@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:form xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+	<h:panelGrid columns="3">
+		<p:button icon="ui-icon-triangle-1-s" title="Toggle Jobticket">
+			<f:param name="ToggleJobticket" />
+		</p:button>
+		<p:panel id="panel1" header="JOBTICKET" toggleable="true">
+			<p:messages id="messages" />
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="jobnummer" value="Jobnummer" />
+					<p:inputText id="jobnummer" readonly="true" />
+					<p:outputLabel for="kundenname" value="Kundenname" />
+					<p:inputText id="kundenname" required="true" />
+					<p:outputLabel for="job" value="Job" />
+					<p:inputText id="job" required="true" />
+				</h:panelGrid>
+				<h:panelGrid columns="3">
+					<h:outputLabel for="altejobnummer" value="alte Jobnummer" />
+					<p:inputText id="altejobnummer" />
+					<p:button icon="ui-icon-triangle-1-e" title="Toggle alte Jobnummer">
+						<f:param name="alte Jobnummer" />
+					</p:button>
+					<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
+					<p:inputText id="kundenkurz" required="true" />
+					<p:commandButton id="neuerKundeButton" icon="ui-icon-plus"
+						onclick="confirmation.show()" type="button" title="neuer Kunde">
+						<f:param name="neuer Kunde" />
+					</p:commandButton>
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:panel>
+	</h:panelGrid>
+	<p:dialog for="neuerKundeButton" widgetVar="confirmation"
+		header="Neuer Kunde">
+		<h:panelGrid columns="2">
+			<p:outputLabel> Kunde</p:outputLabel>
+			<p:inputText autocomplete="true" required="true" />
+			<p:outputLabel> Kundenkürzel</p:outputLabel>
+			<p:inputText autocomplete="true" required="true" />
+			<p:outputLabel> Adresse</p:outputLabel>
+			<p:inputText autocomplete="true" required="true" />
+			<p:outputLabel> Telefon</p:outputLabel>
+			<p:inputText autocomplete="true" required="true" />
+		</h:panelGrid>
+		<h:panelGrid columns="2">
+			<p:button value="Abbrechnen" outcome="TicketAnzeige.xhtml" />
+			<p:button value="Speichern" outcome="TicketAnzeige.xhtml" />
+		</h:panelGrid>
+	</p:dialog>
+</h:form>

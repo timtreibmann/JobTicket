@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<h:outputStylesheet  />
+	<title>JobTicket</title>
+</h:head>
+<h:body>
+
+	<pe:ajaxErrorHandler />
+	<div id="main">
+		<ui:insert name="main">
+			<ui:include src="/WEB-INF/templates/JobTicketMain.xhtml" />
+		</ui:insert>
+	</div>
+
+	<div id="bearbeitung">
+		<ui:insert name="bearbeitung">
+			<ui:include src="/WEB-INF/templates/JobTicketBearbeitung.xhtml" />
+		</ui:insert>
+	</div>
+	<div id="aufwand">
+		<ui:insert name="aufwand">
+			<ui:include src="/WEB-INF/templates/JobTicketAufwand.xhtml" />
+		</ui:insert>
+	</div>
+	<p:ajaxStatus
+		style="width:64px;height:64px;position:fixed;right:50px;bottom:50px">
+		<f:facet name="start">
+			<p:graphicImage value="/images/loading.gif" />
+		</f:facet>
+
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+</h:body>
+</html>
