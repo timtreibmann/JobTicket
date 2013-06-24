@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<h:form>
+
+		<h:panelGrid columns="3">
+
+			<p:panel id="panel1" header="JOBTICKET" toggleable="false">
+				<p:messages id="messages" />
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<h:outputLabel for="jobnummer" value="Jobnummer" />
+						<p:inputText value="#{jobticketBean.job.id}" id="jobnummer"
+							readonly="true" />
+				
+
+
+						<h:outputLabel for="kundenname" value="Kundenname: " />
+						<p:selectOneMenu id="kundenname" value="#{jobticketBean.selectedKundeId}"  effect="fold"
+							editable="false" required="true">
+							
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
+								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
+							
+						</p:selectOneMenu>
+
+
+						<p:outputLabel for="job" value="Job" />
+						<p:inputText id="job" required="false" />
+					</h:panelGrid>
+					<h:panelGrid columns="3">
+						<h:outputLabel for="altejobnummer" value="alte Jobnummer" />
+						<p:inputText id="altejobnummer" />
+						<p:button icon="ui-icon-triangle-1-e"
+							title="Toggle alte Jobnummer">
+							<f:param name="alte Jobnummer" />
+						</p:button>
+						<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
+						<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"   id="kundenkurz" required="false" />
+
+						<p:button id="neuerKundeButton" icon="ui-icon-plus"
+							outcome="kunden_add.xhtml" type="button" title="neuer Kunde">
+							<f:param name="neuer Kunde" />
+						</p:button>
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+		</h:panelGrid>
+
+		<p:commandButton action="#{jobticketBean.saveJobticket}" ajax="false"
+			value="Weiter">
+		</p:commandButton>
+	</h:form>
+</h:body>
+</html>

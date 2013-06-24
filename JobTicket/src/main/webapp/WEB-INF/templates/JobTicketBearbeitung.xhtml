@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:form xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<h:panelGrid columns="3">
+		<p:button icon="ui-icon-minus" title="Toggle Jobticket">
+			<f:param name="ToggleJobticket" />
+		</p:button>
+		<p:panel header="AlteJobTicketnummer_Kundenkürzel_JOBTICKET"
+			toggleable="true">
+			<p:messages id="messages" />
+			<h:panelGrid columns="4">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+					<p:inputText id="eingangsdatum" />
+					<p:outputLabel for="abgabedatum" value="Abgabedatum" />
+					<p:inputText id="abgabedatum" />
+				</h:panelGrid>
+				<h:outputLabel for="fertigstellung" value="Fertigstellung" />
+				<p:inputText id="fertigstellung" />
+				<p:button icon="ui-icon-check" title="Jobticket erledigt">
+					<f:param name="Ticket erledigt" />
+				</p:button>
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="beschreibung" value="Beschreibung" />
+				<p:inputTextarea id="beschreibung" cols="60" />
+			</h:panelGrid>
+			<p:panel id="detailjobticket" header="Detail" toggleable="true">
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="format" value="Format(B x H)" />
+						<p:inputText id="format" />
+						<p:outputLabel for="beschnitt" value="Beschnitt" />
+						<p:inputText id="beschnitt" />
+						<p:outputLabel for="farbe" value="Farbe" />
+						<p:inputText id="farbe" />
+						<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
+						<p:inputText id="sonderfarbe" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="seitenzahl" value="Seitenzahl" />
+						<p:inputText id="seitenzahl" />
+						<p:outputLabel for="falzung" value="Falzung" />
+						<p:inputText id="falzung" />
+						<p:outputLabel for="bindung" value="Bindung" />
+						<p:inputText id="bindung" />
+						<p:outputLabel for="proof" value="Proof" />
+						<p:inputText id="proof" />
+						<p:outputLabel for="dummy" value="Dummy" />
+						<p:inputText id="dummy" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+		</p:panel>
+	</h:panelGrid>
+</h:form>

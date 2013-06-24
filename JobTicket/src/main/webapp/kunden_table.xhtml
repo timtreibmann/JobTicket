@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+
+		<p:panel toggleable="true" closable="true" toggleSpeed="500">
+			<p:dataTable value="#{kundenBean.kunden}" var="kunde">
+
+				<p:column>
+					<f:facet name="header">Name</f:facet>
+					<h:outputText value="#{kunde.name}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Kürzel</f:facet>
+					<h:outputText value="#{kunde.kundenkuerzel}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Adresse</f:facet>
+					<h:outputText value="#{kunde.adresse}" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">Telefon</f:facet>
+					<h:outputText value="#{kunde.telefon}" />
+				</p:column>
+				<p:column>
+					<p:columnGroup>
+						<p:commandButton value="delete"
+							actionListener="#{kundenBean.delete(kunde)}" update="@form" />
+						<p:commandButton value="Edit"
+							action="#{kundenBean.editKunde(kunde)}" ajax="false" />
+					</p:columnGroup>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:button value="Fertig" outcome="jobticket_main.xhtml"></p:button>
+	</h:form>
+</h:body>
+
+</html>

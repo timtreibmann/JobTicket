@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:form>
+
+	<h:panelGrid columns="2">
+		<p:outputLabel> Kunde</p:outputLabel>
+		<p:inputText id="t1" value="#{kundenBean.kunde.name}"
+			autocomplete="true" required="true" />
+
+
+
+		<p:outputLabel> Kundenkürzel</p:outputLabel>
+		<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
+			autocomplete="
+				true" required="true" />
+		<p:outputLabel> Adresse</p:outputLabel>
+		<p:inputText id="t2" value="#{kundenBean.kunde.adresse}"
+			autocomplete="true" required="true" />
+		<p:outputLabel> Telefon</p:outputLabel>
+		<p:inputText id="t3" value="#{kundenBean.kunde.telefon}"
+			autocomplete="true" required="true" />
+
+	</h:panelGrid>
+	<h:panelGrid columns="3">
+		<p:button value="Abbrechen" outcome="jobticket_main.xhtml" />
+		<p:commandButton action="#{kundenBean.saveKunde}" ajax="false"
+			value="Kunden hinzufügen">
+		</p:commandButton>
+		<hr></hr>
+		<p></p>
+		<p:button value="Kunden editieren" outcome="kunden_table.xhtml" />
+
+	</h:panelGrid>
+
+</h:form>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+
+		<p:panel header="Kundenbearbeitung">
+			<f:facet name="actions">
+				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
+			</f:facet>
+		</p:panel>
+		<h:panelGrid columns="2">
+			<label></label>
+			<h:inputHidden id="id0" value="#{kundenBean.kunde.id}" />
+			<label>Name</label>
+			<p:inputText id="lblTitle" value="#{kundenBean.kunde.name}" />
+
+
+			<label>Kürzel</label>
+			<p:inputText id="id1" value="#{kundenBean.kunde.kundenkuerzel}" />
+
+			<label>Adresse</label>
+			<p:inputText id="id2" value="#{kundenBean.kunde.adresse}" />
+
+			<label>Telefon</label>
+			<h:panelGroup>
+				<p:inputText id="id3" value="#{kundenBean.kunde.telefon}" />
+
+				<p:commandButton value="Fertig"
+					action="#{kundenBean.updateKunde}" ajax="false"></p:commandButton>
+			</h:panelGroup>
+		</h:panelGrid>
+
+
+	</h:form>
+</h:body>
+
+</html>
