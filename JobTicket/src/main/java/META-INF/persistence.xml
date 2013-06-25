@@ -9,13 +9,13 @@
 		<class>jt.entities.Kunde</class>
 		<class>jt.entities.Produkteigenschaften</class>
 		<properties>
-		
 			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/jt;create=true"/>
-			<property name="javax.persistence.jdbc.user" value="JOBTICKET"/>
+			<property name="javax.persistence.jdbc.user" value="jobticket"/>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
 			<property name="javax.persistence.jdbc.password" value="pwd"/>
-			<property name="eclipselink.jdbc.cache-statements" value="false"/>
-			<property name="eclipselink.jdbc.native-sql" value="false"/>
+			<property name="eclipselink.logging.level" value="FINEST"/>
+			<property name="eclipselink.ddl-generation" value="create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
 		</properties>
 	</persistence-unit>
 </persistence>
