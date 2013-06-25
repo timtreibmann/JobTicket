@@ -49,7 +49,7 @@ public class KundenBean {
 		return "kunden_edit.xhtml";
 	}
 
-	public String saveKunde(Kunde kunde) {
+	public String saveKunde() {
 		kundenRepository.saveKunde(kunde);
 		return "kunden_add.xhtml";
 	}

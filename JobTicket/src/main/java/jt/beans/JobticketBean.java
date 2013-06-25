@@ -56,7 +56,7 @@ public class JobticketBean {
 	//	kundenBean.findKundenByID(selectedKundeId).addJob(job);
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
 		k.addJob(job);
-		kundenBean.saveKunde(k);
+		kundenBean.saveKunde();
 		jobticketRepository.saveJob(job);
 		
 		
