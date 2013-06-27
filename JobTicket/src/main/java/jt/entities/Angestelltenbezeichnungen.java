@@ -2,6 +2,7 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,7 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(schema="JOBTICKET", name="Angestelltenbezeichnungen")
+@Table(schema="JOBTICKET")
 public class Angestelltenbezeichnungen implements Serializable {
 	private static final long serialVersionUID = 1L;
 

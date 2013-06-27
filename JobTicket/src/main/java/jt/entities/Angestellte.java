@@ -11,7 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table (schema="JOBTICKET", name="Angestellte")
+@Table(schema="JOBTICKET")
 public class Angestellte implements Serializable {
 	private static final long serialVersionUID = 1L;
 

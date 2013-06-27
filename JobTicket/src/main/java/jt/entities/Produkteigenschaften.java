@@ -3,13 +3,15 @@ package jt.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import java.util.Date;
+
 
 /**
  * The persistent class for the PRODUKTEIGENSCHAFTEN database table.
  * 
  */
 @Entity
-@Table(schema="JOBTICKET", name="Produkteigenschaften")
+@Table(schema="JOBTICKET")
 public class Produkteigenschaften implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -17,11 +19,19 @@ public class Produkteigenschaften implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	@Temporal(TemporalType.DATE)
+	private Date abgabedatum;
+
 	private int beschnitt;
 
 	private String bindung;
 
 	private int dummy;
+
+	@Temporal(TemporalType.DATE)
+	private Date eingangsdatum;
+
+	private boolean erledigt;
 
 	private String falzung;
 
@@ -57,6 +67,14 @@ public class Produkteigenschaften implements Serializable {
 		this.id = id;
 	}
 
+	public Date getAbgabedatum() {
+		return this.abgabedatum;
+	}
+
+	public void setAbgabedatum(Date abgabedatum) {
+		this.abgabedatum = abgabedatum;
+	}
+
 	public int getBeschnitt() {
 		return this.beschnitt;
 	}
@@ -79,6 +97,22 @@ public class Produkteigenschaften implements Serializable {
 
 	public void setDummy(int dummy) {
 		this.dummy = dummy;
+	}
+
+	public Date getEingangsdatum() {
+		return this.eingangsdatum;
+	}
+
+	public void setEingangsdatum(Date eingangsdatum) {
+		this.eingangsdatum = eingangsdatum;
+	}
+
+	public boolean getErledigt() {
+		return this.erledigt;
+	}
+
+	public void setErledigt(boolean erledigt) {
+		this.erledigt = erledigt;
 	}
 
 	public String getFalzung() {

@@ -2,42 +2,34 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 
 /**
  * The persistent class for the JOBS database table.
  * 
  */
 @Entity
-@Table (schema="JOBTICKET", name = "JOBS")
+@Table(schema="JOBTICKET", name="JOBS")
 public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "ALTE_JOBNUMMER")
+	@Column(name="ALTE_JOBNUMMER")
 	private int alteJobnummer;
 
-	@Temporal(TemporalType.DATE)
-	private Date ausgang;
-
-	@Column(name = "BUDGET_IN_EURO")
+	@Column(name="BUDGET_IN_EURO")
 	private BigDecimal budgetInEuro;
 
-	@Column(name = "BUDGET_IN_STD")
+	@Column(name="BUDGET_IN_STD")
 	private BigDecimal budgetInStd;
 
-	@Temporal(TemporalType.DATE)
-	private Date eingang;
-
 	private String empfaenger;
-
-	private int erledigt;
 
 	private String jobbeschreibung;
 
@@ -48,22 +40,20 @@ public class Job implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date vorlage;
 
-	// bi-directional many-to-one association to Jobbearbeiter
-	@OneToMany(mappedBy = "job", cascade = { CascadeType.MERGE,
-			CascadeType.REFRESH, CascadeType.PERSIST })
+	//bi-directional many-to-one association to Jobbearbeiter
+	@OneToMany(mappedBy="job")
 	private List<Jobbearbeiter> jobbearbeiters;
 
-	// bi-directional many-to-one association to Kunde
-	@ManyToOne(cascade = { CascadeType.MERGE,
-			CascadeType.REFRESH, CascadeType.PERSIST })
+	//bi-directional many-to-one association to Kunde
+	@ManyToOne
 	private Kunde kunde;
 
-	// bi-directional many-to-one association to Kosten
-	@OneToMany(mappedBy = "job")
+	//bi-directional many-to-one association to Kosten
+	@OneToMany(mappedBy="job")
 	private List<Kosten> kostens;
 
-	// bi-directional many-to-one association to Produkteigenschaften
-	@OneToMany(mappedBy = "job")
+	//bi-directional many-to-one association to Produkteigenschaften
+	@OneToMany(mappedBy="job")
 	private List<Produkteigenschaften> produkteigenschaftens;
 
 	public Job() {
@@ -85,14 +75,6 @@ public class Job implements Serializable {
 		this.alteJobnummer = alteJobnummer;
 	}
 
-	public Date getAusgang() {
-		return this.ausgang;
-	}
-
-	public void setAusgang(Date ausgang) {
-		this.ausgang = ausgang;
-	}
-
 	public BigDecimal getBudgetInEuro() {
 		return this.budgetInEuro;
 	}
@@ -109,28 +91,12 @@ public class Job implements Serializable {
 		this.budgetInStd = budgetInStd;
 	}
 
-	public Date getEingang() {
-		return this.eingang;
-	}
-
-	public void setEingang(Date eingang) {
-		this.eingang = eingang;
-	}
-
 	public String getEmpfaenger() {
 		return this.empfaenger;
 	}
 
 	public void setEmpfaenger(String empfaenger) {
 		this.empfaenger = empfaenger;
-	}
-
-	public int getErledigt() {
-		return this.erledigt;
-	}
-
-	public void setErledigt(int erledigt) {
-		this.erledigt = erledigt;
 	}
 
 	public String getJobbeschreibung() {
@@ -221,21 +187,18 @@ public class Job implements Serializable {
 		return this.produkteigenschaftens;
 	}
 
-	public void setProdukteigenschaftens(
-			List<Produkteigenschaften> produkteigenschaftens) {
+	public void setProdukteigenschaftens(List<Produkteigenschaften> produkteigenschaftens) {
 		this.produkteigenschaftens = produkteigenschaftens;
 	}
 
-	public Produkteigenschaften addProdukteigenschaften(
-			Produkteigenschaften produkteigenschaften) {
+	public Produkteigenschaften addProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
 		getProdukteigenschaftens().add(produkteigenschaften);
 		produkteigenschaften.setJob(this);
 
 		return produkteigenschaften;
 	}
 
-	public Produkteigenschaften removeProdukteigenschaften(
-			Produkteigenschaften produkteigenschaften) {
+	public Produkteigenschaften removeProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
 		getProdukteigenschaftens().remove(produkteigenschaften);
 		produkteigenschaften.setJob(null);
 

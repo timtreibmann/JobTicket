@@ -6,23 +6,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 	<h:head></h:head>
 
 
 	<h:panelGrid columns="3">
-		<p:button icon="ui-icon-minus" title="Toggle Jobticket">
-			<f:param name="ToggleJobticket" />
-		</p:button>
-		<p:panel header="AlteJobTicketnummer_Kundenkürzel_JOBTICKET"
-			toggleable="true">
+
+		<p:panel header="Produkteigenschaften">
 			<p:messages id="messages" />
 			<h:panelGrid columns="4">
 				<h:panelGrid columns="2">
 					<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
-					<p:inputText id="eingangsdatum" />
+					<p:calendar value="#{jobticketBean.produkteigenschaften.eingangsdatum}" id="eingangsdatum"></p:calendar>
+
 					<p:outputLabel for="abgabedatum" value="Abgabedatum" />
-					<p:inputText id="abgabedatum" />
+					<p:calendar value="#{jobticketBean.produkteigenschaften.abgabedatum}" id="abgabedatum" />
 				</h:panelGrid>
 				<h:outputLabel for="fertigstellung" value="Fertigstellung" />
 				<p:inputText id="fertigstellung" />
@@ -32,9 +30,9 @@
 			</h:panelGrid>
 			<h:panelGrid columns="2">
 				<p:outputLabel for="beschreibung" value="Beschreibung" />
-				<p:inputTextarea id="beschreibung" cols="60" />
+				<p:inputTextarea value="#{jobticketBean.produkteigenschaften.produktbeschreibung}"  id="beschreibung" cols="60" />
 			</h:panelGrid>
-			<p:panel id="detailjobticket" header="Detail" toggleable="true">
+			<p:panel id="detailjobticket" header="Detail">
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
 						<p:outputLabel for="format" value="Format(B x H)" />
@@ -60,6 +58,10 @@
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:panel>
-		</p:panel>
+		</p:panel>	
+		<p:commandButton action="#{jobticketBean.saveProdukteigenschaften}" ajax="false"
+			value="Weiter">
+		</p:commandButton>
+		
 	</h:panelGrid>
 </h:form>

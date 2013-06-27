@@ -2,6 +2,7 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.math.BigDecimal;
 
 
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(schema="JOBTICKET", name="Kosten")
+@Table(schema="JOBTICKET")
 public class Kosten implements Serializable {
 	private static final long serialVersionUID = 1L;
 
