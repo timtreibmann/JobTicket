@@ -1,35 +1,33 @@
 package jt.beans;
 
-
-import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 import jt.entities.Job;
 import jt.entities.Kunde;
-import jt.entities.Produkteigenschaften;
 
+@RequestScoped
 @Named
 public class JobticketBean {
 
 	@Inject
-	private JobticketRepository jobticketRepository;
-	
+	private EntityManagerFactory entityManagerFactory;
+	private EntityManager em;
+
 	@Inject
 	private Job job;
-	
-	@Inject
-	private Produkteigenschaften produkteigenschaften;
-	
+
 	@Inject
 	KundenBean kundenBean;
-	
+
 	public int getSelectedKundeId() {
 		return selectedKundeId;
 	}
 
 	private int selectedKundeId;
-	
-
 
 	public void setSelectedKundeId(int selectedKundeId) {
 		this.selectedKundeId = selectedKundeId;
@@ -43,33 +41,14 @@ public class JobticketBean {
 		this.job = job;
 	}
 
-	public Produkteigenschaften getProdukteigenschaften() {
-		return produkteigenschaften;
-	}
-
-	public void setProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
-		this.produkteigenschaften = produkteigenschaften;
-	}
-	
 	public String saveJobticket() {
-		
-	//	kundenBean.findKundenByID(selectedKundeId).addJob(job);
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
-		k.addJob(job);
-		kundenBean.saveKunde();
-		jobticketRepository.saveJob(job);
-		
-		
+		job.setKunde(k);
+		em.persist(job);
+		em.getTransaction().commit();
 		return "jobticket_bearbeitung.xhtml";
 	}
-	
-	public List<String> findKuerzelByName() {
-		String name = job.getKunde().getName();
-		List<String> list = kundenBean.findKuerzelByName(name);
-		return list;
-	}
-	
-	
 
-	
 }

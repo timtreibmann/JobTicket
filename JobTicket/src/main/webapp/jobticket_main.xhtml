@@ -19,22 +19,18 @@
 						<h:outputLabel for="jobnummer" value="Jobnummer" />
 						<p:inputText value="#{jobticketBean.job.id}" id="jobnummer"
 							readonly="true" />
-				
-
-
 						<h:outputLabel for="kundenname" value="Kundenname: " />
-						<p:selectOneMenu id="kundenname" value="#{jobticketBean.selectedKundeId}"  effect="fold"
+						<p:selectOneMenu id="kundenname"
+							value="#{jobticketBean.selectedKundeId}" effect="fold"
 							editable="false" required="true">
-							
-							<f:selectItem itemLabel="Select One" itemValue="" />
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-							
+							<p:ajax event="change" update="@form" listener="#{jobticketBean.selectedKundeId}"/>
 						</p:selectOneMenu>
 
 
-						<p:outputLabel for="job" value="Job" />
-						<p:inputText id="job" required="false" />
+						<p:outputLabel for="job" value="Jobname" />
+						<p:inputText id="job" value="#{jobticketBean.job.name}"  required="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="3">
 						<h:outputLabel for="altejobnummer" value="alte Jobnummer" />
@@ -44,7 +40,8 @@
 							<f:param name="alte Jobnummer" />
 						</p:button>
 						<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
-						<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"   id="kundenkurz" required="false" />
+						<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
+							id="kundenkurz" required="false" />
 
 						<p:button id="neuerKundeButton" icon="ui-icon-plus"
 							outcome="kunden_add.xhtml" type="button" title="neuer Kunde">
