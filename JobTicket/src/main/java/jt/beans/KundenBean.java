@@ -38,10 +38,8 @@ public class KundenBean {
 	}
 
 	public Kunde findKundenByID(int id) {
-		em = entityManagerFactory.createEntityManager();
-		Kunde k = em.find(Kunde.class, id);
-
-		return k;
+		
+		return em.find(Kunde.class, id);
 	}
 
 	/**

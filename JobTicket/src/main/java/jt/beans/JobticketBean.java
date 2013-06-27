@@ -45,8 +45,10 @@ public class JobticketBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
+		System.out.println("KundenID: " + k.getId());
 		job.setKunde(k);
-		em.persist(job);
+		em.merge(job);
+	//	System.out.println(k);
 		em.getTransaction().commit();
 		return "jobticket_bearbeitung.xhtml";
 	}
