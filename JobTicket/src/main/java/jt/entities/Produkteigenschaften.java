@@ -186,5 +186,9 @@ public class Produkteigenschaften implements Serializable {
 	public void setJob(Job job) {
 		this.job = job;
 	}
+	
+	public String toString() {
+		return " " + id + ", ";
+	}
 
 }

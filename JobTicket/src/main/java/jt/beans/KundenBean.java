@@ -80,7 +80,7 @@ public class KundenBean {
 		return null;
 	}
 
-	public String updateKunde(Kunde kunde) {
+	public String updateKunde() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = em.find(Kunde.class, kunde.getId());

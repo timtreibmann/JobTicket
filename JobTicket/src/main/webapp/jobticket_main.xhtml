@@ -17,7 +17,7 @@
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
 						<h:outputLabel for="jobnummer" value="Jobnummer" />
-						<p:inputText value="#{jobticketBean.job.id}" id="jobnummer"
+						<p:outputLabel value="#{jobticketBean.job.id}" id="jobnummer"
 							readonly="true" />
 						<h:outputLabel for="kundenname" value="Kundenname: " />
 						<p:selectOneMenu id="kundenname"
@@ -25,12 +25,14 @@
 							editable="false" required="true">
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-							<p:ajax event="change" update="@form" listener="#{jobticketBean.selectedKundeId}"/>
+							<p:ajax event="change" update="@form"
+								listener="#{jobticketBean.selectedKundeId}" />
 						</p:selectOneMenu>
 
 
 						<p:outputLabel for="job" value="Jobname" />
-						<p:inputText id="job" value="#{jobticketBean.job.name}"  required="true" />
+						<p:inputText id="job" value="#{jobticketBean.job.name}"
+							required="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="3">
 						<h:outputLabel for="altejobnummer" value="alte Jobnummer" />
@@ -52,6 +54,8 @@
 			</p:panel>
 		</h:panelGrid>
 
+		<p:button outcome="start.xhtml"
+			value="Zurück" />
 		<p:commandButton action="#{jobticketBean.saveJobticket}" ajax="false"
 			value="Weiter">
 		</p:commandButton>
