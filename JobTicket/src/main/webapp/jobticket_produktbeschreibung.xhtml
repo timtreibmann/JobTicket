@@ -9,88 +9,116 @@
 
 	<h:head></h:head>
 
+	<h:panelGrid columns="3">
 
 
-	<p:button outcome="jobticket_main.xhtml" value="Zurück" />
-	<p:commandButton action="#{produkteigenschaftenBean.neuesProdukt}" ajax="false"
-		value="Neues Produkt">
-	</p:commandButton>
 
-	<h:outputLabel value="bla: #{produkteigenschaftenBean.job.id}"></h:outputLabel>
+		<p:panel header="Produkte">
+			<p:button outcome="jobticket_main.xhtml" value="Zurück" />
+
+			<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
+			<p />
+			<p:commandButton action="#{produkteigenschaftenBean.neuesProdukt}"
+				ajax="false" value="Neues Produkt anlegen">
+			</p:commandButton>
+			<p />
+			<h:outputLabel value="JOB-ID: #{produkteigenschaftenBean.job.id}"></h:outputLabel>
 
 
-	<p:dataTable value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
-		var="produkteigenschaften" id="table">
-		<p:column>
-			<f:facet name="header">Für das Ticket vorhandene Produkte</f:facet>
+			<ui:repeat
+				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
+				var="produkteigenschaften" id="table">
 
-			<p:panel header="Produkteigenschaften">
-				<p:messages id="messages" />
-				<h:panelGrid columns="4">
-					<h:panelGrid columns="2">
-						<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
-						<h:outputLabel></h:outputLabel>
-						<p:outputLabel value="Eingangsdatum" />
-						<p:outputLabel value="#{produkteigenschaften.eingangsdatum}" />
 
-						<p:outputLabel value="Abgabedatum" />
-						<p:outputLabel value="#{produkteigenschaften.abgabedatum}" />
-					</h:panelGrid>
-					<h:outputLabel value="Fertigstellung" />
-					<p:outputLabel id="fertigstellung" />
-					<p:button icon="ui-icon-check" title="Jobticket erledigt">
-						<f:param name="Ticket erledigt" />
-					</p:button>
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel for="beschreibung" value="Beschreibung" />
-					<p:outputLabel value="#{produkteigenschaften.produktbeschreibung}"
-						id="beschreibung" cols="10" />
-				</h:panelGrid>
-				<p:panel id="detailjobticket" header="Detail">
-					<h:panelGrid columns="2">
+
+
+
+
+				<p:fieldset legend="Produkt: #{produkteigenschaften.id}"
+					toggleable="true" collapsed="false" toggleSpeed="500">
+					<p:commandButton
+						action="#{produkteigenschaftenBean.editProdukteigenschaften(produkteigenschaften)}"
+						ajax="false" icon="ui-icon-wrench">
+					</p:commandButton>
+					<p:commandButton
+						action="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+						ajax="false" icon="ui-icon-trash">
+					</p:commandButton>
+					<p:messages id="messages" />
+					<h:panelGrid columns="4">
 						<h:panelGrid columns="2">
-							<p:outputLabel for="format" value="Format(B x H)" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.fomat}" id="format" />
-							<p:outputLabel for="beschnitt" value="Beschnitt" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.beschnitt}"
-								id="beschnitt" />
-							<p:outputLabel for="farbe" value="Farbe" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.farbe4c}" id="farbe" />
-							<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.sonderfarbe}"
-								id="sonderfarbe" />
-						</h:panelGrid>
-						<h:panelGrid columns="2">
-							<p:outputLabel for="seitenzahl" value="Seitenzahl" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.seitenzahl}"
-								id="seitenzahl" />
-							<p:outputLabel for="falzung" value="Falzung" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.falzung}"
-								id="falzung" />
-							<p:outputLabel for="bindung" value="Bindung" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.bindung}"
-								id="bindung" />
-							<p:outputLabel for="proof" value="Proof" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.proof}" id="proof" />
-							<p:outputLabel for="dummy" value="Dummy" />
-							<p:outputLabel
-								value="#{produkteigenschaftenBean.produkteigenschaften.dummy}" id="dummy" />
-						</h:panelGrid>
-						<p:commandButton value="Editieren" ajax="false"
-							action="#{produkteigenschaftenBean.editProdukteigenschaften(produkteigenschaften)}" />
-					</h:panelGrid>
-				</p:panel>
+							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
+							<h:outputLabel></h:outputLabel>
+							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+							<p:calendar disabled="true"
+								value="#{produkteigenschaften.eingangsdatum}" id="eingangsdatum"
+								required="true" />
 
-			</p:panel>
-		</p:column>
-	</p:dataTable>
+							<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
+							<p:calendar disabled="true"
+								value="#{produkteigenschaften.ausgangsdatum}" id="ausgangsdatum" />
+						</h:panelGrid>
+						<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+						<p:calendar disabled="true"
+							value="#{produkteigenschaften.vorlagedatum}" id="fertigstellung" />
+						<p:button disabled="true" icon="ui-icon-check"
+							title="Jobticket erledigt">
+							<f:param name="Ticket erledigt" />
+						</p:button>
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="beschreibung" value="Beschreibung" />
+						<p:inputTextarea disabled="true"
+							value="#{produkteigenschaften.produktbeschreibung}"
+							id="beschreibung" cols="60" />
+					</h:panelGrid>
+					<p:fieldset legend="Details" toggleable="true" collapsed="true"
+						toggleSpeed="500">
+						<h:panelGrid columns="2">
+							<h:panelGrid columns="2">
+								<p:outputLabel for="format" value="Format(B x H)" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.fomat}" id="format" />
+								<p:outputLabel for="beschnitt" value="Beschnitt" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.beschnitt}" id="beschnitt" />
+								<p:outputLabel for="farbe" value="Farbe" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.farbe4c}" id="farbe" />
+								<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.sonderfarbe}" id="sonderfarbe" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="seitenzahl" value="Seitenzahl" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.seitenzahl}" id="seitenzahl" />
+								<p:outputLabel for="falzung" value="Falzung" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.falzung}" id="falzung" />
+								<p:outputLabel for="bindung" value="Bindung" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.bindung}" id="bindung" />
+								<p:outputLabel for="proof" value="Proof" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.proof}" id="proof" />
+								<p:outputLabel for="dummy" value="Dummy" />
+								<p:inputText disabled="true"
+									value="#{produkteigenschaften.dummy}" id="dummy" />
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:fieldset>
+
+				</p:fieldset>
+			</ui:repeat>
+		</p:panel>
+
+	</h:panelGrid>
+
+	<!-- <p:separator id="separator" />  -->
+
+
+
+
+
 </h:form>

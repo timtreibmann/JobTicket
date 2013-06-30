@@ -8,24 +8,27 @@
 
 
 	<h:panelGrid columns="3">
-		<p:panel header="Neues Produkt">
+		<p:panel header="Produktbeschreibung">
 			<p:messages id="messages" />
 			<h:panelGrid columns="4">
 				<h:panelGrid columns="2">
-					<h:inputHidden value="#{produkteigenschaftenBean.produkteigenschaften.id}"></h:inputHidden>
+					<h:inputHidden
+						value="#{produkteigenschaftenBean.produkteigenschaften.id}"></h:inputHidden>
 					<h:outputLabel></h:outputLabel>
 					<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
 					<p:calendar
 						value="#{produkteigenschaftenBean.produkteigenschaften.eingangsdatum}"
 						id="eingangsdatum" required="true"></p:calendar>
 
-					<p:outputLabel for="abgabedatum" value="Abgabedatum" />
+					<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
 					<p:calendar
-						value="#{produkteigenschaftenBean.produkteigenschaften.abgabedatum}"
-						id="abgabedatum" />
+						value="#{produkteigenschaftenBean.produkteigenschaften.ausgangsdatum}"
+						id="ausgangsdatum" />
 				</h:panelGrid>
-				<h:outputLabel for="fertigstellung" value="Fertigstellung" />
-				<p:inputText id="fertigstellung" />
+				<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+				<p:calendar
+					value="#{produkteigenschaftenBean.produkteigenschaften.vorlagedatum}"
+					id="fertigstellung" />
 				<p:button icon="ui-icon-check" title="Jobticket erledigt">
 					<f:param name="Ticket erledigt" />
 				</p:button>
@@ -40,14 +43,16 @@
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
 						<p:outputLabel for="format" value="Format(B x H)" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.fomat}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.fomat}"
 							id="format" />
 						<p:outputLabel for="beschnitt" value="Beschnitt" />
 						<p:inputText
 							value="#{produkteigenschaftenBean.produkteigenschaften.beschnitt}"
 							id="beschnitt" />
 						<p:outputLabel for="farbe" value="Farbe" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.farbe4c}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.farbe4c}"
 							id="farbe" />
 						<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
 						<p:inputText
@@ -60,25 +65,30 @@
 							value="#{produkteigenschaftenBean.produkteigenschaften.seitenzahl}"
 							id="seitenzahl" />
 						<p:outputLabel for="falzung" value="Falzung" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.falzung}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.falzung}"
 							id="falzung" />
 						<p:outputLabel for="bindung" value="Bindung" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.bindung}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.bindung}"
 							id="bindung" />
 						<p:outputLabel for="proof" value="Proof" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.proof}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.proof}"
 							id="proof" />
 						<p:outputLabel for="dummy" value="Dummy" />
-						<p:inputText value="#{produkteigenschaftenBean.produkteigenschaften.dummy}"
+						<p:inputText
+							value="#{produkteigenschaftenBean.produkteigenschaften.dummy}"
 							id="dummy" />
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:panel>
+			<p:button outcome="jobticket_main.xhtml" value="Zurück" />
+			<p:commandButton action="#{produkteigenschaftenBean.weiter}"
+				ajax="false" value="Weiter">
+			</p:commandButton>
 		</p:panel>
-		<p:button outcome="jobticket_main.xhtml" value="Zurück" />
-		<p:commandButton action="#{produkteigenschaftenBean.weiter}"
-			ajax="false" value="Weiter">
-		</p:commandButton>
+
 
 	</h:panelGrid>
 </h:form>

@@ -14,7 +14,6 @@ import javax.persistence.Query;
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 import jt.entities.Kunde;
-import jt.entities.Produkteigenschaften;
 
 @ApplicationScoped
 @Named
@@ -27,21 +26,24 @@ public class JobticketBean {
 	@Produces
 	@AktuellerJob
 	private Job job;
-
+	
+	private int selectedKundeId;
+	
 	@Inject
 	private KundenBean kundenBean;
-
+	
 	private boolean neuerJob = false;
+	
 
 	public int getSelectedKundeId() {
 		return selectedKundeId;
 	}
 
-	private int selectedKundeId;
-
 	public void setSelectedKundeId(int selectedKundeId) {
+	
 		this.selectedKundeId = selectedKundeId;
 	}
+	
 
 	public Job getJob() {
 		return job;

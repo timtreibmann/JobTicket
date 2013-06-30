@@ -22,7 +22,8 @@
 						<h:outputLabel for="kundenname" value="Kundenname: " />
 						<p:selectOneMenu id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" effect="fold"
-							editable="false" required="true">
+							required="true">
+
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 							<p:ajax event="change" update="@form"
@@ -42,8 +43,10 @@
 							<f:param name="alte Jobnummer" />
 						</p:button>
 						<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
-						<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
-							id="kundenkurz" required="false" />
+						<p:inputText id="kundenkurz" required="false">
+
+						</p:inputText>
+
 
 						<p:button id="neuerKundeButton" icon="ui-icon-plus"
 							outcome="kunden_add.xhtml" type="button" title="neuer Kunde">
@@ -51,14 +54,14 @@
 						</p:button>
 					</h:panelGrid>
 				</h:panelGrid>
+				<p:button outcome="start.xhtml" value="Zurück" />
+				<p:commandButton action="#{jobticketBean.saveJobticket}"
+					ajax="false" value="Weiter">
+				</p:commandButton>
 			</p:panel>
 		</h:panelGrid>
 
-		<p:button outcome="start.xhtml"
-			value="Zurück" />
-		<p:commandButton action="#{jobticketBean.saveJobticket}" ajax="false"
-			value="Weiter">
-		</p:commandButton>
+
 	</h:form>
 </h:body>
 </html>

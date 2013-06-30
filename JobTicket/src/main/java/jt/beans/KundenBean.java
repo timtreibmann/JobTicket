@@ -21,9 +21,6 @@ public class KundenBean {
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
 
-	/**
-	 * @return the blogEntries
-	 */
 	public List<Kunde> getKunden() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -36,12 +33,33 @@ public class KundenBean {
 		em.getTransaction().commit();
 		return kundenListe;
 	}
+	
+	public List<Kunde> findKundenByKuerzel(String kuerzel) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		final Query query = em.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
+		query.setParameter("kuerzel", kuerzel);
+		List<Kunde> kundenListe = query.getResultList();
+		if (kundenListe == null) {
+			kundenListe = new ArrayList<Kunde>();
+		}
+		
+		if (kundenListe.size() == 0) {
+			return getKunden();
+		}
+		
+		
+		em.getTransaction().commit();
+		return kundenListe;
+	}
 
 	public Kunde findKundenByID(int id) {
 		
 		return em.find(Kunde.class, id);
 	}
 
+	
+	
 	/**
 	 * @return the kunde
 	 */

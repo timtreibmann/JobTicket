@@ -2,7 +2,6 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -54,8 +53,7 @@ public class Job implements Serializable {
 	private List<Kosten> kostens;
 
 	//bi-directional many-to-one association to Produkteigenschaften
-	@OneToMany(mappedBy="job", cascade = { CascadeType.MERGE,
-			CascadeType.REFRESH, CascadeType.PERSIST })
+	@OneToMany(mappedBy="job")
 	private List<Produkteigenschaften> produkteigenschaftens;
 
 	public Job() {

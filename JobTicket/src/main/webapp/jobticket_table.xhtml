@@ -20,12 +20,7 @@
             </p:outputPanel>  
         </f:facet>  
   
-        <p:column id="modelColumn" filterBy="#{car.model}"   
-                headerText="Model" footerText="contains"  
-                filterMatchMode="contains">  
-            <h:outputText value="#{car.model}" />  
-        </p:column> 
-	
+   
 	
 
 		<p:panel toggleable="true" closable="true" toggleSpeed="500">
@@ -48,9 +43,9 @@
 
 				<p:column>
 					<p:columnGroup>
-						<p:commandButton value="delete"
+						<p:commandButton  icon="ui-icon-trash"
 							actionListener="#{kundenBean.delete(kunde)}" update="@form" />
-						<p:commandButton value="Edit"
+						<p:commandButton icon="ui-icon-wrench"
 							action="#{jobticketBean.editJob(job)}" ajax="false" />
 					</p:columnGroup>
 				</p:column>

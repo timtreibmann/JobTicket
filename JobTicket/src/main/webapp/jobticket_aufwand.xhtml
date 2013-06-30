@@ -10,18 +10,28 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
+		<p:outputLabel value="#{aufwandBean.job.id}"></p:outputLabel>
 		<h:panelGrid columns="2">
+		
 			<p:button icon="ui-icon-minus" title="Entferne Kontakter">
-			
+
 			</p:button>
 			<p:panel id="panel" header="Aufwand">
 				<p:messages id="messages" />
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="3">
 						<h:outputLabel for="kontakter" value="Kontakter" />
-						<p:inputText id="kontakter" />
-						<p:button icon="ui-icon-triangle-1-e" title="Zeige Kontakter">
-							<f:param name="zeigeKontakter" />
+						<p:selectOneMenu id="kontakter"
+							value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+							editable="false" required="true">
+							<f:selectItems value="#{angestellteBean.angestelltes}" var="angestellte"
+								itemLabel="#{angestellte.vorname}" itemValue="#{angestellte.id}" />
+							<p:ajax event="change" update="@form"
+								listener="#{angestellteBean.selectedAngestellteId}" />
+						</p:selectOneMenu>
+						<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
+							outcome="angestellte_add.xhtml" type="button" title="neuer Kunde">
+
 						</p:button>
 						<p:outputLabel for="grafiker" value="Grafiker" />
 						<p:inputText id="grafiker" />
@@ -58,8 +68,9 @@
 					actionListener="#{jobticketBean.saveJobticket}" />
 			</p:panel>
 			<p:button icon="ui-icon-minus" title="Entferne Grafiker">
-				
+
 			</p:button>
+
 		</h:panelGrid>
 	</h:form>
 </h:body>

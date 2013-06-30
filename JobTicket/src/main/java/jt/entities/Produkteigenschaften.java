@@ -20,7 +20,7 @@ public class Produkteigenschaften implements Serializable {
 	private int id;
 
 	@Temporal(TemporalType.DATE)
-	private Date abgabedatum;
+	private Date ausgangsdatum;
 
 	private int beschnitt;
 
@@ -51,6 +51,9 @@ public class Produkteigenschaften implements Serializable {
 
 	private String sonderfarbe;
 
+	@Temporal(TemporalType.DATE)
+	private Date vorlagedatum;
+
 	//bi-directional many-to-one association to Job
 	@ManyToOne
 	@JoinColumn(name="JOBS_ID")
@@ -67,12 +70,12 @@ public class Produkteigenschaften implements Serializable {
 		this.id = id;
 	}
 
-	public Date getAbgabedatum() {
-		return this.abgabedatum;
+	public Date getAusgangsdatum() {
+		return this.ausgangsdatum;
 	}
 
-	public void setAbgabedatum(Date abgabedatum) {
-		this.abgabedatum = abgabedatum;
+	public void setAusgangsdatum(Date ausgangsdatum) {
+		this.ausgangsdatum = ausgangsdatum;
 	}
 
 	public int getBeschnitt() {
@@ -179,16 +182,20 @@ public class Produkteigenschaften implements Serializable {
 		this.sonderfarbe = sonderfarbe;
 	}
 
+	public Date getVorlagedatum() {
+		return this.vorlagedatum;
+	}
+
+	public void setVorlagedatum(Date vorlagedatum) {
+		this.vorlagedatum = vorlagedatum;
+	}
+
 	public Job getJob() {
 		return this.job;
 	}
 
 	public void setJob(Job job) {
 		this.job = job;
-	}
-	
-	public String toString() {
-		return " " + id + ", ";
 	}
 
 }

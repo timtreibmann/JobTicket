@@ -3,8 +3,6 @@ package jt.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +12,7 @@ import javax.persistence.Query;
 
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
+import jt.entities.Kunde;
 import jt.entities.Produkteigenschaften;
 
 @Named
@@ -74,7 +73,8 @@ public class ProdukteigenschaftenBean {
 		Produkteigenschaften p = em.find(Produkteigenschaften.class,
 				produkteigenschaften.getId());
 		p.setEingangsdatum(produkteigenschaften.getEingangsdatum());
-		p.setAbgabedatum(produkteigenschaften.getAbgabedatum());
+		p.setAusgangsdatum(produkteigenschaften.getAusgangsdatum());
+		p.setVorlagedatum(produkteigenschaften.getVorlagedatum());
 		p.setProduktbeschreibung(produkteigenschaften.getProduktbeschreibung());
 		p.setBeschnitt(produkteigenschaften.getBeschnitt());
 		p.setBindung(produkteigenschaften.getBindung());
@@ -108,6 +108,15 @@ public class ProdukteigenschaftenBean {
 		}
 		em.getTransaction().commit();
 		return produktListe;
+	}
+	
+	public String delete(Produkteigenschaften produkteigenschaften) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		produkteigenschaften = em.merge(produkteigenschaften);
+		em.remove(produkteigenschaften);
+		em.getTransaction().commit();
+		return null;
 	}
 	
 	public String weiter() {
