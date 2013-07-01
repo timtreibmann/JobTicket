@@ -13,7 +13,11 @@ import javax.persistence.Query;
 import org.primefaces.model.LazyDataModel;
 
 import jt.entities.Job;
-
+/**
+ * 
+ * @author tim
+ *
+ */
 @Named
 @RequestScoped
 public class TableBean {
