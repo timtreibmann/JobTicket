@@ -9,36 +9,39 @@
 
 <h:head></h:head>
 <h:form>
+<h:panelGrid columns="3">
+	<p:panel header="Kunden-Editor">
+		<h:panelGrid columns="2">
 
-	<h:panelGrid columns="2">
-		<p:outputLabel> Kunde</p:outputLabel>
-		<p:inputText id="t1" value="#{kundenBean.kunde.name}"
-			autocomplete="true" required="true" />
+			<p:outputLabel> Kunde</p:outputLabel>
+			<p:inputText id="t1" value="#{kundenBean.kunde.name}"
+				autocomplete="true" required="true" />
 
 
 
-		<p:outputLabel> Kundenkürzel</p:outputLabel>
-		<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
-			autocomplete="
+			<p:outputLabel> Kundenkürzel</p:outputLabel>
+			<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
+				autocomplete="
 				true" required="true" />
-		<p:outputLabel> Adresse</p:outputLabel>
-		<p:inputText id="t2" value="#{kundenBean.kunde.adresse}"
-			autocomplete="true" required="true" />
-		<p:outputLabel> Telefon</p:outputLabel>
-		<p:inputText id="t3" value="#{kundenBean.kunde.telefon}"
-			autocomplete="true" required="true" />
+			<p:outputLabel> Adresse</p:outputLabel>
+			<p:inputText id="t2" value="#{kundenBean.kunde.adresse}"
+				autocomplete="true" required="true" />
+			<p:outputLabel> Telefon</p:outputLabel>
+			<p:inputText id="t3" value="#{kundenBean.kunde.telefon}"
+				autocomplete="true" required="true" />
 
+		</h:panelGrid>
+		<h:panelGrid columns="3">
+			<p:button value="Fertig" outcome="jobticket_main.xhtml" />
+			<p:commandButton action="#{kundenBean.saveKunde}" ajax="false"
+				value="Kunden hinzufügen">
+			</p:commandButton>
+			<hr></hr>
+			<p></p>
+			<p:button value="Kunden editieren" outcome="kunden_table.xhtml" />
+
+		</h:panelGrid>
+	</p:panel>
 	</h:panelGrid>
-	<h:panelGrid columns="3">
-		<p:button value="Abbrechen" outcome="jobticket_main.xhtml" />
-		<p:commandButton action="#{kundenBean.saveKunde}" ajax="false"
-			value="Kunden hinzufügen">
-		</p:commandButton>
-		<hr></hr>
-		<p></p>
-		<p:button value="Kunden editieren" outcome="kunden_table.xhtml" />
-
-	</h:panelGrid>
-
 </h:form>
 </html>

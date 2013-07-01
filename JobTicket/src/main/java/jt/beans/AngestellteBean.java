@@ -20,15 +20,13 @@ public class AngestellteBean {
 	@Inject
 	private Angestellte angestellte;
 
-	
-
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
 
+	@Inject
+	private Job job;
 
-
-	
 	public Angestellte getAngestellte() {
 		return angestellte;
 	}
@@ -49,15 +47,17 @@ public class AngestellteBean {
 		em.getTransaction().commit();
 		return angestellteListe;
 	}
-	
+
+	public Angestellte findAngestelltenByID(int id) {
+		return em.find(Angestellte.class, id);
+	}
+
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(angestellte);
 		em.getTransaction().commit();
-
 		return "angestellte_add.xhtml";
 	}
-
 
 }

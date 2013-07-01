@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -66,7 +67,6 @@ public class JobticketBean {
 	}
 
 	public String saveJobticket() {
-
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
@@ -76,7 +76,6 @@ public class JobticketBean {
 		else
 			em.merge(job);
 		em.getTransaction().commit();
-		System.out.println("JOBNAME: " + job.getName());
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
@@ -95,6 +94,7 @@ public class JobticketBean {
 		}
 		em.getTransaction().commit();
 		return jobListe;
+		
 	}
 
 }

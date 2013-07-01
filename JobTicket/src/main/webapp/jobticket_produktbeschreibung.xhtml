@@ -13,7 +13,8 @@
 
 
 
-		<p:panel header="Produkte">
+		<p:panel header="Produktübersicht für Job: #{produkteigenschaftenBean.job.name}">
+			
 			<p:button outcome="jobticket_main.xhtml" value="Zurück" />
 
 			<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
@@ -22,17 +23,12 @@
 				ajax="false" value="Neues Produkt anlegen">
 			</p:commandButton>
 			<p />
-			<h:outputLabel value="JOB-ID: #{produkteigenschaftenBean.job.id}"></h:outputLabel>
+
 
 
 			<ui:repeat
 				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
 				var="produkteigenschaften" id="table">
-
-
-
-
-
 
 				<p:fieldset legend="Produkt: #{produkteigenschaften.id}"
 					toggleable="true" collapsed="false" toggleSpeed="500">
@@ -59,7 +55,7 @@
 								value="#{produkteigenschaften.ausgangsdatum}" id="ausgangsdatum" />
 						</h:panelGrid>
 						<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
-						<p:calendar disabled="true"
+						<p:calendar readonly="true"
 							value="#{produkteigenschaften.vorlagedatum}" id="fertigstellung" />
 						<p:button disabled="true" icon="ui-icon-check"
 							title="Jobticket erledigt">
