@@ -57,16 +57,16 @@ CREATE TABLE JOBTICKET.produkteigenschaften (
      , ausgangsdatum DATE
      , vorlagedatum DATE
      , erledigt BOOLEAN
-     , fomat INTEGER
-     , beschnitt INTEGER
+     , fomat VARCHAR(50)
+     , beschnitt VARCHAR(50)
      , seitenzahl INTEGER
      , falzung VARCHAR(50)
-     , farbe_4c VARCHAR(10)
-     , farbe_sw VARCHAR(10)
+     , farbe_4c VARCHAR(50)
+     , farbe_sw VARCHAR(50)
      , sonderfarbe VARCHAR(50)
      , bindung VARCHAR(50)
-     , proof INTEGER
-     , dummy INTEGER
+     , proof VARCHAR(50)
+     , dummy VARCHAR(50)
      , produktbeschreibung VARCHAR(200)
      , jobs_id INTEGER NOT NULL
      , PRIMARY KEY (id)

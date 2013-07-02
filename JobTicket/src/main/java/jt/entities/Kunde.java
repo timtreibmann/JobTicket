@@ -11,7 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(schema="JOBTICKET")
+@Table (schema="JOBTICKET")
 public class Kunde implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -80,20 +80,6 @@ public class Kunde implements Serializable {
 
 	public void setJobs(List<Job> jobs) {
 		this.jobs = jobs;
-	}
-
-	public Job addJob(Job job) {
-		getJobs().add(job);
-		job.setKunde(this);
-
-		return job;
-	}
-
-	public Job removeJob(Job job) {
-		getJobs().remove(job);
-		job.setKunde(null);
-
-		return job;
 	}
 
 }

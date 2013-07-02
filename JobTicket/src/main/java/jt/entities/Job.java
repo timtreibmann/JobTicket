@@ -139,20 +139,6 @@ public class Job implements Serializable {
 		this.jobbearbeiters = jobbearbeiters;
 	}
 
-	public Jobbearbeiter addJobbearbeiter(Jobbearbeiter jobbearbeiter) {
-		getJobbearbeiters().add(jobbearbeiter);
-		jobbearbeiter.setJob(this);
-
-		return jobbearbeiter;
-	}
-
-	public Jobbearbeiter removeJobbearbeiter(Jobbearbeiter jobbearbeiter) {
-		getJobbearbeiters().remove(jobbearbeiter);
-		jobbearbeiter.setJob(null);
-
-		return jobbearbeiter;
-	}
-
 	public Kunde getKunde() {
 		return this.kunde;
 	}
@@ -169,40 +155,12 @@ public class Job implements Serializable {
 		this.kostens = kostens;
 	}
 
-	public Kosten addKosten(Kosten kosten) {
-		getKostens().add(kosten);
-		kosten.setJob(this);
-
-		return kosten;
-	}
-
-	public Kosten removeKosten(Kosten kosten) {
-		getKostens().remove(kosten);
-		kosten.setJob(null);
-
-		return kosten;
-	}
-
 	public List<Produkteigenschaften> getProdukteigenschaftens() {
 		return this.produkteigenschaftens;
 	}
 
 	public void setProdukteigenschaftens(List<Produkteigenschaften> produkteigenschaftens) {
 		this.produkteigenschaftens = produkteigenschaftens;
-	}
-
-	public Produkteigenschaften addProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
-		getProdukteigenschaftens().add(produkteigenschaften);
-		produkteigenschaften.setJob(this);
-
-		return produkteigenschaften;
-	}
-
-	public Produkteigenschaften removeProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
-		getProdukteigenschaftens().remove(produkteigenschaften);
-		produkteigenschaften.setJob(null);
-
-		return produkteigenschaften;
 	}
 
 }

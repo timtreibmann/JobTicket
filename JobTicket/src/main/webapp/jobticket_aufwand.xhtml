@@ -11,7 +11,7 @@
 <h:body>
 	<h:form>
 		<h:panelGrid columns="2">
-		
+
 
 			<p:panel id="panel" header="Aufwand für #{jobticketBean.job.name}">
 				<p:messages id="messages" />
@@ -22,15 +22,16 @@
 						<p:selectOneMenu id="kontakter"
 							value="#{aufwandBean.selectedAngestellteId}" effect="fold"
 							editable="false" required="true">
-							<f:selectItems value="#{angestellteBean.angestelltes}" var="angestellte"
-								itemLabel="#{angestellte.vorname}" itemValue="#{angestellte.id}" />
+							<f:selectItems value="#{angestellteBean.angestelltes}"
+								var="angestellte" itemLabel="#{angestellte.vorname}"
+								itemValue="#{angestellte.id}" />
 							<p:ajax event="change" update="@form"
 								listener="#{aufwandBean.selectedAngestellteId}" />
 						</p:selectOneMenu>
 						<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
 							outcome="angestellte_add.xhtml" type="button" title="neuer Kunde">
 
-			
+
 						</p:button>
 						<p:outputLabel for="grafiker" value="Grafiker" />
 						<p:inputText id="grafiker" />
@@ -40,12 +41,14 @@
 					</h:panelGrid>
 					<h:panelGrid columns="3">
 						<h:outputLabel for="aufwandZeit" value="Aufwand" />
-						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInStd}" id="aufwandZeit" />
+						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInStd}"
+							id="aufwandZeit" />
 						<p:button icon="ui-icon-clock" title="Aufwand Zeit aktivieren">
 							<f:param name="aufwandZeit" />
 						</p:button>
 						<p:outputLabel for="aufwandEuro" value="Aufwand" />
-						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInEuro}" id="aufwandEuro" />
+						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInEuro}"
+							id="aufwandEuro" />
 						<p:button value="€" title="Aufwand Euro aktivieren">
 							<f:param name="aufwandEuro" />
 						</p:button>
@@ -65,9 +68,9 @@
 				</h:panelGrid>
 				<p:commandButton value="Speichern" ajax="false"
 					action="#{aufwandBean.saveKosten}" />
-					<p:button value="Fertig" outcome="start.xhtml"></p:button>
+				<p:button value="Fertig" outcome="start.xhtml"></p:button>
 			</p:panel>
-			
+
 
 		</h:panelGrid>
 	</h:form>
