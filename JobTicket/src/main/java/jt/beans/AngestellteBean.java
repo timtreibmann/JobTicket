@@ -51,6 +51,16 @@ public class AngestellteBean {
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
+	
+	public String delete(Angestellte angestellte) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		angestellte = em.merge(angestellte);
+		em.remove(angestellte);
+		em.getTransaction().commit();
+		return null;
+	}
+
 
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();

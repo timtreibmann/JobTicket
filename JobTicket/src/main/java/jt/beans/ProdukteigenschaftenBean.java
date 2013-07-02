@@ -120,9 +120,13 @@ public class ProdukteigenschaftenBean {
 	}
 	
 	public String weiter() {
+		System.out.println("PROID"+produkteigenschaften.getId());
 		if (produkteigenschaften.getId()!=0) {
+			System.out.println("UPDATE");
+			
 			updateProdukteigenschaften();
 		}else {
+			System.out.println("KEIN UPDATE");
 			saveProdukteigenschaften();
 		}
 		return "jobticket_produktbeschreibung.xhtml";

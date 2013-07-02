@@ -37,7 +37,7 @@
 						<p></p>
 						<p:fieldset legend="Am Job arbeitende Angestellte">
 							<ui:repeat var="kosten"
-								value="#{aufwandBean.angestellteFromKosten}">
+								value="#{aufwandBean.kostenFromJob}">
 								<p:commandButton ajax="false"
 									action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 
@@ -57,7 +57,7 @@
 
 								<p></p>
 							</ui:repeat>
-
+							<p:outputLabel value="Gesamtaufwand: #{aufwandBean.gesamtKosten}"></p:outputLabel>
 						</p:fieldset>
 
 
@@ -92,7 +92,7 @@
 						</h:panelGrid>
 					</h:panelGrid>
 				</h:panelGrid>
-
+				
 
 
 

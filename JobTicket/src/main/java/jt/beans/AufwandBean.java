@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -27,6 +29,8 @@ public class AufwandBean {
 	@Inject
 	private Kosten kosten;
 
+	private double gesamtKosten;
+
 	@Inject
 	private AngestellteBean angestellteBean;
 
@@ -42,6 +46,10 @@ public class AufwandBean {
 		this.kosten = kosten;
 	}
 
+	public double getGesamtKosten() {
+		return gesamtKosten;
+	}
+
 	private int selectedAngestellteId;
 
 	public int getSelectedAngestellteId() {
@@ -52,16 +60,38 @@ public class AufwandBean {
 		this.selectedAngestellteId = selectedAngestellteId;
 	}
 
+	private boolean istAngestellterVorhanden(Angestellte angestellte) {
+
+		List<Kosten> kostenListe = getKostenFromJob();
+
+		boolean angestellterVorhanden = false;
+		for (Kosten k : kostenListe) {
+			if (k.getAngestellte().getId() == angestellte.getId()) {
+				angestellterVorhanden = true;
+			}
+		}
+		return angestellterVorhanden;
+	}
+
 	public String saveKosten() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		Angestellte angestellte = angestellteBean
 				.findAngestelltenByID(selectedAngestellteId);
-		kosten.setAngestellte(angestellte);
-		kosten.setJob(job);
-		em.merge(job);
-		em.persist(kosten);
-		em.getTransaction().commit();
+		if (!istAngestellterVorhanden(angestellte)) {
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
+			System.out.println("NOCH NICHT VORHANDEN");
+			kosten.setAngestellte(angestellte);
+			kosten.setJob(job);
+			em.merge(job);
+			em.persist(kosten);
+			em.getTransaction().commit();
+		} else {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage("Angestellter wurde bereits hinzugefügt!"));
+			System.out.println("VORHANDEN");
+		}
+		
+
 		return null;
 	}
 
@@ -78,15 +108,14 @@ public class AufwandBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		BigDecimal stundenlohn = kosten.getAngestellte().getStundenlohn();
-		System.out.println("STUNDENLOHN: " + stundenlohn);
-		if (!kosten.getArbeitsaufwandInEuro().equals(new BigDecimal(0))) {
+		if (kosten.getArbeitsaufwandInEuro().doubleValue()!=0) {
 			BigDecimal aufwandEuros = kosten.getArbeitsaufwandInEuro();
 			System.out.println(aufwandEuros.divide(stundenlohn, 2));
 
 			kosten.setArbeitsaufwandInStd(aufwandEuros.divide(stundenlohn, 2));
 		} else {
-			System.out.println("blaa");
-			if (kosten.getArbeitsaufwandInStd().intValue() != 0) {
+			if (kosten.getArbeitsaufwandInStd().doubleValue()!=0) {
+				System.out.println("testi");
 				BigDecimal aufwandStunden = kosten.getArbeitsaufwandInStd();
 				kosten.setArbeitsaufwandInEuro(aufwandStunden
 						.multiply(stundenlohn));
@@ -95,10 +124,11 @@ public class AufwandBean {
 
 		em.merge(kosten);
 		em.getTransaction().commit();
+
 		return null;
 	}
 
-	public List<Kosten> getAngestellteFromKosten() {
+	public List<Kosten> getKostenFromJob() {
 		em = entityManagerFactory.createEntityManager();
 
 		em.getTransaction().begin();
@@ -108,12 +138,22 @@ public class AufwandBean {
 				.createQuery("SELECT p FROM Kosten p WHERE p.job.id = :id");
 		query.setParameter("id", id);
 		@SuppressWarnings("unchecked")
-		List<Kosten> angestellteListe = query.getResultList();
-		if (angestellteListe == null) {
-			angestellteListe = new ArrayList<Kosten>();
+		List<Kosten> kostenListe = query.getResultList();
+		if (kostenListe == null) {
+			kostenListe = new ArrayList<Kosten>();
 		}
+
 		em.getTransaction().commit();
-		return angestellteListe;
+
+		gesamtKosten = 0;
+		for (Kosten k : kostenListe) {
+
+			gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
+			System.out.println("KOST:" + k.getArbeitsaufwandInEuro() + "ges"
+					+ gesamtKosten);
+		}
+		System.out.println("GESAMTKOSTEN: " + gesamtKosten);
+		return kostenListe;
 	}
 
 	public String delete(Kosten kosten) {
@@ -122,6 +162,7 @@ public class AufwandBean {
 		kosten = em.merge(kosten);
 		em.remove(kosten);
 		em.getTransaction().commit();
+
 		return null;
 	}
 
