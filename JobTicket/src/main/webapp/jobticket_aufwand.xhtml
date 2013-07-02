@@ -12,9 +12,7 @@
 	<h:form>
 		<h:panelGrid columns="2">
 		
-			<p:button icon="ui-icon-minus" title="Entferne Kontakter">
 
-			</p:button>
 			<p:panel id="panel" header="Aufwand für #{jobticketBean.job.name}">
 				<p:messages id="messages" />
 				<h:panelGrid columns="2">
@@ -67,10 +65,9 @@
 				</h:panelGrid>
 				<p:commandButton value="Speichern" ajax="false"
 					action="#{aufwandBean.saveKosten}" />
+					<p:button value="Fertig" outcome="start.xhtml"></p:button>
 			</p:panel>
-			<p:button icon="ui-icon-minus" title="Entferne Grafiker">
-
-			</p:button>
+			
 
 		</h:panelGrid>
 	</h:form>
