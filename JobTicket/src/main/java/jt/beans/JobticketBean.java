@@ -35,8 +35,6 @@ public class JobticketBean {
 	
 	private boolean neuerJob = false;
 	
-	private List<Job> filteredJobs;
-	
 
 	public int getSelectedKundeId() {
 		return selectedKundeId;
@@ -96,9 +94,16 @@ public class JobticketBean {
 		}
 		em.getTransaction().commit();
 		return jobListe;
+		
 	}
 	
-
-
+	public String delete(Job job) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		job = em.merge(job);
+		em.remove(job);
+		em.getTransaction().commit();
+		return null;
+	}
 
 }
