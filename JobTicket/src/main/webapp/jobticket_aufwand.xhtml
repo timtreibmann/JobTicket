@@ -15,10 +15,13 @@
 
 			<p:panel id="panel" header="Aufwand für #{jobticketBean.job.name}">
 				<p:messages id="messages" />
-				<h:panelGrid columns="2">
-					<h:panelGrid columns="3">
+				<h:panelGrid columns="1">
+					<h:panelGrid columns="2">
+
 						<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
+						<h:inputHidden></h:inputHidden>
 						<h:outputLabel for="kontakter" value="Kontakter" />
+
 						<p:selectOneMenu id="kontakter"
 							value="#{aufwandBean.selectedAngestellteId}" effect="fold"
 							editable="false" required="true">
@@ -28,15 +31,38 @@
 							<p:ajax event="change" update="@form"
 								listener="#{aufwandBean.selectedAngestellteId}" />
 						</p:selectOneMenu>
+						<p:commandButton value="Angestellten hinzufügen" ajax="false"
+							action="#{aufwandBean.saveKosten}" />
+
+						<p></p>
+						<p:fieldset legend="Am Job arbeitende Angestellte">
+							<ui:repeat var="kosten"
+								value="#{aufwandBean.angestellteFromKosten}">
+								<p:commandButton ajax="false"
+									action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
+
+								<p:commandButton ajax="false"
+									action="#{aufwandBean.updateKosten(kosten)}"
+									icon="ui-icon-disk"></p:commandButton>
+								<h:outputLabel
+									value="Angestellter: #{kosten.angestellte.vorname}"></h:outputLabel>
+
+								
+								<p:outputLabel value="Aufwand in Euro"></p:outputLabel>
+								<p:inputText id="eur" value="#{kosten.arbeitsaufwandInEuro}" />
+								<p:outputLabel value="Aufwand in Stunden"></p:outputLabel>
+								<p:inputText id="std" value="#{kosten.arbeitsaufwandInStd}"></p:inputText>
+								<p:commandButton ajax="false" value="rechne"
+									action="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+
+								<p></p>
+							</ui:repeat>
+
+						</p:fieldset>
+
+
 						<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
 							outcome="angestellte_add.xhtml" type="button" title="neuer Kunde">
-
-
-						</p:button>
-						<p:outputLabel for="grafiker" value="Grafiker" />
-						<p:inputText id="grafiker" />
-						<p:button icon="ui-icon-triangle-1-e" title="Zeige Grafiker">
-							<f:param name="zeigeGrafiker" />
 						</p:button>
 					</h:panelGrid>
 					<h:panelGrid columns="3">
@@ -66,8 +92,10 @@
 						</h:panelGrid>
 					</h:panelGrid>
 				</h:panelGrid>
-				<p:commandButton value="Speichern" ajax="false"
-					action="#{aufwandBean.saveKosten}" />
+
+
+
+
 				<p:button value="Fertig" outcome="start.xhtml"></p:button>
 			</p:panel>
 
