@@ -34,7 +34,7 @@ public class KundenBean {
 		return kundenListe;
 	}
 	
-	public List<Kunde> findKundenByKuerzel(String kuerzel) {
+	public Kunde findKundenByKuerzel(String kuerzel) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		final Query query = em.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
@@ -44,17 +44,17 @@ public class KundenBean {
 			kundenListe = new ArrayList<Kunde>();
 		}
 		
-		if (kundenListe.size() == 0) {
-			return getKunden();
+		
+		for (Kunde k : kundenListe ) {
+			System.out.println(k.getName());
 		}
 		
 		
 		em.getTransaction().commit();
-		return kundenListe;
+		return kundenListe.get(0);
 	}
 
-	public Kunde findKundenByID(int id) {
-		
+	public Kunde findKundenByID(int id) {		
 		return em.find(Kunde.class, id);
 	}
 

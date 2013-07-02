@@ -90,8 +90,6 @@ public class AufwandBean {
 			fc.addMessage(null, new FacesMessage("Angestellter wurde bereits hinzugefügt!"));
 			System.out.println("VORHANDEN");
 		}
-		
-
 		return null;
 	}
 
@@ -147,12 +145,8 @@ public class AufwandBean {
 
 		gesamtKosten = 0;
 		for (Kosten k : kostenListe) {
-
 			gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
-			System.out.println("KOST:" + k.getArbeitsaufwandInEuro() + "ges"
-					+ gesamtKosten);
 		}
-		System.out.println("GESAMTKOSTEN: " + gesamtKosten);
 		return kostenListe;
 	}
 
@@ -162,8 +156,8 @@ public class AufwandBean {
 		kosten = em.merge(kosten);
 		em.remove(kosten);
 		em.getTransaction().commit();
-
 		return null;
 	}
+	
 
 }
