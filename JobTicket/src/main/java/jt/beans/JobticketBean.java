@@ -35,6 +35,8 @@ public class JobticketBean {
 	
 	private boolean neuerJob = false;
 	
+	private List<Job> filteredJobs;
+	
 
 	public int getSelectedKundeId() {
 		return selectedKundeId;
@@ -94,7 +96,9 @@ public class JobticketBean {
 		}
 		em.getTransaction().commit();
 		return jobListe;
-		
 	}
+	
+
+
 
 }
