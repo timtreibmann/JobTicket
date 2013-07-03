@@ -15,7 +15,7 @@ import org.primefaces.model.LazyDataModel;
 import jt.entities.Job;
 /**
  * 
- * @author tim
+ * @author timi
  *
  */
 @Named
