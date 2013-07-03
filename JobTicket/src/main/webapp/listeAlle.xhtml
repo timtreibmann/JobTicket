@@ -10,7 +10,7 @@
 <h:head></h:head>
 <h:form >
 
-	<p:dataTable id="dataTable" var="alleJobs" value="#{tableBean.lazyModel}"
+	<p:dataTable id="dataTable" var="alleJobs" value="#{jobticketBean.jobs}"
 		paginator="true" rows="10"
 		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="5,10,15" lazy="true">
