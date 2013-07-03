@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(schema="JOBTICKET")
+@Table (schema="JOBTICKET")
 public class Produkteigenschaften implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,16 +22,16 @@ public class Produkteigenschaften implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date ausgangsdatum;
 
-	private int beschnitt;
+	private String beschnitt;
 
 	private String bindung;
 
-	private int dummy;
+	private String dummy;
 
 	@Temporal(TemporalType.DATE)
 	private Date eingangsdatum;
 
-	private boolean erledigt;
+	private int erledigt;
 
 	private String falzung;
 
@@ -41,11 +41,11 @@ public class Produkteigenschaften implements Serializable {
 	@Column(name="FARBE_SW")
 	private String farbeSw;
 
-	private int fomat;
+	private String fomat;
 
 	private String produktbeschreibung;
 
-	private int proof;
+	private String proof;
 
 	private int seitenzahl;
 
@@ -78,11 +78,11 @@ public class Produkteigenschaften implements Serializable {
 		this.ausgangsdatum = ausgangsdatum;
 	}
 
-	public int getBeschnitt() {
+	public String getBeschnitt() {
 		return this.beschnitt;
 	}
 
-	public void setBeschnitt(int beschnitt) {
+	public void setBeschnitt(String beschnitt) {
 		this.beschnitt = beschnitt;
 	}
 
@@ -94,11 +94,11 @@ public class Produkteigenschaften implements Serializable {
 		this.bindung = bindung;
 	}
 
-	public int getDummy() {
+	public String getDummy() {
 		return this.dummy;
 	}
 
-	public void setDummy(int dummy) {
+	public void setDummy(String dummy) {
 		this.dummy = dummy;
 	}
 
@@ -110,11 +110,11 @@ public class Produkteigenschaften implements Serializable {
 		this.eingangsdatum = eingangsdatum;
 	}
 
-	public boolean getErledigt() {
+	public int getErledigt() {
 		return this.erledigt;
 	}
 
-	public void setErledigt(boolean erledigt) {
+	public void setErledigt(int erledigt) {
 		this.erledigt = erledigt;
 	}
 
@@ -142,11 +142,11 @@ public class Produkteigenschaften implements Serializable {
 		this.farbeSw = farbeSw;
 	}
 
-	public int getFomat() {
+	public String getFomat() {
 		return this.fomat;
 	}
 
-	public void setFomat(int fomat) {
+	public void setFomat(String fomat) {
 		this.fomat = fomat;
 	}
 
@@ -158,11 +158,11 @@ public class Produkteigenschaften implements Serializable {
 		this.produktbeschreibung = produktbeschreibung;
 	}
 
-	public int getProof() {
+	public String getProof() {
 		return this.proof;
 	}
 
-	public void setProof(int proof) {
+	public void setProof(String proof) {
 		this.proof = proof;
 	}
 

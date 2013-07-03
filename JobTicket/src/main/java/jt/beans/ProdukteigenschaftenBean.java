@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -26,14 +28,6 @@ public class ProdukteigenschaftenBean {
 	@AktuellerJob
 	private Job job;
 
-	public Job getJob() {
-		return job;
-	}
-
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
 
@@ -49,6 +43,14 @@ public class ProdukteigenschaftenBean {
 	public void setProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 		this.produkteigenschaften = produkteigenschaften;
+	}
+
+	public Job getJob() {
+		return job;
+	}
+
+	public void setJob(Job job) {
+		this.job = job;
 	}
 
 	public String editProdukteigenschaften(
@@ -67,7 +69,8 @@ public class ProdukteigenschaftenBean {
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
-	public String updateProdukteigenschaften() {
+	public String updateProdukteigenschaften(
+			Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Produkteigenschaften p = em.find(Produkteigenschaften.class,
@@ -88,6 +91,12 @@ public class ProdukteigenschaftenBean {
 		p.setSeitenzahl(produkteigenschaften.getSeitenzahl());
 		p.setSonderfarbe(produkteigenschaften.getSonderfarbe());
 		em.getTransaction().commit();
+
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		context.addMessage(null, new FacesMessage(
+				"Daten erfolgreich gespeichert!", "Produkteigenschaften"));
+
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
@@ -109,7 +118,7 @@ public class ProdukteigenschaftenBean {
 		em.getTransaction().commit();
 		return produktListe;
 	}
-	
+
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -118,14 +127,4 @@ public class ProdukteigenschaftenBean {
 		em.getTransaction().commit();
 		return null;
 	}
-	
-	public String weiter() {
-		if (produkteigenschaften.getId()!=0) {
-			updateProdukteigenschaften();
-		}else {
-			saveProdukteigenschaften();
-		}
-		return "jobticket_produktbeschreibung.xhtml";
-	}
-
 }

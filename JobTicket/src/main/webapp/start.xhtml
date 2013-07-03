@@ -9,9 +9,47 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
+		<h:panelGrid columns="3">
+			<p:panel toggleable="true" closable="true" toggleSpeed="500">
+				<p:commandButton value="Neues Jobticket anlegen"
+					action="#{jobticketBean.neuesJobticket}" />
+				<p></p>
+				<p:dataTable value="#{jobticketBean.jobs}" var="job"
+					emptyMessage="Keine Jobtickets vorhanden">
 
-		<p:commandButton value="Neues Jobticket" action="#{jobticketBean.neuesJobticket}"/>
-		<p:button value="Jobtickets bearbeiten" outcome="jobticket_table.xhtml"/>
+					<p:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{job.id}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Name</f:facet>
+						<h:outputText value="#{job.name}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">Beschreibung</f:facet>
+						<h:outputText value="#{job.jobbeschreibung}" />
+					</p:column>
+
+
+					<p:column>
+						<f:facet name="header">Kundenname</f:facet>
+						<h:outputText value="#{job.kunde.name}" />
+					</p:column>
+
+					<p:column>
+						<p:columnGroup>
+							<p:commandButton icon="ui-icon-trash"
+								actionListener="#{jobticketBean.delete(job)}" update="@form" />
+							<p:commandButton icon="ui-icon-wrench"
+								action="#{jobticketBean.editJob(job)}" ajax="false" />
+						</p:columnGroup>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:panelGrid>
 	</h:form>
 </h:body>
 </html>

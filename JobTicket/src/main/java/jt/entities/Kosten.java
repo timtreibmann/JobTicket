@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table(schema="JOBTICKET")
+@Table (schema="JOBTICKET")
 public class Kosten implements Serializable {
 	private static final long serialVersionUID = 1L;
 

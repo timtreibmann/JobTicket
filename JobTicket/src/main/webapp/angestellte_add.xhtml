@@ -21,17 +21,19 @@
 		<p:inputText value="#{angestellteBean.angestellte.vorname}"
 			autocomplete="true" required="true" />
 		<p:outputLabel>Stundenlohn</p:outputLabel>
-		<p:inputText id="t2" value="#{angestellteBean.angestellte.stundenlohn}"
+		<p:inputText id="t2"
+			value="#{angestellteBean.angestellte.stundenlohn}"
 			autocomplete="true" required="true" />
 	</h:panelGrid>
 	<h:panelGrid columns="3">
+	<p:button value="Angestelltenliste" outcome="angestellte_table.xhtml"></p:button>
 		<p:button value="Abbrechen" outcome="jobticket_aufwand.xhtml" />
-		<p:commandButton action="#{angestellteBean.saveAngestellte}" ajax="false"
-			value="Angestellten hinzufügen">
+		<p:commandButton action="#{angestellteBean.saveAngestellte}"
+			ajax="false" value="Angestellten hinzufügen">
 		</p:commandButton>
 		<hr></hr>
 		<p></p>
-		
+
 
 	</h:panelGrid>
 
