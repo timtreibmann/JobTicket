@@ -31,7 +31,7 @@ public class Produkteigenschaften implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date eingangsdatum;
 
-	private boolean erledigt;
+	private int erledigt;
 
 	private String falzung;
 
@@ -110,11 +110,11 @@ public class Produkteigenschaften implements Serializable {
 		this.eingangsdatum = eingangsdatum;
 	}
 
-	public boolean getErledigt() {
+	public int getErledigt() {
 		return this.erledigt;
 	}
 
-	public void setErledigt(boolean erledigt) {
+	public void setErledigt(int erledigt) {
 		this.erledigt = erledigt;
 	}
 

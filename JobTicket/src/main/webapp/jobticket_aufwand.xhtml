@@ -33,6 +33,7 @@
 								<p:ajax event="change" update="@form"
 									listener="#{aufwandBean.selectedAngestellteId}" />
 							</p:selectOneMenu>
+							<p:growl></p:growl>
 							<p:commandButton value="Angestellten hinzufügen" ajax="false"
 								action="#{aufwandBean.saveKosten}" />
 						</p:fieldset>
