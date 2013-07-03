@@ -13,7 +13,12 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-
+/**
+ * 
+ * @author jan & tim 
+ * eine Bean die die angestellten in der datenbank verwaltet
+ *
+ */
 @Named
 @RequestScoped
 public class AngestellteBean {
