@@ -7,6 +7,7 @@ import jt.entities.Kunde;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -75,5 +76,20 @@ public class AngestellteBean {
 		em.getTransaction().commit();
 		return "angestellte_add.xhtml";
 	}
+	public String editAngestellten(Angestellte angestellte) {
+		this.angestellte = angestellte;
+		return "angestellten_edit.xhtml";
+	}
+	public String updateAngestellten() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		Angestellte k = em.find(Angestellte.class, angestellte.getId());
+		k.setNachname(angestellte.getNachname());
+		k.setVorname(angestellte.getVorname());
+		k.setStundenlohn(angestellte.getStundenlohn());
+		em.getTransaction().commit();
+		return "kunden_table.xhtml";
+	}
+
 
 }

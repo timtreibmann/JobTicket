@@ -13,6 +13,18 @@
 
 <h:body>
 	<h:form>
+	<p:breadCrumb>
+		<p:menuitem value="Übersicht"
+			url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+		<p:menuitem value="Jobticket"
+			url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+		<p:menuitem value="Aufwand festlegen"
+			url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+			<p:menuitem value="Angestellten hinzufügen"
+			url="http://localhost:8080/JobTicket/faces/angestellte_add.xhtml" />
+			<p:menuitem value="Angestelltentabelle"
+			url="http://localhost:8080/JobTicket/faces/angestellte_table.xhtml" />
+	</p:breadCrumb>
 
 		<p:panel toggleable="true" closable="true" toggleSpeed="500">
 			<p:dataTable value="#{angestellteBean.angestelltes}" var="angestellter">
@@ -38,7 +50,7 @@
 						<p:commandButton value="delete"
 							actionListener="#{angestellteBean.delete(angestellte)}" update="@form" />
 						<p:commandButton value="Edit"
-							action="#{kundenBean.editKunde(kunde)}" ajax="false" />
+							action="#{angestellteBean.editAngestellten(angestellte)}" ajax="false" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>

@@ -9,16 +9,18 @@
 
 	<h:head></h:head>
 
+	<p:breadCrumb>
+		<p:menuitem value="Übersicht"
+			url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+		<p:menuitem value="Jobticket"
+			url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+		<p:menuitem value="Produktbeschreibung"
+			url="http://localhost:8080/JobTicket/faces/jobticket_produktbeschreibung.xhtml" />
+	</p:breadCrumb>
 	<h:panelGrid columns="3">
-
-
-
 		<p:panel
 			header="Produktübersicht für Job: #{produkteigenschaftenBean.job.name}">
-
-
 			<p:button outcome="jobticket_main.xhtml" value="Zurück" />
-
 			<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
 			<p />
 			<p:commandButton action="#{produkteigenschaftenBean.neuesProdukt}"
@@ -47,21 +49,20 @@
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<h:outputLabel></h:outputLabel>
 							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
-							<p:calendar 
-								value="#{produkteigenschaften.eingangsdatum}" id="eingangsdatum"
-								required="true" />
+							<p:calendar value="#{produkteigenschaften.eingangsdatum}"
+								id="eingangsdatum" required="true" />
 
 							<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
-							<p:calendar 
-								value="#{produkteigenschaften.ausgangsdatum}" id="ausgangsdatum" />
+							<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
+								id="ausgangsdatum" />
 						</h:panelGrid>
 						<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
-						<p:calendar 
-							value="#{produkteigenschaften.vorlagedatum}" id="fertigstellung" />
+						<p:calendar value="#{produkteigenschaften.vorlagedatum}"
+							id="fertigstellung" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel for="beschreibung" value="Beschreibung" />
-						<p:inputTextarea 
+						<p:inputTextarea
 							value="#{produkteigenschaften.produktbeschreibung}"
 							id="beschreibung" cols="60" />
 					</h:panelGrid>
@@ -70,34 +71,30 @@
 						<h:panelGrid columns="2">
 							<h:panelGrid columns="2">
 								<p:outputLabel for="format" value="Format(B x H)" />
-								<p:inputText 
-									value="#{produkteigenschaften.fomat}" id="format" />
+								<p:inputText value="#{produkteigenschaften.fomat}" id="format" />
 								<p:outputLabel for="beschnitt" value="Beschnitt" />
-								<p:inputText 
-									value="#{produkteigenschaften.beschnitt}" id="beschnitt" />
+								<p:inputText value="#{produkteigenschaften.beschnitt}"
+									id="beschnitt" />
 								<p:outputLabel for="farbe" value="Farbe" />
-								<p:inputText 
-									value="#{produkteigenschaften.farbe4c}" id="farbe" />
+								<p:inputText value="#{produkteigenschaften.farbe4c}" id="farbe" />
 								<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
-								<p:inputText 
-									value="#{produkteigenschaften.sonderfarbe}" id="sonderfarbe" />
+								<p:inputText value="#{produkteigenschaften.sonderfarbe}"
+									id="sonderfarbe" />
 							</h:panelGrid>
 							<h:panelGrid columns="2">
 								<p:outputLabel for="seitenzahl" value="Seitenzahl" />
-								<p:inputText 
-									value="#{produkteigenschaften.seitenzahl}" id="seitenzahl" />
+								<p:inputText value="#{produkteigenschaften.seitenzahl}"
+									id="seitenzahl" />
 								<p:outputLabel for="falzung" value="Falzung" />
-								<p:inputText 
-									value="#{produkteigenschaften.falzung}" id="falzung" />
+								<p:inputText value="#{produkteigenschaften.falzung}"
+									id="falzung" />
 								<p:outputLabel for="bindung" value="Bindung" />
-								<p:inputText 
-									value="#{produkteigenschaften.bindung}" id="bindung" />
+								<p:inputText value="#{produkteigenschaften.bindung}"
+									id="bindung" />
 								<p:outputLabel for="proof" value="Proof" />
-								<p:inputText 
-									value="#{produkteigenschaften.proof}" id="proof" />
+								<p:inputText value="#{produkteigenschaften.proof}" id="proof" />
 								<p:outputLabel for="dummy" value="Dummy" />
-								<p:inputText 
-									value="#{produkteigenschaften.dummy}" id="dummy" />
+								<p:inputText value="#{produkteigenschaften.dummy}" id="dummy" />
 							</h:panelGrid>
 						</h:panelGrid>
 					</p:fieldset>
