@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:form >
+
+	<p:dataTable id="dataTable" var="alleJobs" value="#{jobticketBean.jobs}"
+		paginator="true" rows="10"
+		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15" lazy="true">
+
+		<f:facet name="header">  
+           Liste aller Jobs
+        </f:facet>
+
+		<p:column sortBy="#{alleJobs.kunde.id}" filterBy="alleJobs.id"
+			headerText="Kunden ID">
+			<h:outputText value="#{alleJobs.kunde.id}" />
+		</p:column>
+
+		<p:column headerText="Kundenname" sortBy="#{alleJobs.kunde.name}"
+			filterBy="#{alleJobs.kunde.name}" filterMatchMode="contains">
+			<h:outputText value="#{alleJobs.kunde.name}" />
+		</p:column>
+
+		<p:column headerText="Telefonnummer" sortBy="#{alleJobs.kunde.telefon}">
+			<h:outputText value="#{alleJobs.kunde.telefon}" />
+		</p:column>
+
+		<p:column headerText="Adresse" footerText="Platzhalter"
+			sortBy="#{alleJobs.kunde.adresse}">
+			<h:outputText value="#{alleJobs.kunde.adresse}" />
+		</p:column>
+		<p:column headerText="Kundenkürzel" footerText="Platzhalter"
+			sortBy="#{alleJobs.kunde.kundenkuerzel}">
+			<h:outputText value="#{alleJobs.kunde.kundenkuerzel}" />
+		</p:column>
+
+		<f:facet name="footer">  
+           Platzhalter Jobs insgesamt
+        </f:facet>
+
+	</p:dataTable>
+
+
+
+</h:form>
+</html>
