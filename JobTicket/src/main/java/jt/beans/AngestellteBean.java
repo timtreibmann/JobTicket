@@ -53,6 +53,7 @@ public class AngestellteBean {
 	}
 	
 	public String delete(Angestellte angestellte) {
+		System.out.println("DELETE");
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		angestellte = em.merge(angestellte);

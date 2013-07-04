@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -29,14 +30,24 @@ public class AufwandBean {
 	@Inject
 	private Kosten kosten;
 
-	private double gesamtKosten;
-
 	@Inject
 	private AngestellteBean angestellteBean;
 
 	@Inject
 	@AktuellerJob
 	private Job job;
+
+	private double gesamtKosten;
+
+	private boolean istAufwandInEuro;
+
+	public boolean isAufwandInEuro() {
+		return istAufwandInEuro;
+	}
+
+	public void setAufwandInEuro(boolean aufwandInEuro) {
+		this.istAufwandInEuro = aufwandInEuro;
+	}
 
 	public Kosten getKosten() {
 		return kosten;
@@ -87,40 +98,41 @@ public class AufwandBean {
 			em.getTransaction().commit();
 		} else {
 			FacesContext fc = FacesContext.getCurrentInstance();
-			fc.addMessage(null, new FacesMessage("Angestellter wurde bereits hinzugefügt!"));
-			System.out.println("VORHANDEN");
+			fc.addMessage(null, new FacesMessage(
+					"Angestellter wurde bereits hinzugefügt!"));
 		}
 		return null;
 	}
 
 	public String updateKosten(Kosten kosten) {
+		
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kosten k = em.find(Kosten.class, kosten.getId());
 		k.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInEuro());
 		em.getTransaction().commit();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
 
+
+
+
 	public String rechneUm(Kosten kosten) {
+		System.out.println("rechneUm");
+
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		BigDecimal stundenlohn = kosten.getAngestellte().getStundenlohn();
-		if (kosten.getArbeitsaufwandInEuro().doubleValue()!=0) {
-			BigDecimal aufwandEuros = kosten.getArbeitsaufwandInEuro();
-			System.out.println(aufwandEuros.divide(stundenlohn, 2));
+		if (!istAufwandInEuro) {
+			
+			kosten.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInStd().multiply(stundenlohn));
 
-			kosten.setArbeitsaufwandInStd(aufwandEuros.divide(stundenlohn, 2));
 		} else {
-			if (kosten.getArbeitsaufwandInStd().doubleValue()!=0) {
-				System.out.println("testi");
-				BigDecimal aufwandStunden = kosten.getArbeitsaufwandInStd();
-				kosten.setArbeitsaufwandInEuro(aufwandStunden
-						.multiply(stundenlohn));
-			}
-		}
+			kosten.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInEuro().divide(stundenlohn));
 
-		em.merge(kosten);
+		}
 		em.getTransaction().commit();
 
 		return null;
@@ -143,6 +155,7 @@ public class AufwandBean {
 
 		em.getTransaction().commit();
 
+		// Gesamtkosten berechnen
 		gesamtKosten = 0;
 		for (Kosten k : kostenListe) {
 			gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
@@ -158,6 +171,5 @@ public class AufwandBean {
 		em.getTransaction().commit();
 		return null;
 	}
-	
 
 }

@@ -22,20 +22,25 @@
 						<h:inputHidden></h:inputHidden>
 
 						<p:fieldset>
-							<p:outputLabel for="kontakter" value="Kontakter" />
+							<p:outputLabel for="kontakter" value="Angestellter" />
 
 							<p:selectOneMenu id="kontakter"
 								value="#{aufwandBean.selectedAngestellteId}" effect="fold"
-								editable="false" required="false">
+								editable="false" required="true">
 								<f:selectItems value="#{angestellteBean.angestelltes}"
 									var="angestellte" itemLabel="#{angestellte.vorname}"
 									itemValue="#{angestellte.id}" />
 								<p:ajax event="change" update="@form"
 									listener="#{aufwandBean.selectedAngestellteId}" />
 							</p:selectOneMenu>
-							<p:growl></p:growl>
-							<p:commandButton value="Angestellten hinzufügen" ajax="false"
-								action="#{aufwandBean.saveKosten}" />
+
+							<p:commandButton value="Angestellten hinzufügen" update="@form"
+								actionListener="#{aufwandBean.saveKosten}" />
+							<p:button id="neuerAngestellterButton"
+								value="neuen Angestellten anlegen" icon="ui-icon-plus"
+								outcome="angestellte_add.xhtml" type="button"
+								title="neuer Kunde">
+							</p:button>
 						</p:fieldset>
 						<p></p>
 						<p:fieldset legend="Am Job arbeitende Angestellte">
@@ -47,45 +52,38 @@
 									<p:commandButton ajax="false"
 										action="#{aufwandBean.updateKosten(kosten)}"
 										icon="ui-icon-disk"></p:commandButton>
-									<h:outputLabel value="#{kosten.angestellte.vorname} "></h:outputLabel>
+									<p></p>
+									<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
 									<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
-									<h:panelGrid columns="4">
+									<h:panelGrid columns="3">
+										<p:selectBooleanButton value="#{aufwandBean.aufwandInEuro}"
+											offLabel="H" onLabel="€">
+											<p:ajax listener="#{aufwandBean.rechneUm(kosten)}"
+												process="aufwand_in_std aufwand_in_euro"
+												update="aufwand_in_std aufwand_in_euro"></p:ajax>
+										</p:selectBooleanButton>
+										<p:panel id="aufwand_in_euro"
+											visible="#{!aufwandBean.aufwandInEuro}">
+											<p:inputText value="#{kosten.arbeitsaufwandInEuro}"></p:inputText>
+											<p:outputLabel value="€"></p:outputLabel>
+										</p:panel>
+										<p:panel id="aufwand_in_std"
+											visible="#{aufwandBean.aufwandInEuro}">
+											<p:inputText value="#{kosten.arbeitsaufwandInStd}"></p:inputText>
+											<p:outputLabel value="Stunden"></p:outputLabel>
+										</p:panel>
 
-
-
-										<p:outputLabel value="Aufwand in Euro"></p:outputLabel>
-										<p:inputText id="eur" value="#{kosten.arbeitsaufwandInEuro}" />
-
-										<p:outputLabel value="Aufwand in Stunden"></p:outputLabel>
-										<p:inputText id="std" value="#{kosten.arbeitsaufwandInStd}"></p:inputText>
-										<p:commandButton ajax="false" value="rechne"
-											action="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 									</h:panelGrid>
-
 								</p:panel>
+
 							</ui:repeat>
 							<p:outputLabel value="Gesamtaufwand: #{aufwandBean.gesamtKosten}"></p:outputLabel>
 						</p:fieldset>
 
 
-						<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
-							outcome="angestellte_add.xhtml" type="button" title="neuer Kunde">
-						</p:button>
+
 					</h:panelGrid>
-					<h:panelGrid columns="3">
-						<h:outputLabel for="aufwandZeit" value="Aufwand" />
-						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInStd}"
-							id="aufwandZeit" />
-						<p:button icon="ui-icon-clock" title="Aufwand Zeit aktivieren">
-							<f:param name="aufwandZeit" />
-						</p:button>
-						<p:outputLabel for="aufwandEuro" value="Aufwand" />
-						<p:inputText value="#{aufwandBean.kosten.arbeitsaufwandInEuro}"
-							id="aufwandEuro" />
-						<p:button value="€" title="Aufwand Euro aktivieren">
-							<f:param name="aufwandEuro" />
-						</p:button>
-					</h:panelGrid>
+
 					<h:panelGrid columns="2">
 						<p:button icon="ui-icon-alert" title="Achtung">
 							<f:param name="achtung" />
