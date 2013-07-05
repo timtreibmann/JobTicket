@@ -28,6 +28,7 @@
 
 		<p:panel toggleable="true" closable="true" toggleSpeed="500">
 			<p:dataTable value="#{angestellteBean.angestelltes}" var="angestellter">
+			
 
 				<p:column>
 					<f:facet name="header">Vorname</f:facet>
@@ -48,14 +49,14 @@
 				<p:column>
 					<p:columnGroup>
 						<p:commandButton value="delete"
-							actionListener="#{angestellteBean.delete(angestellte)}" update="@form" />
+							actionListener="#{angestellteBean.delete(angestellter)}" update="@form" />
 						<p:commandButton value="Edit"
-							action="#{angestellteBean.editAngestellten(angestellte)}" ajax="false" />
+							action="#{angestellteBean.editAngestellten(angestellter)}" ajax="false" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:button value="Fertig" outcome="jobticket_main.xhtml"></p:button>
+		<p:button value="Fertig" outcome="jobticket_aufwand.xhtml"></p:button>
 	</h:form>
 </h:body>
 

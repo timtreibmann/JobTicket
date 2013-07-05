@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem value="Übersicht"
+				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+			<p:menuitem value="Jobticket"
+				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+			<p:menuitem value="Aufwand festlegen"
+				url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+			<p:menuitem value="Angestellten hinzufügen"
+				url="http://localhost:8080/JobTicket/faces/angestellte_add.xhtml" />
+			<p:menuitem value="Angestelltentabelle"
+				url="http://localhost:8080/JobTicket/faces/angestellte_table.xhtml" />
+		</p:breadCrumb>
+
+		<p:panel header="Angestelltenbearbeitung">
+			<f:facet name="actions">
+				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
+			</f:facet>
+		</p:panel>
+		<h:panelGrid columns="2">
+			<label></label>
+			<h:inputHidden id="id0" value="#{angestellteBean.angestellte.id}" />
+			<label>Vorname</label>
+			<p:inputText id="lblTitle"
+				value="#{angestellteBean.angestellte.vorname}" />
+
+
+			<label>Nachname</label>
+			<p:inputText id="id1" value="#{angestellteBean.angestellte.nachname}" />
+
+			<label>Stundenlohn</label>
+			<p:inputText id="id2"
+				value="#{angestellteBean.angestellte.stundenlohn}" />
+
+
+			<p:commandButton value="Fertig"
+				action="#{angestellteBean.updateAngestellten}" ajax="false"></p:commandButton>
+
+		</h:panelGrid>
+
+
+	</h:form>
+</h:body>
+
+</html>

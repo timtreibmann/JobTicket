@@ -9,11 +9,13 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-		<p:breadCrumb>  
-    <p:menuitem value="Übersicht" url="http://localhost:8080/JobTicket/faces/start.xhtml" />  
-    <p:menuitem value="Jobticket" url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />  
+		<p:breadCrumb>
+			<p:menuitem value="Übersicht"
+				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+			<p:menuitem value="Jobticket"
+				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
 
-</p:breadCrumb> 
+		</p:breadCrumb>
 
 		<h:panelGrid columns="3">
 
@@ -29,9 +31,10 @@
 						<p:selectOneMenu id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" effect="fold"
 							required="true">
-
+							
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
+
 							<p:ajax event="change" update="@form"
 								listener="#{jobticketBean.updateKuerzel}" />
 						</p:selectOneMenu>
@@ -74,7 +77,7 @@
 								<f:param name="neuer Kunde" />
 							</p:button>
 						</h:panelGrid>
-						
+
 						<p:outputLabel for="jobbeschreibung" value="Beschreibung" />
 						<p:inputTextarea maxlength="200"
 							value="#{jobticketBean.job.jobbeschreibung}" id="jobbeschreibung"></p:inputTextarea>

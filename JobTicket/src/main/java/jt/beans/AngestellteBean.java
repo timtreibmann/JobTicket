@@ -78,7 +78,7 @@ public class AngestellteBean {
 	}
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;
-		return "angestellten_edit.xhtml";
+		return "angestellte_edit.xhtml";
 	}
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
@@ -88,7 +88,7 @@ public class AngestellteBean {
 		k.setVorname(angestellte.getVorname());
 		k.setStundenlohn(angestellte.getStundenlohn());
 		em.getTransaction().commit();
-		return "kunden_table.xhtml";
+		return "angestellte_table.xhtml";
 	}
 
 
