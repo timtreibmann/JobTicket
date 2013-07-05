@@ -9,6 +9,7 @@
 
 <h:head></h:head>
 <h:form>
+<p:growl id="growl"></p:growl>
 	<p:breadCrumb>
 		<p:menuitem value="Übersicht"
 			url="http://localhost:8080/JobTicket/faces/start.xhtml" />
@@ -38,10 +39,8 @@
 	<p:button value="Angestelltenliste" outcome="angestellte_table.xhtml"></p:button>
 		<p:button value="Abbrechen" outcome="jobticket_aufwand.xhtml" />
 		<p:commandButton action="#{angestellteBean.saveAngestellte}"
-			ajax="false" value="Angestellten hinzufügen">
+			update="growl" value="Angestellten hinzufügen">
 		</p:commandButton>
-		<hr></hr>
-		<p></p>
 
 
 	</h:panelGrid>

@@ -14,6 +14,9 @@
     <p:menuitem value="Jobticket" url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
     <p:menuitem value="Kunden anlegen" url="http://localhost:8080/JobTicket/faces/kunden_add.xhtml" />
 </p:breadCrumb> 
+
+<p:messages></p:messages>
+<p:growl id="growl"></p:growl>
 <h:panelGrid columns="3">
 	<p:panel header="Kunden-Editor">
 		<h:panelGrid columns="2">
@@ -36,9 +39,11 @@
 				autocomplete="true" required="true" />
 
 		</h:panelGrid>
+		
+		
 		<h:panelGrid columns="3">
 			<p:button value="Fertig" outcome="jobticket_main.xhtml" />
-			<p:commandButton action="#{kundenBean.saveKunde}" ajax="false"
+			<p:commandButton action="#{kundenBean.saveKunde}" update="growl"
 				value="Kunden hinzufügen">
 			</p:commandButton>
 			<hr></hr>

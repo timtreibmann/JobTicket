@@ -9,16 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+
 /**
  * 
- * @author jan & tim 
- * eine Bean die die angestellten in der datenbank verwaltet
- *
+ * @author jan & tim eine Bean die die angestellten in der datenbank verwaltet
+ * 
  */
 @Named
 @RequestScoped
@@ -57,7 +59,7 @@ public class AngestellteBean {
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
-	
+
 	public String delete(Angestellte angestellte) {
 		System.out.println("DELETE");
 		em = entityManagerFactory.createEntityManager();
@@ -68,18 +70,22 @@ public class AngestellteBean {
 		return null;
 	}
 
-
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(angestellte);
 		em.getTransaction().commit();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(
+				"Daten erfolgreich gespeichert!", ""));
 		return "angestellte_add.xhtml";
 	}
+
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;
 		return "angestellte_edit.xhtml";
 	}
+
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -90,6 +96,5 @@ public class AngestellteBean {
 		em.getTransaction().commit();
 		return "angestellte_table.xhtml";
 	}
-
 
 }

@@ -4,7 +4,10 @@ import jt.entities.Kunde;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -33,33 +36,30 @@ public class KundenBean {
 		em.getTransaction().commit();
 		return kundenListe;
 	}
-	
+
 	public Kunde findKundenByKuerzel(String kuerzel) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		final Query query = em.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
+		final Query query = em
+				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
 		query.setParameter("kuerzel", kuerzel);
 		List<Kunde> kundenListe = query.getResultList();
 		if (kundenListe == null) {
 			kundenListe = new ArrayList<Kunde>();
 		}
-		
-		
-		for (Kunde k : kundenListe ) {
+
+		for (Kunde k : kundenListe) {
 			System.out.println(k.getName());
 		}
-		
-		
+
 		em.getTransaction().commit();
 		return kundenListe.get(0);
 	}
 
-	public Kunde findKundenByID(int id) {		
+	public Kunde findKundenByID(int id) {
 		return em.find(Kunde.class, id);
 	}
 
-	
-	
 	/**
 	 * @return the kunde
 	 */
@@ -85,6 +85,9 @@ public class KundenBean {
 		em.getTransaction().begin();
 		em.persist(kunde);
 		em.getTransaction().commit();
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(
+				"Daten erfolgreich gespeichert!", ""));
 
 		return "kunden_add.xhtml";
 	}
