@@ -14,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import org.apache.myfaces.view.facelets.tag.jstl.core.CatchHandler;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
@@ -91,6 +93,8 @@ public class AufwandBean {
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
 			System.out.println("NOCH NICHT VORHANDEN");
+			kosten.setArbeitsaufwandInEuro(new BigDecimal(0));
+			kosten.setArbeitsaufwandInStd(new BigDecimal(0));
 			kosten.setAngestellte(angestellte);
 			kosten.setJob(job);
 			em.merge(job);
@@ -105,7 +109,7 @@ public class AufwandBean {
 	}
 
 	public String updateKosten(Kosten kosten) {
-		
+
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kosten k = em.find(Kosten.class, kosten.getId());
@@ -116,9 +120,6 @@ public class AufwandBean {
 		return null;
 	}
 
-
-
-
 	public String rechneUm(Kosten kosten) {
 		System.out.println("rechneUm");
 
@@ -126,11 +127,13 @@ public class AufwandBean {
 		em.getTransaction().begin();
 		BigDecimal stundenlohn = kosten.getAngestellte().getStundenlohn();
 		if (!istAufwandInEuro) {
-			
-			kosten.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInStd().multiply(stundenlohn));
+
+			kosten.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInStd()
+					.multiply(stundenlohn));
 
 		} else {
-			kosten.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInEuro().divide(stundenlohn));
+			kosten.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInEuro()
+					.divide(stundenlohn));
 
 		}
 		em.getTransaction().commit();
@@ -155,10 +158,14 @@ public class AufwandBean {
 
 		em.getTransaction().commit();
 
-		// Gesamtkosten berechnen
-		gesamtKosten = 0;
-		for (Kosten k : kostenListe) {
-			gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
+		try {
+			// Gesamtkosten berechnen
+			gesamtKosten = 0;
+			for (Kosten k : kostenListe) {
+				gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
+			}
+		} catch (NullPointerException e) {
+
 		}
 		return kostenListe;
 	}
