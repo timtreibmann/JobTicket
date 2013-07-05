@@ -16,7 +16,7 @@ public class Job implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "seq")
 	@SequenceGenerator(name = "seq", initialValue = 8983)
 	private int id;
 
