@@ -37,8 +37,8 @@
 				<p:fieldset legend="Produkt: #{produkteigenschaften.id}"
 					toggleable="true" collapsed="false" toggleSpeed="500">
 					<p:commandButton
-						action="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
-						ajax="false" icon="ui-icon-trash">
+						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+						update="@form" icon="ui-icon-trash">
 					</p:commandButton>
 					<p:growl id="growl" showDetail="true" sticky="true" />
 					<p:commandButton icon="ui-icon-disk" update="growl"

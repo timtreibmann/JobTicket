@@ -13,15 +13,16 @@
 
 <h:body>
 	<h:form>
-         <f:facet name="header">  
-            <p:outputPanel>  
-                <h:outputText value="Search all fields:" />  
-                <p:inputText id="globalFilter" onkeyup="carsTable.filter()" style="width:150px" />  
-            </p:outputPanel>  
-        </f:facet>  
-  
-   
-	
+		<f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields:" />
+				<p:inputText id="globalFilter" onkeyup="carsTable.filter()"
+					style="width:150px" />
+			</p:outputPanel>
+		</f:facet>
+
+
+
 
 		<p:panel toggleable="true" closable="true" toggleSpeed="500">
 			<p:dataTable value="#{jobticketBean.jobs}" var="job">
@@ -43,9 +44,11 @@
 
 				<p:column>
 					<p:columnGroup>
-						<p:commandButton  icon="ui-icon-trash"
+
+						<p:commandButton id="loeschbutton" icon="ui-icon-trash"
 							actionListener="#{kundenBean.delete(kunde)}" update="@form" />
-						<p:commandButton icon="ui-icon-wrench"
+
+						<p:commandButton id="editbutton" icon="ui-icon-wrench"
 							action="#{jobticketBean.editJob(job)}" ajax="false" />
 					</p:columnGroup>
 				</p:column>

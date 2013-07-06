@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -13,14 +12,11 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-
-import org.apache.myfaces.view.facelets.tag.jstl.core.CatchHandler;
-
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Kosten;
-import jt.entities.Produkteigenschaften;
+
 
 @Named
 @RequestScoped
@@ -113,31 +109,42 @@ public class AufwandBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kosten k = em.find(Kosten.class, kosten.getId());
-		k.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInEuro());
+		if (istAufwandInEuro) {
+			k.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInEuro());
+			k.setArbeitsaufwandInStd(berechneAufwandInStd(kosten));
+		} else {
+			k.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInStd());
+			k.setArbeitsaufwandInEuro(berechneAufwandInEuro(kosten));
+		}
 		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
 
+	private BigDecimal berechneAufwandInStd(Kosten kosten) {
+		BigDecimal erg = kosten.getArbeitsaufwandInEuro().divide(
+				kosten.getAngestellte().getStundenlohn());
+		return erg;
+	}
+
+	private BigDecimal berechneAufwandInEuro(Kosten kosten) {
+		BigDecimal erg = kosten.getArbeitsaufwandInStd().multiply(
+				kosten.getAngestellte().getStundenlohn());
+		return erg;
+	}
+
 	public String rechneUm(Kosten kosten) {
-		System.out.println("rechneUm");
-
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		BigDecimal stundenlohn = kosten.getAngestellte().getStundenlohn();
+		BigDecimal erg;
 		if (!istAufwandInEuro) {
-
-			kosten.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInStd()
-					.multiply(stundenlohn));
+			erg = berechneAufwandInEuro(kosten);
+			kosten.setArbeitsaufwandInEuro(erg);
 
 		} else {
-			kosten.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInEuro()
-					.divide(stundenlohn));
+			erg = berechneAufwandInStd(kosten);
+			kosten.setArbeitsaufwandInStd(erg);
 
 		}
-		em.getTransaction().commit();
-
 		return null;
 	}
 

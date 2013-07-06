@@ -20,7 +20,6 @@
 		<h:panelGrid columns="3">
 
 			<p:panel id="panel1" header="JOBTICKET" toggleable="false">
-
 				<p:messages id="messages" />
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
@@ -31,7 +30,6 @@
 						<p:selectOneMenu id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" effect="fold"
 							required="true">
-							
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 
