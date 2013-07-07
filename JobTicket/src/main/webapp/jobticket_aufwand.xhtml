@@ -63,33 +63,27 @@
 										action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 									<p:commandButton
 										actionListener="#{aufwandBean.updateKosten(kosten)}"
-										update="growl" icon="ui-icon-disk"></p:commandButton>
+										update="@form" icon="ui-icon-disk"></p:commandButton>
 									<p></p>
 									<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
 									<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
 									<h:panelGrid columns="3">
-										<p:selectBooleanButton value="#{aufwandBean.aufwandInEuro}"
-											offLabel="H" onLabel="€">
-											<p:ajax listener="#{aufwandBean.rechneUm(kosten)}"
-												process="aufwand_in_std aufwand_in_euro"
-												update="aufwand_in_std aufwand_in_euro"></p:ajax>
-										</p:selectBooleanButton>
-										<p:panel id="aufwand_in_euro"
-											visible="#{!aufwandBean.aufwandInEuro}">
-											<p:inputText value="#{kosten.arbeitsaufwandInEuro}"></p:inputText>
-											<p:outputLabel value="€"></p:outputLabel>
-										</p:panel>
-										<p:panel id="aufwand_in_std"
-											visible="#{aufwandBean.aufwandInEuro}">
-											<p:inputText value="#{kosten.arbeitsaufwandInStd}"></p:inputText>
-											<p:outputLabel value="Stunden"></p:outputLabel>
-										</p:panel>
+
+										<p:commandButton update="@this aufwand l" process="aufwand"
+											value=" #{kosten.arbeitsaufwandIstInEuro==1 ? 'H':'€' }"
+											actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+										<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
+											<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+										</p:inputText>
+										<p:outputLabel id="l"
+											value="#{kosten.arbeitsaufwandIstInEuro==1 ? 'in €':'in Stunden' }"></p:outputLabel>
 
 									</h:panelGrid>
 								</p:panel>
 
 							</ui:repeat>
-							<p:outputLabel value="Gesamtaufwand: #{aufwandBean.gesamtKosten}"></p:outputLabel>
+							<p:outputLabel id="gesamtkosten"
+								value="Gesamtaufwand: #{aufwandBean.gesamtKosten}"></p:outputLabel>
 						</p:fieldset>
 
 

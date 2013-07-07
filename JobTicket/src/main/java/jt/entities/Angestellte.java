@@ -11,6 +11,8 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(schema="JOBTICKET")
+@NamedQuery(name="Angestellte.findAll", query="SELECT a FROM Angestellte a")
 public class Angestellte implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -88,12 +90,40 @@ public class Angestellte implements Serializable {
 		this.jobbearbeiters = jobbearbeiters;
 	}
 
+	public Jobbearbeiter addJobbearbeiter(Jobbearbeiter jobbearbeiter) {
+		getJobbearbeiters().add(jobbearbeiter);
+		jobbearbeiter.setAngestellte(this);
+
+		return jobbearbeiter;
+	}
+
+	public Jobbearbeiter removeJobbearbeiter(Jobbearbeiter jobbearbeiter) {
+		getJobbearbeiters().remove(jobbearbeiter);
+		jobbearbeiter.setAngestellte(null);
+
+		return jobbearbeiter;
+	}
+
 	public List<Kosten> getKostens() {
 		return this.kostens;
 	}
 
 	public void setKostens(List<Kosten> kostens) {
 		this.kostens = kostens;
+	}
+
+	public Kosten addKosten(Kosten kosten) {
+		getKostens().add(kosten);
+		kosten.setAngestellte(this);
+
+		return kosten;
+	}
+
+	public Kosten removeKosten(Kosten kosten) {
+		getKostens().remove(kosten);
+		kosten.setAngestellte(null);
+
+		return kosten;
 	}
 
 }

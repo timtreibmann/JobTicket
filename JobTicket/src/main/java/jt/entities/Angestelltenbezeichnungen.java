@@ -1,7 +1,9 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,7 +12,8 @@ import java.util.List;
  * 
  */
 @Entity
-@Table (schema="JOBTICKET")
+@Table(schema="JOBTICKET")
+@NamedQuery(name="Angestelltenbezeichnungen.findAll", query="SELECT a FROM Angestelltenbezeichnungen a")
 public class Angestelltenbezeichnungen implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +52,20 @@ public class Angestelltenbezeichnungen implements Serializable {
 
 	public void setAngestelltes(List<Angestellte> angestelltes) {
 		this.angestelltes = angestelltes;
+	}
+
+	public Angestellte addAngestellte(Angestellte angestellte) {
+		getAngestelltes().add(angestellte);
+		angestellte.setAngestelltenbezeichnungen(this);
+
+		return angestellte;
+	}
+
+	public Angestellte removeAngestellte(Angestellte angestellte) {
+		getAngestelltes().remove(angestellte);
+		angestellte.setAngestelltenbezeichnungen(null);
+
+		return angestellte;
 	}
 
 }

@@ -1,6 +1,7 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.math.BigDecimal;
@@ -11,7 +12,8 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
-@Table (schema="JOBTICKET")
+@Table(schema="JOBTICKET")
+@NamedQuery(name="Kosten.findAll", query="SELECT k FROM Kosten k")
 public class Kosten implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -19,11 +21,10 @@ public class Kosten implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name="ARBEITSAUFWAND_IN_EURO")
-	private BigDecimal arbeitsaufwandInEuro;
+	private BigDecimal arbeitsaufwand;
 
-	@Column(name="ARBEITSAUFWAND_IN_STD")
-	private BigDecimal arbeitsaufwandInStd;
+	@Column(name="ARBEITSAUFWAND_IST_IN_EURO")
+	private int arbeitsaufwandIstInEuro;
 
 	private String kommentar;
 
@@ -47,20 +48,20 @@ public class Kosten implements Serializable {
 		this.id = id;
 	}
 
-	public BigDecimal getArbeitsaufwandInEuro() {
-		return this.arbeitsaufwandInEuro;
+	public BigDecimal getArbeitsaufwand() {
+		return this.arbeitsaufwand;
 	}
 
-	public void setArbeitsaufwandInEuro(BigDecimal arbeitsaufwandInEuro) {
-		this.arbeitsaufwandInEuro = arbeitsaufwandInEuro;
+	public void setArbeitsaufwand(BigDecimal arbeitsaufwand) {
+		this.arbeitsaufwand = arbeitsaufwand;
 	}
 
-	public BigDecimal getArbeitsaufwandInStd() {
-		return this.arbeitsaufwandInStd;
+	public int getArbeitsaufwandIstInEuro() {
+		return this.arbeitsaufwandIstInEuro;
 	}
 
-	public void setArbeitsaufwandInStd(BigDecimal arbeitsaufwandInStd) {
-		this.arbeitsaufwandInStd = arbeitsaufwandInStd;
+	public void setArbeitsaufwandIstInEuro(int arbeitsaufwandIstInEuro) {
+		this.arbeitsaufwandIstInEuro = arbeitsaufwandIstInEuro;
 	}
 
 	public String getKommentar() {

@@ -17,7 +17,6 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Kosten;
 
-
 @Named
 @RequestScoped
 public class AufwandBean {
@@ -88,9 +87,8 @@ public class AufwandBean {
 		if (!istAngestellterVorhanden(angestellte)) {
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
-			System.out.println("NOCH NICHT VORHANDEN");
-			kosten.setArbeitsaufwandInEuro(new BigDecimal(0));
-			kosten.setArbeitsaufwandInStd(new BigDecimal(0));
+			kosten.setArbeitsaufwand(new BigDecimal(0));
+			kosten.setArbeitsaufwandIstInEuro(1);
 			kosten.setAngestellte(angestellte);
 			kosten.setJob(job);
 			em.merge(job);
@@ -109,13 +107,9 @@ public class AufwandBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kosten k = em.find(Kosten.class, kosten.getId());
-		if (istAufwandInEuro) {
-			k.setArbeitsaufwandInEuro(kosten.getArbeitsaufwandInEuro());
-			k.setArbeitsaufwandInStd(berechneAufwandInStd(kosten));
-		} else {
-			k.setArbeitsaufwandInStd(kosten.getArbeitsaufwandInStd());
-			k.setArbeitsaufwandInEuro(berechneAufwandInEuro(kosten));
-		}
+		k.setArbeitsaufwand(kosten.getArbeitsaufwand());
+		k.setArbeitsaufwandIstInEuro(kosten.getArbeitsaufwandIstInEuro());
+
 		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
@@ -123,28 +117,32 @@ public class AufwandBean {
 	}
 
 	private BigDecimal berechneAufwandInStd(Kosten kosten) {
-		BigDecimal erg = kosten.getArbeitsaufwandInEuro().divide(
-				kosten.getAngestellte().getStundenlohn());
+		BigDecimal erg = kosten.getArbeitsaufwand().divide(
+				kosten.getAngestellte().getStundenlohn(), 2);
 		return erg;
 	}
 
 	private BigDecimal berechneAufwandInEuro(Kosten kosten) {
-		BigDecimal erg = kosten.getArbeitsaufwandInStd().multiply(
+		BigDecimal erg = kosten.getArbeitsaufwand().multiply(
 				kosten.getAngestellte().getStundenlohn());
 		return erg;
 	}
 
 	public String rechneUm(Kosten kosten) {
+		System.out.println("RECHNE");
 		BigDecimal erg;
-		if (!istAufwandInEuro) {
+		System.out.println(kosten.getArbeitsaufwandIstInEuro());
+		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
-			kosten.setArbeitsaufwandInEuro(erg);
+			kosten.setArbeitsaufwandIstInEuro(1);
 
 		} else {
 			erg = berechneAufwandInStd(kosten);
-			kosten.setArbeitsaufwandInStd(erg);
-
+			kosten.setArbeitsaufwandIstInEuro(0);
 		}
+		kosten.setArbeitsaufwand(erg);
+		System.out.println(erg);
+		updateKosten(kosten);
 		return null;
 	}
 
@@ -168,8 +166,14 @@ public class AufwandBean {
 		try {
 			// Gesamtkosten berechnen
 			gesamtKosten = 0;
+			double betrag = 0;
 			for (Kosten k : kostenListe) {
-				gesamtKosten += k.getArbeitsaufwandInEuro().doubleValue();
+				if (k.getArbeitsaufwandIstInEuro()==0) {
+					betrag = berechneAufwandInEuro(k).doubleValue();
+				}else {
+					betrag = k.getArbeitsaufwand().doubleValue();
+				}
+				gesamtKosten += betrag;
 			}
 		} catch (NullPointerException e) {
 

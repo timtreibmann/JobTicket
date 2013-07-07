@@ -1,6 +1,7 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.Date;
@@ -11,7 +12,8 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table (schema="JOBTICKET")
+@Table(schema="JOBTICKET")
+@NamedQuery(name="Produkteigenschaften.findAll", query="SELECT p FROM Produkteigenschaften p")
 public class Produkteigenschaften implements Serializable {
 	private static final long serialVersionUID = 1L;
 

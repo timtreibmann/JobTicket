@@ -1,6 +1,7 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -9,7 +10,8 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table (schema="JOBTICKET")
+@Table(schema="JOBTICKET")
+@NamedQuery(name="Jobbearbeiter.findAll", query="SELECT j FROM Jobbearbeiter j")
 public class Jobbearbeiter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
