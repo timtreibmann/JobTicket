@@ -29,7 +29,7 @@
 						<p:outputLabel for="jobnummer" value="Jobnummer" />
 						<p:outputLabel value="#{jobticketBean.job.id}" id="jobnummer"/>
 						<p:outputLabel for="kundenname" value="Kundenname: " />
-						<p:selectOneMenu id="kundenname"
+						<p:selectOneMenu style="width:100%" id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" effect="fold"
 							required="true">
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
