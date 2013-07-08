@@ -175,6 +175,7 @@ public class AufwandBean {
 				}
 				gesamtKosten += betrag;
 			}
+			
 		} catch (NullPointerException e) {
 
 		}

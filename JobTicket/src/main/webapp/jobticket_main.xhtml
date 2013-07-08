@@ -20,6 +20,10 @@
 		<h:panelGrid columns="3">
 
 			<p:panel id="panel1" header="JOBTICKET" toggleable="false">
+				<p:button outcome="start.xhtml" value="Zurück" />
+				<p:commandButton action="#{jobticketBean.saveJobticket}"
+					ajax="false" value="Weiter">
+				</p:commandButton>
 				<p:messages id="messages" />
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
@@ -84,11 +88,6 @@
 
 					</h:panelGrid>
 				</h:panelGrid>
-
-				<p:button outcome="start.xhtml" value="Zurück" />
-				<p:commandButton action="#{jobticketBean.saveJobticket}"
-					ajax="false" value="Weiter">
-				</p:commandButton>
 			</p:panel>
 
 		</h:panelGrid>

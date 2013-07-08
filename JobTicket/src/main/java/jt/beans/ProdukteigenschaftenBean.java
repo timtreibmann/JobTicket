@@ -62,6 +62,7 @@ public class ProdukteigenschaftenBean {
 	public String saveProdukteigenschaften() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
+		produkteigenschaften.setErledigt(0);
 		produkteigenschaften.setJob(job);
 		em.merge(job);
 		em.persist(produkteigenschaften);
@@ -90,6 +91,7 @@ public class ProdukteigenschaftenBean {
 		p.setProof(produkteigenschaften.getProof());
 		p.setSeitenzahl(produkteigenschaften.getSeitenzahl());
 		p.setSonderfarbe(produkteigenschaften.getSonderfarbe());
+		p.setErledigt(produkteigenschaften.getErledigt());
 		em.getTransaction().commit();
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -127,4 +129,15 @@ public class ProdukteigenschaftenBean {
 		em.getTransaction().commit();
 		return null;
 	}
+
+	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {
+		if (produkteigenschaften.getErledigt() == 0) {
+			produkteigenschaften.setErledigt(1);
+		} else {
+			produkteigenschaften.setErledigt(0);
+		}
+		updateProdukteigenschaften(produkteigenschaften);
+		return null;
+	}
+
 }

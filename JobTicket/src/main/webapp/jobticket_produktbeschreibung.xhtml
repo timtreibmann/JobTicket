@@ -27,9 +27,6 @@
 				ajax="false" value="Neues Produkt anlegen">
 			</p:commandButton>
 			<p />
-
-
-
 			<ui:repeat
 				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
 				var="produkteigenschaften" id="table">
@@ -43,11 +40,20 @@
 					<p:growl id="growl" showDetail="true" sticky="true" />
 					<p:commandButton icon="ui-icon-disk" update="growl"
 						actionListener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:commandButton>
+
+					
+
+
 					<p:messages id="messages" />
 					<h:panelGrid columns="4">
 						<h:panelGrid columns="2">
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<h:outputLabel></h:outputLabel>
+							<p:outputLabel value="Job erledigt: "></p:outputLabel>
+							<p:commandButton update="@this"
+								value=" #{produkteigenschaften.erledigt ==1 ? 'ja':'nein' }"
+								actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
+							
 							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
 							<p:calendar value="#{produkteigenschaften.eingangsdatum}"
 								id="eingangsdatum" required="true" />
