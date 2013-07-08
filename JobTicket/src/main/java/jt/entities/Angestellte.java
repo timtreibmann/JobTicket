@@ -2,7 +2,6 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -22,7 +21,7 @@ public class Angestellte implements Serializable {
 
 	private String nachname;
 
-	private BigDecimal stundenlohn;
+	private double stundenlohn;
 
 	private String vorname;
 
@@ -58,11 +57,11 @@ public class Angestellte implements Serializable {
 		this.nachname = nachname;
 	}
 
-	public BigDecimal getStundenlohn() {
+	public double getStundenlohn() {
 		return this.stundenlohn;
 	}
 
-	public void setStundenlohn(BigDecimal stundenlohn) {
+	public void setStundenlohn(double stundenlohn) {
 		this.stundenlohn = stundenlohn;
 	}
 

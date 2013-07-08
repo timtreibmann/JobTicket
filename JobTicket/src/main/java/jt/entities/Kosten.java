@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import java.math.BigDecimal;
 
 
 /**
@@ -21,7 +20,7 @@ public class Kosten implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private BigDecimal arbeitsaufwand;
+	private double arbeitsaufwand;
 
 	@Column(name="ARBEITSAUFWAND_IST_IN_EURO")
 	private int arbeitsaufwandIstInEuro;
@@ -48,11 +47,11 @@ public class Kosten implements Serializable {
 		this.id = id;
 	}
 
-	public BigDecimal getArbeitsaufwand() {
+	public double getArbeitsaufwand() {
 		return this.arbeitsaufwand;
 	}
 
-	public void setArbeitsaufwand(BigDecimal arbeitsaufwand) {
+	public void setArbeitsaufwand(double arbeitsaufwand) {
 		this.arbeitsaufwand = arbeitsaufwand;
 	}
 

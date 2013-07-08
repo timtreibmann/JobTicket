@@ -1,6 +1,5 @@
 package jt.beans;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +86,7 @@ public class AufwandBean {
 		if (!istAngestellterVorhanden(angestellte)) {
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
-			kosten.setArbeitsaufwand(new BigDecimal(0));
+			kosten.setArbeitsaufwand(0);
 			kosten.setArbeitsaufwandIstInEuro(1);
 			kosten.setAngestellte(angestellte);
 			kosten.setJob(job);
@@ -116,21 +115,22 @@ public class AufwandBean {
 		return null;
 	}
 
-	private BigDecimal berechneAufwandInStd(Kosten kosten) {
-		BigDecimal erg = kosten.getArbeitsaufwand().divide(
-				kosten.getAngestellte().getStundenlohn(), 2);
-		return erg;
+	private double berechneAufwandInStd(Kosten kosten) {
+
+		return kosten.getArbeitsaufwand()
+				/ kosten.getAngestellte().getStundenlohn();
+
 	}
 
-	private BigDecimal berechneAufwandInEuro(Kosten kosten) {
-		BigDecimal erg = kosten.getArbeitsaufwand().multiply(
-				kosten.getAngestellte().getStundenlohn());
-		return erg;
+	private double berechneAufwandInEuro(Kosten kosten) {
+		return kosten.getArbeitsaufwand()
+				* kosten.getAngestellte().getStundenlohn();
+
 	}
 
 	public String rechneUm(Kosten kosten) {
 		System.out.println("RECHNE");
-		BigDecimal erg;
+		double erg;
 		System.out.println(kosten.getArbeitsaufwandIstInEuro());
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
@@ -168,10 +168,10 @@ public class AufwandBean {
 			gesamtKosten = 0;
 			double betrag = 0;
 			for (Kosten k : kostenListe) {
-				if (k.getArbeitsaufwandIstInEuro()==0) {
-					betrag = berechneAufwandInEuro(k).doubleValue();
-				}else {
-					betrag = k.getArbeitsaufwand().doubleValue();
+				if (k.getArbeitsaufwandIstInEuro() == 0) {
+					betrag = berechneAufwandInEuro(k);
+				} else {
+					betrag = k.getArbeitsaufwand();
 				}
 				gesamtKosten += betrag;
 			}

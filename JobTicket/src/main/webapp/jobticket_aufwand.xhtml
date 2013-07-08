@@ -73,7 +73,7 @@
 											value=" #{kosten.arbeitsaufwandIstInEuro==1 ? 'H':'€' }"
 											actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 										<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-											<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+						<f:convertNumber></f:convertNumber>
 										</p:inputText>
 										<p:outputLabel id="l"
 											value="#{kosten.arbeitsaufwandIstInEuro==1 ? 'in €':'in Stunden' }"></p:outputLabel>
