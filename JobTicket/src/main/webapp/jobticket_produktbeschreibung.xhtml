@@ -41,7 +41,7 @@
 					<p:commandButton icon="ui-icon-disk" update="growl"
 						actionListener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:commandButton>
 
-					
+
 
 
 					<p:messages id="messages" />
@@ -49,11 +49,11 @@
 						<h:panelGrid columns="2">
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<h:outputLabel></h:outputLabel>
-							<p:outputLabel value="Job erledigt: "></p:outputLabel>
+							<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
 							<p:commandButton update="@this"
-								value=" #{produkteigenschaften.erledigt ==1 ? 'ja':'nein' }"
+								icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
 								actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
-							
+
 							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
 							<p:calendar value="#{produkteigenschaften.eingangsdatum}"
 								id="eingangsdatum" required="true" />
