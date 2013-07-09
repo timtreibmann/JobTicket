@@ -17,48 +17,95 @@ import jt.entities.Job;
 import jt.entities.Kunde;
 import jt.entities.Produkteigenschaften;
 
+// TODO: Auto-generated Javadoc
+/**
+ * @author jan & tim
+ * The Class ProdukteigenschaftenBean.
+ */
 @Named
 @RequestScoped
 public class ProdukteigenschaftenBean {
+	
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
 
+	/** The job. */
 	@Inject
 	@AktuellerJob
 	private Job job;
 
+	/** The produkteigenschaften. */
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
 
+	/**
+	 * Neues produkt.
+	 *
+	 * @return the string
+	 */
 	public String neuesProdukt() {
 		this.produkteigenschaften = new Produkteigenschaften();
 		return "produktbeschreibung_edit.xhtml";
 	}
 
+	/**
+	 * Gets the produkteigenschaften.
+	 *
+	 * @return the produkteigenschaften
+	 */
 	public Produkteigenschaften getProdukteigenschaften() {
 		return produkteigenschaften;
 	}
 
+	/**
+	 * Sets the produkteigenschaften.
+	 *
+	 * @param produkteigenschaften the new produkteigenschaften
+	 */
 	public void setProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 		this.produkteigenschaften = produkteigenschaften;
 	}
 
+	/**
+	 * Gets the job.
+	 *
+	 * @return the job
+	 */
 	public Job getJob() {
 		return job;
 	}
 
+	/**
+	 * Sets the job.
+	 *
+	 * @param job the new job
+	 */
 	public void setJob(Job job) {
 		this.job = job;
 	}
 
+	/**
+	 * Edits the produkteigenschaften.
+	 *
+	 * @param produkteigenschaften the produkteigenschaften
+	 * @return the string
+	 */
 	public String editProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 		this.produkteigenschaften = produkteigenschaften;
 		return "produktbeschreibung_edit.xhtml";
 	}
 
+	/**
+	 * Save produkteigenschaften.
+	 *
+	 * @return the string
+	 */
 	public String saveProdukteigenschaften() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -70,6 +117,12 @@ public class ProdukteigenschaftenBean {
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
+	/**
+	 * Update produkteigenschaften.
+	 *
+	 * @param produkteigenschaften the produkteigenschaften
+	 * @return the string
+	 */
 	public String updateProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
@@ -102,6 +155,11 @@ public class ProdukteigenschaftenBean {
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
+	/**
+	 * Gets the produkteigenschaften from job.
+	 *
+	 * @return the produkteigenschaften from job
+	 */
 	public List<Produkteigenschaften> getProdukteigenschaftenFromJob() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -121,6 +179,12 @@ public class ProdukteigenschaftenBean {
 		return produktListe;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param produkteigenschaften the produkteigenschaften
+	 * @return the string
+	 */
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -130,6 +194,12 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
+	/**
+	 * Toggle erledigt.
+	 *
+	 * @param produkteigenschaften the produkteigenschaften
+	 * @return the string
+	 */
 	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {
 		if (produkteigenschaften.getErledigt() == 0) {
 			produkteigenschaften.setErledigt(1);

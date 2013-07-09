@@ -13,18 +13,31 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;  
   
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LazyJobDataModel.
+ * @author jan & tim
+ */
 public class LazyJobDataModel extends LazyDataModel<Job> {  
       
-    /**s
-	 * 
-	 */
+    /** s. */
 	private static final long serialVersionUID = 1L;
+	
+	/** The datasource. */
 	private List<Job> datasource;  
       
+    /**
+     * Instantiates a new lazy job data model.
+     *
+     * @param datasource the datasource
+     */
     public LazyJobDataModel(List<Job> datasource) {  
         this.datasource = datasource;  
     }  
       
+    /* (non-Javadoc)
+     * @see org.primefaces.model.LazyDataModel#getRowData(java.lang.String)
+     */
     @Override  
     public Job getRowData(String rowKey) {  
         for(Job kunde : datasource) {  
@@ -35,11 +48,17 @@ public class LazyJobDataModel extends LazyDataModel<Job> {
         return null;  
     }  
   
+    /* (non-Javadoc)
+     * @see org.primefaces.model.LazyDataModel#getRowKey(java.lang.Object)
+     */
     @Override  
     public Object getRowKey(Job job) {  
         return job.getName();  
     }  
   
+    /* (non-Javadoc)
+     * @see org.primefaces.model.LazyDataModel#load(int, int, java.lang.String, org.primefaces.model.SortOrder, java.util.Map)
+     */
     @Override  
     public List<Job> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {  
         List<Job> data = new ArrayList<Job>();  

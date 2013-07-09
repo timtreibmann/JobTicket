@@ -10,9 +10,10 @@ import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+// TODO: Auto-generated Javadoc
 /**
  * Eine EntityManagerFactoryBean stellt der Applikation eine
- * EntityManagerFactory zur VerfÃ¼gung. Da die EntityManagerFactory nicht
+ * EntityManagerFactory zur Verfügung. Da die EntityManagerFactory nicht
  * Serializable ist, kann sie nur in <b>transient</b> Eigenschaften injiziert
  * werden, falls die Bean, in die injiziert wird {@code @SessionScoped} ist.
  * 
@@ -22,8 +23,10 @@ import javax.persistence.Persistence;
 @ApplicationScoped
 public class EntityManagerFactoryBean implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
  
+	/** The entity manager factory. */
 	@Produces
 	private EntityManagerFactory entityManagerFactory;
 

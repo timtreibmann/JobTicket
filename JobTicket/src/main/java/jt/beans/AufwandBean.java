@@ -16,57 +16,113 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Kosten;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AufwandBean.
+ * @author jan & tim
+ */
 @Named
 @RequestScoped
 public class AufwandBean {
+	
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
 
+	/** The kosten. */
 	@Inject
 	private Kosten kosten;
 
+	/** The angestellte bean. */
 	@Inject
 	private AngestellteBean angestellteBean;
 
+	/** The job. */
 	@Inject
 	@AktuellerJob
 	private Job job;
 
+	/** The gesamt kosten. */
 	private double gesamtKosten;
 
+	/** The ist aufwand in euro. */
 	private boolean istAufwandInEuro;
 
+	/**
+	 * Checks if is aufwand in euro.
+	 *
+	 * @return true, if is aufwand in euro
+	 */
 	public boolean isAufwandInEuro() {
 		return istAufwandInEuro;
 	}
 
+	/**
+	 * Sets the aufwand in euro.
+	 *
+	 * @param aufwandInEuro the new aufwand in euro
+	 */
 	public void setAufwandInEuro(boolean aufwandInEuro) {
 		this.istAufwandInEuro = aufwandInEuro;
 	}
 
+	/**
+	 * Gets the kosten.
+	 *
+	 * @return the kosten
+	 */
 	public Kosten getKosten() {
 		return kosten;
 	}
 
+	/**
+	 * Sets the kosten.
+	 *
+	 * @param kosten the new kosten
+	 */
 	public void setKosten(Kosten kosten) {
 		this.kosten = kosten;
 	}
 
+	/**
+	 * Gets the gesamt kosten.
+	 *
+	 * @return the gesamt kosten
+	 */
 	public double getGesamtKosten() {
 		return gesamtKosten;
 	}
 
+	/** The selected angestellte id. */
 	private int selectedAngestellteId;
 
+	/**
+	 * Gets the selected angestellte id.
+	 *
+	 * @return the selected angestellte id
+	 */
 	public int getSelectedAngestellteId() {
 		return selectedAngestellteId;
 	}
 
+	/**
+	 * Sets the selected angestellte id.
+	 *
+	 * @param selectedAngestellteId the new selected angestellte id
+	 */
 	public void setSelectedAngestellteId(int selectedAngestellteId) {
 		this.selectedAngestellteId = selectedAngestellteId;
 	}
 
+	/**
+	 * Checks if is t angestellter vorhanden.
+	 *
+	 * @param angestellte the angestellte
+	 * @return true, if is t angestellter vorhanden
+	 */
 	private boolean istAngestellterVorhanden(Angestellte angestellte) {
 
 		List<Kosten> kostenListe = getKostenFromJob();
@@ -80,6 +136,11 @@ public class AufwandBean {
 		return angestellterVorhanden;
 	}
 
+	/**
+	 * Save kosten.
+	 *
+	 * @return the string
+	 */
 	public String saveKosten() {
 		Angestellte angestellte = angestellteBean
 				.findAngestelltenByID(selectedAngestellteId);
@@ -101,6 +162,12 @@ public class AufwandBean {
 		return null;
 	}
 
+	/**
+	 * Update kosten.
+	 *
+	 * @param kosten the kosten
+	 * @return the string
+	 */
 	public String updateKosten(Kosten kosten) {
 
 		em = entityManagerFactory.createEntityManager();
@@ -115,6 +182,12 @@ public class AufwandBean {
 		return null;
 	}
 
+	/**
+	 * Berechne aufwand in std.
+	 *
+	 * @param kosten the kosten
+	 * @return the double
+	 */
 	private double berechneAufwandInStd(Kosten kosten) {
 
 		return kosten.getArbeitsaufwand()
@@ -122,12 +195,24 @@ public class AufwandBean {
 
 	}
 
+	/**
+	 * Berechne aufwand in euro.
+	 *
+	 * @param kosten the kosten
+	 * @return the double
+	 */
 	private double berechneAufwandInEuro(Kosten kosten) {
 		return kosten.getArbeitsaufwand()
 				* kosten.getAngestellte().getStundenlohn();
 
 	}
 
+	/**
+	 * Rechne um.
+	 *
+	 * @param kosten the kosten
+	 * @return the string
+	 */
 	public String rechneUm(Kosten kosten) {
 		System.out.println("RECHNE");
 		double erg;
@@ -146,6 +231,11 @@ public class AufwandBean {
 		return null;
 	}
 
+	/**
+	 * Gets the kosten from job.
+	 *
+	 * @return the kosten from job
+	 */
 	public List<Kosten> getKostenFromJob() {
 		em = entityManagerFactory.createEntityManager();
 
@@ -182,6 +272,12 @@ public class AufwandBean {
 		return kostenListe;
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param kosten the kosten
+	 * @return the string
+	 */
 	public String delete(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

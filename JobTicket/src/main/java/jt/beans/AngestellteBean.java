@@ -17,32 +17,54 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class AngestellteBean.
+ *
  * @author jan & tim eine Bean die die angestellten in der datenbank verwaltet
- * 
  */
 @Named
 @RequestScoped
 public class AngestellteBean {
+	
+	/** The angestellte. */
 	@Inject
 	private Angestellte angestellte;
 
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
 
+	/** The job. */
 	@Inject
 	private Job job;
 
+	/**
+	 * Gets the angestellte.
+	 *
+	 * @return the angestellte
+	 */
 	public Angestellte getAngestellte() {
 		return angestellte;
 	}
 
+	/**
+	 * Sets the angestellte.
+	 *
+	 * @param angestellte the new angestellte
+	 */
 	public void setAngestellte(Angestellte angestellte) {
 		this.angestellte = angestellte;
 	}
 
+	/**
+	 * Gets the angestelltes.
+	 *
+	 * @return the angestelltes
+	 */
 	public List<Angestellte> getAngestelltes() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -56,10 +78,22 @@ public class AngestellteBean {
 		return angestellteListe;
 	}
 
+	/**
+	 * Find angestellten by id.
+	 *
+	 * @param id the id
+	 * @return the angestellte
+	 */
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param angestellte the angestellte
+	 * @return the string
+	 */
 	public String delete(Angestellte angestellte) {
 		System.out.println("DELETE");
 		em = entityManagerFactory.createEntityManager();
@@ -70,6 +104,11 @@ public class AngestellteBean {
 		return null;
 	}
 
+	/**
+	 * Save angestellte.
+	 *
+	 * @return the string
+	 */
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -81,11 +120,22 @@ public class AngestellteBean {
 		return "angestellte_add.xhtml";
 	}
 
+	/**
+	 * Edits the angestellten.
+	 *
+	 * @param angestellte the angestellte
+	 * @return the string
+	 */
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;
 		return "angestellte_edit.xhtml";
 	}
 
+	/**
+	 * Update angestellten.
+	 *
+	 * @return the string
+	 */
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

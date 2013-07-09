@@ -16,69 +16,131 @@ import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 import jt.entities.Kunde;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JobticketBean.
+ * @author jan & tim
+ */
 @ApplicationScoped
 @Named
 public class JobticketBean {
 
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
 
+	/** The job. */
 	@Produces
 	@AktuellerJob
 	private Job job;
 
+	/** The selected kunde id. */
 	private int selectedKundeId;
 
+	/** The kuerzel. */
 	private String kuerzel;
 
+	/** The kunden bean. */
 	@Inject
 	private KundenBean kundenBean;
 
+	/** The neuer job. */
 	private boolean neuerJob = false;
 
+	/**
+	 * Gets the selected kunde id.
+	 *
+	 * @return the selected kunde id
+	 */
 	public int getSelectedKundeId() {
 		return selectedKundeId;
 	}
 
+	/**
+	 * Sets the selected kunde id.
+	 *
+	 * @param selectedKundeId the new selected kunde id
+	 */
 	public void setSelectedKundeId(int selectedKundeId) {
 		this.selectedKundeId = selectedKundeId;
 	}
 
+	/**
+	 * Update kuerzel.
+	 */
 	public void updateKuerzel() {
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
 		kuerzel = k.getKundenkuerzel();
 
 	}
 
+	/**
+	 * Gets the kuerzel.
+	 *
+	 * @return the kuerzel
+	 */
 	public String getKuerzel() {
 		return kuerzel;
 	}
 
+	/**
+	 * Sets the kuerzel.
+	 *
+	 * @param kuerzel the new kuerzel
+	 */
 	public void setKuerzel(String kuerzel) {
 		this.kuerzel = kuerzel;
 	}
 
+	/**
+	 * Gets the job.
+	 *
+	 * @return the job
+	 */
 	public Job getJob() {
 		return job;
 	}
 
+	/**
+	 * Sets the job.
+	 *
+	 * @param job the new job
+	 */
 	public void setJob(Job job) {
 		this.job = job;
 	}
 
+	/**
+	 * Edits the job.
+	 *
+	 * @param job the job
+	 * @return the string
+	 */
 	public String editJob(Job job) {
 		this.job = job;
 		neuerJob = false;
 		return "jobticket_main.xhtml";
 	}
 
+	/**
+	 * Neues jobticket.
+	 *
+	 * @return the string
+	 */
 	public String neuesJobticket() {
 		this.job = new Job();
 		neuerJob = true;
 		return "jobticket_main.xhtml";
 	}
 
+	/**
+	 * Save jobticket.
+	 *
+	 * @return the string
+	 */
 	public String saveJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -92,6 +154,11 @@ public class JobticketBean {
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
+	/**
+	 * Find kunde by kuerzel.
+	 *
+	 * @return the string
+	 */
 	public String findKundeByKuerzel() {
 		System.out.println("testi");
 	
@@ -100,10 +167,21 @@ public class JobticketBean {
 		return null;
 	}
 
+	/**
+	 * Find job by id.
+	 *
+	 * @param id the id
+	 * @return the job
+	 */
 	public Job findJobByID(int id) {
 		return em.find(Job.class, id);
 	}
 
+	/**
+	 * Gets the jobs.
+	 *
+	 * @return the jobs
+	 */
 	public List<Job> getJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -118,6 +196,12 @@ public class JobticketBean {
 
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param job the job
+	 * @return the string
+	 */
 	public String delete(Job job) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

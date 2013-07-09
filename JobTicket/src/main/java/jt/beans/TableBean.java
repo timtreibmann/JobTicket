@@ -13,23 +13,37 @@ import javax.persistence.Query;
 import org.primefaces.model.LazyDataModel;
 
 import jt.entities.Job;
+// TODO: Auto-generated Javadoc
+
 /**
- * 
- * @author timi
+ * The Class TableBean.
  *
+ * @author jan & tim
  */
 @Named
 @RequestScoped
 public class TableBean {
 
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
+	
+	/** The jobs. */
 	private List<Job> jobs;
+	
+	/** The lazy model. */
 	private LazyDataModel<Job> lazyModel;
+	
+	/** The job. */
 	@Inject
 	private Job job;
 
+	/**
+	 * Instantiates a new table bean.
+	 */
 	public TableBean() {
 
 		jobs = getJobs();
@@ -38,14 +52,29 @@ public class TableBean {
 
 	}
 
+	/**
+	 * Gets the lazy model.
+	 *
+	 * @return the lazy model
+	 */
 	public LazyDataModel<Job> getLazyModel() {
 		return lazyModel;
 	}
 
+	/**
+	 * Sets the lazy model.
+	 *
+	 * @param lazyModel the new lazy model
+	 */
 	public void setLazyModel(LazyDataModel<Job> lazyModel) {
 		this.lazyModel = lazyModel;
 	}
 
+	/**
+	 * Gets the jobs.
+	 *
+	 * @return the jobs
+	 */
 	public List<Job> getJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

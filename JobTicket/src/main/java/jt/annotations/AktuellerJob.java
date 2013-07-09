@@ -9,6 +9,10 @@ import java.lang.annotation.Target;
 
 import javax.inject.Qualifier;
 
+/**
+ * The Interface AktuellerJob.
+ * @author jan & tim
+ */
 @Qualifier
 
 @Retention(RetentionPolicy.RUNTIME)

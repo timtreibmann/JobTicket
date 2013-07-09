@@ -14,16 +14,31 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class KundenBean.
+ * @author jan & tim
+ */
 @Named
 @RequestScoped
 public class KundenBean {
+	
+	/** The kunde. */
 	@Inject
 	private Kunde kunde;
 
+	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
+	
+	/** The em. */
 	private EntityManager em;
 
+	/**
+	 * Gets the kunden.
+	 *
+	 * @return the kunden
+	 */
 	public List<Kunde> getKunden() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -37,6 +52,12 @@ public class KundenBean {
 		return kundenListe;
 	}
 
+	/**
+	 * Find kunden by kuerzel.
+	 *
+	 * @param kuerzel the kuerzel
+	 * @return the kunde
+	 */
 	public Kunde findKundenByKuerzel(String kuerzel) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -56,11 +77,19 @@ public class KundenBean {
 		return kundenListe.get(0);
 	}
 
+	/**
+	 * Find kunden by id.
+	 *
+	 * @param id the id
+	 * @return the kunde
+	 */
 	public Kunde findKundenByID(int id) {
 		return em.find(Kunde.class, id);
 	}
 
 	/**
+	 * Gets the kunde.
+	 *
 	 * @return the kunde
 	 */
 	public Kunde getKunde() {
@@ -68,18 +97,30 @@ public class KundenBean {
 	}
 
 	/**
-	 * @param kunde
-	 *            the kunde to set
+	 * Sets the kunde.
+	 *
+	 * @param kunde the kunde to set
 	 */
 	public void setKunde(Kunde kunde) {
 		this.kunde = kunde;
 	}
 
+	/**
+	 * Edits the kunde.
+	 *
+	 * @param kunde the kunde
+	 * @return the string
+	 */
 	public String editKunde(Kunde kunde) {
 		this.kunde = kunde;
 		return "kunden_edit.xhtml";
 	}
 
+	/**
+	 * Save kunde.
+	 *
+	 * @return the string
+	 */
 	public String saveKunde() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -92,6 +133,12 @@ public class KundenBean {
 		return "kunden_add.xhtml";
 	}
 
+	/**
+	 * Delete.
+	 *
+	 * @param kunde the kunde
+	 * @return the string
+	 */
 	public String delete(Kunde kunde) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -101,6 +148,11 @@ public class KundenBean {
 		return null;
 	}
 
+	/**
+	 * Update kunde.
+	 *
+	 * @return the string
+	 */
 	public String updateKunde() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
