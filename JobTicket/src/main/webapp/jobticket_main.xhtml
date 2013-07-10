@@ -21,15 +21,12 @@
 				<p:menuitem value="Jobticket"
 					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
 			</p:breadCrumb>
-			<p:button outcome="start.xhtml" value="Zurück" />
-			<p:commandButton action="#{jobticketBean.saveJobticket}" ajax="false"
-				value="Weiter">
-			</p:commandButton>
+
 			<p:messages id="messages" />
 			<p:panelGrid>
 				<f:facet name="header">
 					<p:row>
-						<p:column colspan="7">JobTicket</p:column>
+						<p:column colspan="5">JobTicket</p:column>
 					</p:row>
 				</f:facet>
 				<p:row>
@@ -120,6 +117,18 @@
 							id="budget_in_std"></p:inputText>
 					</p:column>
 				</p:row>
+				<f:facet name="footer">
+					<p:row>
+						<p:column colspan="4">
+							<p:button outcome="start.xhtml" value="Zurück" />
+						</p:column>
+						<p:column >
+							<p:commandButton action="#{jobticketBean.saveJobticket}"
+								ajax="false" value="Weiter">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+				</f:facet>
 			</p:panelGrid>
 		</p:panel>
 	</h:form>

@@ -5,3 +5,13 @@ table tbody .ui-widget-content {
     border: 0 solid #FFFFFF;
     color: #333333;
 }
+table tfoot .ui-widget-header {
+    
+    border: 0 solid #FFFFFF;
+    color: #333333;
+}
+table thead .ui-widget-header {
+    
+    border: 0 solid #FFFFFF;
+    color: #333333;
+}
