@@ -66,23 +66,28 @@
 						<p:commandButton ajax="false" style="float:right"
 							id="deletebutton" action="#{aufwandBean.delete(kosten)}"
 							icon="ui-icon-trash"></p:commandButton>
-
-						<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
-						<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
-
-						<p></p>
-
-						<p:outputLabel value="Aufwand: "></p:outputLabel>
-						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-							<f:convertNumber pattern="#0.00"></f:convertNumber>
-							<p:ajax event="change" process="@this" update="@form"
-								listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
-						</p:inputText>
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Name: "></p:outputLabel>
+							<h:outputLabel
+								value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
 
 
-						<p:commandButton update="@this aufwand" id="rechneum" process="aufwand"
-							value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
-							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+							<p:outputLabel value="Aufwand: "></p:outputLabel>
+
+							<p:panelGrid columns="2">
+								<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
+									<f:convertNumber pattern="#0.00"></f:convertNumber>
+									<p:ajax event="change" process="@this" update="@form"
+										listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+								</p:inputText>
+
+
+								<p:commandButton update="@this aufwand" id="rechneum"
+									process="aufwand"
+									value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
+									actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+							</p:panelGrid>
+						</p:panelGrid>
 						<p></p>
 					</p:panel>
 				</ui:repeat>
