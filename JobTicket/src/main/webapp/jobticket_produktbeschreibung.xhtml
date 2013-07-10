@@ -5,6 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:head></h:head>
@@ -31,10 +32,12 @@
 				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
 				var="produkteigenschaften" id="table">
 
-				<p:accordionPanel>
+				<p:accordionPanel activeIndex="-1">
 
-					<p:tab title="Produkt"
-						titletip="#{produkteigenschaften.produktbeschreibung}">
+					<p:tab
+						title="Produkt: #{fn:substring(produkteigenschaften.produktbeschreibung,0,40)} ... ">
+
+
 						<p:commandButton
 							actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
 							update="@form" icon="ui-icon-trash">
