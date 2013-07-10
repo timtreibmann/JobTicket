@@ -9,7 +9,9 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-	<h:outputStylesheet library="css" name="jobticketmain.css"  />
+		<h:outputStylesheet library="css" name="jobticketmain.css" />
+
+
 		<p:tooltip for="find" value="Kunden mit Kundenkürzel suchen"></p:tooltip>
 		<p:tooltip for="neuerKundeButton" value="Neuen Kunden anlegen"></p:tooltip>
 		<p:panel id="panel1" style="width:70%">
@@ -24,61 +26,108 @@
 				value="Weiter">
 			</p:commandButton>
 			<p:messages id="messages" />
-			<p:panelGrid columns="2">
-				<p:panelGrid columns="2">
-					<p:outputLabel for="jobnummer" value="Jobnummer" />
-					<p:outputLabel
-						value="#{jobticketBean.job.id==0 ? 'wird generiert' : jobticketBean.job.id}"
-						id="jobnummer" />
-					<p:outputLabel for="kundenname" value="Kundenname: " />
-					<p:selectOneMenu style="width:100%" id="kundenname"
-						value="#{jobticketBean.selectedKundeId}" editable="false" effect="fold"
-						required="true">
+			<p:panelGrid>
+				<f:facet name="header">
+					<p:row>
+						<p:column colspan="7">JobTicket</p:column>
+					</p:row>
+				</f:facet>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="jobnummer" value="Jobnummer" />
+					</p:column>
+					<p:column>
+						<p:outputLabel
+							value="#{jobticketBean.job.id==0 ? 'wird generiert' : jobticketBean.job.id}"
+							id="jobnummer" />
+					</p:column>
+					<p:column>
+						<p:outputLabel for="alt" value="Alte Jobnummer" />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{jobticketBean.job.alteJobnummer}" id="alt"
+							required="false" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="kundenname" value="Kundenname: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu style="width:100%" id="kundenname"
+							value="#{jobticketBean.selectedKundeId}" editable="false"
+							effect="fold" required="true">
 
-						<f:selectItems value="#{kundenBean.kunden}" var="kunde"
-							itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-						<p:ajax event="change" update="@form"
-							listener="#{jobticketBean.updateKuerzel}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel for="job" value="Jobname" />
-					<p:inputText id="job" value="#{jobticketBean.job.name}"
-						required="true" />
-
-
-					<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
-					<p:inputText value="#{jobticketBean.job.budgetInEuro}"
-						id="budget_in_eur"></p:inputText>
-
-					<p:outputLabel for="budget_in_std" value="Budget in Stunden" />
-					<p:inputText value="#{jobticketBean.job.budgetInStd}"
-						id="budget_in_std"></p:inputText>
-				</p:panelGrid>
-				<p:panelGrid columns="2">
-					<p:outputLabel for="alt" value="Alte Jobnummer" />
-					<p:inputText value="#{jobticketBean.job.alteJobnummer}" id="alt"
-						required="false" />
-
-					<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
-					<p:panelGrid columns="5">
-
+							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
+								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
+							<p:ajax event="change" update="@form"
+								listener="#{jobticketBean.updateKuerzel}" />
+						</p:selectOneMenu>
+					</p:column>
+					<p:column>
+						<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
+					</p:column>
+					<p:column>
 						<p:inputText value="#{jobticketBean.kuerzel}" id="kundenkurz"
 							required="false">
 						</p:inputText>
-						<p:commandButton id="find" icon="ui-icon-search"
-							update="kundenname"
-							actionListener="#{jobticketBean.findKundeByKuerzel}"></p:commandButton>
+					</p:column>
+					<p:column>
+						<h:panelGroup>
+							<p:commandButton id="find" icon="ui-icon-search"
+								update="kundenname"
+								actionListener="#{jobticketBean.findKundeByKuerzel}"></p:commandButton>
 
 
-						<p:button id="neuerKundeButton" icon="ui-icon-plus"
-							outcome="kunden_add.xhtml" type="button" title="neuer Kunde">
-							<f:param name="neuer Kunde" />
-						</p:button>
-					</p:panelGrid>
-					<p:outputLabel for="jobbeschreibung" value="Beschreibung" />
-					<p:inputTextarea maxlength="200"
-						value="#{jobticketBean.job.jobbeschreibung}" id="jobbeschreibung"></p:inputTextarea>
-				</p:panelGrid>
+							<p:button id="neuerKundeButton" icon="ui-icon-plus"
+								outcome="kunden_add.xhtml" type="button" title="neuer Kunde">
+								<f:param name="neuer Kunde" />
+							</p:button>
+						</h:panelGroup>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="job" value="Jobname" />
+					</p:column>
+					<p:column>
+						<p:inputText id="job" value="#{jobticketBean.job.name}"
+							required="true" />
+					</p:column>
+					<p:column rowspan="3">
+						<p:outputLabel for="jobbeschreibung" value="Beschreibung" />
+					</p:column>
+					<p:column rowspan="3">
+						<p:inputTextarea maxlength="200"
+							value="#{jobticketBean.job.jobbeschreibung}" id="jobbeschreibung" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{jobticketBean.job.budgetInEuro}"
+							id="budget_in_eur"></p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="budget_in_std" value="Budget in Stunden" />
+					</p:column>
+					<p:column>
+						<p:inputText value="#{jobticketBean.job.budgetInStd}"
+							id="budget_in_std"></p:inputText>
+					</p:column>
+				</p:row>
+
+
+
+
+
+
+
+
 			</p:panelGrid>
 		</p:panel>
 
