@@ -1,17 +1,163 @@
 @CHARSET "UTF-8";
+form{
+	position: absolute;
+	left:20%;
+}
+
+form .breadCrumbpanel{
+	width:850px;
+	height: 15px;
+	background:#FFFFFF;
+
+	border: 0 solid #FFFFFF;
+	color: #FFFFFF;
+	
+}
+form .breadCrumbpanel .ui-menuitem-text{
+	font-size: 12px;
+	color:#494846;
+	text-decoration: none;
+	
+}
+form .breadCrumbpanel .ui-breadcrumb-chevron{
+	color:#494846;
+}
 
 table tbody .ui-widget-content {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 0 solid #FFFFFF;
-    color: #333333;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 0 solid #FFFFFF;
+	color: #333333;
 }
+
 table tfoot .ui-widget-header {
-    
-    border: 0 solid #FFFFFF;
-    color: #333333;
+	
+	background: #494846;
+	border: 0 solid #FFFFFF;
+	color: #FFFFFF;
+	-moz-box-shadow: 5px 5px 0.5px 0.5px #888;
+	-webkit-box-shadow: 5px 5px 0.5px 0.5px #888;
+	box-shadow: 5px 5px 0.5px 0.5px #888;
 }
+
 table thead .ui-widget-header {
-    
-    border: 0 solid #FFFFFF;
-    color: #333333;
+	background: #494846;
+	border: 0 solid #FFFFFF;
+	color: #FFFFFF;
+	font-size: 110%;
+	text-align: left;
+	-moz-box-shadow: 5px 5px 0.5px 0.5px #888;
+	-webkit-box-shadow: 5px 5px 0.5px 0.5px #888;
+	box-shadow: 5px 5px 0.5px 0.5px #888;
+	text-shadow: none;
+}
+
+table tfoot .ui-widget-header .buttonWeiter {
+	height: 30px;
+	width: 150px;
+	background: #494846;
+	color: #FFFFFF;
+	border-width: 2px;
+	border-color: #494846;
+	float: right;
+	font-size: 85%;
+	text-align: center;
+	font-weight: lighter;
+	text-shadow: none;
+	border-top-style: none;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+}
+
+table tfoot .ui-widget-header .buttonZurueck {
+	
+	
+	height: 30px;
+	width: 150px;
+	background: #494846;
+	color: #FFFFFF;
+	border-width: 2px;
+	
+	border-color: #494846;
+	font-size: 85%;
+	font-weight: lighter;
+	text-shadow: none;
+	text-align: center;
+	border-top-style: none;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+}
+
+table tfoot .ui-widget-header .buttonZurueck:hover {
+	background-color: #FFFFFF;
+	color: #494846;
+	cursor: pointer;
+	border: 0px;
+	box-shadow:none;
+}
+
+table tfoot .ui-widget-header .buttonWeiter:hover {
+	background-color: #FFFFFF;
+	color: #494846;
+	cursor: pointer;
+	border: 0px;
+	box-shadow:none;
+}
+table tbody .ui-widget-content .neuerKundeButton{
+	background:#FFFFFF;
+	border: 0 solid #FFFFFF;
+	-moz-box-shadow: 5px 5px 0.5px 0.5px #888;
+	-webkit-box-shadow: 5px 5px 0.5px 0.5px #888;
+	box-shadow: 5px 5px 0.5px 0.5px #888;
+	color: #494846;
+	text-shadow: none;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+}
+table tbody .ui-widget-content .neuerKundeButton:hover {
+	background-color: #494846;
+	color: #FFFFFF;
+	cursor: pointer;
+	border: 0px;
+
+}
+table tbody .ui-widget-content .findKundeByKuerzelButton{
+	background:#FFFFFF;
+	border: 0 solid #FFFFFF;
+	-moz-box-shadow: 5px 5px 0.5px 0.5px #888;
+	-webkit-box-shadow: 5px 5px 0.5px 0.5px #888;
+	box-shadow: 5px 5px 0.5px 0.5px #888;
+	color: #494846;
+	text-shadow: none;
+	border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-right-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	border-bottom-left-radius: 0px;
+	-moz-border-radius-bottomleft: 0px;
+}
+table tbody .ui-widget-content .findKundeByKuerzelButton:hover {
+	background-color: #494846;
+	color: #FFFFFF;
+	cursor: pointer;
+	border: 0px;
 }
