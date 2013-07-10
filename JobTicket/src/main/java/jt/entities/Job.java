@@ -6,37 +6,35 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class Job.
- *
- * @author jan & tim
- * The persistent class for the JOBS database table.
+ * 
+ * @author jan & tim The persistent class for the JOBS database table.
  */
 @Entity
-@Table(schema="JOBTICKET", name="JOBS")
-@NamedQuery(name="Job.findAll", query="SELECT j FROM Job j")
+@Table(schema = "JOBTICKET", name = "JOBS")
+@NamedQuery(name = "Job.findAll", query = "SELECT j FROM Job j")
 public class Job implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	/** The alte jobnummer. */
-	@Column(name="ALTE_JOBNUMMER")
+	@Column(name = "ALTE_JOBNUMMER")
 	private int alteJobnummer;
 
 	/** The budget in euro. */
-	@Column(name="BUDGET_IN_EURO")
+	@Column(name = "BUDGET_IN_EURO")
 	private BigDecimal budgetInEuro;
 
 	/** The budget in std. */
-	@Column(name="BUDGET_IN_STD")
+	@Column(name = "BUDGET_IN_STD")
 	private BigDecimal budgetInStd;
 
 	/** The empfaenger. */
@@ -55,24 +53,24 @@ public class Job implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date vorlage;
 
-	//bi-directional many-to-one association to Jobbearbeiter
+	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
-	@OneToMany(mappedBy="job")
+	@OneToMany(mappedBy = "job")
 	private List<Jobbearbeiter> jobbearbeiters;
 
-	//bi-directional many-to-one association to Kunde
+	// bi-directional many-to-one association to Kunde
 	/** The kunde. */
 	@ManyToOne
 	private Kunde kunde;
 
-	//bi-directional many-to-one association to Kosten
+	// bi-directional many-to-one association to Kosten
 	/** The kostens. */
-	@OneToMany(mappedBy="job")
+	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
 	private List<Kosten> kostens;
 
-	//bi-directional many-to-one association to Produkteigenschaften
+	// bi-directional many-to-one association to Produkteigenschaften
 	/** The produkteigenschaftens. */
-	@OneToMany(mappedBy="job")
+	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
 	private List<Produkteigenschaften> produkteigenschaftens;
 
 	/**
@@ -83,7 +81,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the id.
-	 *
+	 * 
 	 * @return the id
 	 */
 	public int getId() {
@@ -92,8 +90,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the id.
-	 *
-	 * @param id the new id
+	 * 
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -101,7 +100,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the alte jobnummer.
-	 *
+	 * 
 	 * @return the alte jobnummer
 	 */
 	public int getAlteJobnummer() {
@@ -110,8 +109,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the alte jobnummer.
-	 *
-	 * @param alteJobnummer the new alte jobnummer
+	 * 
+	 * @param alteJobnummer
+	 *            the new alte jobnummer
 	 */
 	public void setAlteJobnummer(int alteJobnummer) {
 		this.alteJobnummer = alteJobnummer;
@@ -119,7 +119,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the budget in euro.
-	 *
+	 * 
 	 * @return the budget in euro
 	 */
 	public BigDecimal getBudgetInEuro() {
@@ -128,8 +128,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the budget in euro.
-	 *
-	 * @param budgetInEuro the new budget in euro
+	 * 
+	 * @param budgetInEuro
+	 *            the new budget in euro
 	 */
 	public void setBudgetInEuro(BigDecimal budgetInEuro) {
 		this.budgetInEuro = budgetInEuro;
@@ -137,7 +138,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the budget in std.
-	 *
+	 * 
 	 * @return the budget in std
 	 */
 	public BigDecimal getBudgetInStd() {
@@ -146,8 +147,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the budget in std.
-	 *
-	 * @param budgetInStd the new budget in std
+	 * 
+	 * @param budgetInStd
+	 *            the new budget in std
 	 */
 	public void setBudgetInStd(BigDecimal budgetInStd) {
 		this.budgetInStd = budgetInStd;
@@ -155,7 +157,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the empfaenger.
-	 *
+	 * 
 	 * @return the empfaenger
 	 */
 	public String getEmpfaenger() {
@@ -164,8 +166,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the empfaenger.
-	 *
-	 * @param empfaenger the new empfaenger
+	 * 
+	 * @param empfaenger
+	 *            the new empfaenger
 	 */
 	public void setEmpfaenger(String empfaenger) {
 		this.empfaenger = empfaenger;
@@ -173,7 +176,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the jobbeschreibung.
-	 *
+	 * 
 	 * @return the jobbeschreibung
 	 */
 	public String getJobbeschreibung() {
@@ -182,8 +185,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the jobbeschreibung.
-	 *
-	 * @param jobbeschreibung the new jobbeschreibung
+	 * 
+	 * @param jobbeschreibung
+	 *            the new jobbeschreibung
 	 */
 	public void setJobbeschreibung(String jobbeschreibung) {
 		this.jobbeschreibung = jobbeschreibung;
@@ -191,7 +195,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the name.
-	 *
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
@@ -200,8 +204,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the name.
-	 *
-	 * @param name the new name
+	 * 
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -209,7 +214,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the prints the.
-	 *
+	 * 
 	 * @return the prints the
 	 */
 	public String getPrint() {
@@ -218,8 +223,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the prints the.
-	 *
-	 * @param print the new prints the
+	 * 
+	 * @param print
+	 *            the new prints the
 	 */
 	public void setPrint(String print) {
 		this.print = print;
@@ -227,7 +233,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the vorlage.
-	 *
+	 * 
 	 * @return the vorlage
 	 */
 	public Date getVorlage() {
@@ -236,8 +242,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the vorlage.
-	 *
-	 * @param vorlage the new vorlage
+	 * 
+	 * @param vorlage
+	 *            the new vorlage
 	 */
 	public void setVorlage(Date vorlage) {
 		this.vorlage = vorlage;
@@ -245,7 +252,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the jobbearbeiters.
-	 *
+	 * 
 	 * @return the jobbearbeiters
 	 */
 	public List<Jobbearbeiter> getJobbearbeiters() {
@@ -254,8 +261,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the jobbearbeiters.
-	 *
-	 * @param jobbearbeiters the new jobbearbeiters
+	 * 
+	 * @param jobbearbeiters
+	 *            the new jobbearbeiters
 	 */
 	public void setJobbearbeiters(List<Jobbearbeiter> jobbearbeiters) {
 		this.jobbearbeiters = jobbearbeiters;
@@ -263,8 +271,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Adds the jobbearbeiter.
-	 *
-	 * @param jobbearbeiter the jobbearbeiter
+	 * 
+	 * @param jobbearbeiter
+	 *            the jobbearbeiter
 	 * @return the jobbearbeiter
 	 */
 	public Jobbearbeiter addJobbearbeiter(Jobbearbeiter jobbearbeiter) {
@@ -276,8 +285,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Removes the jobbearbeiter.
-	 *
-	 * @param jobbearbeiter the jobbearbeiter
+	 * 
+	 * @param jobbearbeiter
+	 *            the jobbearbeiter
 	 * @return the jobbearbeiter
 	 */
 	public Jobbearbeiter removeJobbearbeiter(Jobbearbeiter jobbearbeiter) {
@@ -289,7 +299,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the kunde.
-	 *
+	 * 
 	 * @return the kunde
 	 */
 	public Kunde getKunde() {
@@ -298,8 +308,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the kunde.
-	 *
-	 * @param kunde the new kunde
+	 * 
+	 * @param kunde
+	 *            the new kunde
 	 */
 	public void setKunde(Kunde kunde) {
 		this.kunde = kunde;
@@ -307,7 +318,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the kostens.
-	 *
+	 * 
 	 * @return the kostens
 	 */
 	public List<Kosten> getKostens() {
@@ -316,8 +327,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the kostens.
-	 *
-	 * @param kostens the new kostens
+	 * 
+	 * @param kostens
+	 *            the new kostens
 	 */
 	public void setKostens(List<Kosten> kostens) {
 		this.kostens = kostens;
@@ -325,8 +337,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Adds the kosten.
-	 *
-	 * @param kosten the kosten
+	 * 
+	 * @param kosten
+	 *            the kosten
 	 * @return the kosten
 	 */
 	public Kosten addKosten(Kosten kosten) {
@@ -338,8 +351,9 @@ public class Job implements Serializable {
 
 	/**
 	 * Removes the kosten.
-	 *
-	 * @param kosten the kosten
+	 * 
+	 * @param kosten
+	 *            the kosten
 	 * @return the kosten
 	 */
 	public Kosten removeKosten(Kosten kosten) {
@@ -351,7 +365,7 @@ public class Job implements Serializable {
 
 	/**
 	 * Gets the produkteigenschaftens.
-	 *
+	 * 
 	 * @return the produkteigenschaftens
 	 */
 	public List<Produkteigenschaften> getProdukteigenschaftens() {
@@ -360,20 +374,24 @@ public class Job implements Serializable {
 
 	/**
 	 * Sets the produkteigenschaftens.
-	 *
-	 * @param produkteigenschaftens the new produkteigenschaftens
+	 * 
+	 * @param produkteigenschaftens
+	 *            the new produkteigenschaftens
 	 */
-	public void setProdukteigenschaftens(List<Produkteigenschaften> produkteigenschaftens) {
+	public void setProdukteigenschaftens(
+			List<Produkteigenschaften> produkteigenschaftens) {
 		this.produkteigenschaftens = produkteigenschaftens;
 	}
 
 	/**
 	 * Adds the produkteigenschaften.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the produkteigenschaften
 	 */
-	public Produkteigenschaften addProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
+	public Produkteigenschaften addProdukteigenschaften(
+			Produkteigenschaften produkteigenschaften) {
 		getProdukteigenschaftens().add(produkteigenschaften);
 		produkteigenschaften.setJob(this);
 
@@ -382,11 +400,13 @@ public class Job implements Serializable {
 
 	/**
 	 * Removes the produkteigenschaften.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the produkteigenschaften
 	 */
-	public Produkteigenschaften removeProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
+	public Produkteigenschaften removeProdukteigenschaften(
+			Produkteigenschaften produkteigenschaften) {
 		getProdukteigenschaftens().remove(produkteigenschaften);
 		produkteigenschaften.setJob(null);
 
