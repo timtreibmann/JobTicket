@@ -15,7 +15,7 @@
 					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
 			</p:breadCrumb>
 			<p:commandButton value="Neues Jobticket anlegen"
-				action="#{jobticketBean.neuesJobticket}" />
+				action="#{jobticketBean.neuesJobticket}" ajax="false" />
 			<p></p>
 			<p:dataTable value="#{jobticketBean.jobs}" var="job"
 				emptyMessage="Keine Jobtickets vorhanden">
