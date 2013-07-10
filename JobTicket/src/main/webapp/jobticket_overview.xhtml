@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem value="Übersicht"
+				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+			<p:menuitem value="Jobticket"
+				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+			<p:menuitem value="Übersicht"
+				url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+		</p:breadCrumb>
+		
+		
+
+		<p:panel style="width:50%">
+			<p:dataTable var="job" value="#{jobticketBean.job}">
+				<p:column headerText="Jobnummer">
+					<p:outputLabel value="#{job.id}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Name">
+					<p:outputLabel value="#{job.name}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Kunde">
+					<p:outputLabel value="#{job.kunde.name}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Beschreibung">
+					<p:outputLabel value="#{job.jobbeschreibung}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Budget in Euro">
+					<p:outputLabel value="#{job.budgetInEuro}"></p:outputLabel>
+				</p:column>
+			</p:dataTable>
+
+			<p></p>
+
+			<p:dataTable var="produkt"
+				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}">
+				<p:column headerText="Produktbeschreibung">
+					<p:outputLabel value="#{produkt.produktbeschreibung}"></p:outputLabel>
+				</p:column>
+
+				<p:column headerText="Eingangsdatum">
+					<p:outputLabel value="#{produkt.eingangsdatum}">
+						<f:convertDateTime type="date"></f:convertDateTime>
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Erledigt">
+
+					<p:outputLabel value="#{produkt.erledigt==1 ? 'ja' : 'nein'}"></p:outputLabel>
+
+				</p:column>
+			</p:dataTable>
+
+			<p></p>
+
+			<p:dataTable var="kosten" value="#{aufwandBean.kostenFromJob}">
+				<p:column headerText="Angestellter">
+					<p:outputLabel
+						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} "></p:outputLabel>
+				</p:column>
+
+				<p:column headerText="Kosten">
+					<p:outputLabel value="#{kosten.arbeitsaufwand}"></p:outputLabel>
+				</p:column>
+			</p:dataTable>
+			<p></p>
+			<p:button value="Zurück" outcome="jobticket_aufwand.xhtml"></p:button>
+			<p:button value="Fertig" outcome="start.xhtml"></p:button>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
