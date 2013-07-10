@@ -9,18 +9,19 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-		<p:breadCrumb>
-			<p:menuitem value="Übersicht"
-				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
-			<p:menuitem value="Jobticket"
-				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
-			<p:menuitem value="Übersicht"
-				url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
-		</p:breadCrumb>
-		
-		
+
+
+
 
 		<p:panel style="width:50%">
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+				<p:menuitem value="Jobticket"
+					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+			</p:breadCrumb>
 			<p:dataTable var="job" value="#{jobticketBean.job}">
 				<p:column headerText="Jobnummer">
 					<p:outputLabel value="#{job.id}"></p:outputLabel>

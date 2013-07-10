@@ -10,105 +10,102 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-		<p:breadCrumb>
-			<p:menuitem value="Übersicht"
-				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
-			<p:menuitem value="Jobticket"
-				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
-			<p:menuitem value="Aufwand festlegen"
-				url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
-		</p:breadCrumb>
+		<p:panel id="panel" style="width:50%">
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+				<p:menuitem value="Jobticket"
+					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+				<p:menuitem value="Aufwand festlegen"
+					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+			</p:breadCrumb>
 
-		<h:panelGrid columns="2">
-			<p:panel id="panel">
-				<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
-				<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
-				<h:panelGrid columns="1">
-					<h:panelGrid columns="2">
-						<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
-						<h:inputHidden></h:inputHidden>
-						<p:fieldset>
-							<h:panelGrid columns="6">
-								<p:outputLabel for="kontakter" value="Angestellter" />
-								<p:selectOneMenu id="kontakter"
-									value="#{aufwandBean.selectedAngestellteId}" effect="fold"
-									editable="false" required="true">
-									<f:selectItems value="#{angestellteBean.angestelltes}"
-										var="angestellte" itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-										itemValue="#{angestellte.id}" />
-									<p:ajax event="change" update="@form"
-										listener="#{aufwandBean.selectedAngestellteId}" />
-								</p:selectOneMenu>
-								<p:tooltip for="hinzufuegen"
-									value="den ausgewählten Mitarbeiter zum Job hinzufügen"></p:tooltip>
-								<p:commandButton id="hinzufuegen" icon="ui-icon-arrowthick-1-s"
-									process="kontakter" update="@form"
-									actionListener="#{aufwandBean.saveKosten}"></p:commandButton>
-								<p:tooltip for="neuerAngestellterButton"
-									value="Neuen Angestellten anlegen"></p:tooltip>
-								<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
-									outcome="angestellte_add.xhtml" type="button"
-									title="neuer Kunde">
-								</p:button>
-							</h:panelGrid>
 
-						</p:fieldset>
+			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
+			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
+
+
+			<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
+			<h:inputHidden></h:inputHidden>
+			<p:fieldset>
+				<p:tooltip for="hinzufuegen"
+					value="den ausgewählten Mitarbeiter zum Job hinzufügen"></p:tooltip>
+				<p:tooltip for="neuerAngestellterButton"
+					value="Neuen Angestellten anlegen"></p:tooltip>
+				<p:panelGrid columns="4">
+					<p:outputLabel for="kontakter" value="Angestellter" />
+					<p:selectOneMenu id="kontakter"
+						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+						editable="false" required="true">
+						<f:selectItems value="#{angestellteBean.angestelltes}"
+							var="angestellte"
+							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+							itemValue="#{angestellte.id}" />
+						<p:ajax event="change" update="@form"
+							listener="#{aufwandBean.selectedAngestellteId}" />
+					</p:selectOneMenu>
+
+					<p:commandButton id="hinzufuegen" icon="ui-icon-arrowthick-1-s"
+						process="kontakter" update="@form"
+						actionListener="#{aufwandBean.saveKosten}"></p:commandButton>
+
+					<p:button id="neuerAngestellterButton" icon="ui-icon-plus"
+						outcome="angestellte_add.xhtml" type="button" title="neuer Kunde">
+					</p:button>
+				</p:panelGrid>
+			</p:fieldset>
+			<p:fieldset>
+				<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
+				<ui:repeat var="kosten" value="#{aufwandBean.kostenFromJob}">
+
+					<p:growl id="growl"></p:growl>
+					<p:tooltip for="deletebutton" value="Mitarbeiter vom Job entfernen"></p:tooltip>
+
+					<p></p>
+					<p:panel>
+						<p:commandButton ajax="false" style="float:right"
+							id="deletebutton" action="#{aufwandBean.delete(kosten)}"
+							icon="ui-icon-trash"></p:commandButton>
+
+						<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
+						<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
+
 						<p></p>
-						<p:fieldset>
-							<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
-							<h:dataTable var="kosten" value="#{aufwandBean.kostenFromJob}">
 
-								<p:growl id="growl"></p:growl>
-
-
-								<p:tooltip for="deletebutton"
-									value="Mitarbeiter vom Job entfernen"></p:tooltip>
-								<h:column>
-									<p:commandButton ajax="false" id="deletebutton"
-										action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
-								</h:column>
-								<h:column>
-									<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
-									<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
-								</h:column>
-								<h:column>
-									<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-										<f:convertNumber pattern="#0.00"></f:convertNumber>
-										<p:ajax event="change" process="@this" update="@form"
-											listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
-									</p:inputText>
-								</h:column>
-								<h:column>
-									<p:commandButton update="@this aufwand" process="aufwand"
-										value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
-										actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
-								</h:column>
-							</h:dataTable>
-							<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
-							<p:inputText disabled="true" id="gesamtkosten"
-								value="#{aufwandBean.gesamtKosten}">
-								<f:convertNumber pattern="#0.00"></f:convertNumber>
-							</p:inputText>
-						</p:fieldset>
-					</h:panelGrid>
-					<p:fieldset>
-						<h:panelGrid columns="2">
-							<p:button icon="ui-icon-alert" title="Achtung">
-								<f:param name="achtung" />
-							</p:button>
-							<h:panelGrid columns="3">
-								<p:outputLabel value="Budget" />
-								<p:inputText value="#{jobticketBean.job.budgetInEuro} €"
-									disabled="true" />
-							</h:panelGrid>
-						</h:panelGrid>
-					</p:fieldset>
-				</h:panelGrid>
-
-			</p:panel>
+						<p:outputLabel value="Aufwand: "></p:outputLabel>
+						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
+							<f:convertNumber pattern="#0.00"></f:convertNumber>
+							<p:ajax event="change" process="@this" update="@form"
+								listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+						</p:inputText>
 
 
-		</h:panelGrid>
+						<p:commandButton update="@this aufwand" process="aufwand"
+							value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
+							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+						<p></p>
+					</p:panel>
+				</ui:repeat>
+				<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
+				<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
+					<f:convertNumber pattern="#0.00"></f:convertNumber>
+				</h:outputText>
+			</p:fieldset>
+
+			<p:fieldset>
+
+				<p:button icon="ui-icon-alert" title="Achtung">
+					<f:param name="achtung" />
+				</p:button>
+
+				<p:outputLabel value="Budget" />
+				<p:inputText value="#{jobticketBean.job.budgetInEuro} €"
+					disabled="true" />
+
+
+			</p:fieldset>
+
+		</p:panel>
 	</h:form>
 </h:body>
 </html>
