@@ -2,7 +2,6 @@ package jt.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -31,11 +30,11 @@ public class Job implements Serializable {
 
 	/** The budget in euro. */
 	@Column(name = "BUDGET_IN_EURO")
-	private BigDecimal budgetInEuro;
+	private double budgetInEuro;
 
 	/** The budget in std. */
 	@Column(name = "BUDGET_IN_STD")
-	private BigDecimal budgetInStd;
+	private double budgetInStd;
 
 	/** The empfaenger. */
 	private String empfaenger;
@@ -122,7 +121,7 @@ public class Job implements Serializable {
 	 * 
 	 * @return the budget in euro
 	 */
-	public BigDecimal getBudgetInEuro() {
+	public double getBudgetInEuro() {
 		return this.budgetInEuro;
 	}
 
@@ -132,7 +131,7 @@ public class Job implements Serializable {
 	 * @param budgetInEuro
 	 *            the new budget in euro
 	 */
-	public void setBudgetInEuro(BigDecimal budgetInEuro) {
+	public void setBudgetInEuro(double budgetInEuro) {
 		this.budgetInEuro = budgetInEuro;
 	}
 
@@ -141,7 +140,7 @@ public class Job implements Serializable {
 	 * 
 	 * @return the budget in std
 	 */
-	public BigDecimal getBudgetInStd() {
+	public double getBudgetInStd() {
 		return this.budgetInStd;
 	}
 
@@ -151,7 +150,7 @@ public class Job implements Serializable {
 	 * @param budgetInStd
 	 *            the new budget in std
 	 */
-	public void setBudgetInStd(BigDecimal budgetInStd) {
+	public void setBudgetInStd(double budgetInStd) {
 		this.budgetInStd = budgetInStd;
 	}
 
