@@ -40,6 +40,9 @@ public class AufwandBean {
 	@Inject
 	private AngestellteBean angestellteBean;
 
+	/** The selected angestellte id. */
+	private int selectedAngestellteId;
+	
 	/** The job. */
 	@Inject
 	@AktuellerJob
@@ -95,9 +98,6 @@ public class AufwandBean {
 	public double getGesamtKosten() {
 		return gesamtKosten;
 	}
-
-	/** The selected angestellte id. */
-	private int selectedAngestellteId;
 
 	/**
 	 * Gets the selected angestellte id.

@@ -60,7 +60,7 @@
 
 					<p:growl id="growl"></p:growl>
 					<p:tooltip for="deletebutton" value="Mitarbeiter vom Job entfernen"></p:tooltip>
-
+					<p:tooltip for="rechneum" value="Aufwand in Std. oder € umrechnen"></p:tooltip>
 					<p></p>
 					<p:panel>
 						<p:commandButton ajax="false" style="float:right"
@@ -80,7 +80,7 @@
 						</p:inputText>
 
 
-						<p:commandButton update="@this aufwand" process="aufwand"
+						<p:commandButton update="@this aufwand" id="rechneum" process="aufwand"
 							value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
 							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 						<p></p>

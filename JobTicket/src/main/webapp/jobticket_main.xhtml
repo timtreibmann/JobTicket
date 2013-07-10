@@ -31,20 +31,18 @@
 						id="jobnummer" />
 					<p:outputLabel for="kundenname" value="Kundenname: " />
 					<p:selectOneMenu style="width:100%" id="kundenname"
-						value="#{jobticketBean.selectedKundeId}" effect="fold"
+						value="#{jobticketBean.selectedKundeId}" editable="false" effect="fold"
 						required="true">
+
 						<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 							itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-
 						<p:ajax event="change" update="@form"
 							listener="#{jobticketBean.updateKuerzel}" />
 					</p:selectOneMenu>
 
-
 					<p:outputLabel for="job" value="Jobname" />
 					<p:inputText id="job" value="#{jobticketBean.job.name}"
 						required="true" />
-
 
 
 					<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
