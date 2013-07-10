@@ -31,80 +31,115 @@
 				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
 				var="produkteigenschaften" id="table">
 
-				<p:fieldset legend="Produkt: #{produkteigenschaften.id}"
-					toggleable="true" collapsed="false" toggleSpeed="500">
-					<p:commandButton
-						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
-						update="@form" icon="ui-icon-trash">
-					</p:commandButton>
-					<p:growl id="growl" showDetail="true" sticky="true" />
-					<p:commandButton icon="ui-icon-disk" update="growl"
-						actionListener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:commandButton>
+				<p:accordionPanel>
 
-
-
-
-					<p:messages id="messages" />
-					<h:panelGrid columns="4">
-						<h:panelGrid columns="2">
-							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
-							<h:outputLabel></h:outputLabel>
-							<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
-							<p:commandButton update="@this"
-								icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
-								actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
-
-							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
-							<p:calendar value="#{produkteigenschaften.eingangsdatum}"
-								id="eingangsdatum" required="true" />
-
-							<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
-							<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
-								id="ausgangsdatum" />
-						</h:panelGrid>
-						<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
-						<p:calendar value="#{produkteigenschaften.vorlagedatum}"
-							id="fertigstellung" />
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:outputLabel for="beschreibung" value="Beschreibung" />
-						<p:inputTextarea
-							value="#{produkteigenschaften.produktbeschreibung}"
-							id="beschreibung" cols="60" />
-					</h:panelGrid>
-					<p:fieldset legend="Details" toggleable="true" collapsed="true"
-						toggleSpeed="500">
-						<h:panelGrid columns="2">
+					<p:tab title="Produkt"
+						titletip="#{produkteigenschaften.produktbeschreibung}">
+						<p:commandButton
+							actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+							update="@form" icon="ui-icon-trash">
+						</p:commandButton>
+						<p:growl id="growl" showDetail="true" sticky="false" />
+						<h:panelGrid columns="4">
 							<h:panelGrid columns="2">
-								<p:outputLabel for="format" value="Format(B x H)" />
-								<p:inputText value="#{produkteigenschaften.fomat}" id="format" />
-								<p:outputLabel for="beschnitt" value="Beschnitt" />
-								<p:inputText value="#{produkteigenschaften.beschnitt}"
-									id="beschnitt" />
-								<p:outputLabel for="farbe" value="Farbe" />
-								<p:inputText value="#{produkteigenschaften.farbe4c}" id="farbe" />
-								<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
-								<p:inputText value="#{produkteigenschaften.sonderfarbe}"
-									id="sonderfarbe" />
+								<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
+								<h:outputLabel></h:outputLabel>
+								<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
+								<p:commandButton update="@this growl"
+									icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
+									actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
+
+								<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+								<p:calendar value="#{produkteigenschaften.eingangsdatum}"
+									id="eingangsdatum" required="true">
+									<p:ajax event="dateSelect" process="@this" update="growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+
+								</p:calendar>
+
+								<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
+								<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
+									id="ausgangsdatum">
+									<p:ajax event="dateSelect" process="@this" update="growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+								</p:calendar>
 							</h:panelGrid>
-							<h:panelGrid columns="2">
-								<p:outputLabel for="seitenzahl" value="Seitenzahl" />
-								<p:inputText value="#{produkteigenschaften.seitenzahl}"
-									id="seitenzahl" />
-								<p:outputLabel for="falzung" value="Falzung" />
-								<p:inputText value="#{produkteigenschaften.falzung}"
-									id="falzung" />
-								<p:outputLabel for="bindung" value="Bindung" />
-								<p:inputText value="#{produkteigenschaften.bindung}"
-									id="bindung" />
-								<p:outputLabel for="proof" value="Proof" />
-								<p:inputText value="#{produkteigenschaften.proof}" id="proof" />
-								<p:outputLabel for="dummy" value="Dummy" />
-								<p:inputText value="#{produkteigenschaften.dummy}" id="dummy" />
-							</h:panelGrid>
+							<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+							<p:calendar value="#{produkteigenschaften.vorlagedatum}"
+								id="fertigstellung">
+								<p:ajax event="dateSelect" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:calendar>
 						</h:panelGrid>
-					</p:fieldset>
-				</p:fieldset>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="beschreibung" value="Beschreibung" />
+							<p:inputTextarea
+								value="#{produkteigenschaften.produktbeschreibung}"
+								id="beschreibung" cols="60">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputTextarea>
+						</h:panelGrid>
+						<p:panel header="Details" toggleable="true" collapsed="true">
+							<h:panelGrid columns="2">
+								<h:panelGrid columns="2">
+									<p:outputLabel for="format" value="Format(B x H)" />
+									<p:inputText value="#{produkteigenschaften.fomat}" id="format">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="beschnitt" value="Beschnitt" />
+									<p:inputText value="#{produkteigenschaften.beschnitt}"
+										id="beschnitt">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="farbe" value="Farbe" />
+									<p:inputText value="#{produkteigenschaften.farbe4c}" id="farbe">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
+									<p:inputText value="#{produkteigenschaften.sonderfarbe}"
+										id="sonderfarbe">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:outputLabel for="seitenzahl" value="Seitenzahl" />
+									<p:inputText value="#{produkteigenschaften.seitenzahl}"
+										id="seitenzahl">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="falzung" value="Falzung" />
+									<p:inputText value="#{produkteigenschaften.falzung}"
+										id="falzung">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="bindung" value="Bindung" />
+									<p:inputText value="#{produkteigenschaften.bindung}"
+										id="bindung">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="proof" value="Proof" />
+									<p:inputText value="#{produkteigenschaften.proof}" id="proof">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+									<p:outputLabel for="dummy" value="Dummy" />
+									<p:inputText value="#{produkteigenschaften.dummy}" id="dummy">
+										<p:ajax event="change" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputText>
+								</h:panelGrid>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+				</p:accordionPanel>
 			</ui:repeat>
 		</p:panel>
 
