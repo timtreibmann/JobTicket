@@ -27,7 +27,9 @@
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="2">
 						<p:outputLabel for="jobnummer" value="Jobnummer" />
-						<p:outputLabel value="#{jobticketBean.job.id}" id="jobnummer"/>
+						<p:outputLabel
+							value="#{jobticketBean.job.id==0 ? 'wird generiert' : jobticketBean.job.id}"
+							id="jobnummer" />
 						<p:outputLabel for="kundenname" value="Kundenname: " />
 						<p:selectOneMenu style="width:100%" id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" effect="fold"
