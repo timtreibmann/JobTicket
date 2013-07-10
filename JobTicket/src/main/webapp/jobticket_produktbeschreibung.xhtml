@@ -19,8 +19,7 @@
 			url="http://localhost:8080/JobTicket/faces/jobticket_produktbeschreibung.xhtml" />
 	</p:breadCrumb>
 	<h:panelGrid columns="3">
-		<p:panel
-			header="Produktübersicht für Job: #{produkteigenschaftenBean.job.name}">
+		<p:panel>
 			<p:button outcome="jobticket_main.xhtml" value="Zurück" />
 			<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
 			<p />
@@ -36,8 +35,6 @@
 
 					<p:tab
 						title="Produkt: #{fn:substring(produkteigenschaften.produktbeschreibung,0,40)} ... ">
-
-
 						<p:commandButton
 							actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
 							update="@form" icon="ui-icon-trash">
