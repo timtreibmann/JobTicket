@@ -21,15 +21,12 @@
 
 		<h:panelGrid columns="2">
 			<p:panel id="panel" header="Aufwand für #{jobticketBean.job.name}">
-				<p:messages id="messages" />
 				<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
 				<p:button value="Fertig" outcome="start.xhtml"></p:button>
 				<h:panelGrid columns="1">
 					<h:panelGrid columns="2">
-
 						<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
 						<h:inputHidden></h:inputHidden>
-
 						<p:fieldset>
 							<h:panelGrid columns="3">
 								<p:outputLabel for="kontakter" value="Angestellter" />
@@ -44,8 +41,8 @@
 								</p:selectOneMenu>
 							</h:panelGrid>
 
-							<p:commandButton value="Angestellten zum Job hinzufügen" update="@form"
-								actionListener="#{aufwandBean.saveKosten}" />
+							<p:commandButton value="Angestellten zum Job hinzufügen"
+								update="@form" actionListener="#{aufwandBean.saveKosten}" />
 
 							<p:button id="neuerAngestellterButton"
 								value="neuen Angestellten anlegen" icon="ui-icon-plus"
@@ -61,28 +58,21 @@
 									<p:growl id="growl"></p:growl>
 									<p:commandButton ajax="false"
 										action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
-									<p:commandButton
-										actionListener="#{aufwandBean.updateKosten(kosten)}"
-										update="@form" icon="ui-icon-disk"></p:commandButton>
-									<p></p>
+
 									<h:outputLabel value="Name: #{kosten.angestellte.vorname} "></h:outputLabel>
 									<h:outputLabel value="#{kosten.angestellte.nachname}"></h:outputLabel>
 									<h:panelGrid columns="3">
 
-										<p:commandButton update="@this aufwand l" process="aufwand"
-											value=" #{kosten.arbeitsaufwandIstInEuro==1 ? 'H':'€' }"
-											actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 										<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
 											<f:convertNumber pattern="#0.00"></f:convertNumber>
+											<p:ajax event="change" process="@this" update="@form"
+												listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
 										</p:inputText>
-										<p:outputLabel id="l"
-											value="#{kosten.arbeitsaufwandIstInEuro==1 ? 'in €':'in Stunden' }">
-
-										</p:outputLabel>
-
+										<p:commandButton update="@this aufwand" process="aufwand"
+											value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
+											actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 									</h:panelGrid>
 								</p:panel>
-
 							</ui:repeat>
 							<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 							<p:inputText disabled="true" id="gesamtkosten"
@@ -90,11 +80,7 @@
 								<f:convertNumber pattern="#0.00"></f:convertNumber>
 							</p:inputText>
 						</p:fieldset>
-
-
-
 					</h:panelGrid>
-
 					<h:panelGrid columns="2">
 						<p:button icon="ui-icon-alert" title="Achtung">
 							<f:param name="achtung" />
@@ -106,7 +92,7 @@
 						</h:panelGrid>
 					</h:panelGrid>
 				</h:panelGrid>
-				
+
 			</p:panel>
 
 
