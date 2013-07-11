@@ -23,17 +23,21 @@
 					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
 			</p:breadCrumb>
 			<p:dataTable var="job" value="#{jobticketBean.job}">
+				<f:facet name="header">Jobticket</f:facet>
 				<p:column headerText="Jobnummer">
 					<p:outputLabel value="#{job.id}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Alte Jobnummer">
+					<p:outputLabel value="#{job.alteJobnummer}"></p:outputLabel>
 				</p:column>
 				<p:column headerText="Name">
 					<p:outputLabel value="#{job.name}"></p:outputLabel>
 				</p:column>
-				<p:column headerText="Kunde">
-					<p:outputLabel value="#{job.kunde.name}"></p:outputLabel>
-				</p:column>
 				<p:column headerText="Beschreibung">
 					<p:outputLabel value="#{job.jobbeschreibung}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Kunde">
+					<p:outputLabel value="#{job.kunde.name}"></p:outputLabel>
 				</p:column>
 				<p:column headerText="Budget in Euro">
 					<p:outputLabel value="#{job.budgetInEuro}"></p:outputLabel>
@@ -44,6 +48,7 @@
 
 			<p:dataTable var="produkt"
 				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}">
+				<f:facet name="header">Produkte</f:facet>
 				<p:column headerText="Produktbeschreibung">
 					<p:outputLabel value="#{produkt.produktbeschreibung}"></p:outputLabel>
 				</p:column>
@@ -63,15 +68,22 @@
 			<p></p>
 
 			<p:dataTable var="kosten" value="#{aufwandBean.kostenFromJob}">
+			<f:facet name="header">Kosten</f:facet>
 				<p:column headerText="Angestellter">
+				
 					<p:outputLabel
 						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} "></p:outputLabel>
 				</p:column>
 
-				<p:column headerText="Kosten">
+				<p:column headerText="Aufwand">
 					<p:outputLabel value="#{kosten.arbeitsaufwand}"></p:outputLabel>
 				</p:column>
+				<p:column headerText="Aufwandsart">
+					<p:outputLabel
+						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}"></p:outputLabel>
+				</p:column>
 			</p:dataTable>
+			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 			<p></p>
 			<p:button value="Zurück" outcome="jobticket_aufwand.xhtml"></p:button>
 			<p:button value="Fertig" outcome="start.xhtml"></p:button>
