@@ -3,6 +3,7 @@ package jt.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -24,6 +25,8 @@ import jt.entities.Kunde;
 @ApplicationScoped
 @Named
 public class JobticketBean {
+
+	private List<Job> filteredJobs;
 
 	/** The entity manager factory. */
 	@Inject
@@ -49,6 +52,24 @@ public class JobticketBean {
 
 	/** The neuer job. */
 	private boolean neuerJob = false;
+	
+	@PostConstruct
+	public void init() {
+		filteredJobs=getJobs();
+	}
+	
+	public String refreshFilter() {
+		filteredJobs=getJobs();
+		return "start.xhtml";
+	}
+	
+	public List<Job> getFilteredJobs() {
+		return filteredJobs;
+	}
+
+	public void setFilteredJobs(List<Job> filteredJobs) {
+		this.filteredJobs = filteredJobs;
+	}
 
 	/**
 	 * Gets the selected kunde id.
