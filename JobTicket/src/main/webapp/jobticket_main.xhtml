@@ -60,8 +60,7 @@
 
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-							<p:ajax event="change" update="@form"
-								listener="#{jobticketBean.updateKuerzel}" />
+							
 						</p:selectOneMenu>
 					</p:column>
 					<p:column>

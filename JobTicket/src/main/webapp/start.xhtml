@@ -17,37 +17,29 @@
 			<p:commandButton value="Neues Jobticket anlegen"
 				action="#{jobticketBean.neuesJobticket}" ajax="false" />
 			<p></p>
-
-
-
-
 			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
-				emptyMessage="No Jobs found with given criteria"
+				emptyMessage="Keine Jobs mit diesem Suchkriterium gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">
 
 				<f:facet name="header">
-
 					<h:outputText value="Jobticket"></h:outputText>
 				</f:facet>
-
-
 				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
-					footerText="contains" filterMatchMode="contains">
+					 filterMatchMode="startsWith">
 					<h:outputText value="#{job.id}" />
 				</p:column>
-
 				<p:column id="nameColumn" filterBy="#{job.name}"
-					headerText="Jobname" footerText="contains"
+					headerText="Jobname" 
 					filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
 				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
-					headerText="Kunde" footerText="contains" filterMatchMode="contains">
+					headerText="Kunde"  filterMatchMode="contains">
 					<h:outputText value="#{job.kunde.name}" />
 				</p:column>
 				<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
-					headerText="Beschreibung" footerText="contains"
+					headerText="Beschreibung" 
 					filterMatchMode="contains">
 					<h:outputText value="#{job.jobbeschreibung}" />
 				</p:column>

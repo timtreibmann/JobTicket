@@ -89,14 +89,6 @@ public class JobticketBean {
 		this.selectedKundeId = selectedKundeId;
 	}
 
-	/**
-	 * Update kuerzel.
-	 */
-	public void updateKuerzel() {
-		Kunde k = kundenBean.findKundenByID(selectedKundeId);
-		kuerzel = k.getKundenkuerzel();
-
-	}
 
 	/**
 	 * Gets the kuerzel.
