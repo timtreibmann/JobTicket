@@ -85,8 +85,8 @@
 			</p:dataTable>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 			<p></p>
-			<p:button value="Zurück" outcome="jobticket_aufwand.xhtml"></p:button>
-			<p:button value="Fertig" outcome="start.xhtml"></p:button>
+			<p:button value="Zurück"  outcome="jobticket_aufwand.xhtml"></p:button>
+			<p:commandButton ajax="false"  value="Fertig" action="#{jobticketBean.refreshFilter}"></p:commandButton>
 		</p:panel>
 	</h:form>
 </h:body>

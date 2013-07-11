@@ -17,48 +17,58 @@
 			<p:commandButton value="Neues Jobticket anlegen"
 				action="#{jobticketBean.neuesJobticket}" ajax="false" />
 			<p></p>
-			<p:dataTable value="#{jobticketBean.jobs}" var="job"
-				emptyMessage="Keine Jobtickets vorhanden">
 
-				<p:column>
-					<f:facet name="header">ID</f:facet>
+
+
+
+			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
+				emptyMessage="No Jobs found with given criteria"
+				widgetVar="dataTableWidgetVar"
+				filteredValue="#{jobticketBean.filteredJobs}"
+				>
+			
+		<f:facet name="header">  
+            
+            <h:outputText value="Jobticket"></h:outputText>
+        </f:facet>  
+  <f:ajax listener="#{jobticketBean.init}" > </f:ajax>
+
+				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
+					footerText="contains" filterMatchMode="contains">
 					<h:outputText value="#{job.id}" />
 				</p:column>
 
-				<p:column>
-					<f:facet name="header">Name</f:facet>
+				<p:column id="nameColumn" filterBy="#{job.name}"
+					headerText="Jobname" footerText="contains"
+					filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
-
-
-				<p:column>
-					<f:facet name="header">Beschreibung</f:facet>
-					<h:outputText value="#{job.jobbeschreibung}" />
-				</p:column>
-
-
-				<p:column>
-					<f:facet name="header">Kundenname</f:facet>
+				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
+					headerText="Kunde" footerText="contains" filterMatchMode="contains">
 					<h:outputText value="#{job.kunde.name}" />
 				</p:column>
-
+				<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
+					headerText="Beschreibung" footerText="contains"
+					filterMatchMode="contains">
+					<h:outputText value="#{job.jobbeschreibung}" />
+				</p:column>
 				<p:column>
 					<p:columnGroup>
 						<p:overlayPanel id="p" for="delete" hideEffect="fade">
 							<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
 							<p></p>
 							<p:commandButton value="Ja"
-								actionListener="#{jobticketBean.delete(job)}" update="@form" />
-							<p:commandButton value="Nein" update="@form" />
+								actionListener="#{jobticketBean.delete(job)}" update="@form"
+								oncomplete="dataTableWidgetVar.filter();" />
+							<p:commandButton value="Nein" />
 						</p:overlayPanel>
 						<p:commandButton id="delete" icon="ui-icon-trash" />
-						<p:commandButton icon="ui-icon-wrench"
-							action="#{jobticketBean.editJob(job)}" ajax="false" />
+						<p:commandButton icon="ui-icon-wrench" ajax="false"
+							action="#{jobticketBean.editJob(job)}" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-
 	</h:form>
 </h:body>
 </html>

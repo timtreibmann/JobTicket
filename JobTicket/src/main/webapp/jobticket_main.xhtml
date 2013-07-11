@@ -14,7 +14,7 @@
 
 		<p:tooltip for="find" value="Kunden mit Kundenkürzel suchen"></p:tooltip>
 		<p:tooltip for="neuerKundeButton" value="Neuen Kunden anlegen"></p:tooltip>
-		
+
 			<p:breadCrumb styleClass="breadCrumbpanel">
 				<p:menuitem value="Übersicht"
 					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
@@ -127,7 +127,7 @@
 					<p:row>
 						<p:column colspan="7">
 							<p:button outcome="start.xhtml" value="Zurück" styleClass="buttonZurueck" />
-							
+
 							<p:commandButton action="#{jobticketBean.saveJobticket}"
 								ajax="false" value="Weiter"  styleClass="buttonWeiter">
 							</p:commandButton>
@@ -135,7 +135,7 @@
 					</p:row>
 				</f:facet>
 			</p:panelGrid>
-		
+
 	</h:form>
 </h:body>
 </html>
