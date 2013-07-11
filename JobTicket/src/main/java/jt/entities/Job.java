@@ -1,7 +1,11 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
 import java.util.Date;
 import java.util.List;
 
@@ -54,7 +58,7 @@ public class Job implements Serializable {
 
 	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
-	@OneToMany(mappedBy = "job")
+	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	// bi-directional many-to-one association to Kunde
@@ -64,12 +68,14 @@ public class Job implements Serializable {
 
 	// bi-directional many-to-one association to Kosten
 	/** The kostens. */
-	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
+	@CascadeOnDelete
 	private List<Kosten> kostens;
 
 	// bi-directional many-to-one association to Produkteigenschaften
 	/** The produkteigenschaftens. */
-	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
+	@CascadeOnDelete
 	private List<Produkteigenschaften> produkteigenschaftens;
 
 	/**
