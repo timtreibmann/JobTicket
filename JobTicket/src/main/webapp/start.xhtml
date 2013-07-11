@@ -24,14 +24,13 @@
 			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
 				emptyMessage="No Jobs found with given criteria"
 				widgetVar="dataTableWidgetVar"
-				filteredValue="#{jobticketBean.filteredJobs}"
-				>
-			
-		<f:facet name="header">  
-            
-            <h:outputText value="Jobticket"></h:outputText>
-        </f:facet>  
-  <f:ajax listener="#{jobticketBean.init}" > </f:ajax>
+				filteredValue="#{jobticketBean.filteredJobs}">
+
+				<f:facet name="header">
+
+					<h:outputText value="Jobticket"></h:outputText>
+				</f:facet>
+
 
 				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
 					footerText="contains" filterMatchMode="contains">
