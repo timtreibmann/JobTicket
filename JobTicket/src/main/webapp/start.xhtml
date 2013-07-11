@@ -44,8 +44,14 @@
 
 				<p:column>
 					<p:columnGroup>
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{jobticketBean.delete(job)}" update="@form" />
+						<p:overlayPanel id="p" for="delete" hideEffect="fade">
+							<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
+							<p></p>
+							<p:commandButton value="Ja"
+								actionListener="#{jobticketBean.delete(job)}" update="@form" />
+							<p:commandButton value="Nein" update="@form" />
+						</p:overlayPanel>
+						<p:commandButton id="delete" icon="ui-icon-trash" />
 						<p:commandButton icon="ui-icon-wrench"
 							action="#{jobticketBean.editJob(job)}" ajax="false" />
 					</p:columnGroup>
