@@ -47,7 +47,7 @@
 			<p></p>
 
 			<p:dataTable var="produkt"
-				value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}">
+				value="#{jobticketBean.job.produkteigenschaftens}">
 				<f:facet name="header">Produkte</f:facet>
 				<p:column headerText="Produktbeschreibung">
 					<p:outputLabel value="#{produkt.produktbeschreibung}"></p:outputLabel>
@@ -67,7 +67,7 @@
 
 			<p></p>
 
-			<p:dataTable var="kosten" value="#{aufwandBean.kostenFromJob}">
+			<p:dataTable var="kosten" value="#{jobticketBean.job.kostens}">
 			<f:facet name="header">Kosten</f:facet>
 				<p:column headerText="Angestellter">
 				

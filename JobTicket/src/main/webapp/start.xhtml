@@ -9,12 +9,18 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
+		<ui:repeat  var="angestellter"  value="#{angestellteBean.angestelltes[0]}">
+			<h:outputText value="#{angestellter.vorname} hat Jobs: "></h:outputText>
+			<ui:repeat var="kosten" value="#{angestellter.kostens}">
+			<h:outputText value="#{kosten.job.id}"></h:outputText>
+			</ui:repeat>
+		</ui:repeat>
 		<p:panel style="width:50%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht"
 					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
 			</p:breadCrumb>
-			<p:commandButton value="Neues Jobticket anlegen"
+			<p:commandButton value="Neues Ticket"
 				action="#{jobticketBean.neuesJobticket}" ajax="false" />
 			<p></p>
 			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
@@ -25,24 +31,34 @@
 				<f:facet name="header">
 					<h:outputText value="Jobticket"></h:outputText>
 				</f:facet>
+				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
+					headerText="Erstelldatum" filterMatchMode="startsWith">
+					<h:outputText value="#{job.erstellDatum}">
+						<f:convertDateTime timeStyle="short"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
 				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
-					 filterMatchMode="startsWith">
+					filterMatchMode="startsWith">
 					<h:outputText value="#{job.id}" />
 				</p:column>
 				<p:column id="nameColumn" filterBy="#{job.name}"
-					headerText="Jobname" 
-					filterMatchMode="contains">
+					headerText="Jobname" filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
 				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
-					headerText="Kunde"  filterMatchMode="contains">
+					headerText="Kunde" filterMatchMode="contains">
 					<h:outputText value="#{job.kunde.name}" />
 				</p:column>
 				<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
-					headerText="Beschreibung" 
-					filterMatchMode="contains">
+					headerText="Beschreibung" filterMatchMode="contains">
 					<h:outputText value="#{job.jobbeschreibung}" />
 				</p:column>
+				<p:column>
+				<ui:repeat var="produkt" value="#{job.produkteigenschaftens}">
+					<h:outputText value="#{produkt.id}"></h:outputText>
+				</ui:repeat>
+				</p:column>
+
 				<p:column>
 					<p:columnGroup>
 						<p:overlayPanel id="p" for="delete" hideEffect="fade">

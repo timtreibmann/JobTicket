@@ -29,13 +29,12 @@
 		</p:commandButton>
 		<p />
 		<ui:repeat
-			value="#{produkteigenschaftenBean.produkteigenschaftenFromJob}"
+			value="#{jobticketBean.job.produkteigenschaftens}"
 			var="produkteigenschaften" id="table">
 
 			<p:accordionPanel activeIndex="-1">
 
-				<p:tab
-					title="Produkt: #{fn:substring(produkteigenschaften.produktbeschreibung,0,40)} ... ">
+				<p:tab id="tab"  title="Produkt: #{fn:substring(produkteigenschaften.produktbeschreibung,0,40)} ... ">
 					<p:commandButton
 						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
 						update="@form" icon="ui-icon-trash">
@@ -46,7 +45,7 @@
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<h:outputLabel></h:outputLabel>
 							<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
-							<p:commandButton update="@this growl"
+							<p:commandButton update="@form"
 								icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
 								actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
 

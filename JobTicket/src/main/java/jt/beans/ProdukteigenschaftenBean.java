@@ -19,17 +19,16 @@ import jt.entities.Produkteigenschaften;
 
 // TODO: Auto-generated Javadoc
 /**
- * @author jan & tim
- * The Class ProdukteigenschaftenBean.
+ * @author jan & tim The Class ProdukteigenschaftenBean.
  */
 @Named
 @RequestScoped
 public class ProdukteigenschaftenBean {
-	
+
 	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	/** The em. */
 	private EntityManager em;
 
@@ -44,7 +43,7 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Neues produkt.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public String neuesProdukt() {
@@ -54,7 +53,7 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Gets the produkteigenschaften.
-	 *
+	 * 
 	 * @return the produkteigenschaften
 	 */
 	public Produkteigenschaften getProdukteigenschaften() {
@@ -63,8 +62,9 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Sets the produkteigenschaften.
-	 *
-	 * @param produkteigenschaften the new produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the new produkteigenschaften
 	 */
 	public void setProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
@@ -73,7 +73,7 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Gets the job.
-	 *
+	 * 
 	 * @return the job
 	 */
 	public Job getJob() {
@@ -82,8 +82,9 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Sets the job.
-	 *
-	 * @param job the new job
+	 * 
+	 * @param job
+	 *            the new job
 	 */
 	public void setJob(Job job) {
 		this.job = job;
@@ -91,8 +92,9 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Edits the produkteigenschaften.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the string
 	 */
 	public String editProdukteigenschaften(
@@ -103,24 +105,25 @@ public class ProdukteigenschaftenBean {
 
 	/**
 	 * Save produkteigenschaften.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public String saveProdukteigenschaften() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		produkteigenschaften.setErledigt(0);
-		produkteigenschaften.setJob(job);
-		em.merge(job);
+		job.addProdukteigenschaften(produkteigenschaften);
 		em.persist(produkteigenschaften);
+		em.merge(job);
 		em.getTransaction().commit();
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
 	/**
 	 * Update produkteigenschaften.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the string
 	 */
 	public String updateProdukteigenschaften(
@@ -156,48 +159,26 @@ public class ProdukteigenschaftenBean {
 	}
 
 	/**
-	 * Gets the produkteigenschaften from job.
-	 *
-	 * @return the produkteigenschaften from job
-	 */
-	public List<Produkteigenschaften> getProdukteigenschaftenFromJob() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		int id = job.getId();
-		final Query query = em
-				.createQuery("SELECT p FROM Produkteigenschaften p WHERE p.job.id = :id");
-		query.setParameter("id", id);
-		@SuppressWarnings("unchecked")
-		List<Produkteigenschaften> produktListe = query.getResultList();
-		if (produktListe == null) {
-			produktListe = new ArrayList<Produkteigenschaften>();
-		}
-		for (Produkteigenschaften p : produktListe) {
-			System.out.println(p);
-		}
-		em.getTransaction().commit();
-		return produktListe;
-	}
-
-	/**
 	 * Delete.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the string
 	 */
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		produkteigenschaften = em.merge(produkteigenschaften);
-		em.remove(produkteigenschaften);
+		job.removeProdukteigenschaften(produkteigenschaften);
+		em.merge(job);
 		em.getTransaction().commit();
 		return null;
 	}
 
 	/**
 	 * Toggle erledigt.
-	 *
-	 * @param produkteigenschaften the produkteigenschaften
+	 * 
+	 * @param produkteigenschaften
+	 *            the produkteigenschaften
 	 * @return the string
 	 */
 	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {

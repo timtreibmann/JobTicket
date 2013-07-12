@@ -20,10 +20,8 @@
 					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
 			</p:breadCrumb>
 
-
 			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
 			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
-
 
 			<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
 			<h:inputHidden></h:inputHidden>
@@ -56,7 +54,7 @@
 			</p:fieldset>
 			<p:fieldset>
 				<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
-				<ui:repeat var="kosten" value="#{aufwandBean.kostenFromJob}">
+				<ui:repeat var="kosten" value="#{jobticketBean.job.kostens}">
 
 					<p:growl id="growl"></p:growl>
 					<p:tooltip for="deletebutton" value="Mitarbeiter vom Job entfernen"></p:tooltip>

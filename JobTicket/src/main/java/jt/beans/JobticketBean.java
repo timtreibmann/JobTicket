@@ -1,11 +1,11 @@
 package jt.beans;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +20,7 @@ import jt.entities.Kunde;
 // TODO: Auto-generated Javadoc
 /**
  * The Class JobticketBean.
+ * 
  * @author jan & tim
  */
 @ApplicationScoped
@@ -31,7 +32,7 @@ public class JobticketBean {
 	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-	
+
 	/** The em. */
 	private EntityManager em;
 
@@ -52,17 +53,17 @@ public class JobticketBean {
 
 	/** The neuer job. */
 	private boolean neuerJob = false;
-	
+
 	@PostConstruct
 	public void init() {
-		filteredJobs=getJobs();
+		filteredJobs = getJobs();
 	}
-	
+
 	public String refreshFilter() {
-		filteredJobs=getJobs();
+		filteredJobs = getJobs();
 		return "start.xhtml";
 	}
-	
+
 	public List<Job> getFilteredJobs() {
 		return filteredJobs;
 	}
@@ -73,7 +74,7 @@ public class JobticketBean {
 
 	/**
 	 * Gets the selected kunde id.
-	 *
+	 * 
 	 * @return the selected kunde id
 	 */
 	public int getSelectedKundeId() {
@@ -82,17 +83,17 @@ public class JobticketBean {
 
 	/**
 	 * Sets the selected kunde id.
-	 *
-	 * @param selectedKundeId the new selected kunde id
+	 * 
+	 * @param selectedKundeId
+	 *            the new selected kunde id
 	 */
 	public void setSelectedKundeId(int selectedKundeId) {
 		this.selectedKundeId = selectedKundeId;
 	}
 
-
 	/**
 	 * Gets the kuerzel.
-	 *
+	 * 
 	 * @return the kuerzel
 	 */
 	public String getKuerzel() {
@@ -101,8 +102,9 @@ public class JobticketBean {
 
 	/**
 	 * Sets the kuerzel.
-	 *
-	 * @param kuerzel the new kuerzel
+	 * 
+	 * @param kuerzel
+	 *            the new kuerzel
 	 */
 	public void setKuerzel(String kuerzel) {
 		this.kuerzel = kuerzel;
@@ -110,7 +112,7 @@ public class JobticketBean {
 
 	/**
 	 * Gets the job.
-	 *
+	 * 
 	 * @return the job
 	 */
 	public Job getJob() {
@@ -119,8 +121,9 @@ public class JobticketBean {
 
 	/**
 	 * Sets the job.
-	 *
-	 * @param job the new job
+	 * 
+	 * @param job
+	 *            the new job
 	 */
 	public void setJob(Job job) {
 		this.job = job;
@@ -128,8 +131,9 @@ public class JobticketBean {
 
 	/**
 	 * Edits the job.
-	 *
-	 * @param job the job
+	 * 
+	 * @param job
+	 *            the job
 	 * @return the string
 	 */
 	public String editJob(Job job) {
@@ -140,7 +144,7 @@ public class JobticketBean {
 
 	/**
 	 * Neues jobticket.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public String neuesJobticket() {
@@ -151,13 +155,16 @@ public class JobticketBean {
 
 	/**
 	 * Save jobticket.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public String saveJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
+		if (job.getErstellDatum()==null) {
+			job.setErstellDatum(new Date());
+		}
 		job.setKunde(k);
 		if (neuerJob)
 			em.persist(job);
@@ -169,12 +176,12 @@ public class JobticketBean {
 
 	/**
 	 * Find kunde by kuerzel.
-	 *
+	 * 
 	 * @return the string
 	 */
 	public String findKundeByKuerzel() {
 		System.out.println("testi");
-	
+
 		Kunde k = kundenBean.findKundenByKuerzel(kuerzel);
 		selectedKundeId = k.getId();
 		return null;
@@ -182,8 +189,9 @@ public class JobticketBean {
 
 	/**
 	 * Find job by id.
-	 *
-	 * @param id the id
+	 * 
+	 * @param id
+	 *            the id
 	 * @return the job
 	 */
 	public Job findJobByID(int id) {
@@ -192,7 +200,7 @@ public class JobticketBean {
 
 	/**
 	 * Gets the jobs.
-	 *
+	 * 
 	 * @return the jobs
 	 */
 	public List<Job> getJobs() {
@@ -208,11 +216,13 @@ public class JobticketBean {
 		return jobListe;
 
 	}
+	
 
 	/**
 	 * Delete.
-	 *
-	 * @param job the job
+	 * 
+	 * @param job
+	 *            the job
 	 * @return the string
 	 */
 	public String delete(Job job) {

@@ -1,7 +1,9 @@
 package jt.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -47,7 +49,7 @@ public class Angestellte implements Serializable {
 
 	//bi-directional many-to-one association to Kosten
 	/** The kostens. */
-	@OneToMany(mappedBy="angestellte")
+	@OneToMany(mappedBy="angestellte", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Kosten> kostens;
 
 	/**

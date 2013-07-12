@@ -52,9 +52,9 @@ public class Job implements Serializable {
 	/** The print. */
 	private String print;
 
-	/** The vorlage. */
+	/** The erstellDatum. */
 	@Temporal(TemporalType.DATE)
-	private Date vorlage;
+	private Date erstellDatum;
 
 	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
@@ -237,22 +237,22 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the vorlage.
+	 * Gets the erstellDatum.
 	 * 
-	 * @return the vorlage
+	 * @return the erstellDatum
 	 */
-	public Date getVorlage() {
-		return this.vorlage;
+	public Date getErstellDatum() {
+		return this.erstellDatum;
 	}
 
 	/**
-	 * Sets the vorlage.
+	 * Sets the erstellDatum.
 	 * 
-	 * @param vorlage
-	 *            the new vorlage
+	 * @param erstellDatum
+	 *            the new erstellDatum
 	 */
-	public void setVorlage(Date vorlage) {
-		this.vorlage = vorlage;
+	public void setErstellDatum(Date erstellDatum) {
+		this.erstellDatum = erstellDatum;
 	}
 
 	/**

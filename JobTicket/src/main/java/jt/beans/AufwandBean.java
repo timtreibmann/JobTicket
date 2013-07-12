@@ -11,9 +11,11 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
+import jt.entities.Jobbearbeiter;
 import jt.entities.Kosten;
 
 // TODO: Auto-generated Javadoc
@@ -149,10 +151,11 @@ public class AufwandBean {
 			em.getTransaction().begin();
 			kosten.setArbeitsaufwand(0);
 			kosten.setArbeitsaufwandIstInEuro(1);
-			kosten.setAngestellte(angestellte);
-			kosten.setJob(job);
-			em.merge(job);
+			angestellte.addKosten(kosten);
+			job.addKosten(kosten);
 			em.persist(kosten);
+			em.merge(angestellte);
+			em.merge(job);
 			em.getTransaction().commit();
 		} else {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -281,8 +284,8 @@ public class AufwandBean {
 	public String delete(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		kosten = em.merge(kosten);
-		em.remove(kosten);
+		job.removeKosten(kosten);
+		em.merge(job);
 		em.getTransaction().commit();
 		return null;
 	}
