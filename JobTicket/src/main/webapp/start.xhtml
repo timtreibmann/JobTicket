@@ -9,12 +9,6 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-		<ui:repeat  var="angestellter"  value="#{angestellteBean.angestelltes[0]}">
-			<h:outputText value="#{angestellter.vorname} hat Jobs: "></h:outputText>
-			<ui:repeat var="kosten" value="#{angestellter.kostens}">
-			<h:outputText value="#{kosten.job.id}"></h:outputText>
-			</ui:repeat>
-		</ui:repeat>
 		<p:panel style="width:50%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht"
@@ -54,9 +48,9 @@
 					<h:outputText value="#{job.jobbeschreibung}" />
 				</p:column>
 				<p:column>
-				<ui:repeat var="produkt" value="#{job.produkteigenschaftens}">
-					<h:outputText value="#{produkt.id}"></h:outputText>
-				</ui:repeat>
+					<ui:repeat var="produkt" value="#{job.produkteigenschaftens}">
+						<h:outputText value="#{produkt.id}"></h:outputText>
+					</ui:repeat>
 				</p:column>
 
 				<p:column>
