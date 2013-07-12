@@ -156,7 +156,7 @@ public class AufwandBean {
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
 			kosten.setArbeitsaufwand(0);
-			kosten.setArbeitsaufwandIstInEuro(1);
+			kosten.setArbeitsaufwandIstInEuro(0);
 			angestellte.addKosten(kosten);
 			job.addKosten(kosten);
 			em.persist(kosten);

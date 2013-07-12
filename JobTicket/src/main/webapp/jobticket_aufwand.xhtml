@@ -74,7 +74,6 @@
 
 							<p:panelGrid columns="2">
 								<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-									<f:convertNumber pattern="#0.00"></f:convertNumber>
 									<p:ajax event="change" process="@this" update="@form"
 										listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
 								</p:inputText>
@@ -91,7 +90,7 @@
 				</ui:repeat>
 				<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 				<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
-					<f:convertNumber pattern="#0.00"></f:convertNumber>
+					
 				</h:outputText>
 			</p:fieldset>
 
