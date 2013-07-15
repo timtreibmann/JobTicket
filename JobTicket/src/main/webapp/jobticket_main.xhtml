@@ -93,7 +93,7 @@
 				</p:column>
 				<p:column>
 					<p:inputText id="job" value="#{jobticketBean.job.name}"
-						required="true" />
+						 />
 				</p:column>
 				<p:column rowspan="3">
 					<p:outputLabel for="jobbeschreibung" value="Beschreibung" />
@@ -117,8 +117,17 @@
 					<p:outputLabel for="erstelldatum" value="Erstelldatum: " />
 				</p:column>
 				<p:column>
-					
-					<p:outputLabel id="erstelldatum" value="#{jobticketBean.job.erstellDatum==null  ? 'wird generiert' : jobticketBean.job.erstellDatum}" />
+					<p:outputLabel id="erstelldatum"
+						value="#{jobticketBean.job.erstellDatum==null  ? 'wird generiert' : jobticketBean.job.erstellDatum}" />
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel for="ersteller" value="Erstellt vom Benutzer: " />
+				</p:column>
+				<p:column>
+					<p:outputLabel id="ersteller"
+						value="#{jobticketBean.job.ersteller==null  ? request.remoteUser : jobticketBean.job.ersteller}" />
 				</p:column>
 			</p:row>
 			<p:row>

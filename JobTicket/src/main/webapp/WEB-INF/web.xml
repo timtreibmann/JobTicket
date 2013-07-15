@@ -10,7 +10,7 @@
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>cupertino</param-value>
+		<param-value>smoothness</param-value>
 	</context-param>
 
 	<listener>
@@ -26,5 +26,23 @@
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 
-	
+	<!-- Define a Security Constraint on this Application -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>TheTest Application</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>testuser</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<!-- Define the Login Configuration for this Application -->
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/faces/login.xhtml</form-login-page>
+			<form-error-page>/faces/login-failed.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
 </web-app>

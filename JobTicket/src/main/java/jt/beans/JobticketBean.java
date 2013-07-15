@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -58,10 +59,14 @@ public class JobticketBean {
 		this.filterJoblistByAngestellten = filterJoblistByAngestellten;
 	}
 
-	public void toggleFilter() {
-		
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage("test"+filterJoblistByAngestellten));
+	private boolean showAllJobs;
+
+	public boolean isFilterJoblistByUser() {
+		return showAllJobs;
+	}
+
+	public void setFilterJoblistByUser(boolean filterJoblistByUser) {
+		this.showAllJobs = filterJoblistByUser;
 	}
 
 	public int getSelectedAngestellterId() {
@@ -82,6 +87,10 @@ public class JobticketBean {
 	@PostConstruct
 	public void init() {
 		filteredJobs = getJobs();
+	}
+	
+	public void loadTest() {
+		
 	}
 
 	public String refreshFilter() {
@@ -137,9 +146,10 @@ public class JobticketBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
-
 		job.setKunde(k);
 		if (neuerJob) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			job.setErsteller(fc.getExternalContext().getRemoteUser());
 			job.setErstellDatum(new Date());
 			em.persist(job);
 		} else {
@@ -147,10 +157,6 @@ public class JobticketBean {
 		}
 		em.getTransaction().commit();
 		return "jobticket_produktbeschreibung.xhtml";
-	}
-
-	public void loadTest() {
-
 	}
 
 	public List<Job> getJobsFromJobbearbeiter() {
@@ -167,17 +173,23 @@ public class JobticketBean {
 		return jobListe;
 	}
 
-	public String findKundeByKuerzel() {
-		Kunde k = kundenBean.findKundenByKuerzel(kuerzel);
-		selectedKundeId = k.getId();
-		return null;
-	}
+	public List<Job> getJobsFromUser() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		String user = fc.getExternalContext().getRemoteUser();
+		Query query = em
+				.createQuery("SELECT j FROM Job j where j.ersteller = :username");
+		query.setParameter("username", user);
 
-	public Job findJobByID(int id) {
-		return em.find(Job.class, id);
+		List<Job> jobListe = query.getResultList();
+
+		return jobListe;
 	}
 
 	public List<Job> getJobs() {
+		if (showAllJobs) {
+		
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		final Query query = em.createQuery("SELECT b FROM Job b");
@@ -188,7 +200,20 @@ public class JobticketBean {
 		}
 		em.getTransaction().commit();
 		return jobListe;
+		}else{
+			return getJobsFromUser();
+		}
 
+	}
+
+	public String findKundeByKuerzel() {
+		Kunde k = kundenBean.findKundenByKuerzel(kuerzel);
+		selectedKundeId = k.getId();
+		return null;
+	}
+
+	public Job findJobByID(int id) {
+		return em.find(Job.class, id);
 	}
 
 	public String delete(Job job) {
@@ -198,6 +223,13 @@ public class JobticketBean {
 		em.remove(job);
 		em.getTransaction().commit();
 		return null;
+	}
+
+	public String logout() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = facesContext.getExternalContext();
+		externalContext.invalidateSession();
+		return "logout.xhtml";
 	}
 
 }

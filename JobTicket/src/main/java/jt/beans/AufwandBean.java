@@ -267,9 +267,7 @@ public class AufwandBean {
 	 * @return the string
 	 */
 	public String rechneUm(Kosten kosten) {
-		System.out.println("RECHNE");
 		double erg;
-		System.out.println(kosten.getArbeitsaufwandIstInEuro());
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);

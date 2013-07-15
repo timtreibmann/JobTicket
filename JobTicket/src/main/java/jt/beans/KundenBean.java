@@ -68,11 +68,6 @@ public class KundenBean {
 		if (kundenListe == null) {
 			kundenListe = new ArrayList<Kunde>();
 		}
-
-		for (Kunde k : kundenListe) {
-			System.out.println(k.getName());
-		}
-
 		em.getTransaction().commit();
 		return kundenListe.get(0);
 	}

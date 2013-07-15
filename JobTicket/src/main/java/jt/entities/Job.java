@@ -51,10 +51,14 @@ public class Job implements Serializable {
 
 	/** The print. */
 	private String print;
+	
+	private String ersteller;
 
 	/** The erstellDatum. */
 	@Temporal(TemporalType.DATE)
 	private Date erstellDatum;
+	
+	
 
 	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
@@ -234,6 +238,14 @@ public class Job implements Serializable {
 	 */
 	public void setPrint(String print) {
 		this.print = print;
+	}
+
+	public String getErsteller() {
+		return ersteller;
+	}
+
+	public void setErsteller(String ersteller) {
+		this.ersteller = ersteller;
 	}
 
 	/**
