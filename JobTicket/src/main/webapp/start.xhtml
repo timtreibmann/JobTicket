@@ -14,10 +14,31 @@
 				<p:menuitem value="Übersicht"
 					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
 			</p:breadCrumb>
+
 			<p:commandButton value="Neues Ticket"
 				action="#{jobticketBean.neuesJobticket}" ajax="false" />
 			<p></p>
-			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
+			<p:outputLabel for="jobbearbeiter"
+				value="Jobs für Bearbeiter anzeigen: "></p:outputLabel>
+			<p:selectOneMenu id="jobbearbeiter"
+				value="#{jobticketBean.selectedAngestellterId}" effect="fold"
+				editable="false">
+				<f:selectItems value="#{angestellteBean.angestelltes}"
+					var="angestellte"
+					itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+					itemValue="#{angestellte.id}" />
+				<p:ajax event="change" update="dataTable"
+					listener="#{jobticketBean.loadTest}"
+					oncomplete="dataTableWidgetVar.filter();" />
+			</p:selectOneMenu>
+			<p></p>
+		
+			<p:outputLabel for="checkbox" value="Jobs nach Angestellten filtern: "></p:outputLabel>
+			<p:selectBooleanCheckbox id="checkbox" value="#{jobticketBean.filterJoblistByAngestellten}">
+			<p:ajax listener="#{jobticketBean.toggleFilter}" update="dataTable" oncomplete="dataTableWidgetVar.filter();"></p:ajax>
+			</p:selectBooleanCheckbox>
+			
+			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.filterJoblistByAngestellten ? jobticketBean.jobsFromJobbearbeiter : jobticketBean.jobs}"
 				emptyMessage="Keine Jobs mit diesem Suchkriterium gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">
@@ -47,11 +68,8 @@
 					headerText="Beschreibung" filterMatchMode="contains">
 					<h:outputText value="#{job.jobbeschreibung}" />
 				</p:column>
-				<p:column>
-					<ui:repeat var="produkt" value="#{job.produkteigenschaftens}">
-						<h:outputText value="#{produkt.id}"></h:outputText>
-					</ui:repeat>
-				</p:column>
+
+
 
 				<p:column>
 					<p:columnGroup>
@@ -61,7 +79,7 @@
 							<p:commandButton value="Ja"
 								actionListener="#{jobticketBean.delete(job)}" update="@form"
 								oncomplete="dataTableWidgetVar.filter();" />
-							<p:commandButton value="Nein" />
+							<p:commandButton value="Nein" update="@form" />
 						</p:overlayPanel>
 						<p:commandButton id="delete" icon="ui-icon-trash" />
 						<p:commandButton icon="ui-icon-wrench" ajax="false"

@@ -59,8 +59,6 @@
 					<p:growl id="growl"></p:growl>
 					<p:tooltip for="deletebutton" value="Mitarbeiter vom Job entfernen"></p:tooltip>
 					<p:tooltip for="rechneum" value="Aufwand in Std. oder € umrechnen"></p:tooltip>
-					<p></p>
-					<p:panel>
 						<p:commandButton ajax="false" style="float:right"
 							id="deletebutton" action="#{aufwandBean.delete(kosten)}"
 							icon="ui-icon-trash"></p:commandButton>
@@ -85,8 +83,8 @@
 									actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 							</p:panelGrid>
 						</p:panelGrid>
-						<p></p>
-					</p:panel>
+						
+					<hr></hr>
 				</ui:repeat>
 				<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 				<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">

@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -14,7 +16,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import jt.annotations.AktuellerJob;
+import jt.entities.Angestellte;
 import jt.entities.Job;
+import jt.entities.Jobbearbeiter;
+import jt.entities.Kosten;
 import jt.entities.Kunde;
 
 // TODO: Auto-generated Javadoc
@@ -29,29 +34,49 @@ public class JobticketBean {
 
 	private List<Job> filteredJobs;
 
-	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 
-	/** The em. */
 	private EntityManager em;
 
-	/** The job. */
 	@Produces
 	@AktuellerJob
 	private Job job;
 
-	/** The selected kunde id. */
 	private int selectedKundeId;
 
-	/** The kuerzel. */
+	private int selectedAngestellterId;
+
+	private boolean filterJoblistByAngestellten;
+
+	public boolean isFilterJoblistByAngestellten() {
+		return filterJoblistByAngestellten;
+	}
+
+	public void setFilterJoblistByAngestellten(
+			boolean filterJoblistByAngestellten) {
+		this.filterJoblistByAngestellten = filterJoblistByAngestellten;
+	}
+
+	public void toggleFilter() {
+		
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage("test"+filterJoblistByAngestellten));
+	}
+
+	public int getSelectedAngestellterId() {
+		return selectedAngestellterId;
+	}
+
+	public void setSelectedAngestellterId(int selectedAngestellterId) {
+		this.selectedAngestellterId = selectedAngestellterId;
+	}
+
 	private String kuerzel;
 
-	/** The kunden bean. */
 	@Inject
 	private KundenBean kundenBean;
 
-	/** The neuer job. */
 	private boolean neuerJob = false;
 
 	@PostConstruct
@@ -72,137 +97,86 @@ public class JobticketBean {
 		this.filteredJobs = filteredJobs;
 	}
 
-	/**
-	 * Gets the selected kunde id.
-	 * 
-	 * @return the selected kunde id
-	 */
 	public int getSelectedKundeId() {
 		return selectedKundeId;
 	}
 
-	/**
-	 * Sets the selected kunde id.
-	 * 
-	 * @param selectedKundeId
-	 *            the new selected kunde id
-	 */
 	public void setSelectedKundeId(int selectedKundeId) {
 		this.selectedKundeId = selectedKundeId;
 	}
 
-	/**
-	 * Gets the kuerzel.
-	 * 
-	 * @return the kuerzel
-	 */
 	public String getKuerzel() {
 		return kuerzel;
 	}
 
-	/**
-	 * Sets the kuerzel.
-	 * 
-	 * @param kuerzel
-	 *            the new kuerzel
-	 */
 	public void setKuerzel(String kuerzel) {
 		this.kuerzel = kuerzel;
 	}
 
-	/**
-	 * Gets the job.
-	 * 
-	 * @return the job
-	 */
 	public Job getJob() {
 		return job;
 	}
 
-	/**
-	 * Sets the job.
-	 * 
-	 * @param job
-	 *            the new job
-	 */
 	public void setJob(Job job) {
 		this.job = job;
 	}
 
-	/**
-	 * Edits the job.
-	 * 
-	 * @param job
-	 *            the job
-	 * @return the string
-	 */
 	public String editJob(Job job) {
 		this.job = job;
 		neuerJob = false;
 		return "jobticket_main.xhtml";
 	}
 
-	/**
-	 * Neues jobticket.
-	 * 
-	 * @return the string
-	 */
 	public String neuesJobticket() {
 		this.job = new Job();
 		neuerJob = true;
 		return "jobticket_main.xhtml";
 	}
 
-	/**
-	 * Save jobticket.
-	 * 
-	 * @return the string
-	 */
 	public String saveJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kunde k = kundenBean.findKundenByID(selectedKundeId);
-		if (job.getErstellDatum()==null) {
-			job.setErstellDatum(new Date());
-		}
+
 		job.setKunde(k);
-		if (neuerJob)
+		if (neuerJob) {
+			job.setErstellDatum(new Date());
 			em.persist(job);
-		else
+		} else {
 			em.merge(job);
+		}
 		em.getTransaction().commit();
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
-	/**
-	 * Find kunde by kuerzel.
-	 * 
-	 * @return the string
-	 */
-	public String findKundeByKuerzel() {
-		System.out.println("testi");
+	public void loadTest() {
 
+	}
+
+	public List<Job> getJobsFromJobbearbeiter() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		Query query = em
+				.createQuery("SELECT j FROM Jobbearbeiter j where j.angestellte.id = :id");
+		query.setParameter("id", selectedAngestellterId);
+		List<Jobbearbeiter> jlist = query.getResultList();
+		List<Job> jobListe = new ArrayList<Job>();
+		for (Jobbearbeiter j : jlist) {
+			jobListe.add(j.getJob());
+		}
+		return jobListe;
+	}
+
+	public String findKundeByKuerzel() {
 		Kunde k = kundenBean.findKundenByKuerzel(kuerzel);
 		selectedKundeId = k.getId();
 		return null;
 	}
 
-	/**
-	 * Find job by id.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the job
-	 */
 	public Job findJobByID(int id) {
 		return em.find(Job.class, id);
 	}
 
-	/**
-	 * Gets the jobs.
-	 * 
-	 * @return the jobs
-	 */
 	public List<Job> getJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -216,15 +190,7 @@ public class JobticketBean {
 		return jobListe;
 
 	}
-	
 
-	/**
-	 * Delete.
-	 * 
-	 * @param job
-	 *            the job
-	 * @return the string
-	 */
 	public String delete(Job job) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

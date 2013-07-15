@@ -17,7 +17,6 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Jobbearbeiter;
 import jt.entities.Kosten;
-import jt.entities.Kunde;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,18 +28,14 @@ import jt.entities.Kunde;
 @RequestScoped
 public class AufwandBean {
 
-	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 
-	/** The em. */
 	private EntityManager em;
 
-	/** The kosten. */
 	@Inject
 	private Kosten kosten;
 
-	/** The angestellte bean. */
 	@Inject
 	private AngestellteBean angestellteBean;
 
@@ -156,9 +151,14 @@ public class AufwandBean {
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
 			kosten.setArbeitsaufwand(0);
-			kosten.setArbeitsaufwandIstInEuro(0);
+			kosten.setArbeitsaufwandIstInEuro(1);
+			Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
+			jobbearbeiter.setAngestellte(angestellte);
+			job.addJobbearbeiter(jobbearbeiter);
+
 			angestellte.addKosten(kosten);
 			job.addKosten(kosten);
+			em.persist(jobbearbeiter);
 			em.persist(kosten);
 			em.merge(angestellte);
 			em.merge(job);
@@ -183,12 +183,9 @@ public class AufwandBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Kosten k = em.find(Kosten.class, kosten.getId());
-
 		k.setArbeitsaufwand(kosten.getArbeitsaufwand());
-
 		berechneGesamtkosten(kosten);
 		k.setArbeitsaufwandIstInEuro(kosten.getArbeitsaufwandIstInEuro());
-
 		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
@@ -205,7 +202,6 @@ public class AufwandBean {
 				if (k.getAngestellte().getStundenlohn() == 0) {
 					betrag = 0;
 				} else {
-
 					if (k.getArbeitsaufwandIstInEuro() == 0) {
 						betrag = berechneAufwandInEuro(k);
 					} else {
@@ -214,7 +210,6 @@ public class AufwandBean {
 				}
 				gesamtKosten += betrag;
 			}
-
 		} catch (NullPointerException e) {
 
 		}
@@ -278,16 +273,13 @@ public class AufwandBean {
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);
-
 		} else {
 			erg = berechneAufwandInStd(kosten);
 			kosten.setArbeitsaufwandIstInEuro(0);
 		}
 		kosten.setArbeitsaufwand(erg);
-		System.out.println(erg);
 		updateKosten(kosten);
 		return null;
-
 	}
 
 	/**
@@ -297,13 +289,34 @@ public class AufwandBean {
 	 *            the kosten
 	 * @return the string
 	 */
-	public String delete(Kosten kosten) {
+	
+	private void deleteJobbearbeitersFromJob(Kosten kosten) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		List<Jobbearbeiter> jobbearbeiters = job.getJobbearbeiters();
+		Angestellte angestellte = kosten.getAngestellte();
+		Jobbearbeiter jobbearbeiter = null;
+		for (Jobbearbeiter j : jobbearbeiters) {
+			if (j.getAngestellte().getId() == angestellte.getId()) {
+				jobbearbeiter = j;
+			}
+		}
+		jobbearbeiter = em.find(Jobbearbeiter.class, jobbearbeiter.getId());
+		em.remove(jobbearbeiter);
+		em.getTransaction().commit();
+	}
+	
+	private void deleteKostenFromJob(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		job.removeKosten(kosten);
 		em.merge(job);
 		em.getTransaction().commit();
+	}
+	
+	public String delete(Kosten kosten) {
+		deleteJobbearbeitersFromJob(kosten);
+		deleteKostenFromJob(kosten);
 		return null;
 	}
-
 }

@@ -58,7 +58,7 @@ public class Job implements Serializable {
 
 	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
-	@OneToMany(mappedBy = "job", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	// bi-directional many-to-one association to Kunde

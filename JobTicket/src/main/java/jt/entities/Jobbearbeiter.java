@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -28,6 +30,7 @@ public class Jobbearbeiter implements Serializable {
 	//bi-directional many-to-one association to Angestellte
 	/** The angestellte. */
 	@ManyToOne
+	@CascadeOnDelete
 	private Angestellte angestellte;
 
 	//bi-directional many-to-one association to Job

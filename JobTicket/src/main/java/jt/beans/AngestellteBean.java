@@ -1,15 +1,9 @@
 package jt.beans;
 
-import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
-import jt.entities.Job;
-import jt.entities.Kosten;
-import jt.entities.Kunde;
-import jt.entities.Produkteigenschaften;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -29,45 +23,22 @@ import javax.persistence.Query;
 @RequestScoped
 public class AngestellteBean {
 
-	/** The angestellte. */
 	@Inject
 	private Angestellte angestellte;
 
-	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 
-	/** The em. */
-	private EntityManager em;
-
-	/** The job. */
-	@Inject
-	private Job job;
-
-	/**
-	 * Gets the angestellte.
-	 * 
-	 * @return the angestellte
-	 */
 	public Angestellte getAngestellte() {
 		return angestellte;
 	}
 
-	/**
-	 * Sets the angestellte.
-	 * 
-	 * @param angestellte
-	 *            the new angestellte
-	 */
 	public void setAngestellte(Angestellte angestellte) {
 		this.angestellte = angestellte;
 	}
 
-	/**
-	 * Gets the angestelltes.
-	 * 
-	 * @return the angestelltes
-	 */
+	private EntityManager em;
+
 	public List<Angestellte> getAngestelltes() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -80,44 +51,11 @@ public class AngestellteBean {
 		em.getTransaction().commit();
 		return angestellteListe;
 	}
-
-	public List<Produkteigenschaften> getProdukteigenschaftenFromJob() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		int id = job.getId();
-		final Query query = em
-				.createQuery("SELECT p FROM Produkteigenschaften p WHERE p.job.id = :id");
-		query.setParameter("id", id);
-		@SuppressWarnings("unchecked")
-		List<Produkteigenschaften> produktListe = query.getResultList();
-		if (produktListe == null) {
-			produktListe = new ArrayList<Produkteigenschaften>();
-		}
-		for (Produkteigenschaften p : produktListe) {
-			System.out.println(p);
-		}
-		em.getTransaction().commit();
-		return produktListe;
-	}
-
-	/**
-	 * Find angestellten by id.
-	 * 
-	 * @param id
-	 *            the id
-	 * @return the angestellte
-	 */
+	
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
 
-	/**
-	 * Delete.
-	 * 
-	 * @param angestellte
-	 *            the angestellte
-	 * @return the string
-	 */
 	public String delete(Angestellte angestellte) {
 		System.out.println("DELETE");
 		em = entityManagerFactory.createEntityManager();
@@ -128,11 +66,6 @@ public class AngestellteBean {
 		return null;
 	}
 
-	/**
-	 * Save angestellte.
-	 * 
-	 * @return the string
-	 */
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -144,23 +77,11 @@ public class AngestellteBean {
 		return "angestellte_add.xhtml";
 	}
 
-	/**
-	 * Edits the angestellten.
-	 * 
-	 * @param angestellte
-	 *            the angestellte
-	 * @return the string
-	 */
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;
 		return "angestellte_edit.xhtml";
 	}
 
-	/**
-	 * Update angestellten.
-	 * 
-	 * @return the string
-	 */
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

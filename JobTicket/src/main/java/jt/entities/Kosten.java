@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.eclipse.persistence.annotations.CascadeOnDelete;
+
 
 
 // TODO: Auto-generated Javadoc
@@ -44,6 +46,7 @@ public class Kosten implements Serializable {
 	//bi-directional many-to-one association to Job
 	/** The job. */
 	@ManyToOne
+
 	@JoinColumn(name="JOBS_ID")
 	private Job job;
 
