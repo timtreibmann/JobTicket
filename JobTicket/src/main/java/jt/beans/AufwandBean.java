@@ -155,7 +155,6 @@ public class AufwandBean {
 			Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
 			jobbearbeiter.setAngestellte(angestellte);
 			job.addJobbearbeiter(jobbearbeiter);
-
 			angestellte.addKosten(kosten);
 			job.addKosten(kosten);
 			em.persist(jobbearbeiter);

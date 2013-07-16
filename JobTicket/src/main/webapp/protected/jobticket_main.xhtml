@@ -147,7 +147,7 @@
 
 	</h:form>
 
-	<p:overlayPanel for=":form1:neuerKundeButton">
+	<p:overlayPanel my="left top" widgetVar="overlay" showEffect="fade" hideEffect="explode" for=":form1:neuerKundeButton">
 		<h:form>
 			<p:messages></p:messages>
 			<p:growl id="growl"></p:growl>
@@ -168,7 +168,7 @@
 						autocomplete="true" required="false" />
 				</h:panelGrid>
 				<h:panelGrid columns="4">
-					<p:button  value="Schließen" />
+					<p:commandButton immediate="true" onclick="overlay.hide()" update=":form1"  value="Schließen" />
 					<p:commandButton actionListener="#{kundenBean.saveKunde}" update="growl"
 						value="Kunden hinzufügen">
 					</p:commandButton>
