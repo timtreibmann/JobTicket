@@ -30,7 +30,6 @@ public class Jobbearbeiter implements Serializable {
 	//bi-directional many-to-one association to Angestellte
 	/** The angestellte. */
 	@ManyToOne
-	@CascadeOnDelete
 	private Angestellte angestellte;
 
 	//bi-directional many-to-one association to Job

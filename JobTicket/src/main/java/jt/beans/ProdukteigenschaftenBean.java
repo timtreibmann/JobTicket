@@ -82,6 +82,10 @@ public class ProdukteigenschaftenBean {
 	public void setJob(Job job) {
 		this.job = job;
 	}
+	
+	public int getProduktAnzahl() {
+		return job.getProdukteigenschaftens().size();
+	}
 
 	public String createProdukteigenschaft() {
 		em = entityManagerFactory.createEntityManager();

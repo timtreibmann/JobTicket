@@ -7,9 +7,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <h:head></h:head>
+
 <h:body>
 	<h:form>
+		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel id="panel" style="width:50%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht"
@@ -20,8 +23,7 @@
 					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
 			</p:breadCrumb>
 
-			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
-			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
+
 
 			<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
 			<h:inputHidden></h:inputHidden>
@@ -30,7 +32,7 @@
 					value="den ausgewählten Mitarbeiter zum Job hinzufügen"></p:tooltip>
 				<p:tooltip for="neuerAngestellterButton"
 					value="Neuen Angestellten anlegen"></p:tooltip>
-				<p:panelGrid columns="4">
+				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />
 					<p:selectOneMenu id="kontakter"
 						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
@@ -52,48 +54,60 @@
 					</p:button>
 				</p:panelGrid>
 			</p:fieldset>
+			<p></p>
 			<p:fieldset>
 				<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
-				<ui:repeat var="kosten" value="#{jobticketBean.job.kostens}">
+				<p></p>
+				<ui:repeat id="repeat" var="kosten"
+					value="#{jobticketBean.job.kostens}">
 
 					<p:growl id="growl"></p:growl>
-					<p:tooltip for="deletebutton" value="Mitarbeiter vom Job entfernen"></p:tooltip>
-					<p:tooltip for="rechneum" value="Aufwand in Std. oder € umrechnen"></p:tooltip>
-						<p:commandButton ajax="false" style="float:right"
-							id="deletebutton" action="#{aufwandBean.delete(kosten)}"
-							icon="ui-icon-trash"></p:commandButton>
-						<p:panelGrid columns="2">
-							<p:outputLabel value="Name: "></p:outputLabel>
-							<h:outputLabel
-								value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
+					<p:tooltip id="tooltip1" for="deletebutton"
+						value="Mitarbeiter vom Job entfernen"></p:tooltip>
+					<p:tooltip id="tooltip2" for="rechneum"
+						value="Aufwand in Std. oder € umrechnen"></p:tooltip>
+					<p:panelGrid styleClass="grid">
+						<p:row>
+							<p:column>
+								<p:commandButton update="@form" id="deletebutton"
+									action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Name: "></p:outputLabel>
+							</p:column>
+							<p:column style="width:300px">
+								<h:outputLabel
+									value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
+							</p:column>
 
-							<p:outputLabel value="Aufwand: "></p:outputLabel>
+							<p:column>
+								<p:outputLabel value="Aufwand: "></p:outputLabel>
 
-							<p:panelGrid columns="2">
+							</p:column>
+							<p:column>
 								<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
 									<p:ajax event="change" process="@this" update="@form"
 										listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
 								</p:inputText>
-
-
-								<p:commandButton update="@this aufwand" id="rechneum"
-									process="aufwand"
-									value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'Stunden' }"
+							</p:column>
+							<p:column style="width:100px">
+								<p:commandButton update="@this aufwand tooltip1 tooltip2"
+									id="rechneum" process="aufwand"
+									value=" #{kosten.arbeitsaufwandIstInEuro==1 ? '€':'h' }"
 									actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
-							</p:panelGrid>
-						</p:panelGrid>
-						
-					<hr></hr>
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
 				</ui:repeat>
+				<p></p>
 				<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 				<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
-					
 				</h:outputText>
 			</p:fieldset>
-
+			<p></p>
 			<p:fieldset>
-
 				<p:button icon="ui-icon-alert" title="Achtung">
 					<f:param name="achtung" />
 				</p:button>
@@ -104,7 +118,8 @@
 
 
 			</p:fieldset>
-
+			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
+			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
 		</p:panel>
 	</h:form>
 </h:body>
