@@ -236,7 +236,7 @@ public class JobticketBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		externalContext.invalidateSession();
-		return "logout.xhtml";
+		return "start.xhtml";
 	}
 
 }

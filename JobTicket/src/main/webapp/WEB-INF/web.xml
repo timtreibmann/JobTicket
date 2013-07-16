@@ -30,7 +30,7 @@
 	<security-constraint>
 		<web-resource-collection>
 			<web-resource-name>TheTest Application</web-resource-name>
-			<url-pattern>/*</url-pattern>
+			<url-pattern>/faces/protected/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>testuser</role-name>
@@ -42,7 +42,7 @@
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/faces/login.xhtml</form-login-page>
-			<form-error-page>/faces/login-failed.xhtml</form-error-page>
+			<form-error-page>/faces/error.xhtml</form-error-page>
 		</form-login-config>
 	</login-config>
 </web-app>
