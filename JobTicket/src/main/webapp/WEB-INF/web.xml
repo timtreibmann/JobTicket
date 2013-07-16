@@ -10,7 +10,7 @@
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>smoothness</param-value>
+		<param-value>redmond</param-value>
 	</context-param>
 
 	<listener>

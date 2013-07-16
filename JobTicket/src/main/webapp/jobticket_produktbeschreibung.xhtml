@@ -7,12 +7,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
-
+	<h:outputStylesheet library="css" name="style.css" />
 	<h:head></h:head>
 
 
 
-	<p:panel style="width:50%">
+	<p:panel style="width:80%">
 		<p:breadCrumb>
 			<p:menuitem value="Übersicht"
 				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
@@ -21,68 +21,93 @@
 			<p:menuitem value="Produktbeschreibung"
 				url="http://localhost:8080/JobTicket/faces/jobticket_produktbeschreibung.xhtml" />
 		</p:breadCrumb>
-		<p:button outcome="jobticket_main.xhtml" value="Zurück" />
-		<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
-		<p />
-		<p:commandButton action="#{produkteigenschaftenBean.neuesProdukt}"
-			ajax="false" value="Neues Produkt anlegen">
+		<p></p>
+		<p:commandButton
+			action="#{produkteigenschaftenBean.createProdukteigenschaft}"
+			update="@form" value="Neues Produkt anlegen">
 		</p:commandButton>
-		<p />
-		<ui:repeat
-			value="#{jobticketBean.job.produkteigenschaftens}"
-			var="produkteigenschaften" id="table">
+		<p></p>
+		
 
-			<p:accordionPanel activeIndex="-1">
+			<p:accordionPanel var="produkteigenschaften"  value="#{jobticketBean.job.produkteigenschaftens}"  id="acc" activeIndex="-1">
 
-				<p:tab id="tab"  title="Produkt: #{fn:substring(produkteigenschaften.produktbeschreibung,0,40)} ... ">
-					<p:commandButton
-						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
-						update="@form" icon="ui-icon-trash">
-					</p:commandButton>
-					<p:growl id="growl" showDetail="true" sticky="false" />
-					<h:panelGrid columns="4">
-						<h:panelGrid columns="2">
-							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
-							<h:outputLabel></h:outputLabel>
-							<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
-							<p:commandButton update="@form"
-								icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
-								actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
+				<p:tab
+					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #CCFFCC;' : ''}"
+					id="tab"
+					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
+					<p:panel>
+						<p:growl id="growl" showDetail="true" sticky="false" />
+						<p:panelGrid styleClass="grid">
+							<p:row>
+								<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
+								<p:column>
+									<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:commandButton update="@this growl acc"
+										icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
+										actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
 
-							<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
-							<p:calendar value="#{produkteigenschaften.eingangsdatum}"
-								id="eingangsdatum" required="true">
-								<p:ajax event="dateSelect" process="@this" update="growl"
-									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 
-							</p:calendar>
+									<p:commandButton icon="ui-icon-trash"
+										actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+										update="@form" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+								</p:column>
+								<p:column>
+									<p:calendar value="#{produkteigenschaften.eingangsdatum}"
+										id="eingangsdatum" required="true">
+										<p:ajax event="dateSelect" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:calendar>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
+								</p:column>
+								<p:column>
+									<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
+										id="ausgangsdatum">
+										<p:ajax event="dateSelect" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:calendar>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+								</p:column>
+								<p:column>
+									<p:calendar value="#{produkteigenschaften.vorlagedatum}"
+										id="fertigstellung">
+										<p:ajax event="dateSelect" process="@this" update="growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:calendar>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<p:outputLabel for="beschreibung" value="Beschreibung" />
+								</p:column>
+								<p:column>
+									<p:inputTextarea
+										value="#{produkteigenschaften.produktbeschreibung}"
+										id="beschreibung" cols="60">
+										<p:ajax event="change" process="@this" update="acc growl"
+											listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+									</p:inputTextarea>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panel header="Details" collapsed="true" toggleable="true">
 
-							<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
-							<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
-								id="ausgangsdatum">
-								<p:ajax event="dateSelect" process="@this" update="growl"
-									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
-							</p:calendar>
-						</h:panelGrid>
-						<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
-						<p:calendar value="#{produkteigenschaften.vorlagedatum}"
-							id="fertigstellung">
-							<p:ajax event="dateSelect" process="@this" update="growl"
-								listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
-						</p:calendar>
-					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:outputLabel for="beschreibung" value="Beschreibung" />
-						<p:inputTextarea
-							value="#{produkteigenschaften.produktbeschreibung}"
-							id="beschreibung" cols="60">
-							<p:ajax event="change" process="@this" update="growl"
-								listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
-						</p:inputTextarea>
-					</h:panelGrid>
-					<p:panel header="Details" toggleable="true" collapsed="true">
-						<h:panelGrid columns="2">
-							<h:panelGrid columns="2">
+							<p:panelGrid columns="4">
+
 								<p:outputLabel for="format" value="Format(B x H)" />
 								<p:inputText value="#{produkteigenschaften.fomat}" id="format">
 									<p:ajax event="change" process="@this" update="growl"
@@ -105,8 +130,7 @@
 									<p:ajax event="change" process="@this" update="growl"
 										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 								</p:inputText>
-							</h:panelGrid>
-							<h:panelGrid columns="2">
+
 								<p:outputLabel for="seitenzahl" value="Seitenzahl" />
 								<p:inputText value="#{produkteigenschaften.seitenzahl}"
 									id="seitenzahl">
@@ -135,12 +159,16 @@
 									<p:ajax event="change" process="@this" update="growl"
 										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 								</p:inputText>
-							</h:panelGrid>
-						</h:panelGrid>
+							</p:panelGrid>
+
+						</p:panel>
 					</p:panel>
 				</p:tab>
 			</p:accordionPanel>
-		</ui:repeat>
+		
+		<p />
+		<p:button outcome="jobticket_main.xhtml" value="Zurück" />
+		<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
 	</p:panel>
 
 

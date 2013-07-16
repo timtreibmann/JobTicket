@@ -16,6 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import org.primefaces.event.ToggleEvent;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
@@ -181,7 +183,6 @@ public class JobticketBean {
 		Query query = em
 				.createQuery("SELECT j FROM Job j where j.ersteller = :username");
 		query.setParameter("username", user);
-
 		List<Job> jobListe = query.getResultList();
 
 		return jobListe;
@@ -224,6 +225,12 @@ public class JobticketBean {
 		em.getTransaction().commit();
 		return null;
 	}
+	
+	 public void onRowToggle(ToggleEvent event) {  
+	        FacesMessage msg = new FacesMessage("bla");  
+	          
+	        FacesContext.getCurrentInstance().addMessage(null, msg);  
+	    }  
 
 	public String logout() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();

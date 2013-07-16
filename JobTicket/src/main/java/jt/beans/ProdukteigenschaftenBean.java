@@ -1,6 +1,9 @@
 package jt.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -42,16 +45,6 @@ public class ProdukteigenschaftenBean {
 	private Produkteigenschaften produkteigenschaften;
 
 	/**
-	 * Neues produkt.
-	 * 
-	 * @return the string
-	 */
-	public String neuesProdukt() {
-		this.produkteigenschaften = new Produkteigenschaften();
-		return "produktbeschreibung_edit.xhtml";
-	}
-
-	/**
 	 * Gets the produkteigenschaften.
 	 * 
 	 * @return the produkteigenschaften
@@ -90,27 +83,17 @@ public class ProdukteigenschaftenBean {
 		this.job = job;
 	}
 
-	/**
-	 * Edits the produkteigenschaften.
-	 * 
-	 * @param produkteigenschaften
-	 *            the produkteigenschaften
-	 * @return the string
-	 */
-	public String editProdukteigenschaften(
-			Produkteigenschaften produkteigenschaften) {
-		this.produkteigenschaften = produkteigenschaften;
-		return "produktbeschreibung_edit.xhtml";
-	}
-
-	/**
-	 * Save produkteigenschaften.
-	 * 
-	 * @return the string
-	 */
-	public String saveProdukteigenschaften() {
+	public String createProdukteigenschaft() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
+		Produkteigenschaften produkteigenschaften = new Produkteigenschaften();
+		Date d = new Date();
+		produkteigenschaften.setEingangsdatum(d);
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		produkteigenschaften
+				.setProduktbeschreibung("Neues Produkt - Daten eintragen - "
+						+  formatter.format(d));
+		;
 		produkteigenschaften.setErledigt(0);
 		job.addProdukteigenschaften(produkteigenschaften);
 		em.persist(produkteigenschaften);
