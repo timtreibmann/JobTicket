@@ -9,24 +9,23 @@
 
 <h:head></h:head>
 <h:form>
-	<p:breadCrumb>  
-    <p:menuitem value="Übersicht" url="http://localhost:8080/JobTicket/faces/start.xhtml" />  
-    <p:menuitem value="Jobticket" url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
-    <p:menuitem value="Kunden anlegen" url="http://localhost:8080/JobTicket/faces/kunden_add.xhtml" />
-</p:breadCrumb> 
+	<p:messages></p:messages>
+	<p:growl id="growl"></p:growl>
 
-<p:messages></p:messages>
-<p:growl id="growl"></p:growl>
-<h:panelGrid columns="3">
-	<p:panel header="Kunden-Editor">
+	<p:panel style="width:50%">
+
+		<p:breadCrumb>
+			<p:menuitem value="Übersicht"
+				url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+			<p:menuitem value="Jobticket"
+				url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+			<p:menuitem value="Kunden anlegen"
+				url="http://localhost:8080/JobTicket/faces/kunden_add.xhtml" />
+		</p:breadCrumb>
 		<h:panelGrid columns="2">
-
 			<p:outputLabel> Kunde</p:outputLabel>
 			<p:inputText id="t1" value="#{kundenBean.kunde.name}"
 				autocomplete="true" required="true" />
-
-
-
 			<p:outputLabel> Kundenkürzel</p:outputLabel>
 			<p:inputText value="#{kundenBean.kunde.kundenkuerzel}"
 				autocomplete="
@@ -37,21 +36,16 @@
 			<p:outputLabel> Telefon</p:outputLabel>
 			<p:inputText id="t3" value="#{kundenBean.kunde.telefon}"
 				autocomplete="true" required="true" />
-
 		</h:panelGrid>
-		
-		
-		<h:panelGrid columns="3">
-			<p:button value="Abbrechen" outcome="jobticket_main.xhtml" />
+		<h:panelGrid columns="4">
+			<p:button value="Zurück" outcome="jobticket_main.xhtml" />
 			<p:commandButton action="#{kundenBean.saveKunde}" update="growl"
 				value="Kunden hinzufügen">
 			</p:commandButton>
-			<hr></hr>
 			<p></p>
 			<p:button value="Kunden editieren" outcome="kunden_table.xhtml" />
-
 		</h:panelGrid>
 	</p:panel>
-	</h:panelGrid>
+
 </h:form>
 </html>

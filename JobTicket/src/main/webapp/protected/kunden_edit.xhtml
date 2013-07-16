@@ -13,18 +13,20 @@
 
 <h:body>
 	<h:form>
-		<p:breadCrumb>  
-    <p:menuitem value="Übersicht" url="http://localhost:8080/JobTicket/faces/start.xhtml" />  
-    <p:menuitem value="Jobticket" url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
-    <p:menuitem value="Kunden anlegen" url="http://localhost:8080/JobTicket/faces/kunden_add.xhtml" />
-    <p:menuitem value="Kunden Tabelle" url="http://localhost:8080/JobTicket/faces/kunden_table.xhtml" />
-       <p:menuitem value="Kunden editieren" url="#" />        
-</p:breadCrumb> 
 
-		<p:panel header="Kundenbearbeitung">
-			<f:facet name="actions">
-				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
-			</f:facet>
+		<p:panel>
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+				<p:menuitem value="Jobticket"
+					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+				<p:menuitem value="Kunden anlegen"
+					url="http://localhost:8080/JobTicket/faces/kunden_add.xhtml" />
+				<p:menuitem value="Kunden Tabelle"
+					url="http://localhost:8080/JobTicket/faces/kunden_table.xhtml" />
+				<p:menuitem value="Kunden editieren" url="#" />
+			</p:breadCrumb>
+
 		</p:panel>
 		<h:panelGrid columns="2">
 			<label></label>
@@ -43,8 +45,8 @@
 			<h:panelGroup>
 				<p:inputText id="id3" value="#{kundenBean.kunde.telefon}" />
 
-				<p:commandButton value="Fertig"
-					action="#{kundenBean.updateKunde}" ajax="false"></p:commandButton>
+				<p:commandButton value="Fertig" action="#{kundenBean.updateKunde}"
+					ajax="false"></p:commandButton>
 			</h:panelGroup>
 		</h:panelGrid>
 
