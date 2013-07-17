@@ -34,9 +34,8 @@
 		<p></p>
 
 
-		<p:accordionPanel var="produkteigenschaften"
-			value="#{jobticketBean.job.produkteigenschaftens}" id="acc"
-			activeIndex="-1">
+		<p:accordionPanel var="produkteigenschaften" dynamic="true"
+			value="#{jobticketBean.job.produkteigenschaftens}" id="acc" activeIndex="#{produkteigenschaftenBean.accordionIndex}"	>
 
 			<p:tab
 				titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #CCFFCC;' : ''}"

@@ -43,6 +43,8 @@ public class ProdukteigenschaftenBean {
 	/** The produkteigenschaften. */
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
+	
+	private int accordionIndex;
 
 	/**
 	 * Gets the produkteigenschaften.
@@ -83,10 +85,18 @@ public class ProdukteigenschaftenBean {
 		this.job = job;
 	}
 	
-	public int getProduktAnzahl() {
-		return job.getProdukteigenschaftens().size();
+	public void setAccordionIndex(int index) {
+		this.accordionIndex=index;
+	}
+	
+	public int getAccordionIndex() {
+		return this.accordionIndex;
 	}
 
+	public int getProduktAnzahl(){
+		return job.getProdukteigenschaftens().size();
+	}
+	
 	public String createProdukteigenschaft() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -103,6 +113,7 @@ public class ProdukteigenschaftenBean {
 		em.persist(produkteigenschaften);
 		em.merge(job);
 		em.getTransaction().commit();
+		accordionIndex=job.getProdukteigenschaftens().size()-1;
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
