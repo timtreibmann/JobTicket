@@ -88,14 +88,6 @@ public class ProdukteigenschaftenBean {
 		this.job = job;
 	}
 
-	public void onTabChange(TabChangeEvent event) {
-
-		String activeIndex = ((AccordionPanel) event.getComponent())
-				.getActiveIndex();
-		this.accordionIndex = Integer.valueOf(activeIndex);
-		System.out.println("Active:" + activeIndex);
-	}
-
 	public void setAccordionIndex(int index) {
 		this.accordionIndex = index;
 	}

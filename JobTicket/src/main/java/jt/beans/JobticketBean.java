@@ -85,7 +85,6 @@ public class JobticketBean {
 	@Inject
 	private KundenBean kundenBean;
 
-	private boolean neuerJob = false;
 
 	@PostConstruct
 	public void init() {
@@ -157,9 +156,6 @@ public class JobticketBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", "Jobticket"));
-		System.out.println("UPDATETICKET");
-		System.out.println(this.job);
-		System.out.println(selectedKundeId);
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		if (selectedKundeId != 0) {
@@ -239,7 +235,6 @@ public class JobticketBean {
 
 	public void onRowToggle(ToggleEvent event) {
 		FacesMessage msg = new FacesMessage("bla");
-
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
