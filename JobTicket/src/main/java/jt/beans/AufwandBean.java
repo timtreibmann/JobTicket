@@ -97,6 +97,7 @@ public class AufwandBean {
 	 * @return the gesamt kosten
 	 */
 	public double getGesamtKosten() {
+		berechneGesamtkosten(kosten);
 		return gesamtKosten;
 	}
 

@@ -15,12 +15,9 @@
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel id="panel" style="width:60%">
 			<p:breadCrumb>
-				<p:menuitem value="Übersicht"
-					url="start.xhtml" />
-				<p:menuitem value="Jobticket"
-					url="jobticket_main.xhtml" />
-				<p:menuitem value="Aufwand festlegen"
-					url="jobticket_aufwand.xhtml" />
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+				<p:menuitem value="Aufwand festlegen" url="jobticket_aufwand.xhtml" />
 			</p:breadCrumb>
 
 			<p></p>
@@ -53,7 +50,7 @@
 
 			</p:panelGrid>
 
-
+			<hr></hr>
 			<p:panelGrid styleClass="grid" columns="1">
 				<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
 			</p:panelGrid>
@@ -103,18 +100,34 @@
 			</ui:repeat>
 
 
-
+			<hr></hr>
 
 			<p></p>
-			<p:panelGrid styleClass="grid" columns="2">
-				<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
-				<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
-				</h:outputText>
-				<p:button icon="ui-icon-alert" title="Achtung">
-					<f:param name="achtung" />
-				</p:button>
+			<p:panelGrid styleClass="grid">
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 
-				<p:outputLabel value="Budget: #{jobticketBean.job.budgetInEuro} €" />
+					</p:column>
+					<p:column>
+						<h:outputText id="gesamtkosten"
+							value="#{aufwandBean.gesamtKosten}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+					<p:outputLabel value="Budget: " />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{jobticketBean.job.budgetInEuro} €" />
+					</p:column>
+					<p:column>
+						<p:commandButton
+							icon="#{aufwandBean.gesamtKosten > jobticketBean.job.budgetInEuro ? 'ui-icon-alert' : 'ui-icon-circle-check'}"
+							id="achtung" />
+					</p:column>
+				</p:row>
+
 			</p:panelGrid>
 
 
