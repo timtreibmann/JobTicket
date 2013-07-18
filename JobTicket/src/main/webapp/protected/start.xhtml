@@ -9,11 +9,10 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-	<h:outputStylesheet library="css" name="style.css" />
+		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
 			<p:breadCrumb style="height:25px">
-				<p:menuitem value="Übersicht"
-					url="start.xhtml" />
+				<p:menuitem value="Übersicht" url="start.xhtml" />
 			</p:breadCrumb>
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}"></h:outputLabel>
@@ -27,8 +26,8 @@
 
 			<p:commandButton style="width:200px" value="Optionen" id="erweitert" />
 
-			<p:overlayPanel  hideEffect="explode" showEffect="fade" my="right bottom"
-				for="erweitert">
+			<p:overlayPanel hideEffect="explode" showEffect="fade"
+				my="right bottom" for="erweitert">
 				<p:panelGrid columns="2">
 					<p:outputLabel for="jobbearbeiter"
 						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
@@ -59,7 +58,16 @@
 						<p:ajax update="dataTable"
 							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 					</p:selectBooleanCheckbox>
+
+
+					<p:outputLabel for="checkbox2"
+						value="Alle Formulare auf einer Seite zeigen"></p:outputLabel>
+					<p:selectBooleanCheckbox id="checkbox2"
+						value="#{jobticketBean.showAllOnOnePage}">
+					</p:selectBooleanCheckbox>
+
 				</p:panelGrid>
+
 			</p:overlayPanel>
 
 			<p:dataTable id="dataTable" var="job"

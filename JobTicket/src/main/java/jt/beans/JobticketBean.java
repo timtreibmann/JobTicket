@@ -80,11 +80,20 @@ public class JobticketBean {
 		this.selectedAngestellterId = selectedAngestellterId;
 	}
 
+	private boolean showAllOnOnePage;
+
+	public boolean isShowAllOnOnePage() {
+		return showAllOnOnePage;
+	}
+
+	public void setShowAllOnOnePage(boolean showAllOnOnePage) {
+		this.showAllOnOnePage = showAllOnOnePage;
+	}
+
 	private String kuerzel;
 
 	@Inject
 	private KundenBean kundenBean;
-
 
 	@PostConstruct
 	public void init() {
@@ -134,7 +143,11 @@ public class JobticketBean {
 
 	public String editJob(Job job) {
 		this.job = job;
-		return "jobticket_main.xhtml";
+		if (showAllOnOnePage) {
+			return "ticketanzeige.xhtml";
+		} else {
+			return "jobticket_main.xhtml";
+		}
 	}
 
 	public String createJobticket() {
@@ -149,13 +162,16 @@ public class JobticketBean {
 		em.persist(job);
 
 		em.getTransaction().commit();
-		return "jobticket_main.xhtml";
+
+		if (showAllOnOnePage) {
+			return "ticketanzeige.xhtml";
+		} else {
+			return "jobticket_main.xhtml";
+		}
 	}
 
 	public String updateJobticket() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(
-				"Daten erfolgreich gespeichert!", "Jobticket"));
+
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		if (selectedKundeId != 0) {

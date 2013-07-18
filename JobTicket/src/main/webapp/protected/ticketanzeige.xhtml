@@ -17,7 +17,7 @@
 		<p:tooltip for="neuerKundeButton" value="Neuen Kunden anlegen"></p:tooltip>
 		<p:growl id="growl"></p:growl>
 
-		<p:panel style="width:60%">
+		<p:panel style="width:70%">
 			<p:breadCrumb styleClass="breadCrumbpanel">
 				<p:menuitem value="Übersicht" url="start.xhtml" />
 				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
@@ -56,7 +56,7 @@
 						<p:selectOneMenu style="width:103%" id="kundenname"
 							value="#{jobticketBean.selectedKundeId}" editable="false"
 							effect="fold">
-
+							<f:selectItem itemLabel="Kunden auswählen"></f:selectItem>
 							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 							<p:ajax event="change" process="@this" update="@this growl"
@@ -152,8 +152,10 @@
 				</p:row>
 
 			</p:panelGrid>
-			
-			<p:overlayPanel  my="left bottom" widgetVar="overlay1" showEffect="fade"
+		</p:panel>
+	</h:form>
+
+	<p:overlayPanel my="right top" widgetVar="overlay" showEffect="fade"
 		hideEffect="explode" for=":mainform:neuerKundeButton">
 		<h:form id="kundenform">
 			<p:messages></p:messages>
@@ -188,20 +190,14 @@
 
 		</h:form>
 	</p:overlayPanel>
-		</p:panel>
-		
-	</h:form>
 
-	
 
 	<h:form id="produktform">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
 			<p:breadCrumb>
-				<p:menuitem value="Übersicht"
-					url="start.xhtml" />
-				<p:menuitem value="Jobticket"
-					url="jobticket_main.xhtml" />
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
 				<p:menuitem value="Produktbeschreibung"
 					url="jobticket_produktbeschreibung.xhtml" />
 			</p:breadCrumb>
@@ -363,12 +359,9 @@
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel id="panel" style="width:60%">
 			<p:breadCrumb>
-				<p:menuitem value="Übersicht"
-					url="start.xhtml" />
-				<p:menuitem value="Jobticket"
-					url="jobticket_main.xhtml" />
-				<p:menuitem value="Aufwand festlegen"
-					url="jobticket_aufwand.xhtml" />
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+				<p:menuitem value="Aufwand festlegen" url="jobticket_aufwand.xhtml" />
 			</p:breadCrumb>
 
 			<p></p>
@@ -402,9 +395,10 @@
 			</p:panelGrid>
 
 			<hr></hr>
+			<p:panelGrid styleClass="grid" columns="1">
+				<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
+			</p:panelGrid>
 
-			<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
-			<p></p>
 
 			<ui:repeat id="repeat" var="kosten"
 				value="#{jobticketBean.job.kostens}">
@@ -413,6 +407,7 @@
 				<p:tooltip id="tooltip2" for="rechneum"
 					value="Aufwand in Std. oder € umrechnen"></p:tooltip>
 				<p:panelGrid styleClass="grid">
+
 					<p:row>
 						<p:column>
 							<p:commandButton update="@form" id="deletebutton"
@@ -447,23 +442,41 @@
 					</p:row>
 				</p:panelGrid>
 			</ui:repeat>
+
+
 			<hr></hr>
-			<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
-			<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
-			</h:outputText>
 
 			<p></p>
-			<p:panelGrid styleClass="grid" columns="2">
-				<p:button icon="ui-icon-alert" title="Achtung">
-					<f:param name="achtung" />
-				</p:button>
+			<p:panelGrid styleClass="grid">
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
 
-				<p:outputLabel value="Budget: #{jobticketBean.job.budgetInEuro} €" />
+					</p:column>
+					<p:column>
+						<h:outputText id="gesamtkosten"
+							value="#{aufwandBean.gesamtKosten}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Budget: " />
+					</p:column>
+					<p:column>
+						<p:outputLabel value="#{jobticketBean.job.budgetInEuro} €" />
+					</p:column>
+					<p:column>
+						<p:commandButton
+							icon="#{aufwandBean.gesamtKosten > jobticketBean.job.budgetInEuro ? 'ui-icon-alert' : 'ui-icon-circle-check'}"
+							id="achtung" />
+					</p:column>
+				</p:row>
+
 			</p:panelGrid>
 
 
 			<p></p>
-			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
+			<p:button value="Zurück" outcome="start.xhtml"></p:button>
 			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
 		</p:panel>
 	</h:form>
