@@ -3,3 +3,7 @@
  .grid tr, .grid td {
     border: none;
 }
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 95%;
+}

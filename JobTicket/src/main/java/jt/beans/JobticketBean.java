@@ -1,5 +1,6 @@
 package jt.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,9 +91,9 @@ public class JobticketBean {
 	public void init() {
 		filteredJobs = getJobs();
 	}
-	
+
 	public void loadTest() {
-		
+
 	}
 
 	public String refreshFilter() {
@@ -134,31 +135,41 @@ public class JobticketBean {
 
 	public String editJob(Job job) {
 		this.job = job;
-		neuerJob = false;
 		return "jobticket_main.xhtml";
 	}
 
-	public String neuesJobticket() {
-		this.job = new Job();
-		neuerJob = true;
-		return "jobticket_main.xhtml";
-	}
-
-	public String saveJobticket() {
+	public String createJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		Kunde k = kundenBean.findKundenByID(selectedKundeId);
-		job.setKunde(k);
-		if (neuerJob) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			job.setErsteller(fc.getExternalContext().getRemoteUser());
-			job.setErstellDatum(new Date());
-			em.persist(job);
-		} else {
-			em.merge(job);
-		}
+		this.job = new Job();
+		FacesContext fc = FacesContext.getCurrentInstance();
+		job.setErsteller(fc.getExternalContext().getRemoteUser());
+		Date d = new Date();
+
+		job.setErstellDatum(d);
+		em.persist(job);
+
 		em.getTransaction().commit();
-		return "jobticket_produktbeschreibung.xhtml";
+		return "jobticket_main.xhtml";
+	}
+
+	public String updateJobticket() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(
+				"Daten erfolgreich gespeichert!", "Jobticket"));
+		System.out.println("UPDATETICKET");
+		System.out.println(this.job);
+		System.out.println(selectedKundeId);
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		if (selectedKundeId != 0) {
+			Kunde k = kundenBean.findKundenByID(selectedKundeId);
+			job.setKunde(k);
+		}
+		em.merge(job);
+		em.getTransaction().commit();
+
+		return null;
 	}
 
 	public List<Job> getJobsFromJobbearbeiter() {
@@ -190,18 +201,18 @@ public class JobticketBean {
 
 	public List<Job> getJobs() {
 		if (showAllJobs) {
-		
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		final Query query = em.createQuery("SELECT b FROM Job b");
-		@SuppressWarnings("unchecked")
-		List<Job> jobListe = query.getResultList();
-		if (jobListe == null) {
-			jobListe = new ArrayList<Job>();
-		}
-		em.getTransaction().commit();
-		return jobListe;
-		}else{
+
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
+			final Query query = em.createQuery("SELECT b FROM Job b");
+			@SuppressWarnings("unchecked")
+			List<Job> jobListe = query.getResultList();
+			if (jobListe == null) {
+				jobListe = new ArrayList<Job>();
+			}
+			em.getTransaction().commit();
+			return jobListe;
+		} else {
 			return getJobsFromUser();
 		}
 
@@ -225,12 +236,12 @@ public class JobticketBean {
 		em.getTransaction().commit();
 		return null;
 	}
-	
-	 public void onRowToggle(ToggleEvent event) {  
-	        FacesMessage msg = new FacesMessage("bla");  
-	          
-	        FacesContext.getCurrentInstance().addMessage(null, msg);  
-	    }  
+
+	public void onRowToggle(ToggleEvent event) {
+		FacesMessage msg = new FacesMessage("bla");
+
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
 
 	public String logout() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();

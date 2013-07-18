@@ -9,10 +9,11 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
+	<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
-			<p:breadCrumb>
+			<p:breadCrumb style="height:25px">
 				<p:menuitem value="Übersicht"
-					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+					url="start.xhtml" />
 			</p:breadCrumb>
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}"></h:outputLabel>
@@ -22,7 +23,7 @@
 				action="#{jobticketBean.logout}" ajax="false" />
 
 			<p:commandButton style="width:200px" value="Neues Ticket"
-				action="#{jobticketBean.neuesJobticket}" ajax="false" />
+				action="#{jobticketBean.createJobticket}" ajax="false" />
 
 			<p:commandButton style="width:200px" value="Optionen" id="erweitert" />
 

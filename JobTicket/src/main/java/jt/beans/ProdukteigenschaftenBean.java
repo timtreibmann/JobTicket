@@ -15,6 +15,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import org.primefaces.component.accordionpanel.AccordionPanel;
+import org.primefaces.event.TabChangeEvent;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 import jt.entities.Kunde;
@@ -43,7 +46,7 @@ public class ProdukteigenschaftenBean {
 	/** The produkteigenschaften. */
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
-	
+
 	private int accordionIndex;
 
 	/**
@@ -84,19 +87,27 @@ public class ProdukteigenschaftenBean {
 	public void setJob(Job job) {
 		this.job = job;
 	}
-	
-	public void setAccordionIndex(int index) {
-		this.accordionIndex=index;
+
+	public void onTabChange(TabChangeEvent event) {
+
+		String activeIndex = ((AccordionPanel) event.getComponent())
+				.getActiveIndex();
+		this.accordionIndex = Integer.valueOf(activeIndex);
+		System.out.println("Active:" + activeIndex);
 	}
-	
+
+	public void setAccordionIndex(int index) {
+		this.accordionIndex = index;
+	}
+
 	public int getAccordionIndex() {
 		return this.accordionIndex;
 	}
 
-	public int getProduktAnzahl(){
+	public int getProduktAnzahl() {
 		return job.getProdukteigenschaftens().size();
 	}
-	
+
 	public String createProdukteigenschaft() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -106,15 +117,15 @@ public class ProdukteigenschaftenBean {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 		produkteigenschaften
 				.setProduktbeschreibung("Neues Produkt - Daten eintragen - "
-						+  formatter.format(d));
+						+ formatter.format(d));
 		;
 		produkteigenschaften.setErledigt(0);
 		job.addProdukteigenschaften(produkteigenschaften);
 		em.persist(produkteigenschaften);
 		em.merge(job);
 		em.getTransaction().commit();
-		accordionIndex=job.getProdukteigenschaftens().size()-1;
-		return "jobticket_produktbeschreibung.xhtml";
+		accordionIndex = job.getProdukteigenschaftens().size() - 1;
+		return null;
 	}
 
 	/**
@@ -128,26 +139,8 @@ public class ProdukteigenschaftenBean {
 			Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		Produkteigenschaften p = em.find(Produkteigenschaften.class,
-				produkteigenschaften.getId());
-		p.setEingangsdatum(produkteigenschaften.getEingangsdatum());
-		p.setAusgangsdatum(produkteigenschaften.getAusgangsdatum());
-		p.setVorlagedatum(produkteigenschaften.getVorlagedatum());
-		p.setProduktbeschreibung(produkteigenschaften.getProduktbeschreibung());
-		p.setBeschnitt(produkteigenschaften.getBeschnitt());
-		p.setBindung(produkteigenschaften.getBindung());
-		p.setDummy(produkteigenschaften.getDummy());
-		p.setErledigt(produkteigenschaften.getErledigt());
-		p.setFalzung(produkteigenschaften.getFalzung());
-		p.setFarbe4c(produkteigenschaften.getFarbe4c());
-		p.setFarbeSw(produkteigenschaften.getFarbeSw());
-		p.setFomat(produkteigenschaften.getFomat());
-		p.setProof(produkteigenschaften.getProof());
-		p.setSeitenzahl(produkteigenschaften.getSeitenzahl());
-		p.setSonderfarbe(produkteigenschaften.getSonderfarbe());
-		p.setErledigt(produkteigenschaften.getErledigt());
+		em.merge(produkteigenschaften);
 		em.getTransaction().commit();
-
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		context.addMessage(null, new FacesMessage(

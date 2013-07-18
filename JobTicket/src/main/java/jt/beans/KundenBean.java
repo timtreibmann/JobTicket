@@ -151,13 +151,9 @@ public class KundenBean {
 	public String updateKunde() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		Kunde k = em.find(Kunde.class, kunde.getId());
-		k.setName(kunde.getName());
-		k.setAdresse(kunde.getAdresse());
-		k.setTelefon(kunde.getTelefon());
-		k.setKundenkuerzel(kunde.getKundenkuerzel());
-		k.setJobs(k.getJobs());
+		em.merge(kunde);
 		em.getTransaction().commit();
+	
 		return "kunden_table.xhtml";
 	}
 

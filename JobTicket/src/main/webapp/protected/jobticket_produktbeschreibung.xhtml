@@ -1,18 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<h:form xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
 	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:form id="produktform">
 	<h:outputStylesheet library="css" name="style.css" />
-	<h:head></h:head>
-
-
-
 	<p:panel style="width:60%">
 		<p:breadCrumb>
 			<p:menuitem value="Übersicht"
@@ -35,13 +34,14 @@
 
 
 		<p:accordionPanel var="produkteigenschaften" dynamic="true"
-			value="#{jobticketBean.job.produkteigenschaftens}" id="acc" activeIndex="#{produkteigenschaftenBean.accordionIndex}"	>
+			value="#{jobticketBean.job.produkteigenschaftens}" id="acc"
+			activeIndex="#{produkteigenschaftenBean.accordionIndex}">
+
 
 			<p:tab
 				titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #CCFFCC;' : ''}"
 				id="tab"
 				title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
-
 				<p:growl id="growl" showDetail="true" sticky="false" />
 				<p:panelGrid styleClass="grid">
 					<p:row>
@@ -106,7 +106,7 @@
 							<p:inputTextarea
 								value="#{produkteigenschaften.produktbeschreibung}"
 								id="beschreibung" maxlength="199" cols="40">
-								<p:ajax event="change" process="@this" update="acc growl"
+								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 							</p:inputTextarea>
 						</p:column>
@@ -176,8 +176,5 @@
 		<p:button outcome="jobticket_main.xhtml" value="Zurück" />
 		<p:button outcome="jobticket_aufwand.xhtml" value="Weiter" />
 	</p:panel>
-
-
-
-
 </h:form>
+</html>

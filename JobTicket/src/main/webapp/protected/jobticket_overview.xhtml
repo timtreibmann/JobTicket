@@ -11,7 +11,7 @@
 	<h:form>
 
 
-
+		<h:outputStylesheet library="css" name="style.css" />
 
 		<p:panel style="width:80%">
 			<p:breadCrumb>
@@ -68,9 +68,9 @@
 			<p></p>
 
 			<p:dataTable var="kosten" value="#{jobticketBean.job.kostens}">
-			<f:facet name="header">Kosten</f:facet>
+				<f:facet name="header">Kosten</f:facet>
 				<p:column headerText="Angestellter">
-				
+
 					<p:outputLabel
 						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} "></p:outputLabel>
 				</p:column>
@@ -85,8 +85,9 @@
 			</p:dataTable>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 			<p></p>
-			<p:button value="Zurück"  outcome="jobticket_aufwand.xhtml"></p:button>
-			<p:commandButton ajax="false"  value="Fertig" action="#{jobticketBean.refreshFilter}"></p:commandButton>
+			<p:button value="Zurück" outcome="jobticket_aufwand.xhtml"></p:button>
+			<p:commandButton ajax="false" value="Fertig"
+				action="#{jobticketBean.refreshFilter}"></p:commandButton>
 		</p:panel>
 	</h:form>
 </h:body>

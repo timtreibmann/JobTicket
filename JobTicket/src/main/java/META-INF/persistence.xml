@@ -9,7 +9,7 @@
 		<class>jt.entities.Kunde</class>
 		<class>jt.entities.Produkteigenschaften</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/jt;create=true"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/jt;create=true;characterEncoding=UTF-8"/>
 			<property name="javax.persistence.jdbc.user" value="jobticket"/>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
 			<property name="javax.persistence.jdbc.password" value="pwd"/>

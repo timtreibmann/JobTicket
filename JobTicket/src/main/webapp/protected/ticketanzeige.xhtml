@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+
+<h:body>
+	<h:form id="mainform">
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:tooltip for="find" value="Kunden mit Kundenkürzel suchen"></p:tooltip>
+		<p:tooltip for="neuerKundeButton" value="Neuen Kunden anlegen"></p:tooltip>
+		<p:growl id="growl"></p:growl>
+
+		<p:panel style="width:60%">
+			<p:breadCrumb styleClass="breadCrumbpanel">
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+			</p:breadCrumb>
+
+			<p:messages id="messages" />
+			<p></p>
+			<p:panelGrid styleClass="grid">
+
+
+				<p:row>
+					<p:column>
+						<p:outputLabel for="jobnummer" value="Jobnummer" />
+					</p:column>
+					<p:column>
+						<p:outputLabel
+							value="#{jobticketBean.job.id==0 ? 'wird generiert' : jobticketBean.job.id}"
+							id="jobnummer" />
+					</p:column>
+					<p:column>
+						<p:outputLabel for="alt" value="Alte Jobnummer" />
+					</p:column>
+					<p:column>
+						<p:inputText style="width:100%"
+							value="#{jobticketBean.job.alteJobnummer}" id="alt">
+							<p:ajax event="change" process="@this" update="growl"
+								listener="#{jobticketBean.updateJobticket}"></p:ajax>
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="kundenname" value="Kundenname: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu style="width:103%" id="kundenname"
+							value="#{jobticketBean.selectedKundeId}" editable="false"
+							effect="fold">
+
+							<f:selectItems value="#{kundenBean.kunden}" var="kunde"
+								itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
+							<p:ajax event="change" process="@this" update="@this growl"
+								listener="#{jobticketBean.updateJobticket}"></p:ajax>
+
+						</p:selectOneMenu>
+					</p:column>
+					<p:column>
+						<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
+					</p:column>
+					<p:column>
+						<p:inputText style="width:100%" value="#{jobticketBean.kuerzel}"
+							id="kundenkurz">
+						</p:inputText>
+					</p:column>
+					<p:column>
+						<h:panelGroup>
+							<p:commandButton id="find" icon="ui-icon-search"
+								update="kundenname"
+								actionListener="#{jobticketBean.findKundeByKuerzel}"
+								styleClass="findKundeByKuerzelButton" />
+
+
+							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
+
+							</p:commandButton>
+						</h:panelGroup>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="job" value="Jobname" />
+
+					</p:column>
+					<p:column>
+						<p:inputText style="width:100%" id="job"
+							value="#{jobticketBean.job.name}">
+							<p:ajax event="change" process="@this" update="@this growl"
+								listener="#{jobticketBean.updateJobticket}"></p:ajax>
+
+						</p:inputText>
+					</p:column>
+					<p:column rowspan="3">
+						<p:outputLabel for="jobbeschreibung" value="Beschreibung">
+
+
+						</p:outputLabel>
+					</p:column>
+					<p:column rowspan="3">
+						<p:inputTextarea style="width:100%" maxlength="200"
+							value="#{jobticketBean.job.jobbeschreibung}" id="jobbeschreibung">
+							<p:ajax event="change" process="@this" update="@this growl"
+								listener="#{jobticketBean.updateJobticket}"></p:ajax>
+						</p:inputTextarea>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
+					</p:column>
+					<p:column>
+						<p:inputText style="width:100%"
+							value="#{jobticketBean.job.budgetInEuro}" id="budget_in_eur">
+							<p:ajax event="change" process="@this" update="@this growl"
+								listener="#{jobticketBean.updateJobticket}"></p:ajax>
+						</p:inputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="erstelldatum" value="Erstelldatum:" />
+					</p:column>
+					<p:column>
+						<h:outputText id="erstelldatum"
+							value="#{jobticketBean.job.erstellDatum}">
+							<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
+						</h:outputText>
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel for="ersteller" value="Ersteller:" />
+					</p:column>
+					<p:column>
+						<p:outputLabel id="ersteller"
+							value="#{jobticketBean.job.ersteller==null  ? request.remoteUser : jobticketBean.job.ersteller}" />
+					</p:column>
+				</p:row>
+				<p:row>
+					<p:column colspan="7">
+
+					</p:column>
+				</p:row>
+
+			</p:panelGrid>
+			
+			<p:overlayPanel  my="left bottom" widgetVar="overlay1" showEffect="fade"
+		hideEffect="explode" for=":mainform:neuerKundeButton">
+		<h:form id="kundenform">
+			<p:messages></p:messages>
+			<p:growl id="growl"></p:growl>
+
+			<h:panelGrid styleClass="grid" columns="2">
+				<p:outputLabel for="t1">Kundenname</p:outputLabel>
+				<p:inputText style="width:100%" id="t1"
+					value="#{kundenBean.kunde.name}" autocomplete="true"
+					required="true" />
+				<p:outputLabel> Kundenkürzel</p:outputLabel>
+				<p:inputText style="width:100%"
+					value="#{kundenBean.kunde.kundenkuerzel}" autocomplete="
+				true" />
+				<p:outputLabel> Adresse</p:outputLabel>
+				<p:inputText style="width:100%" id="t2"
+					value="#{kundenBean.kunde.adresse}" autocomplete="true" />
+				<p:outputLabel> Telefon</p:outputLabel>
+				<p:inputText style="width:100%" id="t3"
+					value="#{kundenBean.kunde.telefon}" autocomplete="true" />
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+				<p:commandButton immediate="true" onclick="overlay.hide()"
+					value="Schließen" />
+				<p:commandButton actionListener="#{kundenBean.saveKunde}"
+					update="growl :mainform:kundenname" value="Kunden hinzufügen">
+				</p:commandButton>
+				<p></p>
+				<p:button value="Kundenliste anzeigen"
+					icon="ui-icon-arrowreturn-1-e" outcome="kunden_table.xhtml" />
+			</h:panelGrid>
+
+		</h:form>
+	</p:overlayPanel>
+		</p:panel>
+		
+	</h:form>
+
+	
+
+	<h:form id="produktform">
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:panel style="width:60%">
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+				<p:menuitem value="Jobticket"
+					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+				<p:menuitem value="Produktbeschreibung"
+					url="http://localhost:8080/JobTicket/faces/jobticket_produktbeschreibung.xhtml" />
+			</p:breadCrumb>
+			<p></p>
+			<pe:tooltip rendered="#{produkteigenschaftenBean.produktAnzahl==0}"
+				showEffect="fade" hideEffect="fade" for="create"
+				value="Hier klicken, um ein Produkt anzulegen" autoShow="true"
+				widgetVar="tip1" myPosition="left center" atPosition="right center" />
+			<p:commandButton id="create" onclick="tip1.hide();"
+				action="#{produkteigenschaftenBean.createProdukteigenschaft}"
+				update="acc" value="Neues Produkt anlegen">
+			</p:commandButton>
+			<p></p>
+
+
+			<p:accordionPanel var="produkteigenschaften" dynamic="true"
+				value="#{jobticketBean.job.produkteigenschaftens}" id="acc"
+				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
+
+
+				<p:tab
+					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #CCFFCC;' : ''}"
+					id="tab"
+					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
+					<p:growl id="growl" showDetail="true" sticky="false" />
+					<p:panelGrid styleClass="grid">
+						<p:row>
+							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
+							<p:column>
+								<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
+							</p:column>
+
+							<p:column>
+								<p:commandButton update="@this growl acc"
+									icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
+									actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
+
+							</p:column>
+							<p:column>
+								<p:commandButton icon="ui-icon-trash"
+									actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+									update="acc" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+							</p:column>
+							<p:column>
+								<p:calendar value="#{produkteigenschaften.eingangsdatum}"
+									id="eingangsdatum" required="true">
+									<p:ajax event="dateSelect" process="@this" update="growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
+							</p:column>
+							<p:column>
+								<p:calendar value="#{produkteigenschaften.ausgangsdatum}"
+									id="ausgangsdatum">
+									<p:ajax event="dateSelect" process="@this" update="growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+							</p:column>
+							<p:column>
+								<p:calendar value="#{produkteigenschaften.vorlagedatum}"
+									id="fertigstellung">
+									<p:ajax event="dateSelect" process="@this" update="growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel for="beschreibung" value="Beschreibung" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea
+									value="#{produkteigenschaften.produktbeschreibung}"
+									id="beschreibung" maxlength="199" cols="40">
+									<p:ajax event="change" process="@this" update="@this growl"
+										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+								</p:inputTextarea>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panel header="Details" collapsed="true" toggleable="true">
+
+						<p:panelGrid styleClass="grid" columns="4">
+
+							<p:outputLabel for="format" value="Format(B x H)" />
+							<p:inputText value="#{produkteigenschaften.fomat}" id="format">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="beschnitt" value="Beschnitt" />
+							<p:inputText value="#{produkteigenschaften.beschnitt}"
+								id="beschnitt">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="farbe" value="Farbe" />
+							<p:inputText value="#{produkteigenschaften.farbe4c}" id="farbe">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
+							<p:inputText value="#{produkteigenschaften.sonderfarbe}"
+								id="sonderfarbe">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+
+							<p:outputLabel for="seitenzahl" value="Seitenzahl" />
+							<p:inputText value="#{produkteigenschaften.seitenzahl}"
+								id="seitenzahl">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="falzung" value="Falzung" />
+							<p:inputText value="#{produkteigenschaften.falzung}" id="falzung">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="bindung" value="Bindung" />
+							<p:inputText value="#{produkteigenschaften.bindung}" id="bindung">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="proof" value="Proof" />
+							<p:inputText value="#{produkteigenschaften.proof}" id="proof">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+							<p:outputLabel for="dummy" value="Dummy" />
+							<p:inputText value="#{produkteigenschaften.dummy}" id="dummy">
+								<p:ajax event="change" process="@this" update="growl"
+									listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
+							</p:inputText>
+						</p:panelGrid>
+
+					</p:panel>
+
+				</p:tab>
+			</p:accordionPanel>
+
+		</p:panel>
+	</h:form>
+
+	<h:form id="aufwandform">
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:panel id="panel" style="width:60%">
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht"
+					url="http://localhost:8080/JobTicket/faces/start.xhtml" />
+				<p:menuitem value="Jobticket"
+					url="http://localhost:8080/JobTicket/faces/jobticket_main.xhtml" />
+				<p:menuitem value="Aufwand festlegen"
+					url="http://localhost:8080/JobTicket/faces/jobticket_aufwand.xhtml" />
+			</p:breadCrumb>
+
+			<p></p>
+
+			<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
+			<h:inputHidden></h:inputHidden>
+			<p:tooltip for="hinzufuegen"
+				value="den ausgewählten Mitarbeiter zum Job hinzufügen"></p:tooltip>
+			<p:tooltip for="neuerAngestellterButton"
+				value="Neuen Angestellten anlegen"></p:tooltip>
+
+			<p:panelGrid styleClass="grid" columns="4">
+				<p:outputLabel for="kontakter" value="Angestellter" />
+				<p:selectOneMenu id="kontakter"
+					value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+					editable="false" required="true">
+					<f:selectItems value="#{angestellteBean.angestelltes}"
+						var="angestellte"
+						itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+						itemValue="#{angestellte.id}" />
+					<p:ajax event="change" update="@form"
+						listener="#{aufwandBean.selectedAngestellteId}" />
+				</p:selectOneMenu>
+
+				<p:commandButton id="hinzufuegen" icon="ui-icon-arrowthick-1-s"
+					process="kontakter" update="@form"
+					actionListener="#{aufwandBean.saveKosten}"></p:commandButton>
+
+				<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus" />
+
+			</p:panelGrid>
+
+			<hr></hr>
+
+			<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
+			<p></p>
+
+			<ui:repeat id="repeat" var="kosten"
+				value="#{jobticketBean.job.kostens}">
+
+				<p:growl id="growl"></p:growl>
+				<p:tooltip id="tooltip2" for="rechneum"
+					value="Aufwand in Std. oder € umrechnen"></p:tooltip>
+				<p:panelGrid styleClass="grid">
+					<p:row>
+						<p:column>
+							<p:commandButton update="@form" id="deletebutton"
+								action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
+
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Name: "></p:outputLabel>
+						</p:column>
+						<p:column style="width:200px">
+							<h:outputLabel
+								value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
+						</p:column>
+
+						<p:column>
+							<p:outputLabel value="Aufwand: "></p:outputLabel>
+
+						</p:column>
+						<p:column>
+							<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
+								<p:ajax event="change" process="@this" update="@form"
+									listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+							</p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton style="width:50px"
+								update="@this aufwand tooltip2" id="rechneum" process="aufwand"
+								value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'h' }"
+								actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+						</p:column>
+
+					</p:row>
+				</p:panelGrid>
+			</ui:repeat>
+			<hr></hr>
+			<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
+			<h:outputText id="gesamtkosten" value="#{aufwandBean.gesamtKosten}">
+			</h:outputText>
+
+			<p></p>
+			<p:panelGrid styleClass="grid" columns="2">
+				<p:button icon="ui-icon-alert" title="Achtung">
+					<f:param name="achtung" />
+				</p:button>
+
+				<p:outputLabel value="Budget: #{jobticketBean.job.budgetInEuro} €" />
+			</p:panelGrid>
+
+
+			<p></p>
+			<p:button value="Zurück" outcome="jobticket_produktbeschreibung"></p:button>
+			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
+		</p:panel>
+	</h:form>
+
+
+	<p:overlayPanel my="left top" widgetVar="overlay" showEffect="fade"
+		hideEffect="explode" for=":aufwandform:neuerAngestellterButton">
+		<h:form>
+			<p:growl id="growl"></p:growl>
+			<h:panelGrid columns="2">
+				<p:outputLabel>Vorname</p:outputLabel>
+				<p:inputText value="#{angestellteBean.angestellte.vorname}"
+					autocomplete="true" required="true" />
+				<p:outputLabel>Name</p:outputLabel>
+				<p:inputText id="t1" value="#{angestellteBean.angestellte.nachname}"
+					autocomplete="true" required="true" />
+				<p:outputLabel>Stundenlohn</p:outputLabel>
+				<p:inputText id="t2"
+					value="#{angestellteBean.angestellte.stundenlohn}"
+					autocomplete="true" required="true" />
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+
+				<p:commandButton immediate="true" onclick="overlay.hide()"
+					update=":aufwandform" value="Schließen" />
+				<p:commandButton actionListener="#{angestellteBean.saveAngestellte}"
+					update="growl" value="Angestellten hinzufügen"></p:commandButton>
+				<p:button value="Angestelltenliste" icon="ui-icon-arrowreturn-1-e"
+					outcome="angestellte_table.xhtml"></p:button>
+			</h:panelGrid>
+		</h:form>
+	</p:overlayPanel>
+</h:body>
+</html>
