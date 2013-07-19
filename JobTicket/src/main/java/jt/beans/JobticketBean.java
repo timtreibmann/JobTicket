@@ -98,13 +98,9 @@ public class JobticketBean {
 
 	@PostConstruct
 	public void init() {
-		System.out.println("JOBTICKETI " + this);
+		showAllOnOnePage=true;
 		filteredJobs = getJobs();
 		
-	}
-
-	public void loadTest() {
-
 	}
 
 	public String refreshFilter() {

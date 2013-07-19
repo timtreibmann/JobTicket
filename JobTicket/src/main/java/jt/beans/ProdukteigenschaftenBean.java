@@ -141,6 +141,26 @@ public class ProdukteigenschaftenBean {
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
+	public String ermittleFortschritt() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		double fortschritt = 0;
+		List<Produkteigenschaften> list = job.getProdukteigenschaftens();
+		int produktAnzahl = list.size();
+		if (produktAnzahl != 0) {
+			int erledigtAnzahl = 0;
+			for (Produkteigenschaften p : list) {
+				System.out.println(p.getErledigt());
+				erledigtAnzahl += p.getErledigt();
+			}
+			fortschritt = (erledigtAnzahl * 100 / produktAnzahl);
+		}
+		job.setFortschritt(fortschritt);
+		em.merge(job);
+		em.getTransaction().commit();
+		return "jobticket_overview.xhtml";
+	}
+
 	/**
 	 * Delete.
 	 * 

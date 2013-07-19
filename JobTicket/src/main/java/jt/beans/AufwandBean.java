@@ -17,6 +17,7 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Jobbearbeiter;
 import jt.entities.Kosten;
+import jt.entities.Produkteigenschaften;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -317,4 +318,6 @@ public class AufwandBean {
 		deleteKostenFromJob(kosten);
 		return null;
 	}
+	
+
 }

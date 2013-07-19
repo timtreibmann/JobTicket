@@ -13,13 +13,22 @@
 <h:body>
 
 	<pe:ajaxErrorHandler />
+	<div id="ansicht">
+		<ui:insert name="ansicht">
+			<h:form>
+				<p:button style="float:right" icon="ui-icon-carat-2-e-w"
+					outcome="jt_main.xhtml"></p:button>
+			</h:form>
+		</ui:insert>
+	</div>
+
 	<div id="main">
 		<ui:insert name="main">
-		
+
 			<ui:include src="jobticket_main.xhtml" />
 		</ui:insert>
 	</div>
-	
+
 	<div id="produkte">
 		<ui:insert name="produkte">
 			<ui:include src="jobticket_produktbeschreibung.xhtml" />

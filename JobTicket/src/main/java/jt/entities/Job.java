@@ -58,6 +58,7 @@ public class Job implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date erstellDatum;
 	
+	private double fortschritt;
 	
 
 	// bi-directional many-to-one association to Jobbearbeiter
@@ -265,6 +266,14 @@ public class Job implements Serializable {
 	 */
 	public void setErstellDatum(Date erstellDatum) {
 		this.erstellDatum = erstellDatum;
+	}
+
+	public double getFortschritt() {
+		return fortschritt;
+	}
+
+	public void setFortschritt(double fortschritt) {
+		this.fortschritt = fortschritt;
 	}
 
 	/**

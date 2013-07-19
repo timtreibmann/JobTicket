@@ -135,7 +135,7 @@
 				</p:panelGrid>
 			</p:panel>
 			<p:button value="Zurück" outcome="jt_produkte"></p:button>
-			<p:button value="Weiter" outcome="jobticket_overview.xhtml"></p:button>
+			<p:commandButton value="Weiter" action="#{produkteigenschaftenBean.ermittleFortschritt}"/>
 		</h:form>
 
 
@@ -160,9 +160,9 @@
 				<h:panelGrid columns="3">
 
 					<p:commandButton immediate="true" onclick="overlay.hide()"
-						update=":aufwandform" value="Schließen" />
+						 value="Schließen" />
 					<p:commandButton
-						actionListener="#{angestellteBean.saveAngestellte}" update="growl"
+						actionListener="#{angestellteBean.saveAngestellte}" update="growl :aufwandform:kontakter"
 						value="Angestellten hinzufügen"></p:commandButton>
 					<p:button value="Angestelltenliste" icon="ui-icon-arrowreturn-1-e"
 						outcome="angestellte_table.xhtml"></p:button>

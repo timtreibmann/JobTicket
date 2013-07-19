@@ -22,15 +22,7 @@
 			<h:outputLabel value="Willkommen #{request.remoteUser}"></h:outputLabel>
 			<p></p>
 
-			<p:panelGrid styleClass="grid" columns="2">
-				<h:outputText value="Theme:" />
-				<p:themeSwitcher value="#{themeSwitcherBean.theme}"
-					style="width:165px" id="defaultSwitcher">
-					<f:selectItem itemLabel="Choose Theme" itemValue="" />
-					<f:selectItems value="#{themeSwitcherBean.themes}" />
-					<p:ajax event="change" process="@this" update="@form"></p:ajax>
-				</p:themeSwitcher>
-			</p:panelGrid>
+
 			<p:commandButton value="Logout" style="float:right"
 				action="#{jobticketBean.logout}" ajax="false" />
 
@@ -40,8 +32,20 @@
 			<p:commandButton style="width:200px" value="Optionen" id="erweitert" />
 
 			<p:overlayPanel hideEffect="explode" showEffect="fade"
-				my="right bottom" for="erweitert">
-				<p:panelGrid columns="2">
+				my="right bottom" for="erweitert" style="height:50%">
+				<p:panelGrid styleClass="grid" columns="2">
+
+
+
+					<h:outputText value="Theme:" />
+					<p:themeSwitcher value="#{themeSwitcherBean.theme}"
+						style="width:165px" id="defaultSwitcher">
+						<f:selectItem itemLabel="Choose Theme" itemValue="" />
+						<f:selectItems value="#{themeSwitcherBean.themes}" />
+						<p:ajax event="change" process="@this"></p:ajax>
+					</p:themeSwitcher>
+
+
 					<p:outputLabel for="jobbearbeiter"
 						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
 					<p:selectOneMenu id="jobbearbeiter"
@@ -51,8 +55,7 @@
 							var="angestellte"
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
-						<p:ajax event="blur" update="dataTable"
-							listener="#{jobticketBean.loadTest}"
+						<p:ajax event="change" process="@this" update="dataTable"
 							oncomplete="dataTableWidgetVar.filter();" />
 					</p:selectOneMenu>
 
@@ -74,7 +77,7 @@
 
 
 					<p:outputLabel for="checkbox2"
-						value="Alle Formulare auf einer Seite zeigen"></p:outputLabel>
+						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox2"
 						value="#{jobticketBean.showAllOnOnePage}">
 					</p:selectBooleanCheckbox>
@@ -118,8 +121,14 @@
 					headerText="Ersteller" filterMatchMode="contains">
 					<h:outputText value="#{job.ersteller}" />
 				</p:column>
+				<p:column id="fortschrittColumn" 
+					headerText="Fortschritt">
+					
+					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%" displayOnly="true"/> 
+					
+				</p:column>
 
-
+   
 				<p:column>
 					<p:columnGroup>
 						<p:overlayPanel id="p" for="delete" hideEffect="fade">
