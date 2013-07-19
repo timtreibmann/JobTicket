@@ -33,12 +33,15 @@
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />
 					<p:selectOneMenu id="kontakter"
+					
 						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
 						editable="false" required="true">
+						 
 						<f:selectItems value="#{angestellteBean.angestelltes}"
 							var="angestellte"
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
+							 
 						<p:ajax event="change" update="@form"></p:ajax>
 
 					</p:selectOneMenu>

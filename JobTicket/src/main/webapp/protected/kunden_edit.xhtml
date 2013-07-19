@@ -13,17 +13,13 @@
 
 <h:body>
 	<h:form>
-
+<p:growl id="growl"></p:growl>
 		<p:panel>
 			<p:breadCrumb>
-				<p:menuitem value="Übersicht"
-					url="start.xhtml" />
-				<p:menuitem value="Jobticket"
-					url="jobticket_main.xhtml" />
-				<p:menuitem value="Kunden anlegen"
-					url="kunden_add.xhtml" />
-				<p:menuitem value="Kunden Tabelle"
-					url="kunden_table.xhtml" />
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+				<p:menuitem value="Kunden anlegen" url="kunden_add.xhtml" />
+				<p:menuitem value="Kunden Tabelle" url="kunden_table.xhtml" />
 				<p:menuitem value="Kunden editieren" url="#" />
 			</p:breadCrumb>
 
@@ -32,7 +28,7 @@
 			<label></label>
 			<h:inputHidden id="id0" value="#{kundenBean.kunde.id}" />
 			<label>Name</label>
-			<p:inputText id="lblTitle" value="#{kundenBean.kunde.name}" />
+			<p:inputText required="true" id="lblTitle" value="#{kundenBean.kunde.name}" />
 
 
 			<label>Kürzel</label>
@@ -45,8 +41,9 @@
 			<h:panelGroup>
 				<p:inputText id="id3" value="#{kundenBean.kunde.telefon}" />
 
-				<p:commandButton value="Fertig" action="#{kundenBean.updateKunde}"
-					ajax="false"></p:commandButton>
+				<p:commandButton value="Übernehmen" update="growl" process="@form" action="#{kundenBean.updateKunde}"></p:commandButton>
+				<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
+			
 			</h:panelGroup>
 		</h:panelGrid>
 

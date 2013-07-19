@@ -9,8 +9,12 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
+
+
+
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
+
 			<p:breadCrumb style="height:25px">
 				<p:menuitem value="Übersicht" url="start.xhtml" />
 			</p:breadCrumb>
@@ -18,6 +22,15 @@
 			<h:outputLabel value="Willkommen #{request.remoteUser}"></h:outputLabel>
 			<p></p>
 
+			<p:panelGrid styleClass="grid" columns="2">
+				<h:outputText value="Theme:" />
+				<p:themeSwitcher value="#{themeSwitcherBean.theme}"
+					style="width:165px" id="defaultSwitcher">
+					<f:selectItem itemLabel="Choose Theme" itemValue="" />
+					<f:selectItems value="#{themeSwitcherBean.themes}" />
+					<p:ajax event="change" process="@this" update="@form"></p:ajax>
+				</p:themeSwitcher>
+			</p:panelGrid>
 			<p:commandButton value="Logout" style="float:right"
 				action="#{jobticketBean.logout}" ajax="false" />
 

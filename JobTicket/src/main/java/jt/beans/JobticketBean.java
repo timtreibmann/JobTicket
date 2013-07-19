@@ -46,7 +46,8 @@ public class JobticketBean {
 	@Produces
 	@AktuellerJob
 	private Job job;
-
+	
+	
 	private int selectedKundeId;
 
 	private int selectedAngestellterId;
@@ -99,6 +100,7 @@ public class JobticketBean {
 	public void init() {
 		System.out.println("JOBTICKETI " + this);
 		filteredJobs = getJobs();
+		
 	}
 
 	public void loadTest() {

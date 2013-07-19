@@ -54,7 +54,7 @@
 							<p:selectOneMenu style="width:103%" id="kundenselect"
 								value="#{jobticketBean.selectedKundeId}" editable="false"
 								effect="fold">
-								  <f:selectItem itemLabel="Select One" itemValue="0" />  
+								<f:selectItem itemLabel="Select One" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 								<p:ajax event="change" process="@this"

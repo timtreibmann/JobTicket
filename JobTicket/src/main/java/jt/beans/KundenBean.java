@@ -175,7 +175,7 @@ public class KundenBean {
 		em.merge(kunde);
 		em.getTransaction().commit();
 	
-		return "kunden_table.xhtml";
+		return null;
 	}
 
 }

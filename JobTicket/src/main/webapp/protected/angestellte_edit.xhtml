@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    
+
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -15,18 +15,15 @@
 <h:body>
 	<h:form>
 		<p:breadCrumb>
-			<p:menuitem value="Übersicht"
-				url="start.xhtml" />
-			<p:menuitem value="Jobticket"
-				url="jobticket_main.xhtml" />
-			<p:menuitem value="Aufwand festlegen"
-				url="jobticket_aufwand.xhtml" />
+			<p:menuitem value="Übersicht" url="start.xhtml" />
+			<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+			<p:menuitem value="Aufwand festlegen" url="jobticket_aufwand.xhtml" />
 			<p:menuitem value="Angestellten hinzufügen"
 				url="angestellte_add.xhtml" />
-			<p:menuitem value="Angestelltentabelle"
-				url="angestellte_table.xhtml" />
+			<p:menuitem value="Angestelltentabelle" url="angestellte_table.xhtml" />
 		</p:breadCrumb>
 
+		<p:growl id="growl"></p:growl>
 		<p:panel header="Angestelltenbearbeitung">
 			<f:facet name="actions">
 				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
@@ -49,7 +46,7 @@
 
 
 			<p:commandButton value="Fertig"
-				action="#{angestellteBean.updateAngestellten}" ajax="false"></p:commandButton>
+				action="#{angestellteBean.updateAngestellten}" update="growl"></p:commandButton>
 
 		</h:panelGrid>
 
