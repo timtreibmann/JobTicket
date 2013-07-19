@@ -97,6 +97,7 @@ public class JobticketBean {
 
 	@PostConstruct
 	public void init() {
+		System.out.println("JOBTICKETI " + this);
 		filteredJobs = getJobs();
 	}
 
@@ -143,16 +144,27 @@ public class JobticketBean {
 
 	public String editJob(Job job) {
 		this.job = job;
+		//damit in im selectOneMenu auf der jobticket_main-Seite der richtige Kunde gesetzt wird
+		try{
+		selectedKundeId=job.getKunde().getId();	
+		}catch(NullPointerException e) {
+			//kein Kunde gesetzt
+			selectedKundeId=0;
+		}
+		
+		this.kuerzel="";
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
-			return "jobticket_main.xhtml";
+			return "jt_main.xhtml";
 		}
 	}
 
 	public String createJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
+		selectedKundeId=0;
+		this.kuerzel="";
 		this.job = new Job();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		job.setErsteller(fc.getExternalContext().getRemoteUser());
@@ -166,7 +178,7 @@ public class JobticketBean {
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
-			return "jobticket_main.xhtml";
+			return "jt_main.xhtml";
 		}
 	}
 
@@ -178,6 +190,7 @@ public class JobticketBean {
 			Kunde k = kundenBean.findKundenByID(selectedKundeId);
 			job.setKunde(k);
 		}
+	
 		em.merge(job);
 		em.getTransaction().commit();
 
@@ -213,7 +226,6 @@ public class JobticketBean {
 
 	public List<Job> getJobs() {
 		if (showAllJobs) {
-
 			em = entityManagerFactory.createEntityManager();
 			em.getTransaction().begin();
 			final Query query = em.createQuery("SELECT b FROM Job b");
@@ -230,11 +242,6 @@ public class JobticketBean {
 
 	}
 
-	public String findKundeByKuerzel() {
-		Kunde k = kundenBean.findKundenByKuerzel(kuerzel);
-		selectedKundeId = k.getId();
-		return null;
-	}
 
 	public Job findJobByID(int id) {
 		return em.find(Job.class, id);
@@ -247,11 +254,6 @@ public class JobticketBean {
 		em.remove(job);
 		em.getTransaction().commit();
 		return null;
-	}
-
-	public void onRowToggle(ToggleEvent event) {
-		FacesMessage msg = new FacesMessage("bla");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public String logout() {

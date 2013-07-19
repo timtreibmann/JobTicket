@@ -8,15 +8,13 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head />
 <h:body>
-<ui:composition template="templates/structure_all.xhtml">
+	<ui:composition template="templates/structure_single.xhtml">
 		<ui:define name="main">
-			<ui:include src="templates/jobticket_main.xhtml" />
-		</ui:define>
-		<ui:define name="bearbeitung">
 			<ui:include src="templates/jobticket_produktbeschreibung.xhtml" />
-		</ui:define>
-		<ui:define name="aufwand">
-			<ui:include src="templates/jobticket_aufwand.xhtml" />
+			<h:form>
+				<p:button outcome="jt_main.xhtml" value="Zurück" />
+				<p:button outcome="jt_aufwand.xhtml" value="Weiter" />
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

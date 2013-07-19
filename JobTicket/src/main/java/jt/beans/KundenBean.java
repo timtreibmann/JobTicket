@@ -5,7 +5,9 @@ import jt.entities.Kunde;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -20,12 +22,14 @@ import javax.persistence.Query;
  * @author jan & tim
  */
 @Named
-@RequestScoped
+@ApplicationScoped
 public class KundenBean {
 	
 	/** The kunde. */
 	@Inject
 	private Kunde kunde;
+	
+	@Inject JobticketBean jobticketBean;
 
 	/** The entity manager factory. */
 	@Inject
@@ -33,6 +37,16 @@ public class KundenBean {
 	
 	/** The em. */
 	private EntityManager em;
+	
+	private String kuerzel;
+
+	public String getKuerzel() {
+		return kuerzel;
+	}
+
+	public void setKuerzel(String kuerzel) {
+		this.kuerzel = kuerzel;
+	}
 
 	/**
 	 * Gets the kunden.
@@ -58,18 +72,25 @@ public class KundenBean {
 	 * @param kuerzel the kuerzel
 	 * @return the kunde
 	 */
-	public Kunde findKundenByKuerzel(String kuerzel) {
+	public Kunde findKundenByKuerzelAndUpdateJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		final Query query = em
 				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
 		query.setParameter("kuerzel", kuerzel);
+		
+		
 		List<Kunde> kundenListe = query.getResultList();
-		if (kundenListe == null) {
-			kundenListe = new ArrayList<Kunde>();
-		}
 		em.getTransaction().commit();
-		return kundenListe.get(0);
+		if (kundenListe.size() > 0){
+			jobticketBean.setSelectedKundeId(kundenListe.get(0).getId());
+			jobticketBean.updateJobticket();
+			return kundenListe.get(0);
+			
+		} else {
+			return null;
+		}
+		
 	}
 
 	/**
