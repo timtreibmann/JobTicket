@@ -174,7 +174,9 @@ public class KundenBean {
 		em.getTransaction().begin();
 		em.merge(kunde);
 		em.getTransaction().commit();
-	
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(
+				"Daten erfolgreich gespeichert!", "Kunde"));
 		return null;
 	}
 

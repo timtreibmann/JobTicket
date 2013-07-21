@@ -13,8 +13,9 @@
 
 <h:body>
 	<h:form>
-<p:growl id="growl"></p:growl>
-		<p:panel>
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:growl id="growl"></p:growl>
+		<p:panel style="width:60%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
 				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
@@ -23,31 +24,33 @@
 				<p:menuitem value="Kunden editieren" url="#" />
 			</p:breadCrumb>
 
-		</p:panel>
-		<h:panelGrid columns="2">
-			<label></label>
-			<h:inputHidden id="id0" value="#{kundenBean.kunde.id}" />
-			<label>Name</label>
-			<p:inputText required="true" id="lblTitle" value="#{kundenBean.kunde.name}" />
+
+			<h:panelGrid columns="2">
+				<p:outputLabel></p:outputLabel>
+				<h:inputHidden id="id0" value="#{kundenBean.kunde.id}" />
+				<p:outputLabel for="kundenname">Name</p:outputLabel>
+				<p:inputText  required="true" id="kundenname"
+					value="#{kundenBean.kunde.name}" />
 
 
-			<label>Kürzel</label>
-			<p:inputText id="id1" value="#{kundenBean.kunde.kundenkuerzel}" />
+				<p:outputLabel>Kürzel</p:outputLabel>
+				<p:inputText id="id1" value="#{kundenBean.kunde.kundenkuerzel}" />
 
-			<label>Adresse</label>
-			<p:inputText id="id2" value="#{kundenBean.kunde.adresse}" />
+				<p:outputLabel>Adresse</p:outputLabel>
+				<p:inputText id="id2" value="#{kundenBean.kunde.adresse}" />
 
-			<label>Telefon</label>
-			<h:panelGroup>
+				<p:outputLabel>Telefon</p:outputLabel>
+
 				<p:inputText id="id3" value="#{kundenBean.kunde.telefon}" />
+			</h:panelGrid>
 
-				<p:commandButton value="Übernehmen" update="growl" process="@form" action="#{kundenBean.updateKunde}"></p:commandButton>
-				<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
-			
-			</h:panelGroup>
-		</h:panelGrid>
+		</p:panel>
+		<p></p>
 
 
+		<p:commandButton value="Übernehmen" update="growl" process="@form"
+			action="#{kundenBean.updateKunde}"></p:commandButton>
+		<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
 	</h:form>
 </h:body>
 

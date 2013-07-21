@@ -33,10 +33,11 @@
 
 			<p:overlayPanel hideEffect="explode" showEffect="fade"
 				my="right bottom" for="erweitert" style="height:50%">
+
+
+
+				<h:outputText value="Ansicht"></h:outputText>
 				<p:panelGrid styleClass="grid" columns="2">
-
-
-
 					<h:outputText value="Theme:" />
 					<p:themeSwitcher value="#{themeSwitcherBean.theme}"
 						style="width:165px" id="defaultSwitcher">
@@ -45,10 +46,21 @@
 						<p:ajax event="change" process="@this"></p:ajax>
 					</p:themeSwitcher>
 
-
+					<p:outputLabel for="checkbox2"
+						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
+					<p:selectBooleanCheckbox id="checkbox2"
+						value="#{jobticketBean.showAllOnOnePage}">
+					</p:selectBooleanCheckbox>
+				</p:panelGrid>
+				<p></p>
+				<hr></hr>
+				<p></p>
+				<h:outputText value="Filteroptionen"></h:outputText>
+				<p:panelGrid styleClass="grid" columns="2">
 					<p:outputLabel for="jobbearbeiter"
 						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
 					<p:selectOneMenu id="jobbearbeiter"
+						disabled="#{!jobticketBean.filterJoblistByAngestellten}"
 						value="#{jobticketBean.selectedAngestellterId}" effect="fold"
 						editable="false">
 						<f:selectItems value="#{angestellteBean.angestelltes}"
@@ -63,7 +75,7 @@
 						value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox"
 						value="#{jobticketBean.filterJoblistByAngestellten}">
-						<p:ajax update="dataTable"
+						<p:ajax update="dataTable jobbearbeiter"
 							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 					</p:selectBooleanCheckbox>
 
@@ -76,75 +88,72 @@
 					</p:selectBooleanCheckbox>
 
 
-					<p:outputLabel for="checkbox2"
-						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
-					<p:selectBooleanCheckbox id="checkbox2"
-						value="#{jobticketBean.showAllOnOnePage}">
-					</p:selectBooleanCheckbox>
 
 				</p:panelGrid>
 
 			</p:overlayPanel>
+		
+					<p:dataTable id="dataTable" var="job"
+						value="#{jobticketBean.filterJoblistByAngestellten ? jobticketBean.jobsFromJobbearbeiter : jobticketBean.jobs}"
+						emptyMessage="Keine Jobs mit diesem Suchkriterium gefunden"
+						widgetVar="dataTableWidgetVar"
+						filteredValue="#{jobticketBean.filteredJobs}">
 
-			<p:dataTable id="dataTable" var="job"
-				value="#{jobticketBean.filterJoblistByAngestellten ? jobticketBean.jobsFromJobbearbeiter : jobticketBean.jobs}"
-				emptyMessage="Keine Jobs mit diesem Suchkriterium gefunden"
-				widgetVar="dataTableWidgetVar"
-				filteredValue="#{jobticketBean.filteredJobs}">
+						<f:facet name="header">
+							<h:outputText value="Ticket-Übersicht"></h:outputText>
+						</f:facet>
+						<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
+							headerText="Erstelldatum" filterMatchMode="startsWith">
+							<h:outputText value="#{job.erstellDatum}">
+								<f:convertDateTime timeStyle="short"></f:convertDateTime>
+							</h:outputText>
+						</p:column>
+						<p:column id="idColumn" filterBy="#{job.id}"
+							headerText="Jobnummer" filterMatchMode="startsWith">
+							<h:outputText value="#{job.id}" />
+						</p:column>
+						<p:column id="nameColumn" filterBy="#{job.name}"
+							headerText="Jobname" filterMatchMode="contains">
+							<h:outputText value="#{job.name}" />
+						</p:column>
+						<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
+							headerText="Kunde" filterMatchMode="contains">
+							<h:outputText value="#{job.kunde.name}" />
+						</p:column>
+						<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
+							headerText="Beschreibung" filterMatchMode="contains">
+							<h:outputText value="#{job.jobbeschreibung}" />
+						</p:column>
+						<p:column id="erstellerColumn" filterBy="#{job.ersteller}"
+							headerText="Ersteller" filterMatchMode="contains">
+							<h:outputText value="#{job.ersteller}" />
+						</p:column>
+						<p:column id="fortschrittColumn" headerText="Fortschritt">
 
-				<f:facet name="header">
-					<h:outputText value="Ticket-Übersicht"></h:outputText>
-				</f:facet>
-				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
-					headerText="Erstelldatum" filterMatchMode="startsWith">
-					<h:outputText value="#{job.erstellDatum}">
-						<f:convertDateTime timeStyle="short"></f:convertDateTime>
-					</h:outputText>
-				</p:column>
-				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
-					filterMatchMode="startsWith">
-					<h:outputText value="#{job.id}" />
-				</p:column>
-				<p:column id="nameColumn" filterBy="#{job.name}"
-					headerText="Jobname" filterMatchMode="contains">
-					<h:outputText value="#{job.name}" />
-				</p:column>
-				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
-					headerText="Kunde" filterMatchMode="contains">
-					<h:outputText value="#{job.kunde.name}" />
-				</p:column>
-				<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
-					headerText="Beschreibung" filterMatchMode="contains">
-					<h:outputText value="#{job.jobbeschreibung}" />
-				</p:column>
-				<p:column id="erstellerColumn" filterBy="#{job.ersteller}"
-					headerText="Ersteller" filterMatchMode="contains">
-					<h:outputText value="#{job.ersteller}" />
-				</p:column>
-				<p:column id="fortschrittColumn" 
-					headerText="Fortschritt">
-					
-					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%" displayOnly="true"/> 
-					
-				</p:column>
+							<p:progressBar value="#{job.fortschritt}"
+								labelTemplate="{value}%" displayOnly="true" />
 
-   
-				<p:column>
-					<p:columnGroup>
-						<p:overlayPanel id="p" for="delete" hideEffect="fade">
-							<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
-							<p></p>
-							<p:commandButton value="Ja"
-								actionListener="#{jobticketBean.delete(job)}" update="@form"
-								oncomplete="dataTableWidgetVar.filter();" />
-							<p:commandButton value="Nein" update="@form" />
-						</p:overlayPanel>
-						<p:commandButton id="delete" icon="ui-icon-trash" />
-						<p:commandButton icon="ui-icon-wrench" ajax="false"
-							action="#{jobticketBean.editJob(job)}" />
-					</p:columnGroup>
-				</p:column>
-			</p:dataTable>
+						</p:column>
+
+
+						<p:column>
+							<p:columnGroup>
+								<p:overlayPanel id="p" for="delete" hideEffect="fade">
+									<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
+									<p></p>
+									<p:commandButton value="Ja"
+										actionListener="#{jobticketBean.delete(job)}"  update="@form"
+										oncomplete="dataTableWidgetVar.filter();" />
+									<p:commandButton value="Nein" update="@form" />
+								</p:overlayPanel>
+								<p:commandButton id="delete" icon="ui-icon-trash" />
+								<p:commandButton icon="ui-icon-wrench" ajax="false"
+									action="#{jobticketBean.editJob(job)}" />
+							</p:columnGroup>
+						</p:column>
+					</p:dataTable>
+
+				
 		</p:panel>
 	</h:form>
 </h:body>

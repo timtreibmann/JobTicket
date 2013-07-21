@@ -33,15 +33,14 @@
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />
 					<p:selectOneMenu id="kontakter"
-					
 						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
 						editable="false" required="true">
-						 
+
 						<f:selectItems value="#{angestellteBean.angestelltes}"
 							var="angestellte"
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
-							 
+
 						<p:ajax event="change" update="@form"></p:ajax>
 
 					</p:selectOneMenu>
@@ -74,9 +73,7 @@
 									action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 
 							</p:column>
-							<p:column>
-								<p:outputLabel value="Name: "></p:outputLabel>
-							</p:column>
+
 							<p:column style="width:200px">
 								<h:outputLabel
 									value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
@@ -93,7 +90,7 @@
 								</p:inputText>
 							</p:column>
 							<p:column>
-								<p:commandButton style="width:50px"
+								<p:commandButton style="width:35px"
 									update="@this aufwand tooltip2" id="rechneum" process="aufwand"
 									value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'h' }"
 									actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
@@ -135,7 +132,8 @@
 				</p:panelGrid>
 			</p:panel>
 			<p:button value="Zurück" outcome="jt_produkte"></p:button>
-			<p:commandButton value="Weiter" action="#{produkteigenschaftenBean.ermittleFortschritt}"/>
+			<p:commandButton value="Weiter"
+				action="#{produkteigenschaftenBean.ermittleFortschritt}" />
 		</h:form>
 
 
@@ -159,16 +157,18 @@
 				</h:panelGrid>
 				<h:panelGrid columns="3">
 
-					<p:commandButton immediate="true" onclick="overlay.hide()"
-						 value="Schließen" />
+					<p:commandButton immediate="true"
+						onclick="angestellten_overlay.hide()" value="Schließen" />
 					<p:commandButton
-						actionListener="#{angestellteBean.saveAngestellte}" update="growl :aufwandform:kontakter"
+						actionListener="#{angestellteBean.saveAngestellte}"
+						update="growl :aufwandform:kontakter"
 						value="Angestellten hinzufügen"></p:commandButton>
 					<p:button value="Angestelltenliste" icon="ui-icon-arrowreturn-1-e"
 						outcome="angestellte_table.xhtml"></p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>
+
 	</ui:composition>
 </h:body>
 </html>

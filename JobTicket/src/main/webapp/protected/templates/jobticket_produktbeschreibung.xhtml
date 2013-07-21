@@ -18,8 +18,7 @@
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
 				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem value="Produktbeschreibung"
-					url="jt_produkte.xhtml" />
+				<p:menuitem value="Produktbeschreibung" url="jt_produkte.xhtml" />
 			</p:breadCrumb>
 			<p></p>
 			<pe:tooltip rendered="#{produkteigenschaftenBean.produktAnzahl==0}"
@@ -39,10 +38,13 @@
 
 
 				<p:tab
-					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #003333;' : ''}"
+					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #C0C0C0  ;' : ''}"
 					id="tab"
 					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
 					<p:growl id="growl" showDetail="true" sticky="false" />
+					<p:commandButton icon="ui-icon-trash" style="float:right"
+						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+						update="acc" />
 					<p:panelGrid styleClass="grid">
 						<p:row>
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
@@ -56,11 +58,7 @@
 									actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
 
 							</p:column>
-							<p:column>
-								<p:commandButton icon="ui-icon-trash"
-									actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
-									update="acc" />
-							</p:column>
+
 						</p:row>
 						<p:row>
 							<p:column>
@@ -170,8 +168,9 @@
 					</p:panel>
 
 				</p:tab>
-			</p:accordionPanel>	
+			</p:accordionPanel>
 		</p:panel>
+		<p></p>
 	</h:form>
 </ui:composition>
 </html>

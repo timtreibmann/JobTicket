@@ -57,7 +57,7 @@ public class ThemeSwitcherBean {
 		themes.put("UI-Darkness", "ui-darkness");
 		themes.put("UI-Lightness", "ui-lightness");
 		themes.put("Vader", "vader");
-		theme = "home";
+		theme = "smoothness";
 	}
 
 	public TreeMap<String, String> getThemes() {

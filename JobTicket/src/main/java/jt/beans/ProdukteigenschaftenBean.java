@@ -134,7 +134,6 @@ public class ProdukteigenschaftenBean {
 		em.merge(produkteigenschaften);
 		em.getTransaction().commit();
 		FacesContext context = FacesContext.getCurrentInstance();
-
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", "Produkteigenschaften"));
 
