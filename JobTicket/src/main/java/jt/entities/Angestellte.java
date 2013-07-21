@@ -44,12 +44,12 @@ public class Angestellte implements Serializable {
 
 	//bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
-	@OneToMany(mappedBy="angestellte", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="angestellte")
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	//bi-directional many-to-one association to Kosten
 	/** The kostens. */
-	@OneToMany(mappedBy="angestellte", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy="angestellte")
 	private List<Kosten> kostens;
 
 	/**
