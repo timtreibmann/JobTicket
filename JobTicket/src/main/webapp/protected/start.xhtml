@@ -62,8 +62,10 @@
 						disabled="#{!jobticketBean.filterJoblistByAngestellten}"
 						value="#{jobticketBean.selectedAngestellterId}" effect="fold"
 						editable="false">
+						<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
 						<f:selectItems value="#{angestellteBean.angestelltes}"
 							var="angestellte"
+							
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
 						<p:ajax event="change" process="@this" update="dataTable"
