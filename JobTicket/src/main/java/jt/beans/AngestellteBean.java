@@ -84,12 +84,12 @@ public class AngestellteBean {
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		Angestellte k = em.find(Angestellte.class, angestellte.getId());
-		k.setNachname(angestellte.getNachname());
-		k.setVorname(angestellte.getVorname());
-		k.setStundenlohn(angestellte.getStundenlohn());
+		System.out.println("NACHNAMEd :" + angestellte.getNachname());
+		em.merge(angestellte);
 		em.getTransaction().commit();
-		return "angestellte_table.xhtml";
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
+		return null;
 	}
 
 }

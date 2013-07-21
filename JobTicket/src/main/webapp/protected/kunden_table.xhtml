@@ -13,14 +13,14 @@
 
 <h:body>
 	<h:form>
+	<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
+				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
 				<p:menuitem value="Kunden anlegen" url="kunden_add.xhtml" />
 				<p:menuitem value="Kunden Tabelle" url="kunden_table.xhtml" />
 			</p:breadCrumb>
-			<h:outputStylesheet library="css" name="style.css" />
 			<p:dataTable value="#{kundenBean.kunden}" var="kunde">
 
 				<p:column>
@@ -43,11 +43,11 @@
 					<h:outputText value="#{kunde.telefon}" />
 				</p:column>
 				<p:column style="width:80px">
-					
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{kundenBean.delete(kunde)}" update="@form" />
-						<p:commandButton action="#{kundenBean.editKunde(kunde)}"
-							ajax="false" icon="ui-icon-wrench" />
+
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{kundenBean.delete(kunde)}" update="@form" />
+					<p:commandButton action="#{kundenBean.editKunde(kunde)}"
+						ajax="false" icon="ui-icon-wrench" />
 
 
 				</p:column>

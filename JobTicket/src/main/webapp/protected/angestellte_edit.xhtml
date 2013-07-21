@@ -14,43 +14,46 @@
 
 <h:body>
 	<h:form>
-		<p:breadCrumb>
-			<p:menuitem value="Übersicht" url="start.xhtml" />
-			<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
-			<p:menuitem value="Aufwand festlegen" url="jobticket_aufwand.xhtml" />
-			<p:menuitem value="Angestellten hinzufügen"
-				url="angestellte_add.xhtml" />
-			<p:menuitem value="Angestelltentabelle" url="angestellte_table.xhtml" />
-		</p:breadCrumb>
 
-		<p:growl id="growl"></p:growl>
-		<p:panel header="Angestelltenbearbeitung">
+		<p:panel style="width:60%">
+			<h:outputStylesheet library="css" name="style.css" />
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+				<p:menuitem value="Angestelltentabelle"
+					url="angestellte_table.xhtml" />
+			</p:breadCrumb>
+
+			<p:growl id="growl"></p:growl>
+
 			<f:facet name="actions">
 				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
 			</f:facet>
+
+			<h:panelGrid columns="2">
+				<p:outputLabel></p:outputLabel>
+				<h:inputHidden id="id0" value="#{angestellteBean.angestellte.id}" />
+				<p:outputLabel for="vorname">Vorname</p:outputLabel>
+				<p:inputText required="true" id="vorname"
+					value="#{angestellteBean.angestellte.vorname}" />
+
+
+				<p:outputLabel for="nachname">Nachname</p:outputLabel>
+				<p:inputText required="true" id="nachname"
+					value="#{angestellteBean.angestellte.nachname}" />
+
+				<p:outputLabel>Stundenlohn</p:outputLabel>
+				<p:inputText id="id2"
+					value="#{angestellteBean.angestellte.stundenlohn}" />
+
+
+				<p:commandButton value="Übernehmen"
+					actionListener="#{angestellteBean.updateAngestellten}" process="@form"
+					update="growl"></p:commandButton>
+				<p:button value="Zurück" outcome="jt_aufwand.xhtml"></p:button>
+			</h:panelGrid>
 		</p:panel>
-		<h:panelGrid columns="2">
-			<label></label>
-			<h:inputHidden id="id0" value="#{angestellteBean.angestellte.id}" />
-			<label>Vorname</label>
-			<p:inputText id="lblTitle"
-				value="#{angestellteBean.angestellte.vorname}" />
-
-
-			<label>Nachname</label>
-			<p:inputText id="id1" value="#{angestellteBean.angestellte.nachname}" />
-
-			<label>Stundenlohn</label>
-			<p:inputText id="id2"
-				value="#{angestellteBean.angestellte.stundenlohn}" />
-
-
-			<p:commandButton value="Fertig"
-				action="#{angestellteBean.updateAngestellten}" update="growl"></p:commandButton>
-
-		</h:panelGrid>
-
-
 	</h:form>
 </h:body>
 
