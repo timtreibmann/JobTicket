@@ -25,8 +25,8 @@
 				showEffect="fade" hideEffect="fade" for="create"
 				value="Hier klicken, um ein Produkt anzulegen" autoShow="true"
 				widgetVar="tip1" myPosition="left center" atPosition="right center" />
-			<p:commandButton id="create" onclick="tip1.hide();"
-				action="#{produkteigenschaftenBean.createProdukteigenschaft}"
+			<p:commandButton id="create" 
+				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
 				update="acc" value="Neues Produkt anlegen">
 			</p:commandButton>
 			<p></p>
