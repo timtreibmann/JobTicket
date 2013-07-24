@@ -145,7 +145,6 @@ public class KundenBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", ""));
-
 		return "kunden_add.xhtml";
 	}
 

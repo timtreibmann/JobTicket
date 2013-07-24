@@ -148,28 +148,36 @@ public class AufwandBean {
 	 * @return the string
 	 */
 	public String saveKosten() {
+		try {
 		Angestellte angestellte = angestellteBean
 				.findAngestelltenByID(selectedAngestellteId);
-		if (!istAngestellterVorhanden(angestellte)) {
-			em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
-			kosten.setArbeitsaufwand(0);
-			kosten.setArbeitsaufwandIstInEuro(1);
-			Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
-			jobbearbeiter.setAngestellte(angestellte);
-			job.addJobbearbeiter(jobbearbeiter);
-			angestellte.addKosten(kosten);
-			job.addKosten(kosten);
-			em.persist(jobbearbeiter);
-			em.persist(kosten);
-			em.merge(angestellte);
-			em.merge(job);
-			em.getTransaction().commit();
-		} else {
+		
+			if (!istAngestellterVorhanden(angestellte)) {
+				em = entityManagerFactory.createEntityManager();
+				em.getTransaction().begin();
+				kosten.setArbeitsaufwand(0);
+				kosten.setArbeitsaufwandIstInEuro(0);
+				Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
+				jobbearbeiter.setAngestellte(angestellte);
+				job.addJobbearbeiter(jobbearbeiter);
+				angestellte.addKosten(kosten);
+				job.addKosten(kosten);
+				em.persist(jobbearbeiter);
+				em.persist(kosten);
+				em.merge(angestellte);
+				em.merge(job);
+				em.getTransaction().commit();
+			} else {
+				FacesContext fc = FacesContext.getCurrentInstance();
+				fc.addMessage(null, new FacesMessage(
+						"Angestellter wurde bereits hinzugefügt!"));
+			}
+		} catch (NullPointerException e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(
-					"Angestellter wurde bereits hinzugefügt!"));
+					"Bitte Angestellten auswählen!"));
 		}
+
 		return null;
 	}
 
@@ -289,7 +297,7 @@ public class AufwandBean {
 	 *            the kosten
 	 * @return the string
 	 */
-	
+
 	private void deleteJobbearbeitersFromJob(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -305,7 +313,7 @@ public class AufwandBean {
 		em.remove(jobbearbeiter);
 		em.getTransaction().commit();
 	}
-	
+
 	private void deleteKostenFromJob(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -313,12 +321,11 @@ public class AufwandBean {
 		em.merge(job);
 		em.getTransaction().commit();
 	}
-	
+
 	public String delete(Kosten kosten) {
 		deleteJobbearbeitersFromJob(kosten);
 		deleteKostenFromJob(kosten);
 		return null;
 	}
-	
 
 }

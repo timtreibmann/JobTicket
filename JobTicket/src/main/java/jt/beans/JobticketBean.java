@@ -53,6 +53,11 @@ public class JobticketBean {
 
 	private boolean filterJoblistByUser;
 	private boolean filterJoblistByAngestellten;
+	private int kundenAnzahl;
+
+	public int getKundenAnzahl() {
+		return kundenBean.getKunden().size();
+	}
 
 	public boolean isFilterJoblistByAngestellten() {
 		return filterJoblistByAngestellten;

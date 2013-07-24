@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head></h:head>
@@ -54,14 +55,13 @@
 							<p:selectOneMenu style="width:104%" id="kundenselect"
 								value="#{jobticketBean.selectedKundeId}" editable="false"
 								effect="fold">
-								<f:selectItem itemLabel="Select One" itemValue="0" />
+								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-								<p:ajax event="change" process="@this"
-									update="@this growl"
+								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{jobticketBean.updateJobticket}"></p:ajax>
 							</p:selectOneMenu>
-						</p:column>					
+						</p:column>
 						<p:column>
 							<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
 						</p:column>
@@ -74,6 +74,12 @@
 							</p:inputText>
 						</p:column>
 						<p:column>
+							<pe:tooltip
+								rendered="#{jobticketBean.kundenAnzahl==0}"
+								showEffect="fade" hideEffect="fade" for="neuerKundeButton"
+								value="Hier klicken, um einen neuen Kunden anzulegen" autoShow="true"
+								widgetVar="tip1" myPosition="left center"
+								atPosition="right center" />
 							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
 							</p:commandButton>
 						</p:column>
@@ -84,7 +90,7 @@
 
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%" id="job" 
+							<p:inputText style="width:100%" id="job"
 								value="#{jobticketBean.job.name}">
 								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{jobticketBean.updateJobticket}"></p:ajax>
@@ -128,7 +134,7 @@
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
-				
+
 						<p:column>
 							<p:outputLabel for="ersteller" value="Ersteller" />
 						</p:column>
@@ -148,8 +154,7 @@
 		</h:form>
 
 		<p:overlayPanel my="right top" widgetVar="kunden_overlay"
-			showEffect="fade" hideEffect="drop"
-			for=":mainform:neuerKundeButton">
+			showEffect="fade" hideEffect="drop" for=":mainform:neuerKundeButton">
 			<h:form id="kundenform">
 				<p:messages></p:messages>
 				<p:growl id="growl"></p:growl>

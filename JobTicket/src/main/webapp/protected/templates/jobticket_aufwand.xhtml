@@ -37,8 +37,8 @@
 					<p:outputLabel for="kontakter" value="Angestellter" />
 					<p:selectOneMenu id="kontakter"
 						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
-						editable="false" required="true">
-
+						editable="false" required="false">
+						<f:selectItem itemLabel="Angestellten auswählen"></f:selectItem>
 						<f:selectItems value="#{angestellteBean.angestelltes}"
 							var="angestellte"
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
