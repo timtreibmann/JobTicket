@@ -14,10 +14,13 @@
 	<ui:composition>
 		<h:form id="aufwandform">
 			<h:outputStylesheet library="css" name="style.css" />
+			<p:growl id="growl"></p:growl>
+			
 			<p:panel id="panel" style="width:60%">
 				<p:breadCrumb>
 					<p:menuitem value="Übersicht" url="start.xhtml" />
 					<p:menuitem value="Jobticket" url="jt_main.xhtml" />
+					<p:menuitem value="Produktbeschreibung" url="jt_produkte.xhtml" />
 					<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				</p:breadCrumb>
 
@@ -26,7 +29,7 @@
 				<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
 				<h:inputHidden></h:inputHidden>
 				<p:tooltip for="hinzufuegen"
-					value="den ausgewählten Mitarbeiter zum Job hinzufügen"></p:tooltip>
+					value="den ausgewählten Mitarbeiter zum Job zuordnen"></p:tooltip>
 				<p:tooltip for="neuerAngestellterButton"
 					value="Neuen Angestellten anlegen"></p:tooltip>
 
@@ -53,62 +56,41 @@
 
 				</p:panelGrid>
 
-				<hr></hr>
-				<p:panelGrid styleClass="grid" columns="1">
-					<p:outputLabel value="Am Job arbeitende Angestellte:"></p:outputLabel>
-				</p:panelGrid>
+			
+			<p></p>
 
 
-				<ui:repeat id="repeat" var="kosten"
+				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet" id="repeat" var="kosten"
 					value="#{jobticketBean.job.kostens}">
+					<f:facet name="header">
+					<h:outputText value="Am Job arbeitende Angestellte"></h:outputText>
+				</f:facet>
+					<p:column headerText="Mitarbeiter">
+					<p:commandButton update="@form" id="deletebutton"
+							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
+						<h:outputLabel
+							value=" #{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
+					</p:column>
 
-					<p:growl id="growl"></p:growl>
-					<p:tooltip id="tooltip2" for="rechneum"
-						value="Aufwand in Std. oder € umrechnen"></p:tooltip>
-					<p:panelGrid styleClass="grid">
+					<p:column headerText="Aufwand">
+						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
+							<p:ajax event="change" process="@this" update="@form"
+								listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+						</p:inputText>
+						<p:commandButton style="width:40px" update="@this aufwand" id="rechneum"
+							process="aufwand"
+							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'H' }"
+							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+					</p:column>
+				
 
-						<p:row>
-							<p:column>
-								<p:commandButton update="@form" id="deletebutton"
-									action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
-
-							</p:column>
-
-							<p:column style="width:200px">
-								<h:outputLabel
-									value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
-							</p:column>
-
-							<p:column>
-								<p:outputLabel value="Aufwand: "></p:outputLabel>
-
-							</p:column>
-							<p:column>
-								<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-									<p:ajax event="change" process="@this" update="@form"
-										listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
-								</p:inputText>
-							</p:column>
-							<p:column>
-								<p:commandButton style="width:35px"
-									update="@this aufwand tooltip2" id="rechneum" process="aufwand"
-									value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'h' }"
-									actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
-							</p:column>
-
-						</p:row>
-					</p:panelGrid>
-				</ui:repeat>
-
-
-				<hr></hr>
+				</p:dataTable>
 
 				<p></p>
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
-
 						</p:column>
 						<p:column>
 							<h:outputText id="gesamtkosten"
@@ -128,7 +110,6 @@
 								id="achtung" />
 						</p:column>
 					</p:row>
-
 				</p:panelGrid>
 			</p:panel>
 			<p:button value="Zurück" outcome="jt_produkte"></p:button>
@@ -138,7 +119,7 @@
 
 
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"
-			showEffect="fade" hideEffect="explode"
+			showEffect="fade" hideEffect="drop"
 			for=":aufwandform:neuerAngestellterButton">
 			<h:form id="angestellten_form">
 				<p:growl id="growl"></p:growl>

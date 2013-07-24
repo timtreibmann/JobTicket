@@ -29,10 +29,10 @@
 			<p:commandButton style="width:200px" value="Neues Ticket"
 				action="#{jobticketBean.createJobticket}" ajax="false" />
 
-			<p:commandButton style="width:200px" value="Optionen" id="erweitert" />
+			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
 
-			<p:overlayPanel hideEffect="explode" widgetVar="optionpanel"
-				showEffect="fade" my="right bottom" for="erweitert"
+			<p:overlayPanel hideEffect="drop" widgetVar="optionpanel"
+				showEffect="drop" my="right bottom" for="erweitert"
 				style="height:50%">
 
 				<h:outputText value="Ansicht"></h:outputText>
@@ -81,7 +81,7 @@
 					</p:selectBooleanCheckbox>
 
 					<p:outputLabel for="checkbox1"
-						value="Auch Tickets von anderen Benutzern anzeigen: "></p:outputLabel>
+						value="Nur eigene Tickets anzeigen: "></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox1"
 						value="#{jobticketBean.filterJoblistByUser}">
 						<p:ajax update="dataTable"
@@ -93,13 +93,11 @@
 
 				<p></p>
 				<p:commandButton onclick="optionpanel.hide()" value="Schließen" />
-
-
 			</p:overlayPanel>
-
+			<p></p>
 			<p:dataTable id="dataTable" var="job"
-				value="#{jobticketBean.filterJoblistByAngestellten ? jobticketBean.jobsFromJobbearbeiter : jobticketBean.jobs}"
-				emptyMessage="Keine Jobs mit diesem Suchkriterium gefunden"
+				value="#{jobticketBean.jobs}"
+				emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">
 

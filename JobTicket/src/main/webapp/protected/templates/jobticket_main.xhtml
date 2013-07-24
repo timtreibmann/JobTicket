@@ -51,7 +51,7 @@
 							<p:outputLabel for="kundenselect" value="Kunden auswählen " />
 						</p:column>
 						<p:column>
-							<p:selectOneMenu style="width:103%" id="kundenselect"
+							<p:selectOneMenu style="width:104%" id="kundenselect"
 								value="#{jobticketBean.selectedKundeId}" editable="false"
 								effect="fold">
 								<f:selectItem itemLabel="Select One" itemValue="0" />
@@ -91,13 +91,13 @@
 
 							</p:inputText>
 						</p:column>
-						<p:column rowspan="3">
+						<p:column rowspan="2">
 							<p:outputLabel for="jobbeschreibung" value="Beschreibung">
 
 
 							</p:outputLabel>
 						</p:column>
-						<p:column rowspan="3">
+						<p:column rowspan="2">
 							<p:inputTextarea style="width:100%" maxlength="200"
 								value="#{jobticketBean.job.jobbeschreibung}"
 								id="jobbeschreibung">
@@ -120,7 +120,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel for="erstelldatum" value="Erstelldatum:" />
+							<p:outputLabel for="erstelldatum" value="Erstelldatum" />
 						</p:column>
 						<p:column>
 							<h:outputText id="erstelldatum"
@@ -128,10 +128,9 @@
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
-					</p:row>
-					<p:row>
+				
 						<p:column>
-							<p:outputLabel for="ersteller" value="Ersteller:" />
+							<p:outputLabel for="ersteller" value="Ersteller" />
 						</p:column>
 						<p:column>
 							<p:outputLabel id="ersteller"
@@ -149,7 +148,7 @@
 		</h:form>
 
 		<p:overlayPanel my="right top" widgetVar="kunden_overlay"
-			showEffect="fade" hideEffect="explode"
+			showEffect="fade" hideEffect="drop"
 			for=":mainform:neuerKundeButton">
 			<h:form id="kundenform">
 				<p:messages></p:messages>
@@ -183,6 +182,7 @@
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>
+		<p></p>
 	</ui:composition>
 
 </h:body>

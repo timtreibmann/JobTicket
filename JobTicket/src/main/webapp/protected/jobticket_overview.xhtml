@@ -16,8 +16,10 @@
 		<p:panel style="width:80%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem value="Jobticket" url="jobticket_main.xhtml" />
-				<p:menuitem value="Übersicht" url="jobticket_aufwand.xhtml" />
+				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem value="Produktbeschreibung" url="jt_produkte.xhtml" />
+				<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+				<p:menuitem value="Übersicht" url="jobticket_overview.xhtml" />
 			</p:breadCrumb>
 			<p:dataTable var="job" value="#{jobticketBean.job}">
 				<f:facet name="header">Jobticket</f:facet>
@@ -83,7 +85,7 @@
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 		</p:panel>
 		<p:button value="Zurück" outcome="jt_aufwand.xhtml"></p:button>
-		<p:commandButton ajax="false" value="Fertig" 
+		<p:commandButton ajax="false" value="Fertig"
 			action="#{jobticketBean.refreshFilter}"></p:commandButton>
 	</h:form>
 </h:body>

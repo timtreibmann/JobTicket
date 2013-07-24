@@ -14,15 +14,18 @@
 
 <h:body>
 	<h:form>
-		<p:breadCrumb>
-			<p:menuitem value="Übersicht" url="start.xhtml" />
-			<p:menuitem value="Jobticket" url="jt_main.xhtml" />
-			<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
-			<p:menuitem value="Angestelltentabelle" url="angestellte_table.xhtml" />
-		</p:breadCrumb>
+		
 
 		<p:panel style="width:60%">
 			<h:outputStylesheet library="css" name="style.css" />
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem value="Produktbeschreibung" url="jt_produkte.xhtml" />
+				<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+				<p:menuitem value="Angestelltentabelle"
+					url="angestellte_table.xhtml" />
+			</p:breadCrumb>
 			<p:dataTable value="#{angestellteBean.angestelltes}"
 				var="angestellter">
 

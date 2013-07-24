@@ -4,10 +4,9 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head></h:head>
 <body>
-	<h:form id="login"
-		onsubmit="document.getElementById('login').action='j_security_check';"
-		prependId="false">
-		<p:panel style="width:50%">
+	<h:form >
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:panel>
 			<h:outputText value="Erfolgreich abgemeldet."/>
 			<h:outputLink value="/JobTicket/faces/protected/start.xhtml">Wieder anmelden</h:outputLink>
 		</p:panel>
