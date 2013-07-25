@@ -51,7 +51,7 @@ public class AngestellteBean {
 		em.getTransaction().commit();
 		return angestellteListe;
 	}
-	
+
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
@@ -70,10 +70,20 @@ public class AngestellteBean {
 		em.getTransaction().begin();
 		em.persist(angestellte);
 		em.getTransaction().commit();
+		resetAngestellte();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", ""));
 		return "angestellte_add.xhtml";
+
+	}
+
+	private void resetAngestellte() {
+		angestellte = new Angestellte();
+		angestellte.setNachname("");
+		angestellte.setVorname("");
+		angestellte.setStundenlohn(0);
+
 	}
 
 	public String editAngestellten(Angestellte angestellte) {

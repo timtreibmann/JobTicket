@@ -137,15 +137,24 @@ public class KundenBean {
 	 *
 	 * @return the string
 	 */
-	public String saveKunde() {
+	public String saveKunde(Kunde kunde) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(kunde);
 		em.getTransaction().commit();
 		FacesContext context = FacesContext.getCurrentInstance();
+		resetKunde();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", ""));
+	
 		return "kunden_add.xhtml";
+	}
+	
+	private void resetKunde() {
+		this.kunde.setName("");
+		this.kunde.setAdresse("");
+		this.kunde.setKundenkuerzel("");
+		this.kunde.setTelefon("");
 	}
 
 	/**

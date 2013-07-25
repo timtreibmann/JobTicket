@@ -159,7 +159,7 @@
 				<p:messages></p:messages>
 				<p:growl id="growl"></p:growl>
 
-				<h:panelGrid styleClass="grid" columns="2">
+				<h:panelGrid id="grid" styleClass="grid" columns="2">
 					<p:outputLabel for="t1">Kundenname</p:outputLabel>
 					<p:inputText style="width:100%" id="t1"
 						value="#{kundenBean.kunde.name}" autocomplete="true"
@@ -178,8 +178,9 @@
 				<h:panelGrid columns="4">
 					<p:commandButton immediate="true" onclick="kunden_overlay.hide()"
 						value="Schließen" />
-					<p:commandButton actionListener="#{kundenBean.saveKunde}"
-						update="growl :mainform:kundenselect" value="Kunden hinzufügen">
+					<p:commandButton actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
+						update="growl :mainform:kundenselect grid" value="Kunden hinzufügen">
+					
 					</p:commandButton>
 					<p></p>
 					<p:button value="Kundenliste anzeigen"

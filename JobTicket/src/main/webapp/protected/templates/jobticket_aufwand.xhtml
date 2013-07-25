@@ -123,7 +123,7 @@
 			for=":aufwandform:neuerAngestellterButton">
 			<h:form id="angestellten_form">
 				<p:growl id="growl"></p:growl>
-				<h:panelGrid columns="2">
+				<h:panelGrid id="grid" columns="2">
 					<p:outputLabel>Vorname</p:outputLabel>
 					<p:inputText value="#{angestellteBean.angestellte.vorname}"
 						autocomplete="true" required="true" />
@@ -142,7 +142,7 @@
 						onclick="angestellten_overlay.hide()" value="Schließen" />
 					<p:commandButton
 						actionListener="#{angestellteBean.saveAngestellte}"
-						update="growl :aufwandform:kontakter"
+						update="growl :aufwandform:kontakter grid"
 						value="Angestellten hinzufügen"></p:commandButton>
 					<p:button value="Angestelltenliste" icon="ui-icon-arrowreturn-1-e"
 						outcome="angestellte_table.xhtml"></p:button>
