@@ -1,9 +1,12 @@
 package jt.beans;
 
 import jt.entities.Angestellte;
+import jt.entities.Job;
+import jt.entities.Kunde;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -55,13 +58,33 @@ public class AngestellteBean {
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
+	
+	private List<Job> getJobsFromAngestellten(Angestellte angestellte) {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		final Query query = em
+				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id");
+		query.setParameter("id", angestellte.getId());
+		List<Job> jobListe = query.getResultList();
+		em.getTransaction().commit();
+		return jobListe;
+	}
 
 	public String delete(Angestellte angestellte) {
+		List<Job> jobsVomAngestellten = getJobsFromAngestellten(angestellte);
+		if (jobsVomAngestellten.size() == 0) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		angestellte = em.merge(angestellte);
 		em.remove(angestellte);
 		em.getTransaction().commit();
+	} else {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage(
+				"Angestellter kann nicht gelöscht werden, da er folgenden Jobs zugeordnet ist: "
+						+ jobsVomAngestellten));
+
+	}
 		return null;
 	}
 
@@ -84,7 +107,7 @@ public class AngestellteBean {
 		angestellte.setVorname("");
 		angestellte.setStundenlohn(0);
 
-	}
+	}	
 
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;

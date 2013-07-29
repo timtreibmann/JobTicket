@@ -46,11 +46,10 @@ public class JobticketBean {
 	@Produces
 	@AktuellerJob
 	private Job job;
-
+	
+	
 	private int selectedKundeId;
-
 	private int selectedAngestellterId;
-
 	private boolean filterJoblistByUser;
 	private boolean filterJoblistByAngestellten;
 	private int kundenAnzahl;
@@ -251,6 +250,24 @@ public class JobticketBean {
 		em.remove(job);
 		em.getTransaction().commit();
 		return null;
+	}
+	
+	public void findKundenByKuerzelAndUpdateJobticket() {
+		System.out.println("FINDE" + "KUEZEL" +kuerzel);
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		final Query query = em
+				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
+		query.setParameter("kuerzel", kuerzel);		
+		
+		List<Kunde> kundenListe = query.getResultList();
+		em.getTransaction().commit();
+		if (kundenListe.size() > 0){
+			setSelectedKundeId(kundenListe.get(0).getId());
+			updateJobticket();
+		
+		}
+		
 	}
 
 	public String logout() {

@@ -17,6 +17,7 @@
 			<p:growl id="growl"></p:growl>
 
 			<p:panel style="width:60%">
+			
 				<p:breadCrumb styleClass="breadCrumbpanel">
 					<p:menuitem value="Übersicht" url="start.xhtml" />
 					<p:menuitem value="Jobticket" url="jt_main.xhtml" />
@@ -66,10 +67,10 @@
 							<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%" value="#{kundenBean.kuerzel}"
+							<p:inputText style="width:100%" value="#{jobticketBean.kuerzel}"
 								id="kundenkurz">
 								<p:ajax
-									listener="#{kundenBean.findKundenByKuerzelAndUpdateJobticket}"
+									listener="#{jobticketBean.findKundenByKuerzelAndUpdateJobticket}"
 									event="change" process="@this" update="kundenselect"></p:ajax>
 							</p:inputText>
 						</p:column>

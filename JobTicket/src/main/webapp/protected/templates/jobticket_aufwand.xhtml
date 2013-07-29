@@ -72,14 +72,14 @@
 							value=" #{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
 					</p:column>
 
-					<p:column headerText="Aufwand">
+					<p:column style="width:50%" headerText="Aufwand">
 						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
 							<p:ajax event="change" process="@this" update="@form"
 								listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
 						</p:inputText>
-						<p:commandButton style="width:40px" update="@this aufwand" id="rechneum"
+						<p:commandButton update="@this aufwand" id="rechneum"
 							process="aufwand"
-							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'H' }"
+							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'Stunden' }"
 							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 					</p:column>
 				
@@ -112,7 +112,7 @@
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
-			<p:button value="Zurück" outcome="jt_produkte"></p:button>
+			<p:button value="Zurück" outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'  }"></p:button>
 			<p:commandButton value="Weiter"
 				action="#{produkteigenschaftenBean.ermittleFortschritt}" />
 		</h:form>

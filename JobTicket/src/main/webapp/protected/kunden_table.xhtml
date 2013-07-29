@@ -13,6 +13,7 @@
 
 <h:body>
 	<h:form>
+	<p:growl id="growl"></p:growl>
 	<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
 			<p:breadCrumb>
@@ -20,7 +21,8 @@
 				<p:menuitem value="Jobticket" url="jt_main.xhtml" />
 				<p:menuitem value="Kunden Tabelle" url="kunden_table.xhtml" />
 			</p:breadCrumb>
-			<p:dataTable value="#{kundenBean.kunden}" var="kunde">
+			
+			<p:dataTable id="table" value="#{kundenBean.kunden}" var="kunde">
 
 				<p:column>
 					<f:facet name="header">Name</f:facet>

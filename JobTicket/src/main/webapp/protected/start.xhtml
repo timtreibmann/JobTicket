@@ -56,6 +56,13 @@
 				<p></p>
 				<h:outputText value="Filteroptionen"></h:outputText>
 				<p:panelGrid styleClass="grid" columns="2">
+					<p:outputLabel for="checkbox"
+						value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
+					<p:selectBooleanCheckbox id="checkbox"
+						value="#{jobticketBean.filterJoblistByAngestellten}">
+						<p:ajax update="dataTable jobbearbeiter"
+							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
+					</p:selectBooleanCheckbox>
 					<p:outputLabel for="jobbearbeiter"
 						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
 					<p:selectOneMenu id="jobbearbeiter"
@@ -65,21 +72,11 @@
 						<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
 						<f:selectItems value="#{angestellteBean.angestelltes}"
 							var="angestellte"
-							
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
 						<p:ajax event="change" process="@this" update="dataTable"
 							oncomplete="dataTableWidgetVar.filter();" />
 					</p:selectOneMenu>
-
-					<p:outputLabel for="checkbox"
-						value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
-					<p:selectBooleanCheckbox id="checkbox"
-						value="#{jobticketBean.filterJoblistByAngestellten}">
-						<p:ajax update="dataTable jobbearbeiter"
-							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
-					</p:selectBooleanCheckbox>
-
 					<p:outputLabel for="checkbox1"
 						value="Nur eigene Tickets anzeigen: "></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox1"
@@ -95,8 +92,7 @@
 				<p:commandButton onclick="optionpanel.hide()" value="Schließen" />
 			</p:overlayPanel>
 			<p></p>
-			<p:dataTable id="dataTable" var="job"
-				value="#{jobticketBean.jobs}"
+			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
 				emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">

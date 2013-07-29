@@ -51,19 +51,18 @@ public class Job implements Serializable {
 
 	/** The print. */
 	private String print;
-	
+
 	private String ersteller;
 
 	/** The erstellDatum. */
 	@Temporal(TemporalType.DATE)
 	private Date erstellDatum;
-	
+
 	private double fortschritt;
-	
 
 	// bi-directional many-to-one association to Jobbearbeiter
 	/** The jobbearbeiters. */
-	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	// bi-directional many-to-one association to Kunde
@@ -73,13 +72,13 @@ public class Job implements Serializable {
 
 	// bi-directional many-to-one association to Kosten
 	/** The kostens. */
-	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	@CascadeOnDelete
 	private List<Kosten> kostens;
 
 	// bi-directional many-to-one association to Produkteigenschaften
 	/** The produkteigenschaftens. */
-	@OneToMany(mappedBy = "job", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	@CascadeOnDelete
 	private List<Produkteigenschaften> produkteigenschaftens;
 
@@ -437,6 +436,10 @@ public class Job implements Serializable {
 		produkteigenschaften.setJob(null);
 
 		return produkteigenschaften;
+	}
+
+	public String toString() {
+		return id + " ";
 	}
 
 }
