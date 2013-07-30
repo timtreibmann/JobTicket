@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pe="http://primefaces.org/ui/extensions"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
@@ -27,10 +28,12 @@
 
 				<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
 				<h:inputHidden></h:inputHidden>
-				<p:tooltip for="hinzufuegen"
-					value="den ausgewählten Mitarbeiter zum Job zuordnen"></p:tooltip>
-				<p:tooltip for="neuerAngestellterButton"
-					value="Neuen Angestellten anlegen"></p:tooltip>
+				<pe:tooltip id="tooltip" rendered="#{jobticketBean.neuesTicket}"
+					showEffect="fade" hideEffect="fade" for="neuerAngestellterButton"
+					value="neuen Mitarbeiter anlegen" 
+					autoShow="true" widgetVar="tip1" myPosition="left center"
+					atPosition="right center" />			
+			
 
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />

@@ -19,13 +19,13 @@
 					<h:outputText value="Produkte"></h:outputText>
 				</f:facet>
 			<p></p>
-			<pe:tooltip rendered="#{produkteigenschaftenBean.produktAnzahl==0}"
+			<pe:tooltip rendered="#{jobticketBean.neuesTicket}"
 				showEffect="fade" hideEffect="fade" for="create"
-				value="Hier klicken, um ein Produkt anzulegen" autoShow="true"
+				value="neues Produkt anlegen" autoShow="true"
 				widgetVar="tip1" myPosition="left center" atPosition="right center" />
 			<p:commandButton id="create" 
 				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
-				update="acc" value="Neues Produkt anlegen">
+				update="acc :aufwandform" icon="ui-icon-plus">
 			</p:commandButton>
 			<p></p>
 

@@ -75,9 +75,9 @@
 						</p:column>
 						<p:column>
 							<pe:tooltip
-								rendered="#{jobticketBean.kundenAnzahl==0}"
+								rendered="#{jobticketBean.neuesTicket}"
 								showEffect="fade" hideEffect="fade" for="neuerKundeButton"
-								value="Hier klicken, um einen neuen Kunden anzulegen" autoShow="true"
+								value="neuen Kunden anlegen" autoShow="true"
 								widgetVar="tip1" myPosition="left center"
 								atPosition="right center" />
 							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
@@ -156,7 +156,7 @@
 		<p:overlayPanel my="right top" widgetVar="kunden_overlay"
 			showEffect="fade" hideEffect="drop" for=":mainform:neuerKundeButton">
 			<h:form id="kundenform">
-				<p:growl id="growl"></p:growl>
+		
 
 				<h:panelGrid id="grid" styleClass="grid" columns="2">
 					<p:outputLabel for="t1">Kundenname</p:outputLabel>
@@ -178,7 +178,7 @@
 					<p:commandButton immediate="true" onclick="kunden_overlay.hide()"
 						value="Schließen" />
 					<p:commandButton actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
-						update="growl :mainform:kundenselect grid" value="Kunden hinzufügen">
+						update=":mainform:growl :mainform:kundenselect grid" value="Kunden hinzufügen">
 					
 					</p:commandButton>
 					<p></p>

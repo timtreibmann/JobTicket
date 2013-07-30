@@ -51,7 +51,17 @@ public class JobticketBean {
 	private int selectedAngestellterId;
 	private boolean filterJoblistByUser;
 	private boolean filterJoblistByAngestellten;
+	private boolean neuesTicket;
+	
 	private int kundenAnzahl;
+
+	public boolean isNeuesTicket() {
+		return neuesTicket;
+	}
+
+	public void setNeuesTicket(boolean neuesTicket) {
+		this.neuesTicket = neuesTicket;
+	}
 
 	public int getKundenAnzahl() {
 		return kundenBean.getKunden().size();
@@ -143,6 +153,7 @@ public class JobticketBean {
 	}
 
 	public String editJob(Job job) {
+		neuesTicket=false;
 		this.job = job;
 		// damit in im selectOneMenu auf der jobticket_main-Seite der richtige
 		// Kunde gesetzt wird
@@ -162,6 +173,7 @@ public class JobticketBean {
 	}
 
 	public String createJobticket() {
+		neuesTicket = true;
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		selectedKundeId = 0;
