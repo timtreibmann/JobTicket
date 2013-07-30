@@ -47,6 +47,9 @@ public class JobticketBean {
 	@AktuellerJob
 	private Job job;
 
+	@Inject 
+	ProdukteigenschaftenBean produkteigenschaftenBean;
+
 	private int selectedKundeId;
 	private int selectedAngestellterId;
 	private boolean filterJoblistByUser;
@@ -187,6 +190,7 @@ public class JobticketBean {
 		em.persist(job);
 
 		em.getTransaction().commit();
+		produkteigenschaftenBean.createProdukteigenschaft();
 		refreshFilter();
 		fc.addMessage(null, new FacesMessage("Neues Ticket erzeugt!"));
 		if (showAllOnOnePage) {

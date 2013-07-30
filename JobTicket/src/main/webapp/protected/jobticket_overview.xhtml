@@ -82,7 +82,7 @@
 			<p></p>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 		</p:panel>
-		<p:button value="Zurück" outcome="jt_aufwand.xhtml"></p:button>
+		<p:button value="Zurück" outcome="#{jobticketBean.showAllOnOnePage ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
 		<p:commandButton ajax="false" value="Fertig"
 			action="#{jobticketBean.refreshFilter}"></p:commandButton>
 	</h:form>
