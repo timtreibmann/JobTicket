@@ -15,14 +15,13 @@
 		<h:form id="aufwandform">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
-			
+
 			<p:panel id="panel" style="width:60%">
-				<p:breadCrumb>
-					<p:menuitem value="Übersicht" url="start.xhtml" />
-					<p:menuitem value="Jobticket" url="jt_main.xhtml" />
-					<p:menuitem value="Produktbeschreibung" url="jt_produkte.xhtml" />
-					<p:menuitem value="Aufwand festlegen" url="jt_aufwand.xhtml" />
-				</p:breadCrumb>
+				<f:facet rendered="#{jobticketBean.showAllOnOnePage}" name="header">
+					<h:outputText value="Aufwand"></h:outputText>
+				</f:facet>
+
+			
 
 				<p></p>
 
@@ -56,17 +55,17 @@
 
 				</p:panelGrid>
 
-			
-			<p></p>
+
+				<p></p>
 
 
-				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet" id="repeat" var="kosten"
-					value="#{jobticketBean.job.kostens}">
+				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet"
+					id="repeat" var="kosten" value="#{jobticketBean.job.kostens}">
 					<f:facet name="header">
-					<h:outputText value="Am Job arbeitende Angestellte"></h:outputText>
-				</f:facet>
+						<h:outputText value="Am Job arbeitende Angestellte"></h:outputText>
+					</f:facet>
 					<p:column headerText="Mitarbeiter">
-					<p:commandButton update="@form" id="deletebutton"
+						<p:commandButton update="@form" id="deletebutton"
 							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 						<h:outputLabel
 							value=" #{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
@@ -82,7 +81,7 @@
 							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'Stunden' }"
 							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 					</p:column>
-				
+
 
 				</p:dataTable>
 
@@ -112,9 +111,9 @@
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
-			<p:button value="Zurück" outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'  }"></p:button>
-			<p:commandButton value="Weiter"
-				action="#{produkteigenschaftenBean.ermittleFortschritt}" />
+			<p:button value="Zurück"
+				outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
+			<p:button value="Weiter" outcome="jobticket_overview.xhtml" />
 		</h:form>
 
 

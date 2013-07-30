@@ -17,13 +17,12 @@
 			<p:growl id="growl"></p:growl>
 
 			<p:panel style="width:60%">
-			
-				<p:breadCrumb styleClass="breadCrumbpanel">
-					<p:menuitem value="Übersicht" url="start.xhtml" />
-					<p:menuitem value="Jobticket" url="jt_main.xhtml" />
-				</p:breadCrumb>
 
-				<p:messages id="messages" />
+				<f:facet rendered="#{jobticketBean.showAllOnOnePage}" name="header">
+					<h:outputText value="Jobticket"></h:outputText>
+				</f:facet>
+
+		
 				<p></p>
 				<p:panelGrid styleClass="grid">
 
@@ -157,7 +156,6 @@
 		<p:overlayPanel my="right top" widgetVar="kunden_overlay"
 			showEffect="fade" hideEffect="drop" for=":mainform:neuerKundeButton">
 			<h:form id="kundenform">
-				<p:messages></p:messages>
 				<p:growl id="growl"></p:growl>
 
 				<h:panelGrid id="grid" styleClass="grid" columns="2">

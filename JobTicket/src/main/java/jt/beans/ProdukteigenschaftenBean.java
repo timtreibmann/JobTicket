@@ -101,6 +101,7 @@ public class ProdukteigenschaftenBean {
 	}
 
 	public String createProdukteigenschaft() {
+
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Produkteigenschaften produkteigenschaften = new Produkteigenschaften();
@@ -117,6 +118,7 @@ public class ProdukteigenschaftenBean {
 		em.merge(job);
 		em.getTransaction().commit();
 		accordionIndex = job.getProdukteigenschaftens().size() - 1;
+		ermittleFortschritt();
 		return null;
 	}
 
@@ -129,6 +131,7 @@ public class ProdukteigenschaftenBean {
 	 */
 	public String updateProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
+
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(produkteigenschaften);
@@ -136,7 +139,7 @@ public class ProdukteigenschaftenBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", "Produkteigenschaften"));
-
+		ermittleFortschritt();
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
@@ -157,7 +160,7 @@ public class ProdukteigenschaftenBean {
 		job.setFortschritt(fortschritt);
 		em.merge(job);
 		em.getTransaction().commit();
-		return "jobticket_overview.xhtml";
+		return null;
 	}
 
 	/**
@@ -173,6 +176,7 @@ public class ProdukteigenschaftenBean {
 		job.removeProdukteigenschaften(produkteigenschaften);
 		em.merge(job);
 		em.getTransaction().commit();
+		ermittleFortschritt();
 		return null;
 	}
 

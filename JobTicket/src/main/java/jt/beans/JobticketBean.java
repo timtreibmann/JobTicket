@@ -46,8 +46,7 @@ public class JobticketBean {
 	@Produces
 	@AktuellerJob
 	private Job job;
-	
-	
+
 	private int selectedKundeId;
 	private int selectedAngestellterId;
 	private boolean filterJoblistByUser;
@@ -101,7 +100,7 @@ public class JobticketBean {
 	@PostConstruct
 	public void init() {
 		showAllOnOnePage = true;
-		filterJoblistByUser=true;
+		filterJoblistByUser = true;
 		filteredJobs = getJobs();
 
 	}
@@ -176,12 +175,13 @@ public class JobticketBean {
 		em.persist(job);
 
 		em.getTransaction().commit();
-
+		fc.addMessage(null, new FacesMessage("Neues Ticket erzeugt!"));
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
 			return "jt_main.xhtml";
 		}
+
 	}
 
 	public String updateJobticket() {
@@ -251,23 +251,23 @@ public class JobticketBean {
 		em.getTransaction().commit();
 		return null;
 	}
-	
+
 	public void findKundenByKuerzelAndUpdateJobticket() {
-		System.out.println("FINDE" + "KUEZEL" +kuerzel);
+		System.out.println("FINDE" + "KUEZEL" + kuerzel);
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		final Query query = em
 				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
-		query.setParameter("kuerzel", kuerzel);		
-		
+		query.setParameter("kuerzel", kuerzel);
+
 		List<Kunde> kundenListe = query.getResultList();
 		em.getTransaction().commit();
-		if (kundenListe.size() > 0){
+		if (kundenListe.size() > 0) {
 			setSelectedKundeId(kundenListe.get(0).getId());
 			updateJobticket();
-		
+
 		}
-		
+
 	}
 
 	public String logout() {
