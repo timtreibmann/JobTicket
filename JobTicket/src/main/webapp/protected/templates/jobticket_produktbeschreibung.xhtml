@@ -15,9 +15,11 @@
 	<h:form id="produktform">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
-				<f:facet name="header">
-					<h:outputText value="Produkte"></h:outputText>
-				</f:facet>
+			<p:breadCrumb >
+				<p:menuitem  value="Übersicht" url="start.xhtml" />
+				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung" url="jt_produkte.xhtml" />
+			</p:breadCrumb>
 			<p></p>
 			<pe:tooltip rendered="#{jobticketBean.neuesTicket}"
 				showEffect="fade" hideEffect="fade" for="create"

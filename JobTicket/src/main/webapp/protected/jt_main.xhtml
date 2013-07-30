@@ -11,12 +11,13 @@
 	<ui:composition template="templates/structure_single.xhtml">
 		<ui:define name="main">
 		
+
 			<ui:include src="templates/jobticket_main.xhtml" />
-			<h:form>
-				<p:button outcome="start.xhtml" value="Zurück"
-					styleClass="buttonZurueck" />
-				<p:button outcome="jt_produkte.xhtml" value="Weiter" />
-			</h:form>
+
+			<p:button outcome="start.xhtml" value="Zurück"
+				styleClass="buttonZurueck" />
+			<p:button outcome="jt_produkte.xhtml" value="Weiter" />
+
 		</ui:define>
 	</ui:composition>
 

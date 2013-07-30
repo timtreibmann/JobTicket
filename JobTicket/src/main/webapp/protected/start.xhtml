@@ -14,7 +14,9 @@
 
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
-
+			<p:breadCrumb style="height:25px">
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+			</p:breadCrumb>
 
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}!"></h:outputLabel>

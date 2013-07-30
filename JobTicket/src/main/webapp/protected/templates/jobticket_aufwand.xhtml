@@ -18,9 +18,12 @@
 			<p:growl id="growl"></p:growl>
 
 			<p:panel id="panel" style="width:60%">
-				<f:facet name="header">
-					<h:outputText value="Aufwand"></h:outputText>
-				</f:facet>
+				<p:breadCrumb>
+					<p:menuitem value="Übersicht" url="start.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket" url="jt_main.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung" url="jt_produkte.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+				</p:breadCrumb>
 
 
 
@@ -30,10 +33,9 @@
 				<h:inputHidden></h:inputHidden>
 				<pe:tooltip id="tooltip" rendered="#{jobticketBean.neuesTicket}"
 					showEffect="fade" hideEffect="fade" for="neuerAngestellterButton"
-					value="neuen Mitarbeiter anlegen" 
-					autoShow="true" widgetVar="tip1" myPosition="left center"
-					atPosition="right center" />			
-			
+					value="neuen Mitarbeiter anlegen" autoShow="true" widgetVar="tip1"
+					myPosition="left center" atPosition="right center" />
+
 
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />

@@ -19,9 +19,16 @@
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 
-			<f:facet name="header">
-				<h:outputText value="Angestellten editieren"></h:outputText>
-			</f:facet>
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung" url="jt_produkte.xhtml" />
+				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+				<p:menuitem value="Angestelltentabelle"
+					url="angestellte_table.xhtml" />
+				<p:menuitem value="Angestellten editieren"
+					url="angestellte_edit.xhtml" />
+			</p:breadCrumb>
 
 			<h:panelGrid columns="2">
 				<p:outputLabel></p:outputLabel>
