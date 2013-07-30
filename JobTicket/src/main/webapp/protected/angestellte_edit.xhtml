@@ -19,8 +19,8 @@
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 
-			<f:facet name="actions">
-				<p:commandLink value="zurück" action="TicketAnzeige.xhtml" />
+			<f:facet name="header">
+				<h:outputText value="Angestellten editieren"></h:outputText>
 			</f:facet>
 
 			<h:panelGrid columns="2">
@@ -41,9 +41,9 @@
 
 
 				<p:commandButton value="Übernehmen"
-					actionListener="#{angestellteBean.updateAngestellten}" process="@form"
-					update="growl"></p:commandButton>
-				<p:button value="Zurück" outcome="jt_aufwand.xhtml"></p:button>
+					actionListener="#{angestellteBean.updateAngestellten}"
+					process="@form" update="growl"></p:commandButton>
+				<p:button value="Zurück" outcome="angestellte_table.xhtml"></p:button>
 			</h:panelGrid>
 		</p:panel>
 	</h:form>

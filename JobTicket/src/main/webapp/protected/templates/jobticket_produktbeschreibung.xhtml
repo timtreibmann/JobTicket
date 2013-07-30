@@ -15,7 +15,7 @@
 	<h:form id="produktform">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
-				<f:facet rendered="#{jobticketBean.showAllOnOnePage}" name="header">
+				<f:facet name="header">
 					<h:outputText value="Produkte"></h:outputText>
 				</f:facet>
 			<p></p>
@@ -25,7 +25,7 @@
 				widgetVar="tip1" myPosition="left center" atPosition="right center" />
 			<p:commandButton id="create" 
 				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
-				update="acc :aufwandform" icon="ui-icon-plus">
+				update="acc #{jobticketBean.showAllOnOnePage ? ':aufwandform' : ''}" icon="ui-icon-plus">
 			</p:commandButton>
 			<p></p>
 

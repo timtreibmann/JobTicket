@@ -14,7 +14,7 @@
 
 <h:body>
 	<h:form>
-		
+
 
 		<p:panel style="width:60%">
 			<h:outputStylesheet library="css" name="style.css" />
@@ -51,7 +51,8 @@
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:button value="Fertig" outcome="jt_aufwand.xhtml"></p:button>
+		<p:button value="Zurück"
+			outcome="#{jobticketBean.showAllOnOnePage ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
 	</h:form>
 </h:body>
 

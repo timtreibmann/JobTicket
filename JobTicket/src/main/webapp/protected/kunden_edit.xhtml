@@ -16,11 +16,14 @@
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:growl id="growl"></p:growl>
 		<p:panel style="width:60%">
+			<f:facet name="header">
+				<h:outputText value="Kunde editieren"></h:outputText>
+			</f:facet>
 			<h:panelGrid columns="2">
 				<p:outputLabel></p:outputLabel>
 				<h:inputHidden id="id0" value="#{kundenBean.kunde.id}" />
 				<p:outputLabel for="kundenname">Name</p:outputLabel>
-				<p:inputText  required="true" id="kundenname"
+				<p:inputText required="true" id="kundenname"
 					value="#{kundenBean.kunde.name}" />
 
 

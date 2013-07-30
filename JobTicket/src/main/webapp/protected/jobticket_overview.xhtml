@@ -13,7 +13,11 @@
 
 		<h:outputStylesheet library="css" name="style.css" />
 
-		<p:panel style="width:80%">
+		<p:panel style="width:60%">
+		
+		<f:facet name="header">
+				<h:outputText value="Ticket-Übersicht"></h:outputText>
+			</f:facet>
 			<p:dataTable var="job" value="#{jobticketBean.job}">
 				<f:facet name="header">Jobticket</f:facet>
 				<p:column headerText="Jobnummer">
@@ -75,6 +79,7 @@
 						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}"></p:outputLabel>
 				</p:column>
 			</p:dataTable>
+			<p></p>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
 		</p:panel>
 		<p:button value="Zurück" outcome="jt_aufwand.xhtml"></p:button>

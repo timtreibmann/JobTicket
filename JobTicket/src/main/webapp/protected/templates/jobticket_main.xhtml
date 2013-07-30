@@ -18,11 +18,11 @@
 
 			<p:panel style="width:60%">
 
-				<f:facet rendered="#{jobticketBean.showAllOnOnePage}" name="header">
+				<f:facet name="header">
 					<h:outputText value="Jobticket"></h:outputText>
 				</f:facet>
 
-		
+
 				<p></p>
 				<p:panelGrid styleClass="grid">
 
@@ -74,12 +74,10 @@
 							</p:inputText>
 						</p:column>
 						<p:column>
-							<pe:tooltip
-								rendered="#{jobticketBean.neuesTicket}"
+							<pe:tooltip rendered="#{jobticketBean.neuesTicket}"
 								showEffect="fade" hideEffect="fade" for="neuerKundeButton"
-								value="neuen Kunden anlegen" autoShow="true"
-								widgetVar="tip1" myPosition="left center"
-								atPosition="right center" />
+								value="neuen Kunden anlegen" autoShow="true" widgetVar="tip1"
+								myPosition="left center" atPosition="right center" />
 							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
 							</p:commandButton>
 						</p:column>
@@ -156,7 +154,7 @@
 		<p:overlayPanel my="right top" widgetVar="kunden_overlay"
 			showEffect="fade" hideEffect="drop" for=":mainform:neuerKundeButton">
 			<h:form id="kundenform">
-		
+
 
 				<h:panelGrid id="grid" styleClass="grid" columns="2">
 					<p:outputLabel for="t1">Kundenname</p:outputLabel>
@@ -177,9 +175,11 @@
 				<h:panelGrid columns="4">
 					<p:commandButton immediate="true" onclick="kunden_overlay.hide()"
 						value="Schließen" />
-					<p:commandButton actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
-						update=":mainform:growl :mainform:kundenselect grid" value="Kunden hinzufügen">
-					
+					<p:commandButton
+						actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
+						update=":mainform:growl :mainform:kundenselect grid"
+						value="Kunden hinzufügen">
+
 					</p:commandButton>
 					<p></p>
 					<p:button value="Kundenliste anzeigen"
