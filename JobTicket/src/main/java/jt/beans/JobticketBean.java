@@ -175,6 +175,7 @@ public class JobticketBean {
 		em.persist(job);
 
 		em.getTransaction().commit();
+		refreshFilter();
 		fc.addMessage(null, new FacesMessage("Neues Ticket erzeugt!"));
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
