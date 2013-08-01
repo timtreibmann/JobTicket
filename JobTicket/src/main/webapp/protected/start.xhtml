@@ -14,7 +14,7 @@
 
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
-			
+
 
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}!"></h:outputLabel>
@@ -30,8 +30,7 @@
 			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
 
 			<p:overlayPanel hideEffect="drop" widgetVar="optionpanel"
-				showEffect="drop" my="right bottom" for="erweitert"
-				style="height:50%">
+				showEffect="drop" my="right bottom" for="erweitert">
 
 				<h:outputText value="Ansicht"></h:outputText>
 				<p:panelGrid styleClass="grid" columns="2">
@@ -53,7 +52,7 @@
 				<hr></hr>
 				<p></p>
 				<h:outputText value="Filteroptionen"></h:outputText>
-				<p:panelGrid styleClass="grid" columns="2">
+				<p:panelGrid styleClass="grid" columns="3">
 					<p:outputLabel for="checkbox"
 						value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox"
@@ -61,10 +60,9 @@
 						<p:ajax update="dataTable jobbearbeiter"
 							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 					</p:selectBooleanCheckbox>
-					<p:outputLabel for="jobbearbeiter"
-						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
-					<p:selectOneMenu id="jobbearbeiter" disabled="#{!jobticketBean.filterJoblistByAngestellten}"
-						
+
+					<p:selectOneMenu id="jobbearbeiter"
+						disabled="#{!jobticketBean.filterJoblistByAngestellten}"
 						value="#{jobticketBean.selectedAngestellterId}" effect="fold"
 						editable="false">
 						<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
@@ -75,6 +73,8 @@
 						<p:ajax event="change" process="@this" update="dataTable"
 							oncomplete="dataTableWidgetVar.filter();" />
 					</p:selectOneMenu>
+				</p:panelGrid>
+				<p:panelGrid styleClass="grid" columns="2">
 					<p:outputLabel for="checkbox1"
 						value="Nur eigene Tickets anzeigen: "></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox1"
