@@ -1,9 +1,18 @@
 @CHARSET "UTF-8";
 
- .grid tr, .grid td {
-    border: none;
+.grid tr,.grid td {
+	border: none;
 }
 
-.ui-widget, .ui-widget .ui-widget {
-    font-size: 95%;
+.ui-widget,.ui-widget .ui-widget {
+	font-size: 95%;
+}
+
+.ui-menuitem-link {
+	text-decoration:none;
+}
+
+.ui-state-disabled {
+	opacity: 1 !important
+	
 }

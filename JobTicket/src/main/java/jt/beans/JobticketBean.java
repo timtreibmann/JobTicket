@@ -192,7 +192,7 @@ public class JobticketBean {
 		em.getTransaction().commit();
 		produkteigenschaftenBean.createProdukteigenschaft();
 		refreshFilter();
-		fc.addMessage(null, new FacesMessage("Neues Ticket erzeugt!"));
+	
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
