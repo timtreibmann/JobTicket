@@ -14,9 +14,7 @@
 
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:70%">
-			<p:breadCrumb style="height:25px">
-				<p:menuitem value="Übersicht" url="start.xhtml" />
-			</p:breadCrumb>
+			
 
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}!"></h:outputLabel>
@@ -26,7 +24,7 @@
 			<p:commandButton value="Logout" style="float:right"
 				action="#{jobticketBean.logout}" ajax="false" />
 
-			<p:commandButton style="width:200px" value="Neues Ticket"
+			<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
 				action="#{jobticketBean.createJobticket}" ajax="false" />
 
 			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
@@ -65,8 +63,8 @@
 					</p:selectBooleanCheckbox>
 					<p:outputLabel for="jobbearbeiter"
 						value="Jobs von Mitarbeiter anzeigen:"></p:outputLabel>
-					<p:selectOneMenu id="jobbearbeiter"
-						disabled="#{!jobticketBean.filterJoblistByAngestellten}"
+					<p:selectOneMenu id="jobbearbeiter" disabled="#{!jobticketBean.filterJoblistByAngestellten}"
+						
 						value="#{jobticketBean.selectedAngestellterId}" effect="fold"
 						editable="false">
 						<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>

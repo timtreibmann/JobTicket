@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PostLoad;
 import javax.persistence.Query;
 
 import org.primefaces.event.ToggleEvent;
@@ -109,9 +110,12 @@ public class JobticketBean {
 
 	@Inject
 	private KundenBean kundenBean;
+	
+	
 
 	@PostConstruct
 	public void init() {
+		System.out.println("INIIIT");
 		showAllOnOnePage = true;
 		filterJoblistByUser = true;
 		filteredJobs = getJobs();
@@ -291,6 +295,7 @@ public class JobticketBean {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		externalContext.invalidateSession();
+		filteredJobs=null;
 		return "/logout.xhtml?faces-redirect=true";
 	}
 

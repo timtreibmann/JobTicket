@@ -20,9 +20,12 @@
 			<p:panel id="panel" style="width:60%">
 				<p:breadCrumb>
 					<p:menuitem value="Übersicht" url="start.xhtml" />
-					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket" url="jt_main.xhtml" />
-					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung" url="jt_produkte.xhtml" />
-					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Aufwand festlegen" url="jt_aufwand.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}"
+						value="Jobticket" url="jt_main.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}"
+						value="Produktbeschreibung" url="jt_produkte.xhtml" />
+					<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}"
+						value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				</p:breadCrumb>
 
 
@@ -98,7 +101,7 @@
 						</p:column>
 						<p:column>
 							<h:outputText id="gesamtkosten"
-								value="#{aufwandBean.gesamtKosten}" />
+								value="#{aufwandBean.gesamtKosten} €" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -109,16 +112,20 @@
 							<p:outputLabel value="#{jobticketBean.job.budgetInEuro} €" />
 						</p:column>
 						<p:column>
-							<p:commandButton
+
+							<p:commandButton disabled="true"
 								icon="#{aufwandBean.gesamtKosten > jobticketBean.job.budgetInEuro ? 'ui-icon-alert' : 'ui-icon-circle-check'}"
-								id="achtung" />
+								id="achtung">
+
+							</p:commandButton>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
 			<p:button value="Zurück"
 				outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
-			<p:button value="Weiter" outcome="jobticket_overview.xhtml" />
+			<p:button value="Weiter" outcome="jobticket_overview.xhtml">
+			</p:button>
 		</h:form>
 
 
