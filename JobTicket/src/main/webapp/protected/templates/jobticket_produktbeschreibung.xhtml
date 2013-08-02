@@ -15,19 +15,26 @@
 	<h:form id="produktform">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:60%">
-			<p:breadCrumb >
-				<p:menuitem  value="Übersicht" url="start.xhtml" />
-				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung" url="jt_produkte.xhtml" />
+			<p:breadCrumb>
+				<p:menuitem value="Übersicht" url="start.xhtml" />
+				<p:menuitem rendered="#{jobticketBean.showAllOnOnePage}"
+					disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung"
+					url="" />
+					
+				<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
+					value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
+					value="Produktbeschreibung" url="jt_produkte.xhtml" />
 			</p:breadCrumb>
 			<p></p>
-			<pe:tooltip rendered="#{jobticketBean.neuesTicket}"
-				showEffect="fade" hideEffect="fade" for="create"
-				value="neues Produkt anlegen" autoShow="true"
-				widgetVar="tip1" myPosition="left center" atPosition="right center" />
-			<p:commandButton id="create" 
+			<pe:tooltip rendered="#{jobticketBean.neuesTicket}" showEffect="fade"
+				hideEffect="fade" for="create" value="neues Produkt anlegen"
+				autoShow="true" widgetVar="tip1" myPosition="left center"
+				atPosition="right center" />
+			<p:commandButton id="create"
 				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
-				update="acc #{jobticketBean.showAllOnOnePage ? ':aufwandform' : ''}" value="Neues Produkt anlegen">
+				update="acc #{jobticketBean.showAllOnOnePage ? ':aufwandform' : ''}"
+				value="Neues Produkt anlegen">
 			</p:commandButton>
 			<p></p>
 
