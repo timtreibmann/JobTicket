@@ -49,7 +49,7 @@
 		<p></p>
 
 
-		<p:commandButton value="Übernehmen" update="growl" process="@form"
+		<p:commandButton value="Übernehmen" ajax="false" 
 			action="#{kundenBean.updateKunde}"></p:commandButton>
 		<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
 	</h:form>

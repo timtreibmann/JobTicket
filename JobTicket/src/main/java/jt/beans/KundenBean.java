@@ -171,6 +171,7 @@ public class KundenBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(kunde);
+		
 		em.getTransaction().commit();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(

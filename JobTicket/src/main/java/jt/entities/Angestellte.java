@@ -11,39 +11,40 @@ import java.util.List;
 /**
  * The Class Angestellte.
  *
- * @author jan & tim
- * The persistent class for the ANGESTELLTE database table.
+ * @author Jan Müller
+ * @author Tim Treibmann
+ * Diese Entity Klasse ist die Projektion der Datenbank Angestellte mit ihren jeweiligen Spalten als Eigenschaften
  */
 @Entity
 @Table(schema="JOBTICKET")
 @NamedQuery(name="Angestellte.findAll", query="SELECT a FROM Angestellte a")
 public class Angestellte implements Serializable {
 	
-	/** The Constant serialVersionUID. */
+	
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
+	/** Stellt den Primärschlüssel in dieser Datenbank dar. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	/** The nachname. */
+	/** Die Eigenschaft Nachname stellt den Wert Nachname des jeweiligen Angestellten dar. */
 	private String nachname;
 
-	/** The stundenlohn. */
+	/** Die Eigenschaft Stundenlohn stellt das Gehalt des jeweiligen Angestellten pro Stunde dar. */
 	private double stundenlohn;
 
-	/** The vorname. */
+	/** Die Eigenschaft Vorname stellt den Wert Vorname des jeweiligen Angestellten dar. */
 	private String vorname;
 
 	//bi-directional many-to-one association to Angestelltenbezeichnungen
-	/** The angestelltenbezeichnungen. */
+	/** Die Eigenschaft Angestelltenbezeichnung speichert die Berufsbezeichnung der Angestellten. */
 	@ManyToOne
 	@JoinColumn(name="ANGESTELLTENBEZEICHNUNG_ID")
 	private Angestelltenbezeichnungen angestelltenbezeichnungen;
 
 	//bi-directional many-to-one association to Jobbearbeiter
-	/** The jobbearbeiters. */
+	/** Die Eigenschaft jobbearbeiters stellt eine Liste mit . */
 	@OneToMany(mappedBy="angestellte")
 	private List<Jobbearbeiter> jobbearbeiters;
 
