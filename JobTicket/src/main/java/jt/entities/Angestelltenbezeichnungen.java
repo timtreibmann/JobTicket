@@ -9,8 +9,9 @@ import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
- * @author jan & tim
- * The persistent class for the ANGESTELLTENBEZEICHNUNGEN database table.
+ * @author Jan Müller
+ * @author Tim Treibmann
+ * Diese Entity Klasse ist die Projektion der Datenbank ANGESTELLTENBEZEICHNUNGEN mit ihren jeweiligen Spalten als Eigenschaften.
  * 
  */
 @Entity
@@ -18,30 +19,31 @@ import java.util.List;
 @NamedQuery(name="Angestelltenbezeichnungen.findAll", query="SELECT a FROM Angestelltenbezeichnungen a")
 public class Angestelltenbezeichnungen implements Serializable {
 	
-	/** The Constant serialVersionUID. */
+	
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
+	/** Stellt den Primärschlüssel in dieser Datenbank dar. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	/** The bezeichnung. */
+	/** Die Eigenschaft bezeichnung stellt die Berufsbezeichnung des Angestellten dar. */
 	private String bezeichnung;
 
 	//bi-directional many-to-one association to Angestellte
-	/** The angestelltes. */
+	/**Die Eigenschaft angestelltes enthält alle Angestellten in Form einer Liste. */
 	@OneToMany(mappedBy="angestelltenbezeichnungen")
 	private List<Angestellte> angestelltes;
 
 	/**
+	 * Konstruktor der Klasse Angestelltenbezeichnungen
 	 * Instantiates a new angestelltenbezeichnungen.
 	 */
 	public Angestelltenbezeichnungen() {
 	}
 
 	/**
-	 * Gets the id.
+	 * Getter für die Eigenschaft id.
 	 *
 	 * @return the id
 	 */
@@ -50,7 +52,7 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Sets the id.
+	 * Setter für die Eigenschaft id.
 	 *
 	 * @param id the new id
 	 */
@@ -59,7 +61,7 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Gets the bezeichnung.
+	 * Getter für die Eigenschaft bezeichnung.
 	 *
 	 * @return the bezeichnung
 	 */
@@ -68,7 +70,7 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Sets the bezeichnung.
+	 * Setter für die Eigenschaft bezeichnung.
 	 *
 	 * @param bezeichnung the new bezeichnung
 	 */
@@ -77,7 +79,7 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Gets the angestelltes.
+	 * Getter für die Eigenschaft angestelltes.
 	 *
 	 * @return the angestelltes
 	 */
@@ -86,7 +88,7 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Sets the angestelltes.
+	 * Setter für die Eigenschaft angestelltes.
 	 *
 	 * @param angestelltes the new angestelltes
 	 */
@@ -95,7 +97,8 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Adds the angestellte.
+	 * Einen Angestellten hinzufügen, indem der Parameterwert dieser Methode der Liste angestelltes hinzugefügt wird.
+	 * Der Wert der Eigenschaft Angestelltenbezeichnungen in der Entity Angestellte entspricht der Angestelltenbezeichnung, die mit dieser Entity erzeugt wurde.
 	 *
 	 * @param angestellte the angestellte
 	 * @return the angestellte
@@ -108,7 +111,9 @@ public class Angestelltenbezeichnungen implements Serializable {
 	}
 
 	/**
-	 * Removes the angestellte.
+	 * Einen Angestellten entfernen, indem der Parameterwert dieser Methode in der Liste angestelltes gelöscht wird.
+	 * Der Wert der Eigenschaft Angestelltenbezeichnungen in der Entity Angestellte wird auf Null gesetzt.
+	 * Da kein Angestellter gegeben ist, ist auch keine Angestelltenbezeichnung für diese Position verfügbar. 
 	 *
 	 * @param angestellte the angestellte
 	 * @return the angestellte
