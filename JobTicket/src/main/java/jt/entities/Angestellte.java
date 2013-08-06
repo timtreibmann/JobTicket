@@ -57,12 +57,13 @@ public class Angestellte implements Serializable {
 
 	/**
 	 * Instantiates a new angestellte.
+	 * Konstruktor der Klasse Angestellte.
 	 */
 	public Angestellte() {
 	}
 
 	/**
-	 * Gets the id.
+	 * Getter für die Eigenschaft id.
 	 *
 	 * @return the id
 	 */
@@ -71,7 +72,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the id.
+	 * Setter für die Eigenschaft id.
 	 *
 	 * @param id the new id
 	 */
@@ -80,7 +81,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the nachname.
+	 * Getter für die Eigenschaft nachname.
 	 *
 	 * @return the nachname
 	 */
@@ -89,7 +90,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the nachname.
+	 * Setter für die Eigenschaft nachname.
 	 *
 	 * @param nachname the new nachname
 	 */
@@ -98,7 +99,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the stundenlohn.
+	 *  Getter für die Eigenschaft stundenlohn.
 	 *
 	 * @return the stundenlohn
 	 */
@@ -107,7 +108,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the stundenlohn.
+	 * Setter für die Eigenschaft stundenlohn.
 	 *
 	 * @param stundenlohn the new stundenlohn
 	 */
@@ -116,7 +117,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the vorname.
+	 * Getter für die Eigenschaft vorname.
 	 *
 	 * @return the vorname
 	 */
@@ -125,7 +126,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the vorname.
+	 * Setter für die Eigenschaft vorname.
 	 *
 	 * @param vorname the new vorname
 	 */
@@ -134,7 +135,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the angestelltenbezeichnungen.
+	 * Getter für die Eigenschaft angestelltenbezeichnungen.
 	 *
 	 * @return the angestelltenbezeichnungen
 	 */
@@ -143,7 +144,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the angestelltenbezeichnungen.
+	 * Setter für die Eigenschaft angestelltenbezeichnungen.
 	 *
 	 * @param angestelltenbezeichnungen the new angestelltenbezeichnungen
 	 */
@@ -152,7 +153,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the jobbearbeiters.
+	 * Getter für die Eigenschaft jobbearbeiters.
 	 *
 	 * @return the jobbearbeiters
 	 */
@@ -161,7 +162,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the jobbearbeiters.
+	 *  Setter für die Eigenschaft jobbearbeiters.
 	 *
 	 * @param jobbearbeiters the new jobbearbeiters
 	 */
@@ -170,8 +171,8 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Adds the jobbearbeiter.
-	 *
+	 * Einen jobbearbeiter hinzufügen, indem der Parameterwert dieser Methode der Liste jobbearbeiters hinzugefügt wird.
+	 * Der Wert der Eigenschaft Angestellte in der Entity Jobbearbeiter entspricht dem Angestellten der mit dieser Entity erzeugt wurde.
 	 * @param jobbearbeiter the jobbearbeiter
 	 * @return the jobbearbeiter
 	 */
@@ -183,8 +184,9 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Removes the jobbearbeiter.
-	 *
+	 * Einen jobbearbeiter entfernen, indem der Parameterwert dieser Methode in der Liste jobbearbeiters gelöscht wird.
+	 * Der Wert der Eigenschaft Angestellte in der Entity Jobbearbeiter wird auf Null gesetzt.
+	 * Da kein Jobbearbeiter gegeben ist, ist auch kein Angestellter für diese Position verfügbar. 
 	 * @param jobbearbeiter the jobbearbeiter
 	 * @return the jobbearbeiter
 	 */
@@ -196,7 +198,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Gets the kostens.
+	 * Getter für die Eigenschaft kostens.
 	 *
 	 * @return the kostens
 	 */
@@ -205,7 +207,7 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Sets the kostens.
+	 * Setter für die Eigenschaft kostens.
 	 *
 	 * @param kostens the new kostens
 	 */
@@ -214,8 +216,8 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Adds the kosten.
-	 *
+	 * Einen Kostenbetrag hinzufügen, indem der Parameterwert dieser Methode der Liste kosten hinzugefügt wird.
+	 * Der Wert der Eigenschaft angestellte in der Entity Kosten entspricht dem Angestellten der mit dieser Entity erzeugt wurde.
 	 * @param kosten the kosten
 	 * @return the kosten
 	 */
@@ -227,7 +229,9 @@ public class Angestellte implements Serializable {
 	}
 
 	/**
-	 * Removes the kosten.
+	 * Einen Kostenbetrag entfernen, indem der Parameterwert dieser Methode in der Liste kosten gelöscht wird.
+	 * Der Wert der Eigenschaft Angestellte in der Entity Kosten wird auf Null gesetzt.
+	 * Da kein Kostenbetrag gegeben ist, ist auch kein Angestellter für diese Position verfügbar. 
 	 *
 	 * @param kosten the kosten
 	 * @return the kosten
