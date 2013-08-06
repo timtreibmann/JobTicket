@@ -44,12 +44,14 @@ public class Angestellte implements Serializable {
 	private Angestelltenbezeichnungen angestelltenbezeichnungen;
 
 	//bi-directional many-to-one association to Jobbearbeiter
-	/** Die Eigenschaft jobbearbeiters stellt eine Liste mit . */
+	/** Die Eigenschaft jobbearbeiters speichert zusammengehörige Job- und Mitarbeiter-Ids.
+	 * Damit wird identifiziert, welcher Mitarbeiter welchen Job bearbeitet*/
 	@OneToMany(mappedBy="angestellte")
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	//bi-directional many-to-one association to Kosten
-	/** The kostens. */
+	/** Die Eigenschaft kostens speichert zusammengehörige Kosten- und Angestellte-Ids.
+	 * Damit wird identifiziert, wie viel Kosten ein Job beansprucht*/
 	@OneToMany(mappedBy="angestellte")
 	private List<Kosten> kostens;
 
