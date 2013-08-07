@@ -11,41 +11,44 @@ import org.eclipse.persistence.annotations.CascadeOnDelete;
 /**
  * The Class Jobbearbeiter.
  *
- * @author jan & tim
- * The persistent class for the JOBBEARBEITER database table.
+ * @author Jan Müller
+ * @author Tim Treibmann 
+ * Diese Entity Klasse ist die Projektion der Datenbank
+ *         Jobbearbeiter mit ihren jeweiligen Spalten als Eigenschaften
  */
 @Entity
 @Table(schema="JOBTICKET")
 @NamedQuery(name="Jobbearbeiter.findAll", query="SELECT j FROM Jobbearbeiter j")
 public class Jobbearbeiter implements Serializable {
 	
-	/** The Constant serialVersionUID. */
+	
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
+	/** Stellt den Primärschlüssel in dieser Datenbank dar. */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	//bi-directional many-to-one association to Angestellte
-	/** The angestellte. */
+	/** Die Eigenschaft angestellte stellt den Angestellten, welcher als Jobbearbieter fungiert dar. */
 	@ManyToOne
 	private Angestellte angestellte;
 
 	//bi-directional many-to-one association to Job
-	/** The job. */
+	/** Die Eigenschaft job stellt den Job welcher dem Jobbearbeiter zugewiesen wird dar. */
 	@ManyToOne
 	@JoinColumn(name="JOBS_ID")
 	private Job job;
 
 	/**
+	 * Konstruktor der Klasse Jobbearbeiter
 	 * Instantiates a new jobbearbeiter.
 	 */
 	public Jobbearbeiter() {
 	}
 
 	/**
-	 * Gets the id.
+	 * Getter der Eigenschaft id.
 	 *
 	 * @return the id
 	 */
@@ -54,7 +57,7 @@ public class Jobbearbeiter implements Serializable {
 	}
 
 	/**
-	 * Sets the id.
+	 * Setter der Eigenschaft id.
 	 *
 	 * @param id the new id
 	 */
@@ -63,7 +66,7 @@ public class Jobbearbeiter implements Serializable {
 	}
 
 	/**
-	 * Gets the angestellte.
+	 * Getter der Eigenschaft angestellte.
 	 *
 	 * @return the angestellte
 	 */
@@ -72,7 +75,7 @@ public class Jobbearbeiter implements Serializable {
 	}
 
 	/**
-	 * Sets the angestellte.
+	 * Setter der Eigenschaft angestellte.
 	 *
 	 * @param angestellte the new angestellte
 	 */
@@ -81,7 +84,7 @@ public class Jobbearbeiter implements Serializable {
 	}
 
 	/**
-	 * Gets the job.
+	 * Getter der Eigenschaft job.
 	 *
 	 * @return the job
 	 */
@@ -90,7 +93,7 @@ public class Jobbearbeiter implements Serializable {
 	}
 
 	/**
-	 * Sets the job.
+	 * Setter der Eigenschaft job.
 	 *
 	 * @param job the new job
 	 */

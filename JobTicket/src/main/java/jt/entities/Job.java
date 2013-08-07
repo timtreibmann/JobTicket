@@ -13,83 +13,114 @@ import java.util.List;
 /**
  * The Class Job.
  * 
- * @author jan & tim The persistent class for the JOBS database table.
+ * @author Jan Müller
+ * @author Tim Treibmann 
+ * Diese Entity Klasse ist die Projektion der Datenbank
+ *         Jobs mit ihren jeweiligen Spalten als Eigenschaften
  */
 @Entity
 @Table(schema = "JOBTICKET", name = "JOBS")
 @NamedQuery(name = "Job.findAll", query = "SELECT j FROM Job j")
 public class Job implements Serializable {
 
-	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The id. */
+	/** Stellt den Primärschlüssel in dieser Datenbank dar. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	/** The alte jobnummer. */
+	/**
+	 * Die Eigenschaft altejobnummer stellt den Wert für eine Jobnummer von
+	 * Jobtickts aus der Vergangenheit dar.
+	 */
 	@Column(name = "ALTE_JOBNUMMER")
 	private int alteJobnummer;
 
-	/** The budget in euro. */
+	/**
+	 * Die Eigenschaft budgetInEuro stellt den Wert für das Budget in Euro für
+	 * das jeweilige Projekt dar.
+	 */
 	@Column(name = "BUDGET_IN_EURO")
 	private double budgetInEuro;
 
-	/** The budget in std. */
+	/**
+	 * Die Eigenschaft budgetInStd stellt den Wert für das Budget in Stunde für
+	 * das jeweilige Projekt dar.
+	 */
 	@Column(name = "BUDGET_IN_STD")
 	private double budgetInStd;
 
-	/** The empfaenger. */
+	/**
+	 * Die Eigenschaft empfaenger stellt den Wert der Person, die für die
+	 * Bearbeitung des Jobs verantwortlich ist dar.
+	 */
 	private String empfaenger;
 
-	/** The jobbeschreibung. */
+	/**
+	 * Die Eigenschaft jobbeschreibung dient für zusätzliche
+	 * Informationenbeschreibungen bezüglich eines Job.
+	 */
 	private String jobbeschreibung;
 
-	/** The name. */
+	/** Die Eigenschaft name beschreibt den Namen eines Jobs. */
 	private String name;
 
 	/** The print. */
 	private String print;
 
+	/**
+	 * Die Eigenschaft ersteller stellt den Wert des Erzeugers des Jobtickets
+	 * dar.
+	 */
 	private String ersteller;
 
-	/** The erstellDatum. */
+	/** Die Eigenschaft erstellDatum gibt an wann der Job erstellt wurde. */
 	@Temporal(TemporalType.DATE)
 	private Date erstellDatum;
 
+	/**
+	 * Die Eigenschaft fortschritt gibt an, ob ein Job beendet wurde oder sich
+	 * noch im Bearbeitungszyklus befindet
+	 */
 	private double fortschritt;
 
 	// bi-directional many-to-one association to Jobbearbeiter
-	/** The jobbearbeiters. */
+	/**
+	 * Die Eigenschaft jobbearbeiters stellt eine Liste aller Jobbearbeiter
+	 * eines Jobs dar.
+	 */
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Jobbearbeiter> jobbearbeiters;
 
 	// bi-directional many-to-one association to Kunde
-	/** The kunde. */
+	/** Die Eigenschaft kunde stellt den jeweiligen Kunden eines Jobs dar. */
 	@ManyToOne
 	private Kunde kunde;
 
 	// bi-directional many-to-one association to Kosten
-	/** The kostens. */
+	/** Die Eigenschaft kostens stellt eine Liste aller Kosten eines Jobs dar. */
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	@CascadeOnDelete
 	private List<Kosten> kostens;
 
 	// bi-directional many-to-one association to Produkteigenschaften
-	/** The produkteigenschaftens. */
+	/**
+	 * Die Eigenschaft produkteigenschaftens stellt eine Liste aller
+	 * Produkteigenschaften eines Jobs dar.
+	 */
 	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
 	@CascadeOnDelete
 	private List<Produkteigenschaften> produkteigenschaftens;
 
 	/**
-	 * Instantiates a new job.
+	 * Konstruktor der Klasse Job Instantiates a new job.
 	 */
 	public Job() {
 	}
 
 	/**
-	 * Gets the id.
+	 * Getter der Eigenschaft the id.
 	 * 
 	 * @return the id
 	 */
@@ -98,7 +129,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the id.
+	 * Setter der Eigenschaft id.
 	 * 
 	 * @param id
 	 *            the new id
@@ -108,7 +139,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the alte jobnummer.
+	 * Getter der Eigenschaft alte jobnummer.
 	 * 
 	 * @return the alte jobnummer
 	 */
@@ -117,7 +148,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the alte jobnummer.
+	 * Setter der Eigenschaft alte jobnummer.
 	 * 
 	 * @param alteJobnummer
 	 *            the new alte jobnummer
@@ -127,7 +158,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the budget in euro.
+	 * Getter der Eigenschaft budget in euro.
 	 * 
 	 * @return the budget in euro
 	 */
@@ -136,7 +167,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the budget in euro.
+	 * Setter der Eigenschaft budget in euro.
 	 * 
 	 * @param budgetInEuro
 	 *            the new budget in euro
@@ -146,7 +177,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the budget in std.
+	 * Getter der Eigenschaft budget in std.
 	 * 
 	 * @return the budget in std
 	 */
@@ -155,7 +186,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the budget in std.
+	 * Setter der Eigenschaft budget in std.
 	 * 
 	 * @param budgetInStd
 	 *            the new budget in std
@@ -165,7 +196,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the empfaenger.
+	 * Getter der Eigenschaft empfaenger.
 	 * 
 	 * @return the empfaenger
 	 */
@@ -174,7 +205,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the empfaenger.
+	 * Setter der Eigenschaft empfaenger.
 	 * 
 	 * @param empfaenger
 	 *            the new empfaenger
@@ -184,7 +215,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the jobbeschreibung.
+	 * Getter der Eigenschaft jobbeschreibung.
 	 * 
 	 * @return the jobbeschreibung
 	 */
@@ -193,7 +224,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the jobbeschreibung.
+	 * Setter der Eigenschaft jobbeschreibung.
 	 * 
 	 * @param jobbeschreibung
 	 *            the new jobbeschreibung
@@ -203,7 +234,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the name.
+	 * Getter der Eigenschaft name.
 	 * 
 	 * @return the name
 	 */
@@ -212,7 +243,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the name.
+	 * Setter der Eigenschaft name.
 	 * 
 	 * @param name
 	 *            the new name
@@ -222,34 +253,41 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the prints the.
+	 * Getter der Eigenschaft print.
 	 * 
-	 * @return the prints the
+	 * @return the prints
 	 */
 	public String getPrint() {
 		return this.print;
 	}
 
 	/**
-	 * Sets the prints the.
+	 * Setter der Eigenschaft prints the.
 	 * 
 	 * @param print
-	 *            the new prints the
+	 *            the new prints
 	 */
 	public void setPrint(String print) {
 		this.print = print;
 	}
 
+	/** Getter der Eigenschaft ersteller */
 	public String getErsteller() {
 		return ersteller;
 	}
 
+	/**
+	 * Setter der Eigenschaft ersteller
+	 * 
+	 * @param ersteller
+	 *            the new ersteller
+	 */
 	public void setErsteller(String ersteller) {
 		this.ersteller = ersteller;
 	}
 
 	/**
-	 * Gets the erstellDatum.
+	 * Getter der Eigenschaft erstellDatum.
 	 * 
 	 * @return the erstellDatum
 	 */
@@ -258,7 +296,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the erstellDatum.
+	 * Setter der Eigenschaft erstellDatum.
 	 * 
 	 * @param erstellDatum
 	 *            the new erstellDatum
@@ -267,16 +305,23 @@ public class Job implements Serializable {
 		this.erstellDatum = erstellDatum;
 	}
 
+	/** Getter der Eigenschaft fortschritt */
 	public double getFortschritt() {
 		return fortschritt;
 	}
 
+	/**
+	 * Setter der Eigenschaft fortschritt
+	 * 
+	 * @param fortschritt
+	 *            the new fortschritt
+	 */
 	public void setFortschritt(double fortschritt) {
 		this.fortschritt = fortschritt;
 	}
 
 	/**
-	 * Gets the jobbearbeiters.
+	 * Getter der Eigenschaft jobbearbeiters.
 	 * 
 	 * @return the jobbearbeiters
 	 */
@@ -285,7 +330,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the jobbearbeiters.
+	 * Setter der Eigenschaft jobbearbeiters.
 	 * 
 	 * @param jobbearbeiters
 	 *            the new jobbearbeiters
@@ -295,7 +340,10 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Adds the jobbearbeiter.
+	 * Einen jobbearbeiter hinzufügen, indem der Parameterwert dieser Methode
+	 * der Liste jobbearbeiters hinzugefügt wird. Der Wert der Eigenschaft Job
+	 * in der Entity Jobbearbeiter entspricht dem Job der mit dieser Entity
+	 * erzeugt wurde.
 	 * 
 	 * @param jobbearbeiter
 	 *            the jobbearbeiter
@@ -309,7 +357,10 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Removes the jobbearbeiter.
+	 * Einen jobbearbeiter entfernen, indem der Parameterwert dieser Methode in
+	 * der Liste jobbearbeiters gelöscht wird. Der Wert der Eigenschaft Job in
+	 * der Entity Jobbearbeiter wird auf Null gesetzt. Somit wird die Verbindung
+	 * zwischen einem Job und dem zugewiesenden Jobbearbeiter getrennt.
 	 * 
 	 * @param jobbearbeiter
 	 *            the jobbearbeiter
@@ -323,7 +374,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the kunde.
+	 * Getter der Eigenschaft kunde.
 	 * 
 	 * @return the kunde
 	 */
@@ -332,7 +383,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the kunde.
+	 * Setter der Eigenschaft the kunde.
 	 * 
 	 * @param kunde
 	 *            the new kunde
@@ -342,7 +393,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the kostens.
+	 * Getter der Eigenschaft kostens.
 	 * 
 	 * @return the kostens
 	 */
@@ -351,7 +402,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the kostens.
+	 * Setter der Eigenschaft kostens.
 	 * 
 	 * @param kostens
 	 *            the new kostens
@@ -361,7 +412,9 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Adds the kosten.
+	 * Einen Kostenbetrag hinzufügen, indem der Parameterwert dieser Methode der
+	 * Liste kosten hinzugefügt wird. Der Wert der Eigenschaft Job in der Entity
+	 * Kosten entspricht dem Job der mit dieser Entity erzeugt wurde.
 	 * 
 	 * @param kosten
 	 *            the kosten
@@ -375,7 +428,10 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Removes the kosten.
+	 * Einen Kostenbetrag entfernen, indem der Parameterwert dieser Methode in
+	 * der Liste kosten gelöscht wird. Der Wert der Eigenschaft Job in der
+	 * Entity Kosten wird auf Null gesetzt. Somit wird die Verbindung zwischen
+	 * einem Job und dem zugewiesenden Kostenbetrag getrennt.
 	 * 
 	 * @param kosten
 	 *            the kosten
@@ -389,7 +445,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Gets the produkteigenschaftens.
+	 * Getter der Eigenschaft produkteigenschaftens.
 	 * 
 	 * @return the produkteigenschaftens
 	 */
@@ -398,7 +454,7 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Sets the produkteigenschaftens.
+	 * Setter der Eigenschaft produkteigenschaftens.
 	 * 
 	 * @param produkteigenschaftens
 	 *            the new produkteigenschaftens
@@ -409,7 +465,10 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Adds the produkteigenschaften.
+	 * Produkteigenschaften hinzufügen, indem der Parameterwert dieser Methode
+	 * der Liste produkteigenschaftens hinzugefügt wird. Der Wert der
+	 * Eigenschaft Job in der Entity produkteigenschaften entspricht dem Job der
+	 * mit dieser Entity erzeugt wurde.
 	 * 
 	 * @param produkteigenschaften
 	 *            the produkteigenschaften
@@ -424,7 +483,11 @@ public class Job implements Serializable {
 	}
 
 	/**
-	 * Removes the produkteigenschaften.
+	 * Eine Produkteigenschaften entfernen, indem der Parameterwert dieser
+	 * Methode in der Liste produkteigenschaftens gelöscht wird. Der Wert der
+	 * Eigenschaft Job in der Entity Produkteigenschaften wird auf Null gesetzt.
+	 * Somit wird die Verbindung zwischen einem Job und dem zugewiesenden
+	 * Produkteigenschaften getrennt.
 	 * 
 	 * @param produkteigenschaften
 	 *            the produkteigenschaften
@@ -438,6 +501,7 @@ public class Job implements Serializable {
 		return produkteigenschaften;
 	}
 
+	/** Stellt den Wert der Eigenschaft id als String dar */
 	public String toString() {
 		return id + " ";
 	}
