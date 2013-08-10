@@ -78,6 +78,7 @@ public class Produkteigenschaften implements Serializable {
 	/** The vorlagedatum. */
 	@Temporal(TemporalType.DATE)
 	private Date vorlagedatum;
+	
 
 	//bi-directional many-to-one association to Job
 	/** The job. */

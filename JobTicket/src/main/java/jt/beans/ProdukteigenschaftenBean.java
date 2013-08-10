@@ -196,5 +196,9 @@ public class ProdukteigenschaftenBean {
 		updateProdukteigenschaften(produkteigenschaften);
 		return null;
 	}
+	
+//	public boolean getDetailsEingetragen(ProdukteigenschaftenBean produkteigenschaftenBean) {
+//		return produkteigenschaften.getFomat().length() + produkteigenschaften.getFarbe4c().trim().length() + produkteigenschaften.getBindung().length() + produkteigenschaften.getDummy().length() + produkteigenschaften.getBeschnitt().length() + produkteigenschaften.getSonderfarbe().length() + produkteigenschaften.getFalzung().length() + produkteigenschaften.getProof().length() == 0;
+//	}
 
 }

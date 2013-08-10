@@ -13,11 +13,12 @@
 
 
 		<h:outputStylesheet library="css" name="style.css" />
-		<p:panel style="width:70%">
+		<p:panel style="width:90%">
 
 
 			<p></p>
-			<h:outputLabel value="Willkommen #{request.remoteUser}!"></h:outputLabel>
+			<h:outputLabel value="Willkommen #{request.remoteUser}!">
+			</h:outputLabel>
 			<p></p>
 
 
@@ -52,34 +53,48 @@
 				<hr></hr>
 				<p></p>
 				<h:outputText value="Filteroptionen"></h:outputText>
-				<p:panelGrid styleClass="grid" columns="3">
-					<p:outputLabel for="checkbox"
-						value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
-					<p:selectBooleanCheckbox id="checkbox"
-						value="#{jobticketBean.filterJoblistByAngestellten}">
-						<p:ajax update="dataTable jobbearbeiter"
-							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
-					</p:selectBooleanCheckbox>
+				<p:panelGrid styleClass="grid">
+					<p:row>
+						<p:column>
+							<p:outputLabel for="checkbox"
+								value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="checkbox"
+								value="#{jobticketBean.filterJoblistByAngestellten}">
+								<p:ajax update="dataTable jobbearbeiter"
+									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="jobbearbeiter"
+								disabled="#{!jobticketBean.filterJoblistByAngestellten}"
+								value="#{jobticketBean.selectedAngestellterId}" effect="fold"
+								editable="false">
+								<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
+								<f:selectItems value="#{angestellteBean.angestelltes}"
+									var="angestellte"
+									itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+									itemValue="#{angestellte.id}" />
+								<p:ajax event="change" process="@this" update="dataTable"
+									oncomplete="dataTableWidgetVar.filter();" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel for="checkbox3"
+								value="Fertige Jobs nicht anzeigen"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:selectBooleanCheckbox id="checkbox3"
+								value="#{jobticketBean.hideFinishedJobs}">
+								<p:ajax update="dataTable"
+									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
 
-					<p:selectOneMenu id="jobbearbeiter"
-						disabled="#{!jobticketBean.filterJoblistByAngestellten}"
-						value="#{jobticketBean.selectedAngestellterId}" effect="fold"
-						editable="false">
-						<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
-						<f:selectItems value="#{angestellteBean.angestelltes}"
-							var="angestellte"
-							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-							itemValue="#{angestellte.id}" />
-						<p:ajax event="change" process="@this" update="dataTable"
-							oncomplete="dataTableWidgetVar.filter();" />
-					</p:selectOneMenu>
-					<p:outputLabel for="checkbox1"
-						value="Nur eigene Tickets anzeigen: "></p:outputLabel>
-					<p:selectBooleanCheckbox id="checkbox1"
-						value="#{jobticketBean.filterJoblistByUser}">
-						<p:ajax update="dataTable"
-							oncomplete="dataTableWidgetVar.filter();"></p:ajax>
-					</p:selectBooleanCheckbox>
 				</p:panelGrid>
 				<p></p>
 				<hr></hr>
@@ -88,7 +103,7 @@
 				<p:commandButton onclick="optionpanel.hide()" value="Schließen" />
 			</p:overlayPanel>
 			<p></p>
-			<p:dataTable id="dataTable" var="job" value="#{jobticketBean.jobs}"
+			<p:dataTable style="width:100%" id="dataTable" var="job" value="#{jobticketBean.jobs}"
 				emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">
@@ -114,15 +129,8 @@
 					headerText="Kunde" filterMatchMode="contains">
 					<h:outputText value="#{job.kunde.name}" />
 				</p:column>
-				<p:column id="besColumn" filterBy="#{job.jobbeschreibung}"
-					headerText="Beschreibung" filterMatchMode="contains">
-					<h:outputText value="#{job.jobbeschreibung}" />
-				</p:column>
-				<p:column id="erstellerColumn" filterBy="#{job.ersteller}"
-					headerText="Ersteller" filterMatchMode="contains">
-					<h:outputText value="#{job.ersteller}" />
-				</p:column>
-				<p:column id="fortschrittColumn" headerText="Fortschritt">
+				<p:column id="fortschrittColumn" filterMatchMode="contains"
+					filterBy="#{job.fortschritt}" headerText="Fortschritt">
 
 					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%"
 						displayOnly="true" />

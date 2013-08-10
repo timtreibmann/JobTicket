@@ -60,7 +60,7 @@
 								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-								<p:ajax event="change" process="@this" update="@this growl"
+								<p:ajax event="change" process="@this" update="@this growl kundenkurz"
 									listener="#{jobticketBean.updateJobticket}"></p:ajax>
 							</p:selectOneMenu>
 						</p:column>
@@ -97,22 +97,8 @@
 
 							</p:inputText>
 						</p:column>
-						<p:column rowspan="2">
-							<p:outputLabel for="jobbeschreibung" value="Beschreibung">
-
-
-							</p:outputLabel>
-						</p:column>
-						<p:column rowspan="2">
-							<p:inputTextarea style="width:100%" maxlength="200"
-								value="#{jobticketBean.job.jobbeschreibung}"
-								id="jobbeschreibung">
-								<p:ajax event="change" process="@this" update="@this growl"
-									listener="#{jobticketBean.updateJobticket}"></p:ajax>
-							</p:inputTextarea>
-						</p:column>
-					</p:row>
-					<p:row>
+						
+				
 						<p:column>
 							<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
 						</p:column>

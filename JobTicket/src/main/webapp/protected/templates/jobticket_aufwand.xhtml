@@ -20,9 +20,9 @@
 			<p:panel id="panel" style="width:60%">
 				<p:breadCrumb>
 					<p:menuitem value="Übersicht" url="start.xhtml" />
-						<p:menuitem rendered="#{jobticketBean.showAllOnOnePage}"
-					disabled="#{jobticketBean.showAllOnOnePage}" value="Aufwand"
-					url="" />
+					<p:menuitem rendered="#{jobticketBean.showAllOnOnePage}"
+						disabled="#{jobticketBean.showAllOnOnePage}" value="Aufwand"
+						url="" />
 					<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
 						value="Jobticket" url="jt_main.xhtml" />
 					<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
@@ -125,10 +125,19 @@
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
-			<p:button value="Zurück" 
-				outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
-			<p:button value="Weiter" outcome="jobticket_overview.xhtml">
-			</p:button>
+			<p:panelGrid styleClass="grid" style="width:60%">
+				<p:row>
+					<p:column>
+
+						<p:button value="Zurück"
+							outcome="#{jobticketBean.showAllOnOnePage ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
+						<p:button value="Weiter" outcome="jobticket_overview.xhtml"
+							style="float:right">
+						</p:button>
+
+					</p:column>
+				</p:row>
+			</p:panelGrid>
 		</h:form>
 
 
@@ -149,9 +158,12 @@
 					<p:inputText id="t2"
 						value="#{angestellteBean.angestellte.stundenlohn}"
 						autocomplete="true" required="true" />
+						<p:outputLabel>Loginname</p:outputLabel>
+					<p:inputText id="t3"
+						value="#{angestellteBean.angestellte.loginName}"
+						autocomplete="true" required="false" />
 				</h:panelGrid>
 				<h:panelGrid columns="3">
-
 					<p:commandButton immediate="true"
 						onclick="angestellten_overlay.hide()" value="Schließen" />
 					<p:commandButton

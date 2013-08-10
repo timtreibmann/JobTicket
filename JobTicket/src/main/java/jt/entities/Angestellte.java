@@ -36,6 +36,9 @@ public class Angestellte implements Serializable {
 
 	/** Die Eigenschaft Vorname stellt den Wert Vorname des jeweiligen Angestellten dar. */
 	private String vorname;
+	
+	/** Die Eigenschaft loginName stellt den Wert loginName des jeweiligen Angestellten dar. */
+	private String loginName;
 
 	//bi-directional many-to-one association to Angestelltenbezeichnungen
 	/** Die Eigenschaft Angestelltenbezeichnung speichert die Berufsbezeichnung der Angestellten. */
@@ -78,6 +81,14 @@ public class Angestellte implements Serializable {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
 	}
 
 	/**

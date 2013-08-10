@@ -5,15 +5,15 @@ package jt.beans;
 import java.io.Serializable;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 // TODO: Auto-generated Javadoc
 /**
  * Eine EntityManagerFactoryBean stellt der Applikation eine
- * EntityManagerFactory zur Verfügung. Da die EntityManagerFactory nicht
+ * EntityManagerFactory zur Verfï¿½gung. Da die EntityManagerFactory nicht
  * Serializable ist, kann sie nur in <b>transient</b> Eigenschaften injiziert
  * werden, falls die Bean, in die injiziert wird {@code @SessionScoped} ist.
  * 
