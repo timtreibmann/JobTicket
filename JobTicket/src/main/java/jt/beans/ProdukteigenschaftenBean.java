@@ -99,7 +99,7 @@ public class ProdukteigenschaftenBean {
 	public int getProduktAnzahl() {
 		return job.getProdukteigenschaftens().size();
 	}
-
+	
 	public String createProdukteigenschaft() {
 
 		em = entityManagerFactory.createEntityManager();
@@ -111,7 +111,6 @@ public class ProdukteigenschaftenBean {
 		produkteigenschaften
 				.setProduktbeschreibung("Neues Produkt - Daten eintragen - "
 						+ formatter.format(d));
-		;
 		produkteigenschaften.setErledigt(0);
 		job.addProdukteigenschaften(produkteigenschaften);
 		em.persist(produkteigenschaften);
@@ -196,9 +195,4 @@ public class ProdukteigenschaftenBean {
 		updateProdukteigenschaften(produkteigenschaften);
 		return null;
 	}
-	
-//	public boolean getDetailsEingetragen(ProdukteigenschaftenBean produkteigenschaftenBean) {
-//		return produkteigenschaften.getFomat().length() + produkteigenschaften.getFarbe4c().trim().length() + produkteigenschaften.getBindung().length() + produkteigenschaften.getDummy().length() + produkteigenschaften.getBeschnitt().length() + produkteigenschaften.getSonderfarbe().length() + produkteigenschaften.getFalzung().length() + produkteigenschaften.getProof().length() == 0;
-//	}
-
 }

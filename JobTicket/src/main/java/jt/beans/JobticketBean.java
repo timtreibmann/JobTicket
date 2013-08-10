@@ -37,6 +37,7 @@ public class JobticketBean implements Serializable {
 
 	@Inject
 	private transient EntityManagerFactory entityManagerFactory;
+
 	private transient EntityManager em;
 
 	@Produces
@@ -107,12 +108,14 @@ public class JobticketBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+
 		System.out.println("initialisieren");
 		showAllOnOnePage = true;
 		hideFinishedJobs = true;
 		filterJoblistByAngestellten = true;
 		selectedAngestellterId = findLoggedInMitarbeiterId();
 		filteredJobs = getJobs();
+
 	}
 
 	public String refreshFilter() {
@@ -166,7 +169,6 @@ public class JobticketBean implements Serializable {
 			this.kuerzel = "";
 		}
 
-		
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
@@ -209,7 +211,7 @@ public class JobticketBean implements Serializable {
 			job.setKunde(k);
 			kuerzel = k.getKundenkuerzel();
 		}
-		
+
 		em.merge(job);
 		em.getTransaction().commit();
 
@@ -220,7 +222,7 @@ public class JobticketBean implements Serializable {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 
-		Query query = null;
+		Query query = em.createQuery("SELECT b FROM Job b");
 		if (filterJoblistByAngestellten) {
 			if (hideFinishedJobs) {
 				query = findUnfinishedJobsByAngestellten();
@@ -230,9 +232,10 @@ public class JobticketBean implements Serializable {
 			}
 		} else {
 			if (hideFinishedJobs) {
-				query = em.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
+				query = em
+						.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
 			} else {
-				query = em.createQuery("SELECT b FROM Job b");
+
 			}
 
 		}

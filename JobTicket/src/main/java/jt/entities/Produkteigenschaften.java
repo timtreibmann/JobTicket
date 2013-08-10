@@ -78,7 +78,6 @@ public class Produkteigenschaften implements Serializable {
 	/** The vorlagedatum. */
 	@Temporal(TemporalType.DATE)
 	private Date vorlagedatum;
-	
 
 	//bi-directional many-to-one association to Job
 	/** The job. */
@@ -164,7 +163,6 @@ public class Produkteigenschaften implements Serializable {
 	public void setBindung(String bindung) {
 		this.bindung = bindung;
 	}
-
 	/**
 	 * Gets the dummy.
 	 *

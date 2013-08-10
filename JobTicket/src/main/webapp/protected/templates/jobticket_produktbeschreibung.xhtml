@@ -18,9 +18,9 @@
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
 				<p:menuitem rendered="#{jobticketBean.showAllOnOnePage}"
-					disabled="#{jobticketBean.showAllOnOnePage}" value="Produktbeschreibung"
-					url="" />
-					
+					disabled="#{jobticketBean.showAllOnOnePage}"
+					value="Produktbeschreibung" url="" />
+
 				<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
 					value="Jobticket" url="jt_main.xhtml" />
 				<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
@@ -117,7 +117,10 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:panel header="Details" collapsed="true" toggleable="true">
+					
+					<p:panel header="Details #{(produkteigenschaften.fomat =='' and produkteigenschaften.beschnitt=='' and produkteigenschaften.farbe4c=='' and produkteigenschaften.sonderfarbe=='' and produkteigenschaften.seitenzahl==0  and produkteigenschaften.falzung==''  and  produkteigenschaften.bindung=='' and produkteigenschaften.proof=='') ? 'nicht vorhanden' : 'vorhanden'}" 
+						collapsed="true"
+						toggleable="true">
 
 						<p:panelGrid styleClass="grid" columns="4">
 
