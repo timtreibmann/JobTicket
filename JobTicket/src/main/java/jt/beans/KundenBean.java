@@ -161,6 +161,21 @@ public class KundenBean {
 		}
 		return null;
 	}
+	
+//	private boolean istKuerzelVorhanden(String kuerzel) {
+//		
+//		em = entityManagerFactory.createEntityManager();
+//		em.getTransaction().begin();
+//		Query query = em.createQuery("SELECT b FROM Kunde b");
+//		query.set
+//		@SuppressWarnings("unchecked")
+//		List<Kunde> kundenListe = query.getResultList();
+//		if (kundenListe == null) {
+//			kundenListe = new ArrayList<Kunde>();
+//		}
+//		em.getTransaction().commit();
+//		return kundenListe;
+//	}
 
 	/**
 	 * Update kunde.

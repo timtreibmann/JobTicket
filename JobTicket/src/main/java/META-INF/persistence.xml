@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="test" transaction-type="JTA">
+	<jta-data-source>java:comp/env/jdbc/jt</jta-data-source>
 		<class>jt.entities.Angestellte</class>
 		<class>jt.entities.Angestelltenbezeichnungen</class>
 		<class>jt.entities.Jobbearbeiter</class>
@@ -9,10 +10,6 @@
 		<class>jt.entities.Kunde</class>
 		<class>jt.entities.Produkteigenschaften</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/jt;create=true;characterEncoding=UTF-8"/>
-			<property name="javax.persistence.jdbc.user" value="jobticket"/>
-			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-			<property name="javax.persistence.jdbc.password" value="pwd"/>
 			<property name="eclipselink.logging.level" value="FINEST"/>
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="database"/>
