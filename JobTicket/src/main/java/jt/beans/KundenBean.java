@@ -107,15 +107,20 @@ public class KundenBean {
 	 * @return the string
 	 */
 	public String saveKunde(Kunde kunde) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		em.persist(kunde);
-		em.getTransaction().commit();
-		resetKunde();
 		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(
-				"Daten erfolgreich gespeichert!", ""));
-
+		em = entityManagerFactory.createEntityManager();
+		
+		if (!istKuerzelVorhanden(kunde.getKundenkuerzel())) {
+			em.getTransaction().begin();
+			em.persist(kunde);	
+			em.getTransaction().commit();
+			resetKunde();
+			context.addMessage(null, new FacesMessage(
+					"Daten erfolgreich gespeichert!", ""));
+		} else {
+			context.addMessage(null, new FacesMessage(
+					"Kundenkürzel ist bereits vorhanden", ""));
+		}		
 		return "kunden_add.xhtml";
 	}
 
@@ -128,12 +133,10 @@ public class KundenBean {
 
 	private List<Job> getJobsFromKunde(Kunde kunde) {
 		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		final Query query = em
 				.createQuery("SELECT b FROM Job b WHERE b.kunde.id = :id");
 		query.setParameter("id", kunde.getId());
 		List<Job> jobListe = query.getResultList();
-		em.getTransaction().commit();
 		return jobListe;
 	}
 
@@ -161,21 +164,15 @@ public class KundenBean {
 		}
 		return null;
 	}
-	
-//	private boolean istKuerzelVorhanden(String kuerzel) {
-//		
-//		em = entityManagerFactory.createEntityManager();
-//		em.getTransaction().begin();
-//		Query query = em.createQuery("SELECT b FROM Kunde b");
-//		query.set
-//		@SuppressWarnings("unchecked")
-//		List<Kunde> kundenListe = query.getResultList();
-//		if (kundenListe == null) {
-//			kundenListe = new ArrayList<Kunde>();
-//		}
-//		em.getTransaction().commit();
-//		return kundenListe;
-//	}
+
+	private boolean istKuerzelVorhanden(String kuerzel) {
+		Query query = em.createQuery(
+				"SELECT b FROM Kunde b where b.kundenkuerzel = :kuerzel")
+				.setParameter("kuerzel", kuerzel);
+		@SuppressWarnings("unchecked")
+		List<Kunde> kundenListe = query.getResultList();
+		return kundenListe.size() > 0;
+	}
 
 	/**
 	 * Update kunde.
@@ -186,12 +183,10 @@ public class KundenBean {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(kunde);
-		
 		em.getTransaction().commit();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", "Kunde"));
 		return null;
 	}
-
 }

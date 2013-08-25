@@ -42,8 +42,6 @@
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
 				value="#{jobticketBean.job.produkteigenschaftens}" id="acc"
 				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
-
-
 				<p:tab
 					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"
 					id="tab"
@@ -117,10 +115,9 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					
-					<p:panel header="Details #{(produkteigenschaften.fomat =='' and produkteigenschaften.beschnitt=='' and produkteigenschaften.farbe4c=='' and produkteigenschaften.sonderfarbe=='' and produkteigenschaften.seitenzahl==0  and produkteigenschaften.falzung==''  and  produkteigenschaften.bindung=='' and produkteigenschaften.proof=='') ? 'nicht vorhanden' : 'vorhanden'}" 
-						collapsed="true"
-						toggleable="true">
+					<p:panelMenu > <p:menuitem></p:menuitem> </p:panelMenu>
+					<p:panel header="Details" 
+						collapsed="true" toggleable="true">
 
 						<p:panelGrid styleClass="grid" columns="4">
 

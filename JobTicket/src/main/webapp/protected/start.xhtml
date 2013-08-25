@@ -103,7 +103,8 @@
 				<p:commandButton onclick="optionpanel.hide()" value="Schließen" />
 			</p:overlayPanel>
 			<p></p>
-			<p:dataTable style="width:100%" id="dataTable" var="job" value="#{jobticketBean.jobs}"
+			<p:dataTable style="width:100%" id="dataTable" var="job"
+				value="#{jobticketBean.jobs}"
 				emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{jobticketBean.filteredJobs}">
@@ -112,25 +113,28 @@
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
 				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
-					headerText="Erstelldatum" filterMatchMode="startsWith">
+					headerText="Erstelldatum" filterMatchMode="contains">
 					<h:outputText value="#{job.erstellDatum}">
 						<f:convertDateTime timeStyle="short"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
-				<p:column id="idColumn" filterBy="#{job.id}" headerText="Jobnummer"
-					filterMatchMode="startsWith">
+				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.id}"
+					headerText="Jobnummer" filterMatchMode="startsWith">
 					<h:outputText value="#{job.id}" />
 				</p:column>
 				<p:column id="nameColumn" filterBy="#{job.name}"
-					headerText="Jobname" filterMatchMode="contains">
+					sortBy="#{job.name}" headerText="Jobname"
+					filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
 				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
-					headerText="Kunde" filterMatchMode="contains">
+					sortBy="#{job.kunde.name}" headerText="Kunde"
+					filterMatchMode="contains">
 					<h:outputText value="#{job.kunde.name}" />
 				</p:column>
 				<p:column id="fortschrittColumn" filterMatchMode="contains"
-					filterBy="#{job.fortschritt}" headerText="Fortschritt">
+					sortBy="#{job.kunde.name}" filterBy="#{job.fortschritt}"
+					headerText="Fortschritt">
 
 					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%"
 						displayOnly="true" />

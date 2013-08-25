@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,6 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import org.primefaces.component.accordionpanel.AccordionPanel;
+import org.primefaces.component.inputtext.InputText;
 import org.primefaces.event.TabChangeEvent;
 
 import jt.annotations.AktuellerJob;
@@ -194,5 +197,14 @@ public class ProdukteigenschaftenBean {
 		}
 		updateProdukteigenschaften(produkteigenschaften);
 		return null;
+	}
+	
+	public boolean getCollapsed() {
+
+		
+		return true;
+	}
+	public void setCollapsed(boolean collapsed) {
+		//
 	}
 }
