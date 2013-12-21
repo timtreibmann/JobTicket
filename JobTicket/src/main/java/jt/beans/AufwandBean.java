@@ -3,7 +3,6 @@ package jt.beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -18,7 +17,6 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 import jt.entities.Jobbearbeiter;
 import jt.entities.Kosten;
-import jt.entities.Produkteigenschaften;
 
 // TODO: Auto-generated Javadoc
 /**

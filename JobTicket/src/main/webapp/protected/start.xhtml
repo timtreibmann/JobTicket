@@ -9,9 +9,6 @@
 <h:head></h:head>
 <h:body>
 	<h:form>
-
-
-
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel style="width:90%">
 			<p></p>
@@ -21,10 +18,10 @@
 
 
 			<p:commandButton value="Logout" style="float:right"
-				action="#{jobticketBean.logout}" ajax="false" />
+				action="#{startBean.logout}" ajax="false" />
 
 			<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
-				action="#{jobticketBean.createJobticket}" ajax="false" />
+				action="#{startBean.createJobticket}" ajax="false" />
 
 			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
 
@@ -44,7 +41,7 @@
 					<p:outputLabel for="checkbox2"
 						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox2"
-						value="#{jobticketBean.showAllOnOnePage}">
+						value="#{startBean.showAllOnOnePage}">
 					</p:selectBooleanCheckbox>
 				</p:panelGrid>
 				<p></p>
@@ -59,15 +56,15 @@
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="checkbox"
-								value="#{jobticketBean.filterJoblistByAngestellten}">
+								value="#{startBean.filterJoblistByAngestellten}">
 								<p:ajax update="dataTable jobbearbeiter"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="jobbearbeiter"
-								disabled="#{!jobticketBean.filterJoblistByAngestellten}"
-								value="#{jobticketBean.selectedAngestellterId}" effect="fold"
+								disabled="#{!startBean.filterJoblistByAngestellten}"
+								value="#{startBean.selectedAngestellterId}" effect="fold"
 								editable="false">
 								<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
 								<f:selectItems value="#{angestellteBean.angestelltes}"
@@ -86,7 +83,7 @@
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="checkbox3"
-								value="#{jobticketBean.hideFinishedJobs}">
+								value="#{startBean.hideFinishedJobs}">
 								<p:ajax update="dataTable"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>
@@ -102,10 +99,10 @@
 			</p:overlayPanel>
 			<p></p>
 			<p:dataTable style="width:100%" id="dataTable" var="job"
-				value="#{jobticketBean.jobs}"
+				value="#{startBean.jobs}"
 				emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
-				filteredValue="#{jobticketBean.filteredJobs}">
+				filteredValue="#{startBean.filteredJobs}">
 
 				<f:facet name="header">
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
@@ -146,13 +143,13 @@
 							<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
 							<p></p>
 							<p:commandButton value="Ja"
-								actionListener="#{jobticketBean.delete(job)}" update="@form"
+								actionListener="#{startBean.delete(job)}" update="@form"
 								oncomplete="dataTableWidgetVar.filter();" />
 							<p:commandButton value="Nein" update="@form" />
 						</p:overlayPanel>
 						<p:commandButton id="delete" icon="ui-icon-trash" />
 						<p:commandButton icon="ui-icon-wrench" ajax="false"
-							action="#{jobticketBean.editJob(job)}" />
+							action="#{startBean.editJob(job)}" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>

@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.context.ExternalContext;
@@ -21,7 +19,6 @@ import javax.persistence.Query;
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
-import jt.entities.Kunde;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,7 +28,12 @@ import jt.entities.Kunde;
  */
 @SessionScoped
 @Named
-public class JobticketBean implements Serializable {
+public class StartBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private List<Job> filteredJobs;
 
@@ -44,78 +46,19 @@ public class JobticketBean implements Serializable {
 	@AktuellerJob
 	private transient Job job;
 
-	@Inject
-	private transient ProdukteigenschaftenBean produkteigenschaftenBean;
-
-	private int selectedKundeId;
 	private int selectedAngestellterId;
 	private boolean filterJoblistByAngestellten;
 	private boolean hideFinishedJobs;
 	private boolean neuesTicket;
-	private int kundenAnzahl;
-
-	public boolean isNeuesTicket() {
-		return neuesTicket;
-	}
-
-	public void setNeuesTicket(boolean neuesTicket) {
-		this.neuesTicket = neuesTicket;
-	}
-
-	public int getKundenAnzahl() {
-		return kundenBean.getKunden().size();
-	}
-
-	public boolean isFilterJoblistByAngestellten() {
-		return filterJoblistByAngestellten;
-	}
-
-	public void setFilterJoblistByAngestellten(
-			boolean filterJoblistByAngestellten) {
-		this.filterJoblistByAngestellten = filterJoblistByAngestellten;
-	}
-
-	public int getSelectedAngestellterId() {
-		return selectedAngestellterId;
-	}
-
-	public void setSelectedAngestellterId(int selectedAngestellterId) {
-		this.selectedAngestellterId = selectedAngestellterId;
-	}
-
-	public boolean isHideFinishedJobs() {
-		return hideFinishedJobs;
-	}
-
-	public void setHideFinishedJobs(boolean hideFinishedJobs) {
-		this.hideFinishedJobs = hideFinishedJobs;
-	}
-
-	private boolean showAllOnOnePage;
-
-	public boolean isShowAllOnOnePage() {
-		return showAllOnOnePage;
-	}
-
-	public void setShowAllOnOnePage(boolean showAllOnOnePage) {
-		this.showAllOnOnePage = showAllOnOnePage;
-	}
-
-	private String kuerzel;
-
-	@Inject
-	private KundenBean kundenBean;
 
 	@PostConstruct
-	public void init() {
-
+	private void init() {
 		System.out.println("initialisieren");
 		showAllOnOnePage = true;
 		hideFinishedJobs = true;
 		filterJoblistByAngestellten = true;
 		selectedAngestellterId = findLoggedInMitarbeiterId();
 		filteredJobs = getJobs();
-
 	}
 
 	public String refreshFilter() {
@@ -131,22 +74,6 @@ public class JobticketBean implements Serializable {
 		this.filteredJobs = filteredJobs;
 	}
 
-	public int getSelectedKundeId() {
-		return selectedKundeId;
-	}
-
-	public void setSelectedKundeId(int selectedKundeId) {
-		this.selectedKundeId = selectedKundeId;
-	}
-
-	public String getKuerzel() {
-		return kuerzel;
-	}
-
-	public void setKuerzel(String kuerzel) {
-		this.kuerzel = kuerzel;
-	}
-
 	public Job getJob() {
 		return job;
 	}
@@ -158,16 +85,6 @@ public class JobticketBean implements Serializable {
 	public String editJob(Job job) {
 		neuesTicket = false;
 		this.job = job;
-		// damit in im selectOneMenu auf der jobticket_main-Seite der richtige
-		// Kunde gesetzt wird
-		try {
-			selectedKundeId = job.getKunde().getId();
-			kuerzel = job.getKunde().getKundenkuerzel();
-		} catch (NullPointerException e) {
-			// kein Kunde gesetzt
-			selectedKundeId = 0;
-			this.kuerzel = "";
-		}
 
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
@@ -180,42 +97,20 @@ public class JobticketBean implements Serializable {
 		neuesTicket = true;
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		selectedKundeId = 0;
-		this.kuerzel = "";
 		this.job = new Job();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		job.setErsteller(fc.getExternalContext().getRemoteUser());
 		Date d = new Date();
-
 		job.setErstellDatum(d);
 		em.persist(job);
-
 		em.getTransaction().commit();
-		produkteigenschaftenBean.createProdukteigenschaft();
 		refreshFilter();
-
 		if (showAllOnOnePage) {
 			return "ticketanzeige.xhtml";
 		} else {
 			return "jt_main.xhtml";
 		}
 
-	}
-
-	public String updateJobticket() {
-
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		if (selectedKundeId != 0) {
-			Kunde k = kundenBean.findKundenByID(selectedKundeId);
-			job.setKunde(k);
-			kuerzel = k.getKundenkuerzel();
-		}
-
-		em.merge(job);
-		em.getTransaction().commit();
-
-		return null;
 	}
 
 	public List<Job> getJobs() {
@@ -265,12 +160,12 @@ public class JobticketBean implements Serializable {
 			id = angestellteListe.get(0).getId();
 		}
 		em.getTransaction().commit();
+
 		return id;
 
 	}
 
 	private Query findJobByAngestellten() {
-
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id");
 		query.setParameter("id", selectedAngestellterId);
@@ -278,7 +173,6 @@ public class JobticketBean implements Serializable {
 	}
 
 	private Query findUnfinishedJobsByAngestellten() {
-
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id and j.job.fortschritt<100");
 		query.setParameter("id", selectedAngestellterId);
@@ -298,29 +192,54 @@ public class JobticketBean implements Serializable {
 		return null;
 	}
 
-	public void findKundenByKuerzelAndUpdateJobticket() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		final Query query = em
-				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
-		query.setParameter("kuerzel", kuerzel);
-
-		List<Kunde> kundenListe = query.getResultList();
-		em.getTransaction().commit();
-		if (kundenListe.size() > 0) {
-			setSelectedKundeId(kundenListe.get(0).getId());
-			updateJobticket();
-
-		}
-
-	}
-
 	public String logout() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
 		externalContext.invalidateSession();
-
 		return "/logout.xhtml?faces-redirect=true";
+	}
+
+	public boolean isNeuesTicket() {
+		return neuesTicket;
+	}
+
+	public void setNeuesTicket(boolean neuesTicket) {
+		this.neuesTicket = neuesTicket;
+	}
+
+	public boolean isFilterJoblistByAngestellten() {
+		return filterJoblistByAngestellten;
+	}
+
+	public void setFilterJoblistByAngestellten(
+			boolean filterJoblistByAngestellten) {
+		this.filterJoblistByAngestellten = filterJoblistByAngestellten;
+	}
+
+	public int getSelectedAngestellterId() {
+		return selectedAngestellterId;
+	}
+
+	public void setSelectedAngestellterId(int selectedAngestellterId) {
+		this.selectedAngestellterId = selectedAngestellterId;
+	}
+
+	public boolean isHideFinishedJobs() {
+		return hideFinishedJobs;
+	}
+
+	public void setHideFinishedJobs(boolean hideFinishedJobs) {
+		this.hideFinishedJobs = hideFinishedJobs;
+	}
+
+	private boolean showAllOnOnePage;
+
+	public boolean isShowAllOnOnePage() {
+		return showAllOnOnePage;
+	}
+
+	public void setShowAllOnOnePage(boolean showAllOnOnePage) {
+		this.showAllOnOnePage = showAllOnOnePage;
 	}
 
 }

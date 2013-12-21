@@ -20,10 +20,10 @@
 
 				<p:breadCrumb styleClass="breadCrumbpanel">
 					<p:menuitem value="Übersicht" url="start.xhtml" />
-					<p:menuitem rendered="#{jobticketBean.showAllOnOnePage}"
-						disabled="#{jobticketBean.showAllOnOnePage}" value="Jobticket"
+					<p:menuitem rendered="#{startBean.showAllOnOnePage}"
+						disabled="#{startBean.showAllOnOnePage}" value="Jobticket"
 						url="" />
-					<p:menuitem rendered="#{!jobticketBean.showAllOnOnePage}"
+					<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
 						value="Jobticket" url="jt_main.xhtml" />
 				</p:breadCrumb>
 
@@ -35,7 +35,7 @@
 						</p:column>
 						<p:column>
 							<p:outputLabel
-								value="#{jobticketBean.job.id==0 ? 'wird generiert' : jobticketBean.job.id}"
+								value="#{startBean.job.id==0 ? 'wird generiert' : startBean.job.id}"
 								id="jobnummer" />
 						</p:column>
 						<p:column>
@@ -43,9 +43,9 @@
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%"
-								value="#{jobticketBean.job.alteJobnummer}" id="alt">
+								value="#{startBean.job.alteJobnummer}" id="alt">
 								<p:ajax event="change" process="@this" update="growl"
-									listener="#{jobticketBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -55,28 +55,28 @@
 						</p:column>
 						<p:column>
 							<p:selectOneMenu style="width:104%" id="kundenselect"
-								value="#{jobticketBean.selectedKundeId}" editable="false"
+								value="#{jobBean.selectedKundeId}" editable="false"
 								effect="fold">
 								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 								<p:ajax event="change" process="@this" update="@this growl kundenkurz"
-									listener="#{jobticketBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:selectOneMenu>
 						</p:column>
 						<p:column>
 							<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%" value="#{jobticketBean.kuerzel}"
+							<p:inputText style="width:100%" value="#{jobBean.kuerzel}"
 								id="kundenkurz">
 								<p:ajax
-									listener="#{jobticketBean.findKundenByKuerzelAndUpdateJobticket}"
+									listener="#{jobBean.findKundenByKuerzelAndUpdateJobticket}"
 									event="change" process="@this" update="kundenselect"></p:ajax>
 							</p:inputText>
 						</p:column>
 						<p:column>
-							<pe:tooltip rendered="#{jobticketBean.neuesTicket}"
+							<pe:tooltip rendered="#{startBean.neuesTicket}"
 								showEffect="fade" hideEffect="fade" for="neuerKundeButton"
 								value="neuen Kunden anlegen" autoShow="true" widgetVar="tip1"
 								myPosition="left center" atPosition="right center" />
@@ -91,9 +91,9 @@
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%" id="job"
-								value="#{jobticketBean.job.name}">
+								value="#{startBean.job.name}">
 								<p:ajax event="change" process="@this" update="@this growl"
-									listener="#{jobticketBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.updateJobticket}"></p:ajax>
 
 							</p:inputText>
 						</p:column>
@@ -104,9 +104,9 @@
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%"
-								value="#{jobticketBean.job.budgetInEuro}" id="budget_in_eur">
+								value="#{startBean.job.budgetInEuro}" id="budget_in_eur">
 								<p:ajax event="change" process="@this" update="@this growl"
-									listener="#{jobticketBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -116,7 +116,7 @@
 						</p:column>
 						<p:column>
 							<h:outputText id="erstelldatum"
-								value="#{jobticketBean.job.erstellDatum}">
+								value="#{startBean.job.erstellDatum}">
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
@@ -126,7 +126,7 @@
 						</p:column>
 						<p:column>
 							<p:outputLabel id="ersteller"
-								value="#{jobticketBean.job.ersteller==null  ? request.remoteUser : jobticketBean.job.ersteller}" />
+								value="#{startBean.job.ersteller==null  ? request.remoteUser : startBean.job.ersteller}" />
 						</p:column>
 					</p:row>
 					<p:row>

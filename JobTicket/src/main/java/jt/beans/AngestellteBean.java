@@ -1,9 +1,5 @@
 package jt.beans;
 
-import jt.entities.Angestellte;
-import jt.entities.Job;
-import jt.entities.Kunde;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +11,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+
+import jt.entities.Angestellte;
+import jt.entities.Job;
 
 // TODO: Auto-generated Javadoc
 /**

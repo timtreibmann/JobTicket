@@ -5,7 +5,6 @@ package jt.beans;
 import java.io.Serializable;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

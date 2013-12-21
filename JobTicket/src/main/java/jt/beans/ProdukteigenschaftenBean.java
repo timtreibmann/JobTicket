@@ -1,29 +1,20 @@
 package jt.beans;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-
-import org.primefaces.component.accordionpanel.AccordionPanel;
-import org.primefaces.component.inputtext.InputText;
-import org.primefaces.event.TabChangeEvent;
 
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
-import jt.entities.Kunde;
 import jt.entities.Produkteigenschaften;
 
 // TODO: Auto-generated Javadoc
@@ -34,73 +25,23 @@ import jt.entities.Produkteigenschaften;
 @RequestScoped
 public class ProdukteigenschaftenBean {
 
-	/** The entity manager factory. */
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-
-	/** The em. */
 	private EntityManager em;
 
-	/** The job. */
 	@Inject
 	@AktuellerJob
 	private Job job;
 
-	/** The produkteigenschaften. */
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
-
 	private int accordionIndex;
 
-	/**
-	 * Gets the produkteigenschaften.
-	 * 
-	 * @return the produkteigenschaften
-	 */
-	public Produkteigenschaften getProdukteigenschaften() {
-		return produkteigenschaften;
-	}
-
-	/**
-	 * Sets the produkteigenschaften.
-	 * 
-	 * @param produkteigenschaften
-	 *            the new produkteigenschaften
-	 */
-	public void setProdukteigenschaften(
-			Produkteigenschaften produkteigenschaften) {
-		this.produkteigenschaften = produkteigenschaften;
-	}
-
-	/**
-	 * Gets the job.
-	 * 
-	 * @return the job
-	 */
-	public Job getJob() {
-		return job;
-	}
-
-	/**
-	 * Sets the job.
-	 * 
-	 * @param job
-	 *            the new job
-	 */
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
-	public void setAccordionIndex(int index) {
-		this.accordionIndex = index;
-	}
-
-	public int getAccordionIndex() {
-		return this.accordionIndex;
-	}
-
-	public int getProduktAnzahl() {
-		return job.getProdukteigenschaftens().size();
+	@PostConstruct
+	private void init(){
+		if (job.getProdukteigenschaftens().size() == 0) {
+			createProdukteigenschaft();
+		}
 	}
 	
 	public String createProdukteigenschaft() {
@@ -124,13 +65,6 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
-	/**
-	 * Update produkteigenschaften.
-	 * 
-	 * @param produkteigenschaften
-	 *            the produkteigenschaften
-	 * @return the string
-	 */
 	public String updateProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 
@@ -165,13 +99,6 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
-	/**
-	 * Delete.
-	 * 
-	 * @param produkteigenschaften
-	 *            the produkteigenschaften
-	 * @return the string
-	 */
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -182,13 +109,7 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
-	/**
-	 * Toggle erledigt.
-	 * 
-	 * @param produkteigenschaften
-	 *            the produkteigenschaften
-	 * @return the string
-	 */
+	
 	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {
 		if (produkteigenschaften.getErledigt() == 0) {
 			produkteigenschaften.setErledigt(1);
@@ -199,12 +120,35 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 	
-	public boolean getCollapsed() {
+	public Produkteigenschaften getProdukteigenschaften() {
+		return produkteigenschaften;
+	}
 
-		
-		return true;
+	
+	public void setProdukteigenschaften(
+			Produkteigenschaften produkteigenschaften) {
+		this.produkteigenschaften = produkteigenschaften;
 	}
-	public void setCollapsed(boolean collapsed) {
-		//
+
+	
+	public Job getJob() {
+		return job;
 	}
+
+	public void setJob(Job job) {
+		this.job = job;
+	}
+
+	public void setAccordionIndex(int index) {
+		this.accordionIndex = index;
+	}
+
+	public int getAccordionIndex() {
+		return this.accordionIndex;
+	}
+
+	public int getProduktAnzahl() {
+		return job.getProdukteigenschaftens().size();
+	}
+	
 }

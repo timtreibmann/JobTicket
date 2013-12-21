@@ -1,14 +1,9 @@
 package jt.beans;
 
-import jt.entities.Job;
-import jt.entities.Kunde;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -17,6 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import jt.entities.Job;
+import jt.entities.Kunde;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class KundenBean.
@@ -24,15 +22,12 @@ import javax.persistence.Query;
  * @author jan & tim
  */
 @Named
-@ApplicationScoped
+@RequestScoped
 public class KundenBean {
 
 	/** The kunde. */
 	@Inject
 	private Kunde kunde;
-
-	@Inject
-	JobticketBean jobticketBean;
 
 	/** The entity manager factory. */
 	@Inject
