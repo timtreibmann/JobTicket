@@ -16,19 +16,19 @@
 	<h:form>
 
 
-		<p:panel style="width:60%">
+		<p:panel style="width:100%">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl></p:growl>
 
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem rendered="#{startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
 					value="Jobticket" url="ticketanzeige.xhtml" />
-				<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Produktbeschreibung" url="jt_produkte.xhtml" />
-				<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				<p:menuitem value="Angestelltentabelle"
 					url="angestellte_table.xhtml" />
@@ -72,7 +72,7 @@
 			</p:dataTable>
 		</p:panel>
 		<p:button value="Zurück"
-			outcome="#{startBean.showAllOnOnePage ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
+			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
 	</h:form>
 </h:body>
 

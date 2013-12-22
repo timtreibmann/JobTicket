@@ -10,7 +10,7 @@
 <h:body>
 	<h:form>
 		<h:outputStylesheet library="css" name="style.css" />
-		<p:panel style="width:90%">
+		<p:panel style="width:100%">
 			<p></p>
 			<h:outputLabel value="Willkommen #{request.remoteUser}!">
 			</h:outputLabel>
@@ -41,7 +41,7 @@
 					<p:outputLabel for="checkbox2"
 						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox2"
-						value="#{startBean.showAllOnOnePage}">
+						value="#{optionenBean.zeigeAllesAufEinerSeite}">
 					</p:selectBooleanCheckbox>
 				</p:panelGrid>
 				<p></p>
@@ -56,15 +56,15 @@
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="checkbox"
-								value="#{startBean.filterJoblistByAngestellten}">
+								value="#{optionenBean.filtereNachMitarbeiter}">
 								<p:ajax update="dataTable jobbearbeiter"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="jobbearbeiter"
-								disabled="#{!startBean.filterJoblistByAngestellten}"
-								value="#{startBean.selectedAngestellterId}" effect="fold"
+								disabled="#{!optionenBean.filtereNachMitarbeiter}"
+								value="#{optionenBean.selectedAngestellterId}" effect="fold"
 								editable="false">
 								<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
 								<f:selectItems value="#{angestellteBean.angestelltes}"
@@ -83,7 +83,7 @@
 						</p:column>
 						<p:column>
 							<p:selectBooleanCheckbox id="checkbox3"
-								value="#{startBean.hideFinishedJobs}">
+								value="#{optionenBean.versteckeFertigeJobs}">
 								<p:ajax update="dataTable"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>

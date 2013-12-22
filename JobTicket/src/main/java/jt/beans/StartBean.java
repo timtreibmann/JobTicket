@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jt.beans;
 
 import java.io.Serializable;
@@ -6,8 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
-import javax.enterprise.inject.Produces;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -20,46 +35,36 @@ import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class JobticketBean.
+ * Diese Klasse stellt die Anwendungslogik für die "start.xhtml" bereit. 
+ * Sie dient zum Filtern, Sortieren, Erzeugen und Löschen von Jobtickets.
  * 
- * @author jan & tim
+ * @author Jan Müller
+ * @author Tim Treibmann
  */
-@SessionScoped
+
+@RequestScoped
 @Named
 public class StartBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private List<Job> filteredJobs;
 
 	@Inject
-	private transient EntityManagerFactory entityManagerFactory;
+	private EntityManagerFactory entityManagerFactory;
 
-	private transient EntityManager em;
+	private EntityManager em;
 
-	@Produces
+	@Inject
 	@AktuellerJob
-	private transient Job job;
+	private Job aktuellerJob;
 
-	private int selectedAngestellterId;
-	private boolean filterJoblistByAngestellten;
-	private boolean hideFinishedJobs;
-	private boolean neuesTicket;
+	@Inject
+	private OptionenBean optionen;
 
-	@PostConstruct
-	private void init() {
-		System.out.println("initialisieren");
-		showAllOnOnePage = true;
-		hideFinishedJobs = true;
-		filterJoblistByAngestellten = true;
-		selectedAngestellterId = findLoggedInMitarbeiterId();
-		filteredJobs = getJobs();
-	}
+	@Inject
+	private AktuellerJobBean aktuellerJobBean;
 
 	public String refreshFilter() {
 		filteredJobs = getJobs();
@@ -74,19 +79,10 @@ public class StartBean implements Serializable {
 		this.filteredJobs = filteredJobs;
 	}
 
-	public Job getJob() {
-		return job;
-	}
-
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
 	public String editJob(Job job) {
-		neuesTicket = false;
-		this.job = job;
+		aktuellerJobBean.setJob(job);
 
-		if (showAllOnOnePage) {
+		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
 			return "jt_main.xhtml";
@@ -94,18 +90,18 @@ public class StartBean implements Serializable {
 	}
 
 	public String createJobticket() {
-		neuesTicket = true;
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		this.job = new Job();
+		aktuellerJob = new Job();
+		aktuellerJobBean.setJob(aktuellerJob);
 		FacesContext fc = FacesContext.getCurrentInstance();
-		job.setErsteller(fc.getExternalContext().getRemoteUser());
+		aktuellerJob.setErsteller(fc.getExternalContext().getRemoteUser());
 		Date d = new Date();
-		job.setErstellDatum(d);
-		em.persist(job);
+		aktuellerJob.setErstellDatum(d);
+		em.persist(aktuellerJob);
 		em.getTransaction().commit();
 		refreshFilter();
-		if (showAllOnOnePage) {
+		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
 			return "jt_main.xhtml";
@@ -118,15 +114,15 @@ public class StartBean implements Serializable {
 		em.getTransaction().begin();
 
 		Query query = em.createQuery("SELECT b FROM Job b");
-		if (filterJoblistByAngestellten) {
-			if (hideFinishedJobs) {
+		if (optionen.isFiltereNachMitarbeiter()) {
+			if (optionen.isVersteckeFertigeJobs()) {
 				query = findUnfinishedJobsByAngestellten();
 
 			} else {
 				query = findJobByAngestellten();
 			}
 		} else {
-			if (hideFinishedJobs) {
+			if (optionen.isVersteckeFertigeJobs()) {
 				query = em
 						.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
 			} else {
@@ -145,37 +141,17 @@ public class StartBean implements Serializable {
 
 	}
 
-	private int findLoggedInMitarbeiterId() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		String user = fc.getExternalContext().getRemoteUser();
-		int id = -1;
-
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		Query query = em
-				.createQuery("SELECT j FROM Angestellte j where j.loginName = :username");
-		query.setParameter("username", user);
-		List<Angestellte> angestellteListe = query.getResultList();
-		if (angestellteListe.size() > 0) {
-			id = angestellteListe.get(0).getId();
-		}
-		em.getTransaction().commit();
-
-		return id;
-
-	}
-
 	private Query findJobByAngestellten() {
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id");
-		query.setParameter("id", selectedAngestellterId);
+		query.setParameter("id", optionen.getSelectedAngestellterId());
 		return query;
 	}
 
 	private Query findUnfinishedJobsByAngestellten() {
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id and j.job.fortschritt<100");
-		query.setParameter("id", selectedAngestellterId);
+		query.setParameter("id", optionen.getSelectedAngestellterId());
 		return query;
 	}
 
@@ -199,47 +175,5 @@ public class StartBean implements Serializable {
 		return "/logout.xhtml?faces-redirect=true";
 	}
 
-	public boolean isNeuesTicket() {
-		return neuesTicket;
-	}
-
-	public void setNeuesTicket(boolean neuesTicket) {
-		this.neuesTicket = neuesTicket;
-	}
-
-	public boolean isFilterJoblistByAngestellten() {
-		return filterJoblistByAngestellten;
-	}
-
-	public void setFilterJoblistByAngestellten(
-			boolean filterJoblistByAngestellten) {
-		this.filterJoblistByAngestellten = filterJoblistByAngestellten;
-	}
-
-	public int getSelectedAngestellterId() {
-		return selectedAngestellterId;
-	}
-
-	public void setSelectedAngestellterId(int selectedAngestellterId) {
-		this.selectedAngestellterId = selectedAngestellterId;
-	}
-
-	public boolean isHideFinishedJobs() {
-		return hideFinishedJobs;
-	}
-
-	public void setHideFinishedJobs(boolean hideFinishedJobs) {
-		this.hideFinishedJobs = hideFinishedJobs;
-	}
-
-	private boolean showAllOnOnePage;
-
-	public boolean isShowAllOnOnePage() {
-		return showAllOnOnePage;
-	}
-
-	public void setShowAllOnOnePage(boolean showAllOnOnePage) {
-		this.showAllOnOnePage = showAllOnOnePage;
-	}
 
 }

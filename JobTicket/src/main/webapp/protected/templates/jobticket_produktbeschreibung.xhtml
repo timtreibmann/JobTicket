@@ -14,33 +14,32 @@
 <ui:composition>
 	<h:form id="produktform">
 		<h:outputStylesheet library="css" name="style.css" />
-		<p:panel style="width:60%">
+		<p:panel style="width:100%">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem rendered="#{startBean.showAllOnOnePage}"
-					disabled="#{startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
+					disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
 					value="Produktbeschreibung" url="" />
 
-				<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Produktbeschreibung" url="jt_produkte.xhtml" />
 			</p:breadCrumb>
 			<p></p>
-			<pe:tooltip rendered="#{startBean.neuesTicket}" showEffect="fade"
-				hideEffect="fade" for="create" value="neues Produkt anlegen"
-				autoShow="true" widgetVar="tip1" myPosition="left center"
-				atPosition="right center" />
+			<p:tooltip hideEffect="fade" for="create"
+				value="neues Produkt anlegen" autoShow="true" widgetVar="tip1"
+				myPosition="left center" atPosition="right center" />
 			<p:commandButton id="create"
 				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
-				update="acc #{startBean.showAllOnOnePage ? ':aufwandform' : ''}"
+				update="acc #{optionenBean.zeigeAllesAufEinerSeite ? ':aufwandform' : ''}"
 				value="Neues Produkt anlegen">
 			</p:commandButton>
 			<p></p>
 
 
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
-				value="#{startBean.job.produkteigenschaftens}" id="acc"
+				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc"
 				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
 				<p:tab
 					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"

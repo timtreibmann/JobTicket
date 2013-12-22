@@ -1,3 +1,19 @@
+/*
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package jt.beans;
 
 import java.util.ArrayList;
@@ -15,12 +31,14 @@ import javax.persistence.Query;
 import jt.entities.Job;
 import jt.entities.Kunde;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class KundenBean.
+ * Diese Klasse stellt die Anwendungslogik für die "kunden_edit.xhtml", "kunden_table.xhtml"
+ * bereit. Sie dient zur Verwaltung von Kunden.
  * 
- * @author jan & tim
+ * @author Jan Müller
+ * @author Tim Treibmann
  */
+
 @Named
 @RequestScoped
 public class KundenBean {

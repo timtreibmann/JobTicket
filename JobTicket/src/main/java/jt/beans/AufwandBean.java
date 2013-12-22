@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package jt.beans;
 
 import java.util.ArrayList;
@@ -18,11 +35,13 @@ import jt.entities.Job;
 import jt.entities.Jobbearbeiter;
 import jt.entities.Kosten;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class AufwandBean.
+ * Diese Klasse stellt die Anwendungslogik für die "jobticket_aufwand.xhtml"
+ * bereit. Sie dient zum Ermitteln der Kosten eines Jobs und zum Verwalten der
+ * Mitarbeiter die zu einem Job gehören.
  * 
- * @author jan & tim
+ * @author Jan Müller
+ * @author Tim Treibmann
  */
 @Named
 @RequestScoped
@@ -30,72 +49,33 @@ public class AufwandBean {
 
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-
 	private EntityManager em;
-
 	@Inject
 	private Kosten kosten;
-
-	@Inject
-	private AngestellteBean angestellteBean;
-
-	/** The selected angestellte id. */
 	private int selectedAngestellteId;
-
-	/** The job. */
 	@Inject
 	@AktuellerJob
 	private Job job;
-
-	/** The gesamt kosten. */
 	private double gesamtKosten;
-
-	/** The ist aufwand in euro. */
 	private boolean istAufwandInEuro;
 
-	/**
-	 * Checks if is aufwand in euro.
-	 * 
-	 * @return true, if is aufwand in euro
-	 */
+
 	public boolean isAufwandInEuro() {
 		return istAufwandInEuro;
 	}
 
-	/**
-	 * Sets the aufwand in euro.
-	 * 
-	 * @param aufwandInEuro
-	 *            the new aufwand in euro
-	 */
 	public void setAufwandInEuro(boolean aufwandInEuro) {
 		this.istAufwandInEuro = aufwandInEuro;
 	}
 
-	/**
-	 * Gets the kosten.
-	 * 
-	 * @return the kosten
-	 */
 	public Kosten getKosten() {
 		return kosten;
 	}
 
-	/**
-	 * Sets the kosten.
-	 * 
-	 * @param kosten
-	 *            the new kosten
-	 */
 	public void setKosten(Kosten kosten) {
 		this.kosten = kosten;
 	}
 
-	/**
-	 * Gets the gesamt kosten.
-	 * 
-	 * @return the gesamt kosten
-	 */
 	public double getGesamtKosten() {
 		berechneGesamtkosten(kosten);
 		return gesamtKosten;
@@ -140,18 +120,14 @@ public class AufwandBean {
 		return angestellterVorhanden;
 	}
 
-	/**
-	 * Save kosten.
-	 * 
-	 * @return the string
-	 */
 	public String saveKosten() {
-		try {
-		Angestellte angestellte = angestellteBean
-				.findAngestelltenByID(selectedAngestellteId);
-		
+
+
+		try {		
+			em = entityManagerFactory.createEntityManager();
+			Angestellte angestellte = em.find(Angestellte.class,
+					selectedAngestellteId);
 			if (!istAngestellterVorhanden(angestellte)) {
-				em = entityManagerFactory.createEntityManager();
 				em.getTransaction().begin();
 				kosten.setArbeitsaufwand(0);
 				kosten.setArbeitsaufwandIstInEuro(0);
@@ -190,10 +166,7 @@ public class AufwandBean {
 
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		Kosten k = em.find(Kosten.class, kosten.getId());
-		k.setArbeitsaufwand(kosten.getArbeitsaufwand());
-		berechneGesamtkosten(kosten);
-		k.setArbeitsaufwandIstInEuro(kosten.getArbeitsaufwandIstInEuro());
+		em.merge(kosten);
 		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
@@ -276,6 +249,8 @@ public class AufwandBean {
 	 */
 	public String rechneUm(Kosten kosten) {
 		double erg;
+		System.out.println(kosten);
+		System.out.println("ASD"+ kosten.getArbeitsaufwand());
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);
@@ -283,6 +258,7 @@ public class AufwandBean {
 			erg = berechneAufwandInStd(kosten);
 			kosten.setArbeitsaufwandIstInEuro(0);
 		}
+		System.out.println(erg);
 		kosten.setArbeitsaufwand(erg);
 		updateKosten(kosten);
 		return null;

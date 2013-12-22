@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package jt.beans;
 
 import java.util.ArrayList;
@@ -15,11 +32,12 @@ import javax.persistence.Query;
 import jt.entities.Angestellte;
 import jt.entities.Job;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class AngestellteBean.
+ * Diese Klasse stellt die Anwendungslogik für die "angestellte_edit.xhtml" und "angestellte_table.xhtml"
+ * zur Verfügung. Sie dient zur Verwaltung von Mitarbeiten.
  * 
- * @author jan & tim eine Bean die die angestellten in der datenbank verwaltet
+ * @author Jan Müller
+ * @author Tim Treibmann
  */
 @Named
 @RequestScoped
@@ -30,27 +48,16 @@ public class AngestellteBean {
 
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
-
-	public Angestellte getAngestellte() {
-		return angestellte;
-	}
-
-	public void setAngestellte(Angestellte angestellte) {
-		this.angestellte = angestellte;
-	}
-
 	private EntityManager em;
 
 	public List<Angestellte> getAngestelltes() {
 		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		final Query query = em.createQuery("SELECT b FROM Angestellte b");
 		@SuppressWarnings("unchecked")
 		List<Angestellte> angestellteListe = query.getResultList();
 		if (angestellteListe == null) {
 			angestellteListe = new ArrayList<Angestellte>();
 		}
-		em.getTransaction().commit();
 		return angestellteListe;
 	}
 
@@ -123,5 +130,14 @@ public class AngestellteBean {
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
+	
+	public Angestellte getAngestellte() {
+		return angestellte;
+	}
+
+	public void setAngestellte(Angestellte angestellte) {
+		this.angestellte = angestellte;
+	}
+
 
 }

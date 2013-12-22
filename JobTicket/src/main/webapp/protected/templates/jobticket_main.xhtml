@@ -16,14 +16,14 @@
 
 			<p:growl id="growl"></p:growl>
 
-			<p:panel style="width:60%">
+			<p:panel style="width:100%">
 
 				<p:breadCrumb styleClass="breadCrumbpanel">
 					<p:menuitem value="Übersicht" url="start.xhtml" />
-					<p:menuitem rendered="#{startBean.showAllOnOnePage}"
-						disabled="#{startBean.showAllOnOnePage}" value="Jobticket"
-						url="" />
-					<p:menuitem rendered="#{!startBean.showAllOnOnePage}"
+					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
+						disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
+						value="Jobticket" url="" />
+					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 						value="Jobticket" url="jt_main.xhtml" />
 				</p:breadCrumb>
 
@@ -35,7 +35,7 @@
 						</p:column>
 						<p:column>
 							<p:outputLabel
-								value="#{startBean.job.id==0 ? 'wird generiert' : startBean.job.id}"
+								value="#{aktuellerJobBean.job.id==0 ? 'wird generiert' : aktuellerJobBean.job.id}"
 								id="jobnummer" />
 						</p:column>
 						<p:column>
@@ -43,7 +43,7 @@
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%"
-								value="#{startBean.job.alteJobnummer}" id="alt">
+								value="#{aktuellerJobBean.job.alteJobnummer}" id="alt">
 								<p:ajax event="change" process="@this" update="growl"
 									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:inputText>
@@ -60,7 +60,8 @@
 								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
-								<p:ajax event="change" process="@this" update="@this growl kundenkurz"
+								<p:ajax event="change" process="@this"
+									update="@this growl kundenkurz"
 									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:selectOneMenu>
 						</p:column>
@@ -76,10 +77,10 @@
 							</p:inputText>
 						</p:column>
 						<p:column>
-							<pe:tooltip rendered="#{startBean.neuesTicket}"
-								showEffect="fade" hideEffect="fade" for="neuerKundeButton"
-								value="neuen Kunden anlegen" autoShow="true" widgetVar="tip1"
-								myPosition="left center" atPosition="right center" />
+							<p:tooltip showEffect="fade" hideEffect="fade"
+								for="neuerKundeButton" value="neuen Kunden anlegen"
+								widgetVar="tip1" myPosition="left center"
+								atPosition="right center" />
 							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
 							</p:commandButton>
 						</p:column>
@@ -91,20 +92,20 @@
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%" id="job"
-								value="#{startBean.job.name}">
+								value="#{aktuellerJobBean.job.name}">
 								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{jobBean.updateJobticket}"></p:ajax>
 
 							</p:inputText>
 						</p:column>
-						
-				
+
+
 						<p:column>
 							<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
 						</p:column>
 						<p:column>
 							<p:inputText style="width:100%"
-								value="#{startBean.job.budgetInEuro}" id="budget_in_eur">
+								value="#{aktuellerJobBean.job.budgetInEuro}" id="budget_in_eur">
 								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{jobBean.updateJobticket}"></p:ajax>
 							</p:inputText>
@@ -116,7 +117,7 @@
 						</p:column>
 						<p:column>
 							<h:outputText id="erstelldatum"
-								value="#{startBean.job.erstellDatum}">
+								value="#{aktuellerJobBean.job.erstellDatum}">
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
@@ -126,7 +127,7 @@
 						</p:column>
 						<p:column>
 							<p:outputLabel id="ersteller"
-								value="#{startBean.job.ersteller==null  ? request.remoteUser : startBean.job.ersteller}" />
+								value="#{aktuellerJobBean.job.ersteller==null  ? request.remoteUser : aktuellerJobBean.job.ersteller}" />
 						</p:column>
 					</p:row>
 					<p:row>
