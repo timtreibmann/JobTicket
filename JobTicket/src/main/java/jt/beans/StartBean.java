@@ -100,6 +100,7 @@ public class StartBean implements Serializable {
 		aktuellerJob.setErstellDatum(d);
 		em.persist(aktuellerJob);
 		em.getTransaction().commit();
+		aktuellerJobBean.setIstNeuesTicket(true);
 		refreshFilter();
 		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";

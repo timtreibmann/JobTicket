@@ -20,6 +20,7 @@ package jt.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -58,72 +59,24 @@ public class AufwandBean {
 	private Job job;
 	private double gesamtKosten;
 	private boolean istAufwandInEuro;
+	@Inject
+	OptionenBean options;
+	private boolean wurdeMitarbeiterHinzugefuegt;
+	@Inject
+	private AktuellerJobBean aktuellerJobBean;
 
-
-	public boolean isAufwandInEuro() {
-		return istAufwandInEuro;
-	}
-
-	public void setAufwandInEuro(boolean aufwandInEuro) {
-		this.istAufwandInEuro = aufwandInEuro;
-	}
-
-	public Kosten getKosten() {
-		return kosten;
-	}
-
-	public void setKosten(Kosten kosten) {
-		this.kosten = kosten;
-	}
-
-	public double getGesamtKosten() {
-		berechneGesamtkosten(kosten);
-		return gesamtKosten;
-	}
-
-	/**
-	 * Gets the selected angestellte id.
-	 * 
-	 * @return the selected angestellte id
-	 */
-	public int getSelectedAngestellteId() {
-		return selectedAngestellteId;
-	}
-
-	/**
-	 * Sets the selected angestellte id.
-	 * 
-	 * @param selectedAngestellteId
-	 *            the new selected angestellte id
-	 */
-	public void setSelectedAngestellteId(int selectedAngestellteId) {
-		this.selectedAngestellteId = selectedAngestellteId;
-	}
-
-	/**
-	 * Checks if is t angestellter vorhanden.
-	 * 
-	 * @param angestellte
-	 *            the angestellte
-	 * @return true, if is t angestellter vorhanden
-	 */
-	private boolean istAngestellterVorhanden(Angestellte angestellte) {
-
-		List<Kosten> kostenListe = job.getKostens();
-
-		boolean angestellterVorhanden = false;
-		for (Kosten k : kostenListe) {
-			if (k.getAngestellte().getId() == angestellte.getId()) {
-				angestellterVorhanden = true;
-			}
+	@PostConstruct
+	private void init() {
+		if (aktuellerJobBean.isIstNeuesTicket()) {
+			selectedAngestellteId = options.getSelectedAngestellterId();
+			saveKosten();
+			aktuellerJobBean.setIstNeuesTicket(false);
 		}
-		return angestellterVorhanden;
 	}
 
 	public String saveKosten() {
 
-
-		try {		
+		try {
 			em = entityManagerFactory.createEntityManager();
 			Angestellte angestellte = em.find(Angestellte.class,
 					selectedAngestellteId);
@@ -151,7 +104,6 @@ public class AufwandBean {
 			fc.addMessage(null, new FacesMessage(
 					"Bitte Angestellten auswählen!"));
 		}
-
 		return null;
 	}
 
@@ -250,7 +202,7 @@ public class AufwandBean {
 	public String rechneUm(Kosten kosten) {
 		double erg;
 		System.out.println(kosten);
-		System.out.println("ASD"+ kosten.getArbeitsaufwand());
+		System.out.println("ASD" + kosten.getArbeitsaufwand());
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);
@@ -300,6 +252,48 @@ public class AufwandBean {
 		deleteJobbearbeitersFromJob(kosten);
 		deleteKostenFromJob(kosten);
 		return null;
+	}
+
+	public boolean isAufwandInEuro() {
+		return istAufwandInEuro;
+	}
+
+	public void setAufwandInEuro(boolean aufwandInEuro) {
+		this.istAufwandInEuro = aufwandInEuro;
+	}
+
+	public Kosten getKosten() {
+		return kosten;
+	}
+
+	public void setKosten(Kosten kosten) {
+		this.kosten = kosten;
+	}
+
+	public double getGesamtKosten() {
+		berechneGesamtkosten(kosten);
+		return gesamtKosten;
+	}
+
+	public int getSelectedAngestellteId() {
+		return selectedAngestellteId;
+	}
+
+	public void setSelectedAngestellteId(int selectedAngestellteId) {
+		this.selectedAngestellteId = selectedAngestellteId;
+	}
+
+	private boolean istAngestellterVorhanden(Angestellte angestellte) {
+
+		List<Kosten> kostenListe = job.getKostens();
+
+		boolean angestellterVorhanden = false;
+		for (Kosten k : kostenListe) {
+			if (k.getAngestellte().getId() == angestellte.getId()) {
+				angestellterVorhanden = true;
+			}
+		}
+		return angestellterVorhanden;
 	}
 
 }

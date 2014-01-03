@@ -47,6 +47,7 @@ public class AktuellerJobBean implements Serializable{
 	@AktuellerJob
 	private transient Job job;
 	
+	private boolean istNeuesTicket;
 	
 	@PostConstruct
 	private void init() {
@@ -59,4 +60,13 @@ public class AktuellerJobBean implements Serializable{
 	public void setJob(Job job) {
 		this.job = job;
 	}
+
+	public boolean isIstNeuesTicket() {
+		return istNeuesTicket;
+	}
+
+	public void setIstNeuesTicket(boolean istNeuesTicket) {
+		this.istNeuesTicket = istNeuesTicket;
+	}
+	
 }

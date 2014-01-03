@@ -31,8 +31,6 @@
 						value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				</p:breadCrumb>
 
-
-
 				<p></p>
 
 				<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
@@ -40,7 +38,6 @@
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
-
 
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:outputLabel for="kontakter" value="Angestellter" />
@@ -53,7 +50,7 @@
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
 
-						<p:ajax event="change" update="@form"></p:ajax>
+						
 
 					</p:selectOneMenu>
 
@@ -63,9 +60,7 @@
 					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus" />
 				</p:panelGrid>
 
-
 				<p></p>
-
 
 				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet"
 					id="repeat" var="kosten" value="#{aktuellerJobBean.job.kostens}">
@@ -116,7 +111,6 @@
 							<p:commandButton disabled="true"
 								icon="#{aufwandBean.gesamtKosten > aktuellerJobBean.job.budgetInEuro ? 'ui-icon-alert' : 'ui-icon-circle-check'}"
 								id="achtung">
-
 							</p:commandButton>
 						</p:column>
 					</p:row>

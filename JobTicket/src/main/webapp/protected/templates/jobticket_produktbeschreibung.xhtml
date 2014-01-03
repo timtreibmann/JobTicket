@@ -41,27 +41,32 @@
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc"
 				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
-				<p:ajax event="tabChange" listener="#{produkteigenschaftenBean.onTabChange}" />
+				<p:ajax event="tabChange"
+					listener="#{produkteigenschaftenBean.onTabChange}" />
 				<p:tab
 					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"
 					id="tab"
 					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
 					<p:growl id="growl" showDetail="true" sticky="false" />
-					<p:commandButton icon="ui-icon-trash" style="float:right"
-						actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
-						update="acc" />
+
 					<p:panelGrid styleClass="grid">
+
 						<p:row>
+
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<p:column>
-								<p:outputLabel value="Aufgabe erledigt: "></p:outputLabel>
+								<p:outputLabel value="Erledigt"></p:outputLabel>
 							</p:column>
-
 							<p:column>
 								<p:commandButton update="@this growl acc"
 									icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
 									actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
+							</p:column>
 
+							<p:column>
+								<p:commandButton icon="ui-icon-trash"
+									actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
+									update="acc" />
 							</p:column>
 
 						</p:row>
@@ -108,7 +113,7 @@
 							<p:column>
 								<p:inputTextarea
 									value="#{produkteigenschaften.produktbeschreibung}"
-									id="beschreibung" maxlength="199" cols="40">
+									id="beschreibung" maxlength="199" cols="90">
 									<p:ajax event="change" process="@this" update="@this growl"
 										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 								</p:inputTextarea>
