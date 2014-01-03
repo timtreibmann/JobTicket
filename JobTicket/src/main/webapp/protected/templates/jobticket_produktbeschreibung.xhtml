@@ -41,6 +41,7 @@
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc"
 				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
+				<p:ajax event="tabChange" listener="#{produkteigenschaftenBean.onTabChange}" />
 				<p:tab
 					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"
 					id="tab"
@@ -114,7 +115,8 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:accordionPanel activeIndex="-1">
+					<p:accordionPanel
+						activeIndex="#{produkteigenschaftenBean.accordionIndex1}">
 						<p:tab title="Details">
 							<p:panelGrid styleClass="grid" columns="4">
 								<p:outputLabel for="format" value="Format(B x H)" />

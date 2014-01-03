@@ -29,6 +29,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import org.primefaces.component.accordionpanel.AccordionPanel;
+import org.primefaces.event.TabChangeEvent;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 import jt.entities.Produkteigenschaften;
@@ -57,10 +60,13 @@ public class ProdukteigenschaftenBean {
 	private Produkteigenschaften produkteigenschaften;
 	private int accordionIndex;
 
+	private int accordionIndex1;
+
 	private boolean wurdeProdukteigenschaftErzeugt;
 
 	@PostConstruct
 	private void init() {
+		accordionIndex1 = -1;
 		if (job.getProdukteigenschaftens().size() == 0) {
 			createProdukteigenschaft();
 			wurdeProdukteigenschaftErzeugt = true;
@@ -145,6 +151,33 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
+	public void onTabChange(TabChangeEvent event) {
+		String activeIndex = ((AccordionPanel) event.getComponent())
+				.getActiveIndex();
+		int index = Integer.parseInt(activeIndex);
+		try {
+
+			if (sindDetailsVorhanden(job.getProdukteigenschaftens().get(index))) {
+				accordionIndex1 = 0;
+			} else {
+				accordionIndex1 = -1;
+			}
+
+		} catch (Exception e) {
+			accordionIndex1 = -1;
+		}
+		System.out.println("tabchange" + accordionIndex1);
+	}
+
+	private boolean sindDetailsVorhanden(Produkteigenschaften p) {
+		return (p.getFomat().length() + p.getFarbe4c().length()
+				+ p.getSeitenzahl() + p.getBindung().length()
+				+ p.getDummy().length() + p.getBeschnitt().length()
+				+ p.getSonderfarbe().length() + p.getFalzung().length() + p
+				.getProof().length()) > 0;
+
+	}
+
 	public Produkteigenschaften getProdukteigenschaften() {
 		return produkteigenschaften;
 	}
@@ -172,6 +205,14 @@ public class ProdukteigenschaftenBean {
 
 	public int getProduktAnzahl() {
 		return job.getProdukteigenschaftens().size();
+	}
+
+	public int getAccordionIndex1() {
+		return accordionIndex1;
+	}
+
+	public void setAccordionIndex1(int accordionIndex1) {
+		this.accordionIndex1 = accordionIndex1;
 	}
 
 }
