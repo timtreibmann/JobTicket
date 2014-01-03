@@ -34,8 +34,9 @@ import jt.entities.Job;
 import jt.entities.Produkteigenschaften;
 
 /**
- * Diese Klasse stellt die Anwendungslogik für die "jobticket_produktbeschreibung.xhtml"
- * bereit. Sie dient zur Verwaltung von Produkteigenschaften, die zu einem Job gehören.
+ * Diese Klasse stellt die Anwendungslogik für die
+ * "jobticket_produktbeschreibung.xhtml" bereit. Sie dient zur Verwaltung von
+ * Produkteigenschaften, die zu einem Job gehören.
  * 
  * @author Jan Müller
  * @author Tim Treibmann
@@ -56,31 +57,37 @@ public class ProdukteigenschaftenBean {
 	private Produkteigenschaften produkteigenschaften;
 	private int accordionIndex;
 
+	private boolean wurdeProdukteigenschaftErzeugt;
+
 	@PostConstruct
-	private void init(){
+	private void init() {
 		if (job.getProdukteigenschaftens().size() == 0) {
 			createProdukteigenschaft();
+			wurdeProdukteigenschaftErzeugt = true;
 		}
 	}
-	
-	public String createProdukteigenschaft() {
 
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		Produkteigenschaften produkteigenschaften = new Produkteigenschaften();
-		Date d = new Date();
-		produkteigenschaften.setEingangsdatum(d);
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		produkteigenschaften
-				.setProduktbeschreibung("Neues Produkt - Daten eintragen - "
-						+ formatter.format(d));
-		produkteigenschaften.setErledigt(0);
-		job.addProdukteigenschaften(produkteigenschaften);
-		em.persist(produkteigenschaften);
-		em.merge(job);
-		em.getTransaction().commit();
-		accordionIndex = job.getProdukteigenschaftens().size() - 1;
-		ermittleFortschritt();
+	public String createProdukteigenschaft() {
+		// nur eine neue Produkteigenschaft erzeugen, wenn in der init Methode
+		// noch keine automatisch erzeugt wurde
+		if (!wurdeProdukteigenschaftErzeugt) {
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
+			Produkteigenschaften produkteigenschaften = new Produkteigenschaften();
+			Date d = new Date();
+			produkteigenschaften.setEingangsdatum(d);
+			SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+			produkteigenschaften
+					.setProduktbeschreibung("Neues Produkt - Daten eintragen - "
+							+ formatter.format(d));
+			produkteigenschaften.setErledigt(0);
+			job.addProdukteigenschaften(produkteigenschaften);
+			em.persist(produkteigenschaften);
+			em.merge(job);
+			em.getTransaction().commit();
+			accordionIndex = job.getProdukteigenschaftens().size() - 1;
+			ermittleFortschritt();
+		}
 		return null;
 	}
 
@@ -128,7 +135,6 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
-	
 	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {
 		if (produkteigenschaften.getErledigt() == 0) {
 			produkteigenschaften.setErledigt(1);
@@ -138,18 +144,16 @@ public class ProdukteigenschaftenBean {
 		updateProdukteigenschaften(produkteigenschaften);
 		return null;
 	}
-	
+
 	public Produkteigenschaften getProdukteigenschaften() {
 		return produkteigenschaften;
 	}
 
-	
 	public void setProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
 		this.produkteigenschaften = produkteigenschaften;
 	}
 
-	
 	public Job getJob() {
 		return job;
 	}
@@ -169,5 +173,5 @@ public class ProdukteigenschaftenBean {
 	public int getProduktAnzahl() {
 		return job.getProdukteigenschaftens().size();
 	}
-	
+
 }
