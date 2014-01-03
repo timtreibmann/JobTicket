@@ -1,5 +1,18 @@
 @CHARSET "UTF-8";
 
+.panel {
+	width: 850px;
+}
+
+.panelLong {
+	width: 1000px;
+}
+
+
+.table {
+	max-width: 200px;
+}
+
 .grid tr,.grid td {
 	border: none;
 }
