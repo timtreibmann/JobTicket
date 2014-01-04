@@ -51,10 +51,12 @@ public class OptionenBean implements Serializable {
 	private boolean versteckeFertigeJobs;
 	private boolean filtereNachMitarbeiter;
 	private int selectedAngestellterId;
+	private int angemeldeterMitarbeiterId;
 
 	@PostConstruct
 	private void init() {
-		selectedAngestellterId = findeAngemeldetenMitarbeiterId();
+		angemeldeterMitarbeiterId = findeAngemeldetenMitarbeiterId();;
+		selectedAngestellterId = angemeldeterMitarbeiterId;
 		zeigeAllesAufEinerSeite = true;
 		versteckeFertigeJobs = true;
 		filtereNachMitarbeiter = true;
@@ -107,6 +109,14 @@ public class OptionenBean implements Serializable {
 	public void setSelectedAngestellterId(int selectedAngestellterId) {
 		System.out.println("SEEEEEEEEEEEEEET"+selectedAngestellterId);
 		this.selectedAngestellterId = selectedAngestellterId;
+	}
+
+	public int getAngemeldeterMitarbeiterId() {
+		return angemeldeterMitarbeiterId;
+	}
+
+	public void setAngemeldeterMitarbeiterId(int angemeldeterMitarbeiterId) {
+		this.angemeldeterMitarbeiterId = angemeldeterMitarbeiterId;
 	}
 
 }

@@ -51,8 +51,6 @@ public class AufwandBean {
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
-	@Inject
-	private Kosten kosten;
 	private int selectedAngestellteId;
 	@Inject
 	@AktuellerJob
@@ -67,10 +65,12 @@ public class AufwandBean {
 	@PostConstruct
 	private void init() {
 		if (aktuellerJobBean.isIstNeuesTicket()) {
-			selectedAngestellteId = options.getSelectedAngestellterId();
+			selectedAngestellteId = options.getAngemeldeterMitarbeiterId();
 			saveKosten();
 			aktuellerJobBean.setIstNeuesTicket(false);
+
 		}
+		berechneGesamtkosten();
 	}
 
 	public String saveKosten() {
@@ -81,6 +81,7 @@ public class AufwandBean {
 					selectedAngestellteId);
 			if (!istAngestellterVorhanden(angestellte)) {
 				em.getTransaction().begin();
+				Kosten kosten = new Kosten();
 				kosten.setArbeitsaufwand(0);
 				kosten.setArbeitsaufwandIstInEuro(0);
 				Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
@@ -118,33 +119,29 @@ public class AufwandBean {
 		em.getTransaction().begin();
 		em.merge(kosten);
 		FacesContext fc = FacesContext.getCurrentInstance();
-		kosten.setKommentar(kosten.getKommentar()+" --zuletzt editiert von: "+fc.getExternalContext().getRemoteUser());
 		em.getTransaction().commit();
-		
+
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
 
-	private void berechneGesamtkosten(Kosten kosten) {
-		try {
-			// Gesamtkosten berechnen
-			gesamtKosten = 0;
-			double betrag = 0;
-			List<Kosten> kostenListe = job.getKostens();
-			for (Kosten k : kostenListe) {
-				if (k.getAngestellte().getStundenlohn() == 0) {
-					betrag = 0;
-				} else {
-					if (k.getArbeitsaufwandIstInEuro() == 0) {
-						betrag = berechneAufwandInEuro(k);
-					} else {
-						betrag = k.getArbeitsaufwand();
-					}
-				}
-				gesamtKosten += betrag;
-			}
-		} catch (NullPointerException e) {
+	private void berechneGesamtkosten() {
 
+		// Gesamtkosten berechnen
+		gesamtKosten = 0;
+		double betrag = 0;
+		List<Kosten> kostenListe = job.getKostens();
+		for (Kosten k : kostenListe) {
+			if (k.getAngestellte().getStundenlohn() == 0) {
+				betrag = 0;
+			} else {
+				if (k.getArbeitsaufwandIstInEuro() == 0) {
+					betrag = berechneAufwandInEuro(k);
+				} else {
+					betrag = k.getArbeitsaufwand();
+				}
+			}
+			gesamtKosten += betrag;
 		}
 
 	}
@@ -201,8 +198,6 @@ public class AufwandBean {
 	 */
 	public String rechneUm(Kosten kosten) {
 		double erg;
-		System.out.println(kosten);
-		System.out.println("ASD" + kosten.getArbeitsaufwand());
 		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);
@@ -210,7 +205,6 @@ public class AufwandBean {
 			erg = berechneAufwandInStd(kosten);
 			kosten.setArbeitsaufwandIstInEuro(0);
 		}
-		System.out.println(erg);
 		kosten.setArbeitsaufwand(erg);
 		updateKosten(kosten);
 		return null;
@@ -231,19 +225,24 @@ public class AufwandBean {
 		Angestellte angestellte = kosten.getAngestellte();
 		Jobbearbeiter jobbearbeiter = null;
 		for (Jobbearbeiter j : jobbearbeiters) {
-			if (j.getAngestellte().getId() == angestellte.getId()) {
-				jobbearbeiter = j;
+			if (j.getAngestellte() != null) {
+				if (j.getAngestellte().getId() == angestellte.getId()) {
+					jobbearbeiter = j;
+				}
 			}
 		}
+		job.getJobbearbeiters().remove(jobbearbeiter);
 		jobbearbeiter = em.find(Jobbearbeiter.class, jobbearbeiter.getId());
 		em.remove(jobbearbeiter);
 		em.getTransaction().commit();
+
 	}
 
 	private void deleteKostenFromJob(Kosten kosten) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		job.removeKosten(kosten);
+		kosten.getAngestellte();
 		em.merge(job);
 		em.getTransaction().commit();
 	}
@@ -251,6 +250,7 @@ public class AufwandBean {
 	public String delete(Kosten kosten) {
 		deleteJobbearbeitersFromJob(kosten);
 		deleteKostenFromJob(kosten);
+		berechneGesamtkosten();
 		return null;
 	}
 
@@ -262,16 +262,7 @@ public class AufwandBean {
 		this.istAufwandInEuro = aufwandInEuro;
 	}
 
-	public Kosten getKosten() {
-		return kosten;
-	}
-
-	public void setKosten(Kosten kosten) {
-		this.kosten = kosten;
-	}
-
 	public double getGesamtKosten() {
-		berechneGesamtkosten(kosten);
 		return gesamtKosten;
 	}
 

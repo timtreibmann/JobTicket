@@ -123,7 +123,6 @@ public class AngestellteBean {
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-		System.out.println("NACHNAMEd :" + angestellte.getNachname());
 		em.merge(angestellte);
 		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();

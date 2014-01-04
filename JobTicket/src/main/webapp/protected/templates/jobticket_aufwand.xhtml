@@ -33,8 +33,7 @@
 
 				<p></p>
 
-				<h:inputHidden value="#{aufwandBean.kosten.id}"></h:inputHidden>
-				<h:inputHidden></h:inputHidden>
+
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
@@ -116,20 +115,7 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:panelGrid styleClass="grid">
-					<p:row>
-						<p:column>
-							<h:outputLabel value="Kommentar:"></h:outputLabel>
-						</p:column>
-						<p:column>
-							<p:inputTextarea maxlength="200" value="#{kosten.kommentar}"
-								rows="1" cols="115">
-								<p:ajax event="change" process="@this" update="@form"
-									listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
-							</p:inputTextarea>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+			
 			</p:panel>
 			<p:button value="Zurück"
 				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
