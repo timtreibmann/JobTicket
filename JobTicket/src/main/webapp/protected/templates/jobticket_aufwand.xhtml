@@ -17,7 +17,7 @@
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 
-			<p:panel styleClass="panel" id="panel" >
+			<p:panel styleClass="panel" id="panel">
 				<p:breadCrumb>
 					<p:menuitem value="Übersicht" url="start.xhtml" />
 					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
@@ -50,7 +50,7 @@
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
 
-						
+
 
 					</p:selectOneMenu>
 
@@ -84,9 +84,8 @@
 							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'Stunden' }"
 							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
 					</p:column>
-
-
 				</p:dataTable>
+				<p></p>
 
 				<p></p>
 				<p:panelGrid styleClass="grid">
@@ -106,12 +105,28 @@
 						<p:column>
 							<p:outputLabel value="#{aktuellerJobBean.job.budgetInEuro} €" />
 						</p:column>
-						<p:column>
 
+						<p:column>
 							<p:commandButton disabled="true"
+								style="#{aufwandBean.gesamtKosten > aktuellerJobBean.job.budgetInEuro ? 'background:orange' : ''}"
 								icon="#{aufwandBean.gesamtKosten > aktuellerJobBean.job.budgetInEuro ? 'ui-icon-alert' : 'ui-icon-circle-check'}"
 								id="achtung">
 							</p:commandButton>
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid styleClass="grid">
+					<p:row>
+						<p:column>
+							<h:outputLabel value="Kommentar:"></h:outputLabel>
+						</p:column>
+						<p:column>
+							<p:inputTextarea maxlength="200" value="#{kosten.kommentar}"
+								rows="1" cols="115">
+								<p:ajax event="change" process="@this" update="@form"
+									listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+							</p:inputTextarea>
 						</p:column>
 					</p:row>
 				</p:panelGrid>

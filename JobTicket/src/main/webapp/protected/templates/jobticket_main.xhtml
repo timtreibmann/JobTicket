@@ -91,7 +91,7 @@
 
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%" id="job"
+							<p:inputText style="width:100%" maxlength="30" id="job"
 								value="#{aktuellerJobBean.job.name}">
 								<p:ajax event="change" process="@this" update="@this growl"
 									listener="#{jobBean.updateJobticket}"></p:ajax>

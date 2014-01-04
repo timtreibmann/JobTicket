@@ -61,7 +61,6 @@ public class AufwandBean {
 	private boolean istAufwandInEuro;
 	@Inject
 	OptionenBean options;
-	private boolean wurdeMitarbeiterHinzugefuegt;
 	@Inject
 	private AktuellerJobBean aktuellerJobBean;
 
@@ -115,12 +114,13 @@ public class AufwandBean {
 	 * @return the string
 	 */
 	public String updateKosten(Kosten kosten) {
-
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		em.merge(kosten);
-		em.getTransaction().commit();
 		FacesContext fc = FacesContext.getCurrentInstance();
+		kosten.setKommentar(kosten.getKommentar()+" --zuletzt editiert von: "+fc.getExternalContext().getRemoteUser());
+		em.getTransaction().commit();
+		
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}

@@ -39,7 +39,8 @@
 					</p:themeSwitcher>
 
 					<p:outputLabel for="checkbox2"
-						value="Alle Formulare auf einer Seite zeigen:"></p:outputLabel>
+						value="Alle Formulare auf einer Seite zeigen:">
+					</p:outputLabel>
 					<p:selectBooleanCheckbox id="checkbox2"
 						value="#{optionenBean.zeigeAllesAufEinerSeite}">
 					</p:selectBooleanCheckbox>
@@ -58,6 +59,7 @@
 							<p:selectBooleanCheckbox id="checkbox"
 								value="#{optionenBean.filtereNachMitarbeiter}">
 								<p:ajax update="dataTable jobbearbeiter"
+									listener="#{startBean.queryJobs}"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>
 						</p:column>
@@ -72,6 +74,7 @@
 									itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 									itemValue="#{angestellte.id}" />
 								<p:ajax event="change" process="@this" update="dataTable"
+									listener="#{startBean.queryJobs}"
 									oncomplete="dataTableWidgetVar.filter();" />
 							</p:selectOneMenu>
 						</p:column>
@@ -84,7 +87,7 @@
 						<p:column>
 							<p:selectBooleanCheckbox id="checkbox3"
 								value="#{optionenBean.versteckeFertigeJobs}">
-								<p:ajax update="dataTable"
+								<p:ajax update="dataTable" listener="#{startBean.queryJobs}"
 									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
 							</p:selectBooleanCheckbox>
 						</p:column>
@@ -99,8 +102,7 @@
 			</p:overlayPanel>
 			<p></p>
 			<p:dataTable style="width:100%" id="dataTable" var="job"
-				value="#{startBean.jobs}"
-				emptyMessage="Keine Jobtickets gefunden"
+				value="#{startBean.jobs}" emptyMessage="Keine Jobtickets gefunden"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{startBean.filteredJobs}">
 

@@ -22,7 +22,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -36,8 +38,8 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 
 /**
- * Diese Klasse stellt die Anwendungslogik für die "start.xhtml" bereit. 
- * Sie dient zum Filtern, Sortieren, Erzeugen und Löschen von Jobtickets.
+ * Diese Klasse stellt die Anwendungslogik für die "start.xhtml" bereit. Sie
+ * dient zum Filtern, Sortieren, Erzeugen und Löschen von Jobtickets.
  * 
  * @author Jan Müller
  * @author Tim Treibmann
@@ -65,6 +67,15 @@ public class StartBean implements Serializable {
 
 	@Inject
 	private AktuellerJobBean aktuellerJobBean;
+
+	private List<Job> jobs;
+
+	@PostConstruct
+	private void init() {
+		if (jobs == null) {
+			queryJobs();
+		}
+	}
 
 	public String refreshFilter() {
 		filteredJobs = getJobs();
@@ -111,6 +122,10 @@ public class StartBean implements Serializable {
 	}
 
 	public List<Job> getJobs() {
+		return jobs;
+	}
+
+	public void queryJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 
@@ -126,10 +141,7 @@ public class StartBean implements Serializable {
 			if (optionen.isVersteckeFertigeJobs()) {
 				query = em
 						.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
-			} else {
-
 			}
-
 		}
 		@SuppressWarnings("unchecked")
 		List<Job> jobListe = query.getResultList();
@@ -137,9 +149,7 @@ public class StartBean implements Serializable {
 		if (jobListe == null) {
 			jobListe = new ArrayList<Job>();
 		}
-		em.getTransaction().commit();
-		return jobListe;
-
+		jobs = jobListe;
 	}
 
 	private Query findJobByAngestellten() {
@@ -175,6 +185,5 @@ public class StartBean implements Serializable {
 		externalContext.invalidateSession();
 		return "/logout.xhtml?faces-redirect=true";
 	}
-
 
 }
