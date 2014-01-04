@@ -47,21 +47,22 @@ import jt.entities.Kosten;
 @Named
 @RequestScoped
 public class AufwandBean {
-
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
-	private int selectedAngestellteId;
 	@Inject
 	@AktuellerJob
 	private Job job;
-	private double gesamtKosten;
-	private boolean istAufwandInEuro;
+
 	@Inject
 	OptionenBean options;
 	@Inject
 	private AktuellerJobBean aktuellerJobBean;
 
+	private int selectedAngestellteId;
+	private double gesamtKosten;
+	private boolean istAufwandInEuro;
+	
 	@PostConstruct
 	private void init() {
 		if (aktuellerJobBean.isIstNeuesTicket()) {
@@ -231,7 +232,8 @@ public class AufwandBean {
 				}
 			}
 		}
-		job.getJobbearbeiters().remove(jobbearbeiter);
+		job.removeJobbearbeiter(jobbearbeiter);
+		angestellte.removeJobbearbeiter(jobbearbeiter);
 		jobbearbeiter = em.find(Jobbearbeiter.class, jobbearbeiter.getId());
 		em.remove(jobbearbeiter);
 		em.getTransaction().commit();
@@ -275,9 +277,7 @@ public class AufwandBean {
 	}
 
 	private boolean istAngestellterVorhanden(Angestellte angestellte) {
-
 		List<Kosten> kostenListe = job.getKostens();
-
 		boolean angestellterVorhanden = false;
 		for (Kosten k : kostenListe) {
 			if (k.getAngestellte().getId() == angestellte.getId()) {
