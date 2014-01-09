@@ -13,6 +13,10 @@
 	max-width: 200px;
 }
 
+.ui-datatable tbody td.wrap {
+    white-space: normal;
+}
+
 .grid tr,.grid td {
 	border: none;
 }

@@ -52,10 +52,10 @@
 			</p:dataTable>
 			<p></p>
 
-			<p:dataTable var="produkt"
+			<p:dataTable  var="produkt"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}">
 				<f:facet name="header">Produkte</f:facet>
-				<p:column headerText="Produktbeschreibung">
+				<p:column width="200px" styleClass="wrap" headerText="Produktbeschreibung">
 					<p:outputLabel value="#{produkt.produktbeschreibung}"></p:outputLabel>
 				</p:column>
 

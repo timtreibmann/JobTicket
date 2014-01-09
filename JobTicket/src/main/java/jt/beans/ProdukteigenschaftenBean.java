@@ -60,16 +60,27 @@ public class ProdukteigenschaftenBean {
 	private Produkteigenschaften produkteigenschaften;
 	private int accordionIndex;
 
-	private int accordionIndex1;
+	private int detailsAccordionIndex;
 
 	private boolean wurdeProdukteigenschaftErzeugt;
 
 	@PostConstruct
 	private void init() {
-		accordionIndex1 = -1;
 		if (job.getProdukteigenschaftens().size() == 0) {
 			createProdukteigenschaft();
 			wurdeProdukteigenschaftErzeugt = true;
+		}
+		//Details ausklappen, wenn Inhalte eingetragen wurden 
+		accordionIndex=0;
+		try {
+			if (sindDetailsVorhanden(job.getProdukteigenschaftens().get(
+					accordionIndex))) {
+				detailsAccordionIndex = 0;
+			} else {
+				detailsAccordionIndex = -1;
+			}
+		} catch (Exception e) {
+			detailsAccordionIndex = -1;
 		}
 	}
 
@@ -158,15 +169,15 @@ public class ProdukteigenschaftenBean {
 		try {
 
 			if (sindDetailsVorhanden(job.getProdukteigenschaftens().get(index))) {
-				accordionIndex1 = 0;
+				detailsAccordionIndex = 0;
 			} else {
-				accordionIndex1 = -1;
+				detailsAccordionIndex = -1;
 			}
 
 		} catch (Exception e) {
-			accordionIndex1 = -1;
+			detailsAccordionIndex = -1;
 		}
-		System.out.println("tabchange" + accordionIndex1);
+		System.out.println("tabchange" + detailsAccordionIndex);
 	}
 
 	private boolean sindDetailsVorhanden(Produkteigenschaften p) {
@@ -187,14 +198,6 @@ public class ProdukteigenschaftenBean {
 		this.produkteigenschaften = produkteigenschaften;
 	}
 
-	public Job getJob() {
-		return job;
-	}
-
-	public void setJob(Job job) {
-		this.job = job;
-	}
-
 	public void setAccordionIndex(int index) {
 		this.accordionIndex = index;
 	}
@@ -208,11 +211,11 @@ public class ProdukteigenschaftenBean {
 	}
 
 	public int getAccordionIndex1() {
-		return accordionIndex1;
+		return detailsAccordionIndex;
 	}
 
 	public void setAccordionIndex1(int accordionIndex1) {
-		this.accordionIndex1 = accordionIndex1;
+		this.detailsAccordionIndex = accordionIndex1;
 	}
 
 }
