@@ -24,7 +24,32 @@
 				action="#{startBean.createJobticket}" ajax="false" />
 
 			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
+			
+			<p></p>
+			<p:panelGrid styleClass="grid" columns="3">			
+				<p:selectBooleanCheckbox id="checkbox"
+					value="#{optionenBean.filtereNachMitarbeiter}">
+					<p:ajax update="@form" listener="#{startBean.queryJobs}"
+						oncomplete="dataTableWidgetVar.filter();"></p:ajax>
+				</p:selectBooleanCheckbox>
+				
+				<p:outputLabel for="checkbox" value="Tickets nach Mitarbeitern filtern "></p:outputLabel>	
 
+
+				<p:selectOneMenu id="jobbearbeiter"
+					disabled="#{!optionenBean.filtereNachMitarbeiter}"
+					value="#{optionenBean.selectedAngestellterId}" effect="fold"
+					rendered="#{optionenBean.filtereNachMitarbeiter}" editable="false">
+					<f:selectItem itemLabel="Mitarbeiter wählen"></f:selectItem>
+					<f:selectItems value="#{angestellteBean.angestelltes}"
+						var="angestellte"
+						itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+						itemValue="#{angestellte.id}" />
+					<p:ajax event="change" process="@this" update="dataTable"
+						listener="#{startBean.queryJobs}"
+						oncomplete="dataTableWidgetVar.filter();" />
+				</p:selectOneMenu>
+			</p:panelGrid>
 			<p:overlayPanel hideEffect="drop" widgetVar="optionpanel"
 				showEffect="drop" my="right bottom" for="erweitert">
 
@@ -52,35 +77,6 @@
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>
-							<p:outputLabel for="checkbox"
-								value="Jobs nach Mitarbeitern filtern: "></p:outputLabel>
-						</p:column>
-						<p:column>
-							<p:selectBooleanCheckbox id="checkbox"
-								value="#{optionenBean.filtereNachMitarbeiter}">
-								<p:ajax update="dataTable jobbearbeiter"
-									listener="#{startBean.queryJobs}"
-									oncomplete="dataTableWidgetVar.filter();"></p:ajax>
-							</p:selectBooleanCheckbox>
-						</p:column>
-						<p:column>
-							<p:selectOneMenu id="jobbearbeiter"
-								disabled="#{!optionenBean.filtereNachMitarbeiter}"
-								value="#{optionenBean.selectedAngestellterId}" effect="fold"
-								editable="false">
-								<f:selectItem itemLabel="Mitarbeiter auswählen"></f:selectItem>
-								<f:selectItems value="#{angestellteBean.angestelltes}"
-									var="angestellte"
-									itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-									itemValue="#{angestellte.id}" />
-								<p:ajax event="change" process="@this" update="dataTable"
-									listener="#{startBean.queryJobs}"
-									oncomplete="dataTableWidgetVar.filter();" />
-							</p:selectOneMenu>
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
 							<p:outputLabel for="checkbox3"
 								value="Fertige Jobs nicht anzeigen"></p:outputLabel>
 						</p:column>
@@ -102,7 +98,8 @@
 			</p:overlayPanel>
 			<p></p>
 			<p:dataTable style="width:100%" id="dataTable" var="job"
-				value="#{startBean.jobs}" emptyMessage="Keine Jobtickets gefunden"
+				value="#{startBean.jobs}"
+				emptyMessage="Keine Tickets für den ausgewählten Benutzer gefunden! (Mitarbeiterfilter deaktivieren, um alle Tickets anzuzeigen)"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{startBean.filteredJobs}">
 
@@ -155,8 +152,6 @@
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
-
-
 		</p:panel>
 	</h:form>
 </h:body>

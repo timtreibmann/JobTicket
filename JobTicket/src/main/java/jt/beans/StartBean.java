@@ -24,6 +24,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -145,7 +146,7 @@ public class StartBean implements Serializable {
 		}
 		@SuppressWarnings("unchecked")
 		List<Job> jobListe = query.getResultList();
-
+		em.getTransaction().commit();
 		if (jobListe == null) {
 			jobListe = new ArrayList<Job>();
 		}

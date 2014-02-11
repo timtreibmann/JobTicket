@@ -52,12 +52,14 @@ public class AngestellteBean {
 
 	public List<Angestellte> getAngestelltes() {
 		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
 		final Query query = em.createQuery("SELECT b FROM Angestellte b");
 		@SuppressWarnings("unchecked")
 		List<Angestellte> angestellteListe = query.getResultList();
 		if (angestellteListe == null) {
 			angestellteListe = new ArrayList<Angestellte>();
 		}
+		em.getTransaction().commit();
 		return angestellteListe;
 	}
 
