@@ -78,11 +78,6 @@ public class StartBean implements Serializable {
 		}
 	}
 
-//	public String refreshFilter() {
-//		filteredJobs = getJobs();
-//		return "start.xhtml";
-//	}
-
 	public List<Job> getFilteredJobs() {
 		return filteredJobs;
 	}
@@ -113,7 +108,6 @@ public class StartBean implements Serializable {
 		em.persist(aktuellerJob);
 		em.getTransaction().commit();
 		aktuellerJobBean.setIstNeuesTicket(true);
-//		refreshFilter();
 		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
