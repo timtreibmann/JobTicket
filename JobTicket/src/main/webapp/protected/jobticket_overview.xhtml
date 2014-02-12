@@ -94,8 +94,7 @@
 		</p:panel>
 		<p:button value="Zurück"
 			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
-		<p:commandButton ajax="false" value="Fertig"
-			action="#{startBean.refreshFilter}"></p:commandButton>
+		<p:button outcome="start.xhtml" value="Fertig"></p:button>
 	</h:form>
 </h:body>
 </html>
