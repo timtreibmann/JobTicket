@@ -184,7 +184,7 @@ public class AufwandBean {
 	 *            the kosten
 	 * @return the double
 	 */
-	private double berechneAufwandInEuro(Kosten kosten) {
+	public double berechneAufwandInEuro(Kosten kosten) {
 		return kosten.getArbeitsaufwand()
 				* kosten.getAngestellte().getStundenlohn();
 

@@ -180,5 +180,10 @@ public class StartBean implements Serializable {
 		externalContext.invalidateSession();
 		return "/logout.xhtml?faces-redirect=true";
 	}
+	
+	public String jobOverview(Job job){
+		aktuellerJobBean.setJob(job);
+		return "jobticket_overview.xhtml";
+	}
 
 }

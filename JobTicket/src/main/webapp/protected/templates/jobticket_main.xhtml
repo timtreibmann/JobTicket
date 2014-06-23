@@ -45,7 +45,7 @@
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.alteJobnummer}" id="alt">
 								<p:ajax event="change" process="@this" update="growl"
-									listener="#{jobBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.updateJobticket}"/>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -161,18 +161,14 @@
 					<p:inputText style="width:100%" id="t3"
 						value="#{kundenBean.kunde.telefon}" autocomplete="true" />
 				</h:panelGrid>
-				<h:panelGrid columns="4">
+				<h:panelGrid columns="2">
 					<p:commandButton immediate="true" onclick="kunden_overlay.hide()"
 						value="Schließen" />
 					<p:commandButton
 						actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
 						update=":mainform:growl :mainform:kundenselect grid"
-						value="Kunden hinzufügen">
-
-					</p:commandButton>
+						value="Kunden hinzufügen"/>
 					<p></p>
-					<p:button value="Kundenliste anzeigen"
-						icon="ui-icon-arrowreturn-1-e" outcome="kunden_table.xhtml" />
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>

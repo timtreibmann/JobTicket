@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import jt.beans.AufwandBean;
+
 import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 // TODO: Auto-generated Javadoc
@@ -24,8 +26,7 @@ import org.eclipse.persistence.annotations.CascadeOnDelete;
  * The Class Job.
  * 
  * @author Jan Müller
- * @author Tim Treibmann 
- * Diese Entity Klasse ist die Projektion der Datenbank
+ * @author Tim Treibmann Diese Entity Klasse ist die Projektion der Datenbank
  *         Jobs mit ihren jeweiligen Spalten als Eigenschaften
  */
 @Entity
@@ -516,4 +517,25 @@ public class Job implements Serializable {
 		return id + " ";
 	}
 
+	public double getGesamtKosten() {
+		// Gesamtkosten berechnen
+		double gesamtKosten = 0;
+		double betrag = 0;
+		List<Kosten> kostenListe = kostens;
+		for (Kosten k : kostenListe) {
+			if (k.getAngestellte().getStundenlohn() == 0) {
+				betrag = 0;
+			} else {
+				if (k.getArbeitsaufwandIstInEuro() == 0) {
+					AufwandBean aB = new AufwandBean();
+					betrag = aB.berechneAufwandInEuro(k);
+				} else {
+					betrag = k.getArbeitsaufwand();
+				}
+			}
+			gesamtKosten += betrag;
+		}
+		return gesamtKosten;
+	}
+	
 }

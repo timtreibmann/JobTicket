@@ -33,31 +33,10 @@
 
 				<p></p>
 
-
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
 
-				<p:panelGrid styleClass="grid" columns="4">
-					<p:outputLabel for="kontakter" value="Angestellter" />
-					<p:selectOneMenu id="kontakter"
-						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
-						editable="false" required="false">
-						<f:selectItem itemLabel="Angestellten auswählen"></f:selectItem>
-						<f:selectItems value="#{angestellteBean.angestelltes}"
-							var="angestellte"
-							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-							itemValue="#{angestellte.id}" />
-
-
-
-					</p:selectOneMenu>
-
-					<p:commandButton id="hinzufuegen" icon="ui-icon-arrowthick-1-s"
-						process="kontakter" update="@form"
-						actionListener="#{aufwandBean.saveKosten}"></p:commandButton>
-					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus" />
-				</p:panelGrid>
 
 				<p></p>
 
@@ -67,8 +46,6 @@
 						<h:outputText value="Am Job arbeitende Angestellte"></h:outputText>
 					</f:facet>
 					<p:column headerText="Mitarbeiter">
-						<p:commandButton update="@form" id="deletebutton"
-							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"></p:commandButton>
 						<h:outputLabel
 							value=" #{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
 					</p:column>
@@ -82,8 +59,30 @@
 							process="aufwand"
 							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'Stunden' }"
 							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+
+						<p:commandButton update="@form" id="deletebutton"
+							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"
+							style="float:right"></p:commandButton>
 					</p:column>
 				</p:dataTable>
+					<p:panelGrid columns="4" style="width:820px;">
+						<p:outputLabel for="kontakter" value="Zum Job hinzufügen"
+							style="width:150px" />
+						<p:selectOneMenu id="kontakter"
+							value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+							editable="false" required="false">
+							<f:selectItem itemLabel="Angestellten auswählen" />
+							<f:selectItems value="#{angestellteBean.angestelltes}"
+								var="angestellte"
+								itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+								itemValue="#{angestellte.id}" />
+							<p:ajax event="change" process="@this" update="repeat"
+								listener="#{aufwandBean.saveKosten}" oncomplete="" />
+						</p:selectOneMenu>
+						<p:outputLabel style="width:50%" value="Neuen Mitarbeiter anlegen:"/>
+						<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"
+							style="float:right" />
+					</p:panelGrid>
 				<p></p>
 
 				<p></p>
@@ -115,7 +114,7 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-			
+
 			</p:panel>
 			<p:button value="Zurück"
 				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
@@ -144,15 +143,13 @@
 						value="#{angestellteBean.angestellte.loginName}"
 						autocomplete="true" required="false" />
 				</h:panelGrid>
-				<h:panelGrid columns="3">
+				<h:panelGrid columns="2">
 					<p:commandButton immediate="true"
 						onclick="angestellten_overlay.hide()" value="Schließen" />
 					<p:commandButton
 						actionListener="#{angestellteBean.saveAngestellte}"
 						update="growl :aufwandform:kontakter grid"
 						value="Angestellten hinzufügen"></p:commandButton>
-					<p:button value="Angestelltenliste" icon="ui-icon-arrowreturn-1-e"
-						outcome="angestellte_table.xhtml"></p:button>
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>

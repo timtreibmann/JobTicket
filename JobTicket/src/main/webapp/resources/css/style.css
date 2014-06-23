@@ -34,3 +34,10 @@
 		
 }
 
+.ui-accordion .ui-accordion-content{
+	padding-left:0px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell{
+	border:none;
+}

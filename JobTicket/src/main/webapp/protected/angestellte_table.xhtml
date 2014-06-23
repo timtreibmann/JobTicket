@@ -13,9 +13,8 @@
 </h:head>
 
 <h:body>
+	<p:commandButton id="neuerAngestellterButton" value="Neuen Angestellten anlegen" />
 	<h:form>
-
-
 		<p:panel styleClass="panel">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl></p:growl>
@@ -52,7 +51,7 @@
 					<f:facet name="header">Stundenlohn</f:facet>
 					<h:outputText value="#{angestellter.stundenlohn}€" />
 				</p:column>
-				
+
 				<p:column>
 					<f:facet name="header">Loginname</f:facet>
 					<h:outputText value="#{angestellter.loginName}" />
@@ -61,19 +60,50 @@
 
 				<p:column>
 					<p:columnGroup>
-						<p:commandButton icon="ui-icon-trash"
-							actionListener="#{angestellteBean.delete(angestellter)}"
-							update="@form" />
 						<p:commandButton icon="ui-icon-wrench"
 							action="#{angestellteBean.editAngestellten(angestellter)}"
 							ajax="false" />
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{angestellteBean.delete(angestellter)}"
+							update="@form" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:button value="Zurück"
-			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
+		<p:button value="Zurück" outcome="start.xhtml" />
 	</h:form>
+	<p:overlayPanel my="right top" widgetVar="angestellten_overlay"
+			showEffect="fade" hideEffect="drop"
+			for=":neuerAngestellterButton">
+			<h:form id="angestellten_form">
+				<p:growl id="growl"></p:growl>
+				<h:panelGrid id="grid" columns="2">
+					<p:outputLabel>Vorname</p:outputLabel>
+					<p:inputText value="#{angestellteBean.angestellte.vorname}"
+						autocomplete="true" required="true" />
+					<p:outputLabel>Name</p:outputLabel>
+					<p:inputText id="t1"
+						value="#{angestellteBean.angestellte.nachname}"
+						autocomplete="true" required="true" />
+					<p:outputLabel>Stundenlohn</p:outputLabel>
+					<p:inputText id="t2"
+						value="#{angestellteBean.angestellte.stundenlohn}"
+						autocomplete="true" required="true" />
+					<p:outputLabel>Loginname</p:outputLabel>
+					<p:inputText id="t3"
+						value="#{angestellteBean.angestellte.loginName}"
+						autocomplete="true" required="false" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton immediate="true"
+						onclick="angestellten_overlay.hide()" value="Schließen" />
+					<p:commandButton
+						actionListener="#{angestellteBean.saveAngestellte}"
+						update="@all"
+						value="Angestellten hinzufügen"></p:commandButton>
+				</h:panelGrid>
+			</h:form>
+		</p:overlayPanel>
 </h:body>
 
 </html>

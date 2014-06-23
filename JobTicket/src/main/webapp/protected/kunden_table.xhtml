@@ -12,14 +12,17 @@
 </h:head>
 
 <h:body>
+	<p:commandButton id="neuerKundeButton" value="Neuen Kunden anlegen" />
 	<h:form>
-	<p:growl id="growl"></p:growl>
-	<h:outputStylesheet library="css" name="style.css" />
+		<p:growl id="growl"></p:growl>
+		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel styleClass="panel">
-		<p:breadCrumb>
+			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}" value="Jobticket" url="ticketanzeige.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}" value="Jobticket" url="jt_main.xhtml" />
+				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
+					value="Jobticket" url="ticketanzeige.xhtml" />
+				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
+					value="Jobticket" url="jt_main.xhtml" />
 				<p:menuitem value="Kunden Tabelle" url="kunden_table.xhtml" />
 			</p:breadCrumb>
 			<p:dataTable id="table" value="#{kundenBean.kunden}" var="kunde">
@@ -45,17 +48,46 @@
 				</p:column>
 				<p:column style="width:80px">
 
-					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{kundenBean.delete(kunde)}" update="@form" />
+
 					<p:commandButton action="#{kundenBean.editKunde(kunde)}"
 						ajax="false" icon="ui-icon-wrench" />
-
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{kundenBean.delete(kunde)}" update="@form" />
 
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:button value="Zurück" outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_main.xhtml'}"></p:button>
+		<p:button value="Zurück" outcome="start.xhtml"></p:button>
 	</h:form>
+	<p:overlayPanel my="right top" widgetVar="kunden_overlay"
+		showEffect="fade" hideEffect="drop" for=":neuerKundeButton">
+		<h:form id="kundenform">
+			<h:panelGrid id="grid" styleClass="grid" columns="2">
+				<p:outputLabel for="t1">Kundenname</p:outputLabel>
+				<p:inputText style="width:100%" id="t1"
+					value="#{kundenBean.kunde.name}" autocomplete="true"
+					required="true" />
+				<p:outputLabel> Kundenkürzel</p:outputLabel>
+				<p:inputText style="width:100%"
+					value="#{kundenBean.kunde.kundenkuerzel}" autocomplete="
+				true" />
+				<p:outputLabel> Adresse</p:outputLabel>
+				<p:inputText style="width:100%" id="t2"
+					value="#{kundenBean.kunde.adresse}" autocomplete="true" />
+				<p:outputLabel> Telefon</p:outputLabel>
+				<p:inputText style="width:100%" id="t3"
+					value="#{kundenBean.kunde.telefon}" autocomplete="true" />
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton immediate="true" onclick="kunden_overlay.hide()"
+					value="Schließen" />
+				<p:commandButton
+					actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
+					update="@all" value="Kunden hinzufügen" />
+				<p></p>
+			</h:panelGrid>
+		</h:form>
+	</p:overlayPanel>
 </h:body>
 
 </html>

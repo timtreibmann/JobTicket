@@ -10,7 +10,6 @@
 <h:body>
 	<h:form>
 
-
 		<h:outputStylesheet library="css" name="style.css" />
 
 		<p:panel styleClass="panel">
@@ -52,10 +51,11 @@
 			</p:dataTable>
 			<p></p>
 
-			<p:dataTable  var="produkt"
+			<p:dataTable var="produkt"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}">
 				<f:facet name="header">Produkte</f:facet>
-				<p:column width="200px" styleClass="wrap" headerText="Produktbeschreibung">
+				<p:column width="200px" styleClass="wrap"
+					headerText="Produktbeschreibung">
 					<p:outputLabel value="#{produkt.produktbeschreibung}"></p:outputLabel>
 				</p:column>
 
@@ -78,23 +78,24 @@
 				<p:column headerText="Angestellter">
 
 					<p:outputLabel
-						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} "></p:outputLabel>
+						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} " />
 				</p:column>
 
 				<p:column headerText="Aufwand">
-					<p:outputLabel value="#{kosten.arbeitsaufwand}"></p:outputLabel>
+					<p:outputLabel value="#{kosten.arbeitsaufwand}" />
 				</p:column>
 				<p:column headerText="Aufwandsart">
 					<p:outputLabel
-						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}"></p:outputLabel>
+						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}" />
 				</p:column>
 			</p:dataTable>
 			<p></p>
-			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €"></p:outputLabel>
+			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €" />
 		</p:panel>
-		<p:button value="Zurück"
-			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}"></p:button>
-		<p:button outcome="start.xhtml" value="Fertig"></p:button>
+		<p:button outcome="start.xhtml" value="Zurück" />
+		<p:button value="Bearbeiten"
+			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}" />
+
 	</h:form>
 </h:body>
 </html>

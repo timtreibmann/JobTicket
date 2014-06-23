@@ -14,11 +14,19 @@
 		<param-name>primefaces.THEME</param-name>
 		<param-value>#{themeSwitcherBean.theme}</param-value>
 	</context-param>
-
+	<context-param>
+		<param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>client</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
 	</listener>
+
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -29,15 +37,15 @@
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 
-
 	<!-- Define a Security Constraint on this Application -->
+
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>TheTest Application</web-resource-name>
+			<web-resource-name>JobTicket Application</web-resource-name>
 			<url-pattern>/faces/protected/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>testuser</role-name>
+			<role-name>JobTicket-Benutzer</role-name>
 		</auth-constraint>
 	</security-constraint>
 
@@ -46,7 +54,7 @@
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/faces/login.xhtml</form-login-page>
-			<form-error-page>/faces/login.xhtml</form-error-page>
+			<form-error-page>/error.html</form-error-page>
 		</form-login-config>
 	</login-config>
 </web-app>

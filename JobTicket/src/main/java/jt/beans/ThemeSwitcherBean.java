@@ -9,7 +9,7 @@ import javax.inject.Named;
 @Named
 @ApplicationScoped
 public class ThemeSwitcherBean {
-	
+
 	private TreeMap<String, String> themes;
 
 	private String theme;
@@ -22,6 +22,11 @@ public class ThemeSwitcherBean {
 		this.theme = theme;
 	}
 
+	/**
+	 * Initialisiert die Liste der <code>themes</code> mit einer Liste von
+	 * Themes. Das aktuelle <code>theme</code> wird mit dem Wert "aristo"
+	 * initialisiert.
+	 */
 	@PostConstruct
 	public void init() {
 		themes = new TreeMap<String, String>();
