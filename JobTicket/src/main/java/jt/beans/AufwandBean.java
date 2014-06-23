@@ -69,7 +69,6 @@ public class AufwandBean {
 			selectedAngestellteId = options.getAngemeldeterMitarbeiterId();
 			saveKosten();
 			aktuellerJobBean.setIstNeuesTicket(false);
-
 		}
 		berechneGesamtkosten();
 	}
@@ -93,7 +92,7 @@ public class AufwandBean {
 				em.persist(jobbearbeiter);
 				em.persist(kosten);
 				em.merge(angestellte);
-				em.merge(job);
+				//em.merge(job);
 				em.getTransaction().commit();
 			} else {
 				FacesContext fc = FacesContext.getCurrentInstance();
@@ -127,7 +126,6 @@ public class AufwandBean {
 	}
 
 	private void berechneGesamtkosten() {
-
 		// Gesamtkosten berechnen
 		gesamtKosten = 0;
 		double betrag = 0;
@@ -241,12 +239,12 @@ public class AufwandBean {
 	}
 
 	private void deleteKostenFromJob(Kosten kosten) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
+		//em = entityManagerFactory.createEntityManager();
+		//em.getTransaction().begin();
 		job.removeKosten(kosten);
 		kosten.getAngestellte();
-		em.merge(job);
-		em.getTransaction().commit();
+		//em.merge(job);
+		//em.getTransaction().commit();
 	}
 
 	public String delete(Kosten kosten) {

@@ -88,7 +88,7 @@ public class StartBean implements Serializable {
 
 	public String editJob(Job job) {
 		aktuellerJobBean.setJob(job);
-
+		
 		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
@@ -96,6 +96,11 @@ public class StartBean implements Serializable {
 		}
 	}
 
+	/**
+	 * Erstellt einen neuen Job ,initialisiert das Erstellungsdatum 
+	 * und speichert diesen Job in der Datenbank. 
+	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder nicht wird ein anderer Datei-name zurückgegeben
+	 */
 	public String createJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -113,7 +118,22 @@ public class StartBean implements Serializable {
 		} else {
 			return "jt_main.xhtml";
 		}
-
+	}
+	
+	/**
+	 * Erstellt einen neuen Job und initialisiert das Erstellungsdatum,
+	 * ohne direkt einen neuen Eintrag in der Datenbank zu erstellen
+	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder nicht wird ein anderer Datei-name zurückgegeben
+	 */
+	public String createJobticketSimple() {
+		aktuellerJob = new Job();
+		aktuellerJobBean.setJob(aktuellerJob);
+		FacesContext fc = FacesContext.getCurrentInstance();
+		aktuellerJob.setErsteller(fc.getExternalContext().getRemoteUser());
+		Date d = new Date();
+		aktuellerJob.setErstellDatum(d);
+		aktuellerJobBean.setIstNeuesTicket(true);
+		return "jt_main.xhtml";
 	}
 
 	public List<Job> getJobs() {

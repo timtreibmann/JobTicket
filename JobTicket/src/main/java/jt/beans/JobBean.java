@@ -32,7 +32,8 @@ import jt.entities.Job;
 import jt.entities.Kunde;
 
 /**
- * Diese Klasse stellt die Anwendungslogik für die "jobticket_main.xhtml" bereit.
+ * Diese Klasse stellt die Anwendungslogik für die "jobticket_main.xhtml"
+ * bereit.
  * 
  * 
  * @author Jan Müller
@@ -45,7 +46,7 @@ public class JobBean {
 	@Inject
 	@AktuellerJob
 	private Job job;
-	
+
 	@Inject
 	AktuellerJobBean aktuellerJobBean;
 
@@ -66,7 +67,12 @@ public class JobBean {
 		}
 	}
 
-
+	/**
+	 * Alte Methode die zum Speichern des Jobs in der Datenbank genutzt wurde
+	 * und aufgerufen wurde wann immer etwas im Formular geändert wurde.
+	 * 
+	 * @return null
+	 */
 	public String updateJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -80,6 +86,61 @@ public class JobBean {
 		return null;
 	}
 
+	/**
+	 * Speichert den Job in der Datenbank ab.
+	 */
+	public String saveJob() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		if (aktuellerJobBean.isIstNeuesTicket()) {
+			em.persist(job);
+			//Vorläufige Lösung
+			em.getTransaction().commit();
+			return "start.xhtml";
+		} else {
+			em.merge(job);
+		}
+		em.getTransaction().commit();
+		return null;
+	}
+
+	/**
+	 * Sucht den Kunden in der Datenbank und speichert das Ergebnis im Job
+	 */
+	public void findeKunde() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		if (selectedKundeId != 0) {
+			Kunde k = em.find(Kunde.class, selectedKundeId);
+			job.setKunde(k);
+			kuerzel = k.getKundenkuerzel();
+		}
+		em.getTransaction().commit();
+	}
+
+	/**
+	 * Sucht nach einem Kunde über sein Kürzel in der Datenbank 
+	 * und speichert den Namen im Job.
+	 */
+	public void findeKundeUeberKuerzel() {
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		final Query query = em
+				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
+		query.setParameter("kuerzel", kuerzel);
+		
+		List<Kunde> kundenListe = query.getResultList();
+		em.getTransaction().commit();
+		if (kundenListe.size() > 0) {
+			setSelectedKundeId(kundenListe.get(0).getId());
+			findeKunde();
+		}
+	}
+
+	/**
+	 * Alte Methode die zum Suchen nach einem Kunde über sein Kürzel verwendet
+	 * wurde. Speichert im nachinein das Ergebnis in der Datenbank
+	 */
 	public void findKundenByKuerzelAndUpdateJobticket() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();

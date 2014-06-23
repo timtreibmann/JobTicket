@@ -16,8 +16,9 @@
 
 			<p:button outcome="start.xhtml" value="Zurück"
 				styleClass="buttonZurueck" />
-			<p:button outcome="jt_produkte.xhtml" value="Weiter" />
-
+			<p:commandButton value="Speichern"	action="#{jobBean.saveJob}"/>
+			<p:button outcome="jt_produkte.xhtml" value="Weiter" rendered="#{!aktuellerJobBean.istNeuesTicket}"/>
+			
 		</ui:define>
 	</ui:composition>
 

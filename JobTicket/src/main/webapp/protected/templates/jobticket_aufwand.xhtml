@@ -117,9 +117,9 @@
 
 			</p:panel>
 			<p:button value="Zurück"
-				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'start.xhtml' : 'jt_produkte.xhtml'}"></p:button>
-			<p:button value="Weiter" outcome="jobticket_overview.xhtml">
-			</p:button>
+				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'start.xhtml' : 'jt_produkte.xhtml'}"/>
+			<p:button value="Zur Job Overview" outcome="jobticket_overview.xhtml"/>
+			<p:commandButton value="Speichern"	action="#{jobBean.saveJob}"/>
 		</h:form>
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"
 			showEffect="fade" hideEffect="drop"
@@ -149,7 +149,7 @@
 					<p:commandButton
 						actionListener="#{angestellteBean.saveAngestellte}"
 						update="growl :aufwandform:kontakter grid"
-						value="Angestellten hinzufügen"></p:commandButton>
+						value="Angestellten hinzufügen"/>
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>

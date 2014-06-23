@@ -44,8 +44,7 @@
 						<p:column>
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.alteJobnummer}" id="alt">
-								<p:ajax event="change" process="@this" update="growl"
-									listener="#{jobBean.updateJobticket}"/>
+								<p:ajax event="change" process="@this"/>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -62,7 +61,7 @@
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 								<p:ajax event="change" process="@this"
 									update="@this growl kundenkurz"
-									listener="#{jobBean.updateJobticket}"></p:ajax>
+									listener="#{jobBean.findeKunde}"></p:ajax>
 							</p:selectOneMenu>
 						</p:column>
 						<p:column>
@@ -72,7 +71,7 @@
 							<p:inputText style="width:100%" value="#{jobBean.kuerzel}"
 								id="kundenkurz">
 								<p:ajax
-									listener="#{jobBean.findKundenByKuerzelAndUpdateJobticket}"
+									listener="#{jobBean.findeKundeUeberKuerzel}"
 									event="change" process="@this" update="kundenselect"></p:ajax>
 							</p:inputText>
 						</p:column>
@@ -93,9 +92,7 @@
 						<p:column>
 							<p:inputText style="width:100%" maxlength="30" id="job"
 								value="#{aktuellerJobBean.job.name}">
-								<p:ajax event="change" process="@this" update="@this growl"
-									listener="#{jobBean.updateJobticket}"></p:ajax>
-
+								<p:ajax event="change" process="@this"/>
 							</p:inputText>
 						</p:column>
 
@@ -106,8 +103,7 @@
 						<p:column>
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.budgetInEuro}" id="budget_in_eur">
-								<p:ajax event="change" process="@this" update="@this growl"
-									listener="#{jobBean.updateJobticket}"></p:ajax>
+								<p:ajax event="change" process="@this"/>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -152,8 +148,7 @@
 						required="true" />
 					<p:outputLabel> Kundenkürzel</p:outputLabel>
 					<p:inputText style="width:100%"
-						value="#{kundenBean.kunde.kundenkuerzel}" autocomplete="
-				true" />
+						value="#{kundenBean.kunde.kundenkuerzel}" autocomplete="true" />
 					<p:outputLabel> Adresse</p:outputLabel>
 					<p:inputText style="width:100%" id="t2"
 						value="#{kundenBean.kunde.adresse}" autocomplete="true" />
