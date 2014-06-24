@@ -118,8 +118,8 @@
 				</f:facet>
 				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
 					headerText="Erstelldatum" filterMatchMode="contains" filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
-					<h:outputText id="dates" value="#{job.erstellDatum}">
-						<f:convertDateTime timeStyle="short"></f:convertDateTime>
+					<h:outputText id="dates">
+						#{startBean.customFormatDate(job.erstellDatum)}
 					</h:outputText>
 				</p:column>
 				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.id}"

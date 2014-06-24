@@ -217,7 +217,7 @@ public class StartBean implements Serializable {
 	
 	public String customFormatDate(Date date) {
 		   if (date != null) {
-		       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		       DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 		       return format.format(date);
 		    }
 		   return "";
