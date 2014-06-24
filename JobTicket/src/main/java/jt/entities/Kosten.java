@@ -16,10 +16,10 @@ import javax.persistence.Table;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Kosten.
- *
- * @author jan & tim
  * The persistent class for the KOSTEN database table.
+ *
+ * @author jan
+ * @author tim
  */
 @Entity
 @Table(schema="JOBTICKET")
