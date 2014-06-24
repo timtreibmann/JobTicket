@@ -17,6 +17,8 @@
 package jt.beans;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +61,9 @@ public class StartBean implements Serializable {
 
 	private EntityManager em;
 
+	@Inject
+	OptionenBean options;
+	
 	@Inject
 	@AktuellerJob
 	private Job aktuellerJob;
@@ -133,7 +138,11 @@ public class StartBean implements Serializable {
 		Date d = new Date();
 		aktuellerJob.setErstellDatum(d);
 		aktuellerJobBean.setIstNeuesTicket(true);
-		return "jt_main.xhtml";
+		/*if (optionen.isZeigeAllesAufEinerSeite()) {
+			return "ticketanzeige.xhtml";
+		} else {*/
+			return "jt_main.xhtml";
+		//}
 	}
 
 	public List<Job> getJobs() {
@@ -205,5 +214,13 @@ public class StartBean implements Serializable {
 		aktuellerJobBean.setJob(job);
 		return "jobticket_overview.xhtml";
 	}
+	
+	public String customFormatDate(Date date) {
+		   if (date != null) {
+		       DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		       return format.format(date);
+		    }
+		   return "";
+		}
 
 }

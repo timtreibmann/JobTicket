@@ -117,7 +117,7 @@
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
 				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
-					headerText="Erstelldatum" filterMatchMode="contains" filterBy="">
+					headerText="Erstelldatum" filterMatchMode="contains" filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
 					<h:outputText id="dates" value="#{job.erstellDatum}">
 						<f:convertDateTime timeStyle="short"></f:convertDateTime>
 					</h:outputText>
