@@ -89,16 +89,6 @@ public class StartBean implements Serializable {
 		this.filteredJobs = filteredJobs;
 	}
 
-	public String editJob(Job job) {
-		aktuellerJobBean.setJob(job);
-
-		if (optionen.isZeigeAllesAufEinerSeite()) {
-			return "ticketanzeige.xhtml";
-		} else {
-			return "jt_main.xhtml";
-		}
-	}
-
 	/**
 	 * Erstellt einen neuen Job und initialisiert das Erstellungsdatum, ohne
 	 * direkt einen neuen Eintrag in der Datenbank zu erstellen
@@ -181,6 +171,16 @@ public class StartBean implements Serializable {
 		job = em.merge(job);
 		em.remove(job);
 		em.getTransaction().commit();
+		resetJob();
+		return null;
+	}
+	
+	/**
+	 * Setzt den aktuellen Job auf null und schickt den Cliet zurück auf die start.xhtml
+	 * @return null
+	 */
+	public String resetJob() {
+		aktuellerJobBean.setJob(null);
 		goToPage("start.xhtml?faces-redirect=true");
 		return null;
 	}
@@ -197,6 +197,7 @@ public class StartBean implements Serializable {
 	 * <schickt den client auf die Job-Overview des ausgewählten Jobs.
 	 */
 	public void onRowSelect() {
+		aktuellerJobBean.setIstNeuesTicket(false);
 		goToPage("jobticket_overview.xhtml?faces-redirect=true");
 	}
 

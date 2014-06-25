@@ -136,7 +136,7 @@
 				<p></p>
 				<p:commandButton value="Ja"
 					action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
-				<p:button value="Nein" update="@form" outcome="start.xhtml" />
+				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein" update="@form" />
 			</p:overlayPanel>
 		</h:form>
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"

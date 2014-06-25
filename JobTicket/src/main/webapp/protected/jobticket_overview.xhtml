@@ -92,9 +92,9 @@
 			<p></p>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €" />
 		</p:panel>
-		<p:button outcome="start.xhtml" value="Job-Tabelle" />
+		<p:commandButton actionListener="#{startBean.resetJob}" value="Job-Tabelle" />
 		<p:button value="Bearbeiten"
-			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}" />
+			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_main.xhtml'}" />
 		<p:commandButton id="delete" value="Job löschen" icon="ui-icon-trash" rendered="#{!aktuellerJobBean.istNeuesTicket}"/>
 
 		<p:overlayPanel id="p" for="delete" hideEffect="fade">

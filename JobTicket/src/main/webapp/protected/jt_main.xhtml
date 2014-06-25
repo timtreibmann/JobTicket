@@ -22,7 +22,7 @@
 				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
 				<p></p>
 				<p:commandButton value="Ja" action="#{jobBean.saveJobAndRedirect('start.xhtml')}"/>
-				<p:button value="Nein" update="@form" outcome="start.xhtml"/>
+				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein"/>
 			</p:overlayPanel>
 
 		</ui:define>

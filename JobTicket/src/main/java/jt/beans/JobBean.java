@@ -106,6 +106,9 @@ public class JobBean {
 
 	public String saveJobAndRedirect(String target){
 		saveJob();
+		if(target.equals("start.xhtml")){
+			aktuellerJobBean.setJob(null);
+		}
 		return target;
 	}
 	
