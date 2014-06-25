@@ -122,7 +122,7 @@
 				rendered="#{optionenBean.zeigeAllesAufEinerSeite}" id="back" />
 
 			<p:commandButton value="Zur Job Overview" id="toOverview" />
-			<p:commandButton value="Speichern" action="#{jobBean.saveJob}"
+			<p:commandButton value="Speichern" action="#{jobBean.saveJobAndRedirect(null)}"
 				update="@form" />
 			<p:overlayPanel id="reminder1" for="toOverview" hideEffect="fade">
 				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>

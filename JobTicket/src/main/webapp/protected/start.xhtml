@@ -135,7 +135,7 @@
 					filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
-				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
+				<p:column id="kundeColumn" filterBy="#{startBean.customKundenFilter(job.kunde)}"
 					sortBy="#{job.kunde.name}" headerText="Kunde"
 					filterMatchMode="contains" style="width:25%">
 					<h:outputText value="#{job.kunde.name}"/>

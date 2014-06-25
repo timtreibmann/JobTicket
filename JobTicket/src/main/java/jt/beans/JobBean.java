@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann, Marcus Wanka
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -38,6 +40,7 @@ import jt.entities.Kunde;
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
 
 @RequestScoped
@@ -89,29 +92,38 @@ public class JobBean {
 	/**
 	 * Speichert den Job in der Datenbank ab.
 	 */
-	public String saveJob() {
+	private void saveJob() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		if (aktuellerJobBean.isIstNeuesTicket()) {
 			em.persist(job);
-			em.getTransaction().commit();
 			aktuellerJobBean.setIstNeuesTicket(false);
-			return "start.xhtml";
 		} else {
 			em.merge(job);
 		}
 		em.getTransaction().commit();
-		return null;
 	}
 
-	public String saveJobAndRedirect(String target){
-		saveJob();
-		if(target.equals("start.xhtml")){
-			aktuellerJobBean.setJob(null);
+	/**
+	 * Die methode die von den xhtml Seiten aufgerufen wird,
+	 * um den job zu speichern und dann die Seite zu verlassen.
+	 * @param target Name der Datei die nach dem Speichen geladen werden soll oder null wenn eine geladen werden soll.
+	 * @return Der übergebene Parameter Target wird wieder an den Client zurück gegeben.
+	 */
+	public String saveJobAndRedirect(String target) {
+		if ((job.getName()).equals("") && job.getKunde() == null) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null, new FacesMessage(
+					"Bevor gespeichert werden kann, muss entweder ein Jobname oder Kunde angegeben werden."));
+		} else {
+			saveJob();
+			if (target.equals("start.xhtml")) {
+				aktuellerJobBean.setJob(null);
+			}
 		}
 		return target;
 	}
-	
+
 	/**
 	 * Sucht den Kunden in der Datenbank und speichert das Ergebnis im Job
 	 */
@@ -127,8 +139,8 @@ public class JobBean {
 	}
 
 	/**
-	 * Sucht nach einem Kunde über sein Kürzel in der Datenbank 
-	 * und speichert den Namen im Job.
+	 * Sucht nach einem Kunde über sein Kürzel in der Datenbank und speichert
+	 * den Namen im Job.
 	 */
 	public void findeKundeUeberKuerzel() {
 		em = entityManagerFactory.createEntityManager();
@@ -136,7 +148,7 @@ public class JobBean {
 		final Query query = em
 				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
 		query.setParameter("kuerzel", kuerzel);
-		
+
 		List<Kunde> kundenListe = query.getResultList();
 		em.getTransaction().commit();
 		if (kundenListe.size() > 0) {

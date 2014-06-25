@@ -15,7 +15,7 @@
 			<ui:include src="templates/jobticket_main.xhtml" />
 
 			<p:commandButton  value="Zurück" styleClass="buttonZurueck" id="back"/>
-			<p:commandButton value="Speichern" action="#{jobBean.saveJob}" />
+			<p:commandButton value="Speichern" action="#{jobBean.saveJobAndRedirect(null)}" />
 			<p:button outcome="jt_produkte.xhtml" value="Weiter" />
 			
 			<p:overlayPanel id="reminder" for="back" hideEffect="fade">

@@ -36,6 +36,7 @@ import javax.persistence.Query;
 
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
+import jt.entities.Kunde;
 
 /**
  * Diese Klasse stellt die Anwendungslogik für die "start.xhtml" bereit. Sie
@@ -224,5 +225,13 @@ public class StartBean implements Serializable {
 
 		configurableNavigationHandler
 				.performNavigation(page);
+	}
+	
+	public String customKundenFilter(Kunde k){
+		String filter = "";
+		if(k != null){
+			filter = k.getName() + k.getKundenkuerzel();
+		}
+		return filter;
 	}
 }
