@@ -117,7 +117,8 @@
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
 				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
-					headerText="Erstelldatum" filterMatchMode="contains" filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
+					headerText="Erstelldatum" filterMatchMode="contains"
+					filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
 					<h:outputText id="dates">
 						#{startBean.customFormatDate(job.erstellDatum)}
 					</h:outputText>
@@ -144,7 +145,6 @@
 						displayOnly="true" />
 
 				</p:column>
-
 				<p:column>
 					<p:columnGroup>
 						<p:overlayPanel id="p" for="delete" hideEffect="fade">

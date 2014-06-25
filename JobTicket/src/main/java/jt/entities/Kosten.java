@@ -12,59 +12,58 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-
-
 // TODO: Auto-generated Javadoc
 /**
  * The persistent class for the KOSTEN database table.
- *
+ * 
  * @author jan
  * @author tim
  */
 @Entity
-@Table(schema="JOBTICKET")
-@NamedQuery(name="Kosten.findAll", query="SELECT k FROM Kosten k")
+@Table(schema = "JOBTICKET")
+@NamedQuery(name = "Kosten.findAll", query = "SELECT k FROM Kosten k")
 public class Kosten implements Serializable {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	/** The arbeitsaufwand. */
 	private double arbeitsaufwand;
 
 	/** The arbeitsaufwand ist in euro. */
-	@Column(name="ARBEITSAUFWAND_IST_IN_EURO")
+	@Column(name = "ARBEITSAUFWAND_IST_IN_EURO")
 	private int arbeitsaufwandIstInEuro;
 
 	/** The kommentar. */
 	private String kommentar;
 
-	//bi-directional many-to-one association to Angestellte
+	// bi-directional many-to-one association to Angestellte
 	/** The angestellte. */
 	@ManyToOne
 	private Angestellte angestellte;
 
-	//bi-directional many-to-one association to Job
+	// bi-directional many-to-one association to Job
 	/** The job. */
 	@ManyToOne
-
-	@JoinColumn(name="JOBS_ID")
+	@JoinColumn(name = "JOBS_ID")
 	private Job job;
 
 	/**
 	 * Instantiates a new kosten.
 	 */
 	public Kosten() {
+		arbeitsaufwand = 0;
+		arbeitsaufwandIstInEuro = 0;
 	}
 
 	/**
 	 * Gets the id.
-	 *
+	 * 
 	 * @return the id
 	 */
 	public int getId() {
@@ -73,8 +72,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the id.
-	 *
-	 * @param id the new id
+	 * 
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -82,7 +82,7 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Gets the arbeitsaufwand.
-	 *
+	 * 
 	 * @return the arbeitsaufwand
 	 */
 	public double getArbeitsaufwand() {
@@ -91,8 +91,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the arbeitsaufwand.
-	 *
-	 * @param arbeitsaufwand the new arbeitsaufwand
+	 * 
+	 * @param arbeitsaufwand
+	 *            the new arbeitsaufwand
 	 */
 	public void setArbeitsaufwand(double arbeitsaufwand) {
 		this.arbeitsaufwand = arbeitsaufwand;
@@ -100,7 +101,7 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Gets the arbeitsaufwand ist in euro.
-	 *
+	 * 
 	 * @return the arbeitsaufwand ist in euro
 	 */
 	public int getArbeitsaufwandIstInEuro() {
@@ -109,8 +110,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the arbeitsaufwand ist in euro.
-	 *
-	 * @param arbeitsaufwandIstInEuro the new arbeitsaufwand ist in euro
+	 * 
+	 * @param arbeitsaufwandIstInEuro
+	 *            the new arbeitsaufwand ist in euro
 	 */
 	public void setArbeitsaufwandIstInEuro(int arbeitsaufwandIstInEuro) {
 		this.arbeitsaufwandIstInEuro = arbeitsaufwandIstInEuro;
@@ -118,7 +120,7 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Gets the kommentar.
-	 *
+	 * 
 	 * @return the kommentar
 	 */
 	public String getKommentar() {
@@ -127,8 +129,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the kommentar.
-	 *
-	 * @param kommentar the new kommentar
+	 * 
+	 * @param kommentar
+	 *            the new kommentar
 	 */
 	public void setKommentar(String kommentar) {
 		this.kommentar = kommentar;
@@ -136,7 +139,7 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Gets the angestellte.
-	 *
+	 * 
 	 * @return the angestellte
 	 */
 	public Angestellte getAngestellte() {
@@ -145,8 +148,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the angestellte.
-	 *
-	 * @param angestellte the new angestellte
+	 * 
+	 * @param angestellte
+	 *            the new angestellte
 	 */
 	public void setAngestellte(Angestellte angestellte) {
 		this.angestellte = angestellte;
@@ -154,7 +158,7 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Gets the job.
-	 *
+	 * 
 	 * @return the job
 	 */
 	public Job getJob() {
@@ -163,8 +167,9 @@ public class Kosten implements Serializable {
 
 	/**
 	 * Sets the job.
-	 *
-	 * @param job the new job
+	 * 
+	 * @param job
+	 *            the new job
 	 */
 	public void setJob(Job job) {
 		this.job = job;

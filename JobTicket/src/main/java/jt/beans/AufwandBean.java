@@ -30,6 +30,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import org.primefaces.context.RequestContext;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Angestellte;
 import jt.entities.Job;
@@ -62,66 +64,39 @@ public class AufwandBean {
 	private int selectedAngestellteId;
 	private double gesamtKosten;
 	private boolean istAufwandInEuro;
-	
+
 	@PostConstruct
 	private void init() {
 		if (aktuellerJobBean.isIstNeuesTicket()) {
 			selectedAngestellteId = options.getAngemeldeterMitarbeiterId();
-			saveKosten();
-			aktuellerJobBean.setIstNeuesTicket(false);
+			initRelations();
+			RequestContext.getCurrentInstance().update("aufwandform:repeat");
 		}
 		berechneGesamtkosten();
 	}
 
-	public String saveKosten() {
-
-		try {
-			em = entityManagerFactory.createEntityManager();
-			Angestellte angestellte = em.find(Angestellte.class,
-					selectedAngestellteId);
-			if (!istAngestellterVorhanden(angestellte)) {
-				em.getTransaction().begin();
-				Kosten kosten = new Kosten();
-				kosten.setArbeitsaufwand(0);
-				kosten.setArbeitsaufwandIstInEuro(0);
-				Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
-				jobbearbeiter.setAngestellte(angestellte);
-				job.addJobbearbeiter(jobbearbeiter);
-				angestellte.addKosten(kosten);
-				job.addKosten(kosten);
-				em.persist(jobbearbeiter);
-				em.persist(kosten);
-				em.merge(angestellte);
-				//em.merge(job);
-				em.getTransaction().commit();
-			} else {
-				FacesContext fc = FacesContext.getCurrentInstance();
-				fc.addMessage(null, new FacesMessage(
-						"Angestellter wurde bereits hinzugefügt!"));
-			}
-		} catch (NullPointerException e) {
+	/**
+	 * Initialisiert die Relationen zu den Kosten und dem Jobbearbeiter.
+	 * @return null
+	 */
+	public String initRelations() {
+		Kosten kosten = new Kosten();
+		em = entityManagerFactory.createEntityManager();
+		Angestellte angestellte = em.find(Angestellte.class,
+				selectedAngestellteId);
+		if (!istAngestellterVorhanden(angestellte) && selectedAngestellteId != 0) {
+			kosten.setAngestellte(angestellte);
+			Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
+			jobbearbeiter.setAngestellte(angestellte);
+			job.addJobbearbeiter(jobbearbeiter);
+			angestellte.addKosten(kosten);
+			job.addKosten(kosten);
+		} else {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(
-					"Bitte Angestellten auswählen!"));
+					"Angestellter wurde bereits hinzugefügt!"));
 		}
-		return null;
-	}
-
-	/**
-	 * Update kosten.
-	 * 
-	 * @param kosten
-	 *            the kosten
-	 * @return the string
-	 */
-	public String updateKosten(Kosten kosten) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		em.merge(kosten);
-		FacesContext fc = FacesContext.getCurrentInstance();
-		em.getTransaction().commit();
-
-		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
+		selectedAngestellteId = 0;
 		return null;
 	}
 
@@ -142,7 +117,6 @@ public class AufwandBean {
 			}
 			gesamtKosten += betrag;
 		}
-
 	}
 
 	public List<Kosten> getKostens() {
@@ -205,7 +179,6 @@ public class AufwandBean {
 			kosten.setArbeitsaufwandIstInEuro(0);
 		}
 		kosten.setArbeitsaufwand(erg);
-		updateKosten(kosten);
 		return null;
 	}
 
@@ -218,8 +191,6 @@ public class AufwandBean {
 	 */
 
 	private void deleteJobbearbeitersFromJob(Kosten kosten) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		List<Jobbearbeiter> jobbearbeiters = job.getJobbearbeiters();
 		Angestellte angestellte = kosten.getAngestellte();
 		Jobbearbeiter jobbearbeiter = null;
@@ -232,19 +203,11 @@ public class AufwandBean {
 		}
 		job.removeJobbearbeiter(jobbearbeiter);
 		angestellte.removeJobbearbeiter(jobbearbeiter);
-		jobbearbeiter = em.find(Jobbearbeiter.class, jobbearbeiter.getId());
-		em.remove(jobbearbeiter);
-		em.getTransaction().commit();
-
 	}
 
 	private void deleteKostenFromJob(Kosten kosten) {
-		//em = entityManagerFactory.createEntityManager();
-		//em.getTransaction().begin();
 		job.removeKosten(kosten);
 		kosten.getAngestellte();
-		//em.merge(job);
-		//em.getTransaction().commit();
 	}
 
 	public String delete(Kosten kosten) {

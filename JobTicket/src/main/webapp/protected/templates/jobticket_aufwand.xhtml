@@ -52,44 +52,43 @@
 
 					<p:column style="width:50%" headerText="Aufwand">
 						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-							<p:ajax event="change" process="@this" update="@form"
-								listener="#{aufwandBean.updateKosten(kosten)}"></p:ajax>
+							<p:ajax event="change" process="@this" update="@form" />
 						</p:inputText>
 						<p:commandButton update="@this aufwand" id="rechneum"
 							process="aufwand"
 							value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' :'Stunden' }"
-							actionListener="#{aufwandBean.rechneUm(kosten)}"></p:commandButton>
+							actionListener="#{aufwandBean.rechneUm(kosten)}" />
 
 						<p:commandButton update="@form" id="deletebutton"
 							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"
-							style="float:right"></p:commandButton>
+							style="float:right" />
 					</p:column>
 				</p:dataTable>
-					<p:panelGrid columns="4" style="width:820px;">
-						<p:outputLabel for="kontakter" value="Zum Job hinzufügen"
-							style="width:150px" />
-						<p:selectOneMenu id="kontakter"
-							value="#{aufwandBean.selectedAngestellteId}" effect="fold"
-							editable="false" required="false">
-							<f:selectItem itemLabel="Angestellten auswählen" />
-							<f:selectItems value="#{angestellteBean.angestelltes}"
-								var="angestellte"
-								itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-								itemValue="#{angestellte.id}" />
-							<p:ajax event="change" process="@this" update="repeat"
-								listener="#{aufwandBean.saveKosten}" oncomplete="" />
-						</p:selectOneMenu>
-						<p:outputLabel style="width:50%" value="Neuen Mitarbeiter anlegen:"/>
-						<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"
-							style="float:right" />
-					</p:panelGrid>
+				<p:panelGrid columns="4" style="width:820px;">
+					<p:outputLabel for="kontakter" value="Zum Job hinzufügen"
+						style="width:150px" />
+					<p:selectOneMenu id="kontakter"
+						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+						editable="false" required="false">
+						<f:selectItem itemLabel="Angestellten auswählen" />
+						<f:selectItems value="#{angestellteBean.angestelltes}"
+							var="angestellte"
+							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+							itemValue="#{angestellte.id}" />
+						<p:ajax event="change" process="@this" update="repeat"
+							listener="#{aufwandBean.initRelations}" />
+					</p:selectOneMenu>
+					<p:outputLabel style="width:50%" value="Neuen Mitarbeiter anlegen:" />
+					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"
+						style="float:right" />
+				</p:panelGrid>
 				<p></p>
 
 				<p></p>
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Gesamtkosten: "></p:outputLabel>
+							<p:outputLabel value="Gesamtkosten: " />
 						</p:column>
 						<p:column>
 							<h:outputText id="gesamtkosten"
@@ -117,15 +116,34 @@
 
 			</p:panel>
 			<p:button value="Zurück"
-				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'start.xhtml' : 'jt_produkte.xhtml'}"/>
-			<p:button value="Zur Job Overview" outcome="jobticket_overview.xhtml"/>
-			<p:commandButton value="Speichern"	action="#{jobBean.saveJob}"/>
+				rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
+				outcome="jt_produkte.xhtml" />
+			<p:commandButton value="Zurück" styleClass="buttonZurueck"
+				rendered="#{optionenBean.zeigeAllesAufEinerSeite}" id="back" />
+
+			<p:commandButton value="Zur Job Overview" id="toOverview" />
+			<p:commandButton value="Speichern" action="#{jobBean.saveJob}"
+				update="@form" />
+			<p:overlayPanel id="reminder1" for="toOverview" hideEffect="fade">
+				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
+				<p></p>
+				<p:commandButton value="Ja"
+					action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
+				<p:button value="Nein" update="@form" outcome="jobticket_overview.xhtml" />
+			</p:overlayPanel>
+			<p:overlayPanel id="reminder2" for="back" hideEffect="fade">
+				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
+				<p></p>
+				<p:commandButton value="Ja"
+					action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
+				<p:button value="Nein" update="@form" outcome="start.xhtml" />
+			</p:overlayPanel>
 		</h:form>
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"
 			showEffect="fade" hideEffect="drop"
 			for=":aufwandform:neuerAngestellterButton">
 			<h:form id="angestellten_form">
-				<p:growl id="growl"></p:growl>
+				<p:growl id="growl" />
 				<h:panelGrid id="grid" columns="2">
 					<p:outputLabel>Vorname</p:outputLabel>
 					<p:inputText value="#{angestellteBean.angestellte.vorname}"
@@ -149,7 +167,7 @@
 					<p:commandButton
 						actionListener="#{angestellteBean.saveAngestellte}"
 						update="growl :aufwandform:kontakter grid"
-						value="Angestellten hinzufügen"/>
+						value="Angestellten hinzufügen" />
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>

@@ -103,7 +103,7 @@
 						<p:column>
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.budgetInEuro}" id="budget_in_eur">
-								<p:ajax event="change" process="@this"/>
+								<p:ajax event="change" process="@this" update="@form"/>
 							</p:inputText>
 						</p:column>
 					</p:row>

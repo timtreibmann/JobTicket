@@ -129,6 +129,9 @@ public class Job implements Serializable {
 	 * Konstruktor der Klasse Job Instantiates a new job.
 	 */
 	public Job() {
+		produkteigenschaftens = new ArrayList<Produkteigenschaften>();
+		jobbearbeiters = new ArrayList<Jobbearbeiter>();
+		kostens = new ArrayList<Kosten>();
 	}
 
 	/**

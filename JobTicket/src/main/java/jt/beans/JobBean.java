@@ -94,8 +94,8 @@ public class JobBean {
 		em.getTransaction().begin();
 		if (aktuellerJobBean.isIstNeuesTicket()) {
 			em.persist(job);
-			//Vorläufige Lösung
 			em.getTransaction().commit();
+			aktuellerJobBean.setIstNeuesTicket(false);
 			return "start.xhtml";
 		} else {
 			em.merge(job);
@@ -104,6 +104,11 @@ public class JobBean {
 		return null;
 	}
 
+	public String saveJobAndRedirect(String target){
+		saveJob();
+		return target;
+	}
+	
 	/**
 	 * Sucht den Kunden in der Datenbank und speichert das Ergebnis im Job
 	 */

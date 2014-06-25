@@ -71,8 +71,8 @@ public class ProdukteigenschaftenBean {
 			createProdukteigenschaft();
 			wurdeProdukteigenschaftErzeugt = true;
 		}
-		//Details ausklappen, wenn Inhalte eingetragen wurden 
-		accordionIndex=0;
+		// Details ausklappen, wenn Inhalte eingetragen wurden
+		accordionIndex = 0;
 		try {
 			if (sindDetailsVorhanden(job.getProdukteigenschaftens().get(
 					accordionIndex))) {
@@ -85,12 +85,16 @@ public class ProdukteigenschaftenBean {
 		}
 	}
 
+	/**
+	 * Erzeugt eine Produkteigenschaft und ordnet sie dem aktuellen Job zu.
+	 * Berechnet den Fortschritt des Jobs neu.
+	 * 
+	 * @return null - immer
+	 */
 	public String createProdukteigenschaft() {
 		// nur eine neue Produkteigenschaft erzeugen, wenn in der init Methode
 		// noch keine automatisch erzeugt wurde
 		if (!wurdeProdukteigenschaftErzeugt) {
-			em = entityManagerFactory.createEntityManager();
-			em.getTransaction().begin();
 			Produkteigenschaften produkteigenschaften = new Produkteigenschaften();
 			Date d = new Date();
 			produkteigenschaften.setEingangsdatum(d);
@@ -100,9 +104,6 @@ public class ProdukteigenschaftenBean {
 							+ formatter.format(d));
 			produkteigenschaften.setErledigt(0);
 			job.addProdukteigenschaften(produkteigenschaften);
-			em.persist(produkteigenschaften);
-			//em.merge(job);
-			em.getTransaction().commit();
 			accordionIndex = job.getProdukteigenschaftens().size() - 1;
 			ermittleFortschritt();
 		}
@@ -111,11 +112,6 @@ public class ProdukteigenschaftenBean {
 
 	public String updateProdukteigenschaften(
 			Produkteigenschaften produkteigenschaften) {
-
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		em.merge(produkteigenschaften);
-		em.getTransaction().commit();
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", "Produkteigenschaften"));
@@ -124,8 +120,6 @@ public class ProdukteigenschaftenBean {
 	}
 
 	public String ermittleFortschritt() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		double fortschritt = 0;
 		List<Produkteigenschaften> list = job.getProdukteigenschaftens();
 		int produktAnzahl = list.size();
@@ -138,17 +132,11 @@ public class ProdukteigenschaftenBean {
 			fortschritt = (erledigtAnzahl * 100 / produktAnzahl);
 		}
 		job.setFortschritt(fortschritt);
-		//em.merge(job);
-		em.getTransaction().commit();
 		return null;
 	}
 
 	public String delete(Produkteigenschaften produkteigenschaften) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
 		job.removeProdukteigenschaften(produkteigenschaften);
-		//em.merge(job);
-		em.getTransaction().commit();
 		ermittleFortschritt();
 		return null;
 	}

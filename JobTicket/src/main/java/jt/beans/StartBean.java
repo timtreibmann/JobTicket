@@ -24,10 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -37,7 +34,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
 import jt.annotations.AktuellerJob;
-import jt.entities.Angestellte;
 import jt.entities.Job;
 
 /**
@@ -63,7 +59,7 @@ public class StartBean implements Serializable {
 
 	@Inject
 	OptionenBean options;
-	
+
 	@Inject
 	@AktuellerJob
 	private Job aktuellerJob;
@@ -93,7 +89,7 @@ public class StartBean implements Serializable {
 
 	public String editJob(Job job) {
 		aktuellerJobBean.setJob(job);
-		
+
 		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
@@ -102,9 +98,11 @@ public class StartBean implements Serializable {
 	}
 
 	/**
-	 * Erstellt einen neuen Job ,initialisiert das Erstellungsdatum 
-	 * und speichert diesen Job in der Datenbank. 
-	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder nicht wird ein anderer Datei-name zurückgegeben
+	 * Erstellt einen neuen Job ,initialisiert das Erstellungsdatum und
+	 * speichert diesen Job in der Datenbank.
+	 * 
+	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder
+	 *         nicht wird ein anderer Datei-name zurückgegeben
 	 */
 	public String createJobticket() {
 		em = entityManagerFactory.createEntityManager();
@@ -124,11 +122,13 @@ public class StartBean implements Serializable {
 			return "jt_main.xhtml";
 		}
 	}
-	
+
 	/**
-	 * Erstellt einen neuen Job und initialisiert das Erstellungsdatum,
-	 * ohne direkt einen neuen Eintrag in der Datenbank zu erstellen
-	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder nicht wird ein anderer Datei-name zurückgegeben
+	 * Erstellt einen neuen Job und initialisiert das Erstellungsdatum, ohne
+	 * direkt einen neuen Eintrag in der Datenbank zu erstellen
+	 * 
+	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder
+	 *         nicht wird ein anderer Datei-name zurückgegeben
 	 */
 	public String createJobticketSimple() {
 		aktuellerJob = new Job();
@@ -138,11 +138,11 @@ public class StartBean implements Serializable {
 		Date d = new Date();
 		aktuellerJob.setErstellDatum(d);
 		aktuellerJobBean.setIstNeuesTicket(true);
-		/*if (optionen.isZeigeAllesAufEinerSeite()) {
+		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
-		} else {*/
+		} else {
 			return "jt_main.xhtml";
-		//}
+		}
 	}
 
 	public List<Job> getJobs() {
@@ -209,18 +209,17 @@ public class StartBean implements Serializable {
 		externalContext.invalidateSession();
 		return "/logout.xhtml?faces-redirect=true";
 	}
-	
-	public String jobOverview(Job job){
+
+	public String jobOverview(Job job) {
 		aktuellerJobBean.setJob(job);
 		return "jobticket_overview.xhtml";
 	}
-	
-	public String customFormatDate(Date date) {
-		   if (date != null) {
-		       DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		       return format.format(date);
-		    }
-		   return "";
-		}
 
+	public String customFormatDate(Date date) {
+		if (date != null) {
+			DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+			return format.format(date);
+		}
+		return "";
+	}
 }
