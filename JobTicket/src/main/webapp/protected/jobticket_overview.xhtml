@@ -95,7 +95,14 @@
 		<p:button outcome="start.xhtml" value="Job-Tabelle" />
 		<p:button value="Bearbeiten"
 			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml'}" />
+		<p:commandButton id="delete" value="Job löschen" icon="ui-icon-trash" rendered="#{!aktuellerJobBean.istNeuesTicket}"/>
 
+		<p:overlayPanel id="p" for="delete" hideEffect="fade">
+			<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
+			<p></p>
+			<p:commandButton value="Ja" actionListener="#{startBean.deleteJob}"/>
+			<p:commandButton value="Nein" update="@form" />
+		</p:overlayPanel>
 	</h:form>
 </h:body>
 </html>

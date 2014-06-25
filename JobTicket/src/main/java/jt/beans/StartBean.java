@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann, Marcus Wanka
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -42,6 +43,7 @@ import jt.entities.Job;
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
 
 @RequestScoped
@@ -98,39 +100,13 @@ public class StartBean implements Serializable {
 	}
 
 	/**
-	 * Erstellt einen neuen Job ,initialisiert das Erstellungsdatum und
-	 * speichert diesen Job in der Datenbank.
-	 * 
-	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder
-	 *         nicht wird ein anderer Datei-name zurückgegeben
-	 */
-	public String createJobticket() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		aktuellerJob = new Job();
-		aktuellerJobBean.setJob(aktuellerJob);
-		FacesContext fc = FacesContext.getCurrentInstance();
-		aktuellerJob.setErsteller(fc.getExternalContext().getRemoteUser());
-		Date d = new Date();
-		aktuellerJob.setErstellDatum(d);
-		em.persist(aktuellerJob);
-		em.getTransaction().commit();
-		aktuellerJobBean.setIstNeuesTicket(true);
-		if (optionen.isZeigeAllesAufEinerSeite()) {
-			return "ticketanzeige.xhtml";
-		} else {
-			return "jt_main.xhtml";
-		}
-	}
-
-	/**
 	 * Erstellt einen neuen Job und initialisiert das Erstellungsdatum, ohne
 	 * direkt einen neuen Eintrag in der Datenbank zu erstellen
 	 * 
 	 * @return Je nachdem ob der User alles auf einer Seite sehen will oder
 	 *         nicht wird ein anderer Datei-name zurückgegeben
 	 */
-	public String createJobticketSimple() {
+	public String createJobticket() {
 		aktuellerJob = new Job();
 		aktuellerJobBean.setJob(aktuellerJob);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -194,12 +170,18 @@ public class StartBean implements Serializable {
 		return em.find(Job.class, id);
 	}
 
-	public String delete(Job job) {
+	/**
+	 * Löscht einen Job aus der Datenbank.
+	 * @return null
+	 */
+	public String deleteJob() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
+		Job job = aktuellerJobBean.getJob();
 		job = em.merge(job);
 		em.remove(job);
 		em.getTransaction().commit();
+		goToPage("start.xhtml?faces-redirect=true");
 		return null;
 	}
 
@@ -210,16 +192,36 @@ public class StartBean implements Serializable {
 		return "/logout.xhtml?faces-redirect=true";
 	}
 
-	public String jobOverview(Job job) {
-		aktuellerJobBean.setJob(job);
-		return "jobticket_overview.xhtml";
+	/**
+	 * Event-Handler der bei der Selection einer Zeile in der Jobtabelle ausgeführt wird.
+	 * <schickt den client auf die Job-Overview des ausgewählten Jobs.
+	 */
+	public void onRowSelect() {
+		goToPage("jobticket_overview.xhtml?faces-redirect=true");
 	}
 
+	/**
+	 * Wandelt ein Date-Objekt in einen kurzen String im Format 'dd.MM.yyyy' um.
+	 * @param date Umzuwandelndes Dateobjekt
+	 * @return Datum im Format dd.MM.yyyy
+	 */
 	public String customFormatDate(Date date) {
 		if (date != null) {
 			DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
 			return format.format(date);
 		}
 		return "";
+	}
+	
+	/**
+	 * Schickt die Page dessen Name übergeben wurde an den Client.
+	 * @param Name der zu ladenden Datei in form von: "<Dateiname>.xhtml?faces-redirect=true".
+	 */
+	private void goToPage(String page){
+		ConfigurableNavigationHandler configurableNavigationHandler = (ConfigurableNavigationHandler) FacesContext
+				.getCurrentInstance().getApplication().getNavigationHandler();
+
+		configurableNavigationHandler
+				.performNavigation(page);
 	}
 }

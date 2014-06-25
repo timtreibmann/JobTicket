@@ -56,7 +56,7 @@
 					outcome="angestellte_table.xhtml" />
 
 				<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
-					action="#{startBean.createJobticketSimple}" ajax="false" />
+					action="#{startBean.createJobticket}" ajax="false" />
 
 
 			</p:panelGrid>
@@ -112,7 +112,10 @@
 				emptyMessage="Keine Tickets für den ausgewählten Benutzer gefunden! (Mitarbeiterfilter deaktivieren, um alle Tickets anzuzeigen)"
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{startBean.filteredJobs}"
-				sortBy="#{job.erstellDatum}" sortOrder="descending">
+				sortBy="#{job.erstellDatum}" sortOrder="descending"
+				selectionMode="single"
+             	selection="#{aktuellerJobBean.job}" rowKey="#{job.id}">
+             	<p:ajax event="rowSelect" listener="#{startBean.onRowSelect}"/>
 				<f:facet name="header">
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
@@ -124,7 +127,7 @@
 					</h:outputText>
 				</p:column>
 				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.id}"
-					headerText="Jobnummer" filterMatchMode="startsWith">
+					headerText="Nummer" filterMatchMode="startsWith">
 					<h:outputText value="#{job.id}" />
 				</p:column>
 				<p:column id="nameColumn" filterBy="#{job.name}"
@@ -134,8 +137,8 @@
 				</p:column>
 				<p:column id="kundeColumn" filterBy="#{job.kunde.name}"
 					sortBy="#{job.kunde.name}" headerText="Kunde"
-					filterMatchMode="contains">
-					<h:outputText value="#{job.kunde.name}" />
+					filterMatchMode="contains" style="width:25%">
+					<h:outputText value="#{job.kunde.name}"/>
 				</p:column>
 				<p:column id="fortschrittColumn" filterMatchMode="contains"
 					sortBy="#{job.fortschritt}" filterBy="#{job.fortschritt}"
@@ -143,27 +146,11 @@
 
 					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%"
 						displayOnly="true" />
-
 				</p:column>
-				<p:column>
-					<p:columnGroup>
-						<p:overlayPanel id="p" for="delete" hideEffect="fade">
-							<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
-							<p></p>
-							<p:commandButton value="Ja"
-								actionListener="#{startBean.delete(job)}" update="@form"
-								oncomplete="PF('dataTableWidgetVar').filter();" />
-							<p:commandButton value="Nein" update="@form" />
-						</p:overlayPanel>
-						<p:commandButton icon="ui-icon-search" ajax="false"
-							action="#{startBean.jobOverview(job)}" />
-						<p:commandButton icon="ui-icon-wrench" ajax="false"
-							action="#{startBean.editJob(job)}" />
-						<p:commandButton id="delete" icon="ui-icon-trash" />
-						<p:commandButton disabled="true"
+				<p:column style="width: 5%">
+					<p:commandButton disabled="true"
 							rendered="#{(job.budgetInEuro > 0) and (job.getGesamtKosten() > job.budgetInEuro)}"
 							style="background:orange" icon="ui-icon-alert" id="achtung" />
-					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
 		</p:panel>
