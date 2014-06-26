@@ -41,3 +41,7 @@
 .ui-panelgrid .ui-panelgrid-cell{
 	border:none;
 }
+
+.ui-selectonemenu-filter-container {
+    width: 98% !important;
+}

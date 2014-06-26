@@ -19,7 +19,7 @@
 			<p:panel styleClass="panel">
 
 				<p:breadCrumb styleClass="breadCrumbpanel">
-					<p:menuitem value="Übersicht" url="start.xhtml" />
+					<p:menuitem value="Übersicht" />
 					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
 						disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
 						value="Jobticket" url="" />
@@ -55,13 +55,14 @@
 						<p:column>
 							<p:selectOneMenu style="width:104%" id="kundenselect"
 								value="#{jobBean.selectedKundeId}" editable="false"
-								effect="fold">
+								effect="fold" filter="true"
+								filterMatchMode="contains">
 								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 								<p:ajax event="change" process="@this"
 									update="@this growl kundenkurz"
-									listener="#{jobBean.findeKunde}"></p:ajax>
+									listener="#{jobBean.findeKunde}"/>
 							</p:selectOneMenu>
 						</p:column>
 						<p:column>
@@ -80,8 +81,7 @@
 								for="neuerKundeButton" value="neuen Kunden anlegen"
 								widgetVar="tip1" myPosition="left center"
 								atPosition="right center" />
-							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus">
-							</p:commandButton>
+							<p:button id="neuerKundeButton" icon="ui-icon-plus"/>
 						</p:column>
 					</p:row>
 					<p:row>

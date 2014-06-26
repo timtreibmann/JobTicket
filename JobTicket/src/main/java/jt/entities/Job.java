@@ -542,4 +542,18 @@ public class Job implements Serializable {
 		return gesamtKosten;
 	}
 	
+	public String longId(){
+		String longId = "" + this.id;
+		if(id < 10){
+			longId = "0000" + longId;
+		}else if(id < 100){
+			longId = "000" + longId;
+		}else if(id < 1000){
+			longId = "00" + longId;
+		}else if(id < 10000){
+			longId = "0" + longId;
+		}
+		return longId;
+	}
+	
 }

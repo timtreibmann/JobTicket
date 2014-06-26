@@ -14,17 +14,18 @@
 			<p>
 				<h:outputLabel value="Willkommen #{request.remoteUser}!" />
 			</p>
+			<p style="float:right">
 			<p:commandButton value="Logout" style="float:right"
 				action="#{startBean.logout}" ajax="false" />
-
-			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
-			<p:button value="Kundenliste anzeigen" outcome="kunden_table.xhtml" />
-
+			<p:button style="float:right" value="Kundenliste" outcome="kunden_table.xhtml" />
+			<p:commandButton value="Optionen" id="erweitert" />
+			</p>
+			
+			<p>
 			<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 				for="angestellteBearbeitenButton"
 				value="Mitarbeiter liste bearbeiten" widgetVar="tip1"
 				myPosition="left center" atPosition="right center" />
-
 
 			<p:panelGrid styleClass="grid" columns="5">
 				<p:selectBooleanCheckbox id="checkbox"
@@ -57,10 +58,8 @@
 
 				<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
 					action="#{startBean.createJobticket}" ajax="false" />
-
-
 			</p:panelGrid>
-
+			</p>
 			<p:overlayPanel hideEffect="drop" widgetVar="optionpanel"
 				showEffect="drop" my="right bottom" for="erweitert">
 
@@ -119,26 +118,26 @@
 				<f:facet name="header">
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
-				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
-					headerText="Erstelldatum" filterMatchMode="contains"
-					filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
-					<h:outputText id="dates">
-						#{startBean.customFormatDate(job.erstellDatum)}
-					</h:outputText>
+				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.longId()}"
+					headerText="Jobnummer" filterMatchMode="contains">
+					<h:outputText value="#{job.longId()}" />
 				</p:column>
-				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.id}"
-					headerText="Jobnummer" filterMatchMode="startsWith">
-					<h:outputText value="#{job.id}" />
+				<p:column id="kundeColumn" filterBy="#{startBean.customKundenFilter(job.kunde)}"
+					sortBy="#{job.kunde.name}" headerText="Kunde"
+					filterMatchMode="contains">
+					<h:outputText value="#{job.kunde.kundenkuerzel}"/>
 				</p:column>
 				<p:column id="nameColumn" filterBy="#{job.name}"
 					sortBy="#{job.name}" headerText="Jobname"
 					filterMatchMode="contains">
 					<h:outputText value="#{job.name}" />
 				</p:column>
-				<p:column id="kundeColumn" filterBy="#{startBean.customKundenFilter(job.kunde)}"
-					sortBy="#{job.kunde.name}" headerText="Kunde"
-					filterMatchMode="contains" style="width:25%">
-					<h:outputText value="#{job.kunde.name}"/>
+				<p:column id="erstColumn" sortBy="#{job.erstellDatum}"
+					headerText="Erstelldatum" filterMatchMode="contains"
+					filterBy="#{startBean.customFormatDate(job.erstellDatum)}">
+					<h:outputText id="dates">
+						#{startBean.customFormatDate(job.erstellDatum)}
+					</h:outputText>
 				</p:column>
 				<p:column id="fortschrittColumn" filterMatchMode="contains"
 					sortBy="#{job.fortschritt}" filterBy="#{job.fortschritt}"
