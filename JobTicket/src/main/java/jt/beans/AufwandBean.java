@@ -65,19 +65,26 @@ public class AufwandBean {
 	private int selectedAngestellteId;
 	private double gesamtKosten;
 	private boolean istAufwandInEuro;
+	private boolean initDone;
 
+	/**
+	 * Initialisierungsmethode der Bean, 
+	 * die sofern der Aktuelle job ein neues Ticket ist den angemeldeten Mitarbeiter 
+	 * dem Job hinzufügt und dann die Gesamtkosten berechnet.
+	 */
 	@PostConstruct
 	private void init() {
 		if (aktuellerJobBean.isIstNeuesTicket()) {
 			selectedAngestellteId = options.getAngemeldeterMitarbeiterId();
 			initRelations();
-			RequestContext.getCurrentInstance().update("aufwandform:repeat");
 		}
 		berechneGesamtkosten();
+		initDone = true;
 	}
 
 	/**
 	 * Initialisiert die Relationen zu den Kosten und dem Jobbearbeiter.
+	 * Fügt dem Job einen Mitarbeiter hinzu.
 	 * @return null
 	 */
 	public String initRelations() {
@@ -101,6 +108,9 @@ public class AufwandBean {
 		return null;
 	}
 
+	/**
+	 * Berechnet die Gesamtkosten aus dem Aufwand der verschiedenen Mitarbeiter.
+	 */
 	private void berechneGesamtkosten() {
 		// Gesamtkosten berechnen
 		gesamtKosten = 0;
@@ -137,8 +147,8 @@ public class AufwandBean {
 	 * Berechne aufwand in std.
 	 * 
 	 * @param kosten
-	 *            the kosten
-	 * @return the double
+	 *            Übergebene Kosten die umgerechnet werden sollen.
+	 * @return Den Aufwand in Stunden
 	 */
 	private double berechneAufwandInStd(Kosten kosten) {
 		double stundenlohn = kosten.getAngestellte().getStundenlohn();
@@ -206,11 +216,20 @@ public class AufwandBean {
 		angestellte.removeJobbearbeiter(jobbearbeiter);
 	}
 
+	/**
+	 * Löscht Kosten vom Job.
+	 * @param kosten Zu löschende Kosten.
+	 */
 	private void deleteKostenFromJob(Kosten kosten) {
 		job.removeKosten(kosten);
 		kosten.getAngestellte();
 	}
 
+	/**
+	 * Löscht Jobbearbeiter und Kosten vom Job.
+	 * @param kosten zu löschende Kosten
+	 * @return null
+	 */
 	public String delete(Kosten kosten) {
 		deleteJobbearbeitersFromJob(kosten);
 		deleteKostenFromJob(kosten);
@@ -238,6 +257,11 @@ public class AufwandBean {
 		this.selectedAngestellteId = selectedAngestellteId;
 	}
 
+	/**
+	 * Schaut im Job nach ob der übergebene Angestellte bereits am Job arbeitet.
+	 * @param angestellte Zu überprüfender Angestellter
+	 * @return Ob der angestellte vorhanden bereits ist (true) oder nicht (false).
+	 */
 	private boolean istAngestellterVorhanden(Angestellte angestellte) {
 		List<Kosten> kostenListe = job.getKostens();
 		boolean angestellterVorhanden = false;
@@ -249,4 +273,11 @@ public class AufwandBean {
 		return angestellterVorhanden;
 	}
 
+	/**
+	 * Getter-methode für initDone Variable.
+	 * @return the initDone
+	 */
+	public boolean isInitDone() {
+		return initDone;
+	}
 }

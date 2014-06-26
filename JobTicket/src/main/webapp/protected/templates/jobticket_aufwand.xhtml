@@ -9,14 +9,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<h:head></h:head>
+<h:head/>
 
 <h:body>
 	<ui:composition>
-		<h:form id="aufwandform">
+		<h:form id="aufwandform" rendered="#{aufwandBean.initDone}">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
-
 			<p:panel styleClass="panel" id="panel">
 				<p:breadCrumb>
 					<p:menuitem value="Übersicht" url="start.xhtml" />

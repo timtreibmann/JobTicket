@@ -66,6 +66,10 @@ public class ProdukteigenschaftenBean {
 
 	private boolean wurdeProdukteigenschaftErzeugt;
 
+	/**
+	 * Initialisierungsmethode der Bean, die den accordionIndex initialisiert und sofern im Job keine Produkte vorhanden sind,
+	 * eine neue Produkteigenschaft anlegt. 
+	 */
 	@PostConstruct
 	private void init() {
 		if (job.getProdukteigenschaftens().size() == 0) {
@@ -111,15 +115,21 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
-	public String updateProdukteigenschaften(
-			Produkteigenschaften produkteigenschaften) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(
-				"Daten erfolgreich gespeichert!", "Produkteigenschaften"));
+	/**
+	 * Updatet den Fortschritt der Produkteigenschaft.
+	 * @param produkteigenschaften
+	 * @return "jobticket_produktbeschreibung.xhtml"
+	 */
+	public String updateProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
 		ermittleFortschritt();
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
+	/**
+	 * Berechnet den prozentualen Fortschritt 
+	 * aus der Anzahl der fertigen Produkte durch die Anzahl der Produkte.
+	 * @return null
+	 */
 	public String ermittleFortschritt() {
 		double fortschritt = 0;
 		List<Produkteigenschaften> list = job.getProdukteigenschaftens();
@@ -136,12 +146,23 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
+	/**
+	 * Löscht eine Produkteigenschaft vom Job.
+	 * @param produkteigenschaften zu löschende Produkteigenschaft
+	 * @return null
+	 */
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		job.removeProdukteigenschaften(produkteigenschaften);
 		ermittleFortschritt();
 		return null;
 	}
 
+	/**
+	 * Listener für den Button übr den man einen Job als erledigt kennzeichnet.
+	 * Toggled die Eigenschaft erledigt. 
+	 * @param produkteigenschaften Produkteigenschaft die als erledigt oder unerledigt gekennzeichnet werden soll
+	 * @return null
+	 */
 	public String toggleErledigt(Produkteigenschaften produkteigenschaften) {
 		if (produkteigenschaften.getErledigt() == 0) {
 			produkteigenschaften.setErledigt(1);
@@ -152,6 +173,10 @@ public class ProdukteigenschaftenBean {
 		return null;
 	}
 
+	/**
+	 * Listener der dafür sorgt dass immer nur eine Produkteigenschaft geöffnet ist.
+	 * @param event TabChangeEvent, dass beim wechseln des tabs generiert wird.
+	 */
 	public void onTabChange(TabChangeEvent event) {
 		String activeIndex = ((AccordionPanel) event.getComponent())
 				.getActiveIndex();

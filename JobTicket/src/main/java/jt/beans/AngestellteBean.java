@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann, Marus Wanka
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,11 +33,13 @@ import jt.entities.Angestellte;
 import jt.entities.Job;
 
 /**
- * Diese Klasse stellt die Anwendungslogik für die "angestellte_edit.xhtml" und "angestellte_table.xhtml"
- * zur Verfügung. Sie dient zur Verwaltung von Mitarbeiten.
+ * Diese Klasse stellt die Anwendungslogik für die "angestellte_edit.xhtml" und
+ * "angestellte_table.xhtml" zur Verfügung. Sie dient zur Verwaltung von
+ * Mitarbeiten.
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
 @Named
 @RequestScoped
@@ -50,6 +52,11 @@ public class AngestellteBean {
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
 
+	/**
+	 * Holt die Angestellten aus der Datenbank und gibt sie dann zurück.
+	 * 
+	 * @return
+	 */
 	public List<Angestellte> getAngestelltes() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -63,10 +70,25 @@ public class AngestellteBean {
 		return angestellteListe;
 	}
 
+	/**
+	 * Sucht über eine id den dazugehörigen Angestellten aus der Datenbank
+	 * 
+	 * @param id
+	 *            Die id des gesuchten Angestellten.
+	 * @return Den Angestellten dessen id übergeben wurde.
+	 */
 	public Angestellte findAngestelltenByID(int id) {
 		return em.find(Angestellte.class, id);
 	}
-	
+
+	/**
+	 * Sucht in der Datenbank nach den Jobs an denen der übergebene Mitarbeiter
+	 * arbeitet.
+	 * 
+	 * @param angestellte
+	 *            Angestellter dessen Jobs gesucht werden sollen.
+	 * @return Liste an Jobs an denen Der übergebene Angestellte arbeitet.
+	 */
 	private List<Job> getJobsFromAngestellten(Angestellte angestellte) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -78,24 +100,38 @@ public class AngestellteBean {
 		return jobListe;
 	}
 
+	/**
+	 * Löscht einen Angestellten aus der Datenbank.
+	 * 
+	 * @param angestellte
+	 *            Zu löschender Angestellter
+	 * @return null
+	 */
 	public String delete(Angestellte angestellte) {
 		List<Job> jobsVomAngestellten = getJobsFromAngestellten(angestellte);
 		if (jobsVomAngestellten.size() == 0) {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		angestellte = em.merge(angestellte);
-		em.remove(angestellte);
-		em.getTransaction().commit();
-	} else {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage(
-				"Angestellter kann nicht gelöscht werden, da er folgenden Jobs zugeordnet ist: "
-						+ jobsVomAngestellten));
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
+			angestellte = em.merge(angestellte);
+			em.remove(angestellte);
+			em.getTransaction().commit();
+		} else {
+			FacesContext context = FacesContext.getCurrentInstance();
+			context.addMessage(
+					null,
+					new FacesMessage(
+							"Angestellter kann nicht gelöscht werden, da er folgenden Jobs zugeordnet ist: "
+									+ jobsVomAngestellten));
 
-	}
+		}
 		return null;
 	}
 
+	/**
+	 * Speichert einen neuen Angestellten in der Datenbank ab.
+	 * 
+	 * @return "angestellte_add.xhtml"
+	 */
 	public String saveAngestellte() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -109,19 +145,35 @@ public class AngestellteBean {
 
 	}
 
+	/**
+	 * Resettet die Eigenschaft angestellte.
+	 */
 	private void resetAngestellte() {
 		angestellte = new Angestellte();
 		angestellte.setNachname("");
 		angestellte.setVorname("");
 		angestellte.setStundenlohn(0);
 
-	}	
+	}
 
+	/**
+	 * Ruft die Bearbeitungsseite für den übergebenen Angestellten auf.
+	 * 
+	 * @param angestellte
+	 *            Zu bearbeitender Angestellter
+	 * @return "angestellte_edit.xhtml"
+	 */
 	public String editAngestellten(Angestellte angestellte) {
 		this.angestellte = angestellte;
 		return "angestellte_edit.xhtml";
 	}
 
+	/**
+	 * Überschreibt einen vorhandenen Angestellten in der Datenbank. Der zu
+	 * überschreibende Angestellte wird aus der Eigenschaft angestellte geholt.
+	 * 
+	 * @return null
+	 */
 	public String updateAngestellten() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -131,7 +183,7 @@ public class AngestellteBean {
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
-	
+
 	public Angestellte getAngestellte() {
 		return angestellte;
 	}
@@ -139,6 +191,5 @@ public class AngestellteBean {
 	public void setAngestellte(Angestellte angestellte) {
 		this.angestellte = angestellte;
 	}
-
 
 }

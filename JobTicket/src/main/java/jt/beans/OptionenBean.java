@@ -53,6 +53,9 @@ public class OptionenBean implements Serializable {
 	private int selectedAngestellterId;
 	private int angemeldeterMitarbeiterId;
 
+	/**
+	 * Initialisierungsmethode der Bean in der die Eigenschaften initialisiert werden.
+	 */
 	@PostConstruct
 	private void init() {
 		angemeldeterMitarbeiterId = findeAngemeldetenMitarbeiterId();;
@@ -62,6 +65,10 @@ public class OptionenBean implements Serializable {
 		filtereNachMitarbeiter = true;
 	}
 	
+	/**
+	 * Sucht in der Datenbank nach dem angemeldeten Mitarbeiter und gibt dessen id zurück.
+	 * @return Gibt die id des Angemeldeten mitarbeiters zurück.
+	 */
 	private int findeAngemeldetenMitarbeiterId() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String user = fc.getExternalContext().getRemoteUser();

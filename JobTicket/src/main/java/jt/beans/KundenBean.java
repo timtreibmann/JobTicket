@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann, Marcus Wanka
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ import jt.entities.Kunde;
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
 
 @Named
@@ -137,6 +138,9 @@ public class KundenBean {
 		return "kunden_add.xhtml";
 	}
 
+	/**
+	 * Resettet die Eigenschaften der Eigenschaft kunde auf leere Strings.
+	 */
 	private void resetKunde() {
 		this.kunde.setName("");
 		this.kunde.setAdresse("");
@@ -144,6 +148,11 @@ public class KundenBean {
 		this.kunde.setTelefon("");
 	}
 
+	/**
+	 * Sucht in der Datenbank nach allen Jobs die für den übergebenen Kunden sind.
+	 * @param kunde Kunde dessen Jobs gesucht werden.
+	 * @return Liste von Jobs die für den übergebenen Kunden gemacht werden.
+	 */
 	private List<Job> getJobsFromKunde(Kunde kunde) {
 		em = entityManagerFactory.createEntityManager();
 		final Query query = em
@@ -178,6 +187,7 @@ public class KundenBean {
 		return null;
 	}
 
+	
 	private boolean istKuerzelVorhanden(String kuerzel) {
 		Query query = em.createQuery(
 				"SELECT b FROM Kunde b where b.kundenkuerzel = :kuerzel")

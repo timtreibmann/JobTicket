@@ -60,6 +60,10 @@ public class JobBean {
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
 
+	/**
+	 * Initialisierungsmethode der Bean in der versucht wird,
+	 * die Eigenschaften kuerzel und selected KundeId zu initialisieren.
+	 */
 	@PostConstruct
 	private void init() {
 		try {
@@ -68,25 +72,6 @@ public class JobBean {
 		} catch (NullPointerException e) {
 			System.out.println("nullpo");
 		}
-	}
-
-	/**
-	 * Alte Methode die zum Speichern des Jobs in der Datenbank genutzt wurde
-	 * und aufgerufen wurde wann immer etwas im Formular geändert wurde.
-	 * 
-	 * @return null
-	 */
-	public String updateJobticket() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		if (selectedKundeId != 0) {
-			Kunde k = em.find(Kunde.class, selectedKundeId);
-			job.setKunde(k);
-			kuerzel = k.getKundenkuerzel();
-		}
-		em.merge(job);
-		em.getTransaction().commit();
-		return null;
 	}
 
 	/**
@@ -111,7 +96,7 @@ public class JobBean {
 	 * @return Der übergebene Parameter Target wird wieder an den Client zurück gegeben.
 	 */
 	public String saveJobAndRedirect(String target) {
-		if ((job.getName()).equals("") && job.getKunde() == null) {
+		if ((job.getName()) == null && job.getKunde() == null) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(
 					"Bevor gespeichert werden kann, muss entweder ein Jobname oder Kunde angegeben werden."));
@@ -154,25 +139,6 @@ public class JobBean {
 		if (kundenListe.size() > 0) {
 			setSelectedKundeId(kundenListe.get(0).getId());
 			findeKunde();
-		}
-	}
-
-	/**
-	 * Alte Methode die zum Suchen nach einem Kunde über sein Kürzel verwendet
-	 * wurde. Speichert im nachinein das Ergebnis in der Datenbank
-	 */
-	public void findKundenByKuerzelAndUpdateJobticket() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		final Query query = em
-				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
-		query.setParameter("kuerzel", kuerzel);
-
-		List<Kunde> kundenListe = query.getResultList();
-		em.getTransaction().commit();
-		if (kundenListe.size() > 0) {
-			setSelectedKundeId(kundenListe.get(0).getId());
-			updateJobticket();
 		}
 	}
 

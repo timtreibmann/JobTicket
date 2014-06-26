@@ -75,6 +75,9 @@ public class StartBean implements Serializable {
 
 	private List<Job> jobs;
 
+	/**
+	 * Initialisierungsmethode der Bean wo die Eigenschaft jobs initialisiert wird.
+	 */
 	@PostConstruct
 	private void init() {
 		if (jobs == null) {
@@ -116,6 +119,9 @@ public class StartBean implements Serializable {
 		return jobs;
 	}
 
+	/**
+	 * Query methode die die Eigenschaft jobs mit einer Liste von Jobs aus der Datenbank füllt.
+	 */
 	public void queryJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
@@ -143,6 +149,10 @@ public class StartBean implements Serializable {
 		jobs = jobListe;
 	}
 
+	/**
+	 * Sucht in der Datenbank nach allen Jobs an denen der ausgewählte Mitarbeiter arbeitet.
+	 * @return Query für die gesuchten Jobs
+	 */
 	private Query findJobByAngestellten() {
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id");
@@ -150,6 +160,10 @@ public class StartBean implements Serializable {
 		return query;
 	}
 
+	/**
+	 * Sucht in der Datenbank nach allen nicht fertigen Jobs.
+	 * @return Query für die gesuchten Jobs
+	 */
 	private Query findUnfinishedJobsByAngestellten() {
 		Query query = em
 				.createQuery("SELECT j.job FROM Jobbearbeiter j where j.angestellte.id = :id and j.job.fortschritt<100");
@@ -157,6 +171,11 @@ public class StartBean implements Serializable {
 		return query;
 	}
 
+	/**
+	 * Sucht in der Datenbank nach einem Job über seine id.
+	 * @param id Id des zu findenden Jobs
+	 * @return Job dessen id übergeben wurde
+	 */
 	public Job findJobByID(int id) {
 		return em.find(Job.class, id);
 	}
@@ -186,6 +205,10 @@ public class StartBean implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Stellt den Link zur Logout-Page bereit und invalidiert die Session.
+	 * @return "/logout.xhtml?faces-redirect=true"
+	 */
 	public String logout() {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ExternalContext externalContext = facesContext.getExternalContext();
@@ -227,6 +250,11 @@ public class StartBean implements Serializable {
 				.performNavigation(page);
 	}
 	
+	/**
+	 * Filtermethode für die Kunden damit man auch nach dem Kürzel suchen kann.
+	 * @param k vom Datatable übergebener Kunde
+	 * @return String der vom Datatabe zum filtern benutzt wird
+	 */
 	public String customKundenFilter(Kunde k){
 		String filter = "";
 		if(k != null){

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014  Jan Müller, Tim Treibmann
+ *  Copyright (C) 2014  Jan Müller, Tim Treibmann, Marcus Wanka
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,36 +27,35 @@ import javax.inject.Named;
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 
-/** 
- * Die Attribute des aktuell zu bearbeitenden Jobs werden in dieser Klasse zwischengespeichert,
- * so dass sie beim Navigieren zwischen den Seiten erhalten bleiben.
+/**
+ * Die Attribute des aktuell zu bearbeitenden Jobs werden in dieser Klasse
+ * zwischengespeichert, so dass sie beim Navigieren zwischen den Seiten erhalten
+ * bleiben.
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
-
 @Named
 @SessionScoped
-public class AktuellerJobBean implements Serializable{
-	/**
-	 * 
-	 */
+public class AktuellerJobBean implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Produces
 	@AktuellerJob
 	private transient Job job;
-	
+
 	private boolean istNeuesTicket;
-	
-	@PostConstruct
-	private void init() {
-		System.out.println("aktuellerjob init");
-	}
-	
+
+	/**
+	 * Getter methode für den aktuellen Job.
+	 * @return
+	 */
 	public Job getJob() {
 		return job;
 	}
+
 	public void setJob(Job job) {
 		this.job = job;
 	}
@@ -68,5 +67,4 @@ public class AktuellerJobBean implements Serializable{
 	public void setIstNeuesTicket(boolean istNeuesTicket) {
 		this.istNeuesTicket = istNeuesTicket;
 	}
-	
 }
