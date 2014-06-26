@@ -95,7 +95,7 @@
 		<p:commandButton actionListener="#{startBean.resetJob}" value="Job-Tabelle" />
 		<p:button value="Bearbeiten"
 			outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_main.xhtml'}" />
-		<p:commandButton id="delete" value="Job löschen" icon="ui-icon-trash" rendered="#{!aktuellerJobBean.istNeuesTicket}"/>
+		<p:commandButton id="delete" value="Job löschen" icon="ui-icon-trash" rendered="#{(!aktuellerJobBean.istNeuesTicket) and (request.isUserInRole('JobTicket-Administratoren') or aktuellerJobBean.jobMadeByRemoteUser())}"/>
 
 		<p:overlayPanel id="p" for="delete" hideEffect="fade">
 			<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>

@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import jt.annotations.AktuellerJob;
@@ -66,5 +67,14 @@ public class AktuellerJobBean implements Serializable {
 
 	public void setIstNeuesTicket(boolean istNeuesTicket) {
 		this.istNeuesTicket = istNeuesTicket;
+	}
+	
+	/**
+	 * Gibt zurück ob der Aktuelle Job vom aktuell angemeldeten User erstellt wurde.
+	 * @return TRUE wenn der Job vom Angemeldeten User ist, FALSE falls nicht
+	 */
+	public boolean jobMadeByRemoteUser(){
+		FacesContext fc = FacesContext.getCurrentInstance();
+		return job.getErsteller().equals(fc.getExternalContext().getRemoteUser());
 	}
 }
