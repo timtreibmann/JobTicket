@@ -57,6 +57,9 @@ public class ProdukteigenschaftenBean {
 	@Inject
 	@AktuellerJob
 	private Job job;
+	
+	@Inject
+	private AktuellerJobBean aktuellerJobBean;
 
 	@Inject
 	private Produkteigenschaften produkteigenschaften;
@@ -111,6 +114,7 @@ public class ProdukteigenschaftenBean {
 			job.addProdukteigenschaften(produkteigenschaften);
 			accordionIndex = job.getProdukteigenschaftens().size() - 1;
 			ermittleFortschritt();
+			aktuellerJobBean.setUnsavedChanges(true);
 		}
 		return null;
 	}
@@ -122,6 +126,7 @@ public class ProdukteigenschaftenBean {
 	 */
 	public String updateProdukteigenschaften(Produkteigenschaften produkteigenschaften) {
 		ermittleFortschritt();
+		aktuellerJobBean.setUnsavedChanges(true);
 		return "jobticket_produktbeschreibung.xhtml";
 	}
 
@@ -154,6 +159,7 @@ public class ProdukteigenschaftenBean {
 	public String delete(Produkteigenschaften produkteigenschaften) {
 		job.removeProdukteigenschaften(produkteigenschaften);
 		ermittleFortschritt();
+		aktuellerJobBean.setUnsavedChanges(true);
 		return null;
 	}
 
@@ -170,6 +176,7 @@ public class ProdukteigenschaftenBean {
 			produkteigenschaften.setErledigt(0);
 		}
 		updateProdukteigenschaften(produkteigenschaften);
+		aktuellerJobBean.setUnsavedChanges(true);
 		return null;
 	}
 

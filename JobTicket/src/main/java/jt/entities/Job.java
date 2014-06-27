@@ -24,11 +24,11 @@ import org.eclipse.persistence.annotations.CascadeOnDelete;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Job.
+ * The Class Job. Diese Entity Klasse ist die Projektion der Datenbank
+ * Jobs mit ihren jeweiligen Spalten als Eigenschaften
  * 
  * @author Jan Müller
- * @author Tim Treibmann Diese Entity Klasse ist die Projektion der Datenbank
- *         Jobs mit ihren jeweiligen Spalten als Eigenschaften
+ * @author Tim Treibmann
  */
 @Entity
 @Table(schema = "JOBTICKET", name = "JOBS")

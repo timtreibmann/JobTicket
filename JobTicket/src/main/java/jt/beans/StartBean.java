@@ -108,6 +108,7 @@ public class StartBean implements Serializable {
 		Date d = new Date();
 		aktuellerJob.setErstellDatum(d);
 		aktuellerJobBean.setIstNeuesTicket(true);
+		aktuellerJobBean.setUnsavedChanges(true);
 		if (optionen.isZeigeAllesAufEinerSeite()) {
 			return "ticketanzeige.xhtml";
 		} else {
@@ -202,6 +203,7 @@ public class StartBean implements Serializable {
 	public String resetJob() {
 		aktuellerJobBean.setJob(null);
 		goToPage("start.xhtml?faces-redirect=true");
+		aktuellerJobBean.setUnsavedChanges(false);
 		return null;
 	}
 

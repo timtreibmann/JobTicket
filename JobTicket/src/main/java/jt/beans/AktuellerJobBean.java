@@ -25,6 +25,8 @@ import javax.enterprise.inject.Produces;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 
@@ -48,6 +50,8 @@ public class AktuellerJobBean implements Serializable {
 	private transient Job job;
 
 	private boolean istNeuesTicket;
+	
+	private boolean unsavedChanges;
 
 	/**
 	 * Getter methode für den aktuellen Job.
@@ -76,5 +80,26 @@ public class AktuellerJobBean implements Serializable {
 	public boolean jobMadeByRemoteUser(){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		return job.getErsteller().equals(fc.getExternalContext().getRemoteUser());
+	}
+
+	/**
+	 * @return the unsavedChanges
+	 */
+	public boolean isUnsavedChanges() {
+		return unsavedChanges;
+	}
+
+	/**
+	 * @param unsavedChanges the unsavedChanges to set
+	 */
+	public void setUnsavedChanges(boolean unsavedChanges) {
+		this.unsavedChanges = unsavedChanges;
+	}
+	
+	public String leavePage(){
+		if(unsavedChanges){
+			RequestContext.getCurrentInstance().execute("wVar.show();");
+		}
+		return null;
 	}
 }

@@ -44,7 +44,8 @@
 						<p:column>
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.alteJobnummer}" id="alt">
-								<p:ajax event="change" process="@this"/>
+								<p:ajax event="change" process="@this" update="@form"
+								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -92,7 +93,8 @@
 						<p:column>
 							<p:inputText style="width:100%" maxlength="30" id="job"
 								value="#{aktuellerJobBean.job.name}">
-								<p:ajax event="change" process="@this"/>
+								<p:ajax event="change" process="@this" update="@form"
+								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
 							</p:inputText>
 						</p:column>
 
@@ -103,7 +105,8 @@
 						<p:column>
 							<p:inputText style="width:100%"
 								value="#{aktuellerJobBean.job.budgetInEuro}" id="budget_in_eur">
-								<p:ajax event="change" process="@this" update="@form"/>
+								<p:ajax event="change" process="@this" update="@form"
+								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
 							</p:inputText>
 						</p:column>
 					</p:row>

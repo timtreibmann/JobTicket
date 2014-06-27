@@ -9,7 +9,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<h:head/>
+<h:head />
 
 <h:body>
 	<ui:composition>
@@ -51,7 +51,8 @@
 
 					<p:column style="width:50%" headerText="Aufwand">
 						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
-							<p:ajax event="change" process="@this" update="@form" />
+							<p:ajax event="change" process="@this" update="@form"
+								listener="#{aktuellerJobBean.setUnsavedChanges(true)}" />
 						</p:inputText>
 						<p:commandButton update="@this aufwand" id="rechneum"
 							process="aufwand"
@@ -74,7 +75,7 @@
 							var="angestellte"
 							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
 							itemValue="#{angestellte.id}" />
-						<p:ajax event="change" process="@this" update="repeat"
+						<p:ajax event="change" process="@this" update="@form"
 							listener="#{aufwandBean.initRelations}" />
 					</p:selectOneMenu>
 					<p:outputLabel style="width:50%" value="Neuen Mitarbeiter anlegen:" />
@@ -117,25 +118,31 @@
 			<p:button value="Zurück"
 				rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 				outcome="jt_produkte.xhtml" />
+				
 			<p:commandButton value="Job-Tabelle" styleClass="buttonZurueck"
 				rendered="#{optionenBean.zeigeAllesAufEinerSeite}" id="back" />
 
 			<p:commandButton value="Zur Job Overview" id="toOverview" />
-			<p:commandButton value="Speichern" action="#{jobBean.saveJobAndRedirect(null)}"
-				update="@form" />
-			<p:overlayPanel id="reminder1" for="toOverview" hideEffect="fade">
-				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
+			
+			<p:commandButton value="Speichern"
+				action="#{jobBean.saveJobAndRedirect(null)}" update="@form" />
+			
+			<p:overlayPanel id="reminder1" for="toOverview" hideEffect="fade"
+				rendered="#{aktuellerJobBean.unsavedChanges}">
+				<p:outputLabel value="Vorm verlassen speichern?" />
 				<p></p>
 				<p:commandButton value="Ja"
 					action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
-				<p:button value="Nein" update="@form" outcome="jobticket_overview.xhtml" />
+				<p:button value="Nein" update="@form"
+					outcome="jobticket_overview.xhtml" />
 			</p:overlayPanel>
 			<p:overlayPanel id="reminder2" for="back" hideEffect="fade">
 				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
 				<p></p>
 				<p:commandButton value="Ja"
 					action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
-				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein" update="@form" />
+				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein"
+					update="@form" />
 			</p:overlayPanel>
 		</h:form>
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"

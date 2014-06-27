@@ -99,6 +99,7 @@ public class AufwandBean {
 			job.addJobbearbeiter(jobbearbeiter);
 			angestellte.addKosten(kosten);
 			job.addKosten(kosten);
+			aktuellerJobBean.setUnsavedChanges(true);
 		} else {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			fc.addMessage(null, new FacesMessage(
@@ -234,6 +235,7 @@ public class AufwandBean {
 		deleteJobbearbeitersFromJob(kosten);
 		deleteKostenFromJob(kosten);
 		berechneGesamtkosten();
+		aktuellerJobBean.setUnsavedChanges(true);
 		return null;
 	}
 

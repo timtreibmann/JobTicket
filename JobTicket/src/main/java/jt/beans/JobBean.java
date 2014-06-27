@@ -86,6 +86,7 @@ public class JobBean {
 		} else {
 			em.merge(job);
 		}
+		aktuellerJobBean.setUnsavedChanges(false);
 		em.getTransaction().commit();
 	}
 
@@ -120,6 +121,7 @@ public class JobBean {
 			job.setKunde(k);
 			kuerzel = k.getKundenkuerzel();
 		}
+		aktuellerJobBean.setUnsavedChanges(true);
 		em.getTransaction().commit();
 	}
 
