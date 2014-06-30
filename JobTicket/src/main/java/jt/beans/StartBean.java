@@ -34,6 +34,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import org.primefaces.context.RequestContext;
+
 import jt.annotations.AktuellerJob;
 import jt.entities.Job;
 import jt.entities.Kunde;
@@ -194,6 +196,36 @@ public class StartBean implements Serializable {
 		em.getTransaction().commit();
 		resetJob();
 		return null;
+	}
+	
+	/**
+	 * ButtonListener methode die einen Dialog öffnet sofern es ungespeicherte Änderungen gibt 
+	 * und ansonsten die Client redirected.
+	 * @param target Ziel-Datei die über den Button erreicht werden sollte als String
+	 * @return Zielpfad, der vom Browser ausgewertet wird
+	 */
+	public String redirectFromOverview(String target){
+		if(aktuellerJobBean.isUnsavedChanges()){
+			String dialog;
+			switch(target){
+				case "start.xhtml":
+					dialog = "reminder1";
+					break;
+				case "jobticket_overview.xhtml":
+					dialog = "reminder2";
+					break;
+				default:
+					dialog = "";
+			}
+			if(!dialog.equals("")){
+				RequestContext.getCurrentInstance().execute("PF('" + dialog + "').show();");
+			}
+			target = null;
+		}
+		if(target != null && target.equals("start.xhtml")){
+			resetJob();
+		}
+		return target;
 	}
 	
 	/**

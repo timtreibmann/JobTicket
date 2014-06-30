@@ -10,21 +10,36 @@
 <h:body>
 	<ui:composition template="templates/structure_single.xhtml">
 		<ui:define name="main">
-
-
 			<ui:include src="templates/jobticket_main.xhtml" />
+			<p:panel style="width:850px">
+				<p:button outcome="jt_produkte.xhtml" value="Weiter" />
 
-			<p:commandButton  value="Zurück" styleClass="buttonZurueck" id="back"/>
-			<p:commandButton value="Speichern" action="#{jobBean.saveJobAndRedirect(null)}" />
-			<p:button outcome="jt_produkte.xhtml" value="Weiter" />
-			
-			<p:overlayPanel id="reminder" for="back" hideEffect="fade">
-				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
-				<p></p>
-				<p:commandButton value="Ja" action="#{jobBean.saveJobAndRedirect('start.xhtml')}"/>
-				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein"/>
-			</p:overlayPanel>
+				<p:commandButton value="Speichern"
+					action="#{jobBean.saveJobAndRedirect(null)}" />
 
+				<p:commandButton value="Job-Tabelle" style="float:right"
+					action="#{startBean.redirectFromOverview('start.xhtml')}" />
+
+				<p:commandButton value="Zur Job Overview" style="float:right"
+					action="#{startBean.redirectFromOverview('jobticket_overview.xhtml')}" />
+
+
+				<p:dialog header="Ungespeicherte Änderungen gefunden!"
+					widgetVar="reminder1" modal="true" minHeight="40">
+					<h:outputText value="Vorm verlassen speichern?" />
+					<p:commandButton value="Ja"
+						action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
+					<p:commandButton actionListener="#{startBean.resetJob}"
+						value="Nein" />
+				</p:dialog>
+				<p:dialog header="Ungespeicherte Änderungen gefunden!"
+					widgetVar="reminder2" modal="true" minHeight="40">
+					<h:outputText value="Vorm verlassen speichern?" />
+					<p:commandButton value="Ja"
+						action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
+					<p:button value="Nein" outcome="jobticket_overview.xhtml" />
+				</p:dialog>
+			</p:panel>
 		</ui:define>
 	</ui:composition>
 

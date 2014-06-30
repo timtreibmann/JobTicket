@@ -115,35 +115,37 @@
 				</p:panelGrid>
 
 			</p:panel>
-			<p:button value="Zurück"
-				rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-				outcome="jt_produkte.xhtml" />
-				
-			<p:commandButton value="Job-Tabelle" styleClass="buttonZurueck"
-				rendered="#{optionenBean.zeigeAllesAufEinerSeite}" id="back" />
+			<p:panel style="width:850px">
+				<p:button value="Zurück" styleClass="buttonZurueck"
+					rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
+					outcome="jt_produkte.xhtml" />
 
-			<p:commandButton value="Zur Job Overview" id="toOverview" />
-			
-			<p:commandButton value="Speichern"
-				action="#{jobBean.saveJobAndRedirect(null)}" update="@form" />
-			
-			<p:overlayPanel id="reminder1" for="toOverview" hideEffect="fade"
-				rendered="#{aktuellerJobBean.unsavedChanges}">
-				<p:outputLabel value="Vorm verlassen speichern?" />
-				<p></p>
-				<p:commandButton value="Ja"
-					action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
-				<p:button value="Nein" update="@form"
-					outcome="jobticket_overview.xhtml" />
-			</p:overlayPanel>
-			<p:overlayPanel id="reminder2" for="back" hideEffect="fade">
-				<p:outputLabel value="Vorm verlassen speichern?"></p:outputLabel>
-				<p></p>
-				<p:commandButton value="Ja"
-					action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
-				<p:commandButton actionListener="#{startBean.resetJob}" value="Nein"
-					update="@form" />
-			</p:overlayPanel>
+				<p:commandButton value="Speichern"
+					action="#{jobBean.saveJobAndRedirect(null)}" update="@form" />
+
+				<p:commandButton value="Job-Tabelle" style="float:right"
+					action="#{startBean.redirectFromOverview('start.xhtml')}" />
+
+				<p:commandButton value="Zur Job Overview" style="float:right"
+					action="#{startBean.redirectFromOverview('jobticket_overview.xhtml')}" />
+
+				<p:dialog header="Ungespeicherte Änderungen gefunden!"
+					widgetVar="reminder1" modal="true" minHeight="40">
+					<h:outputText value="Vorm verlassen speichern?" />
+					<p:commandButton value="Ja"
+						action="#{jobBean.saveJobAndRedirect('start.xhtml')}" />
+					<p:commandButton actionListener="#{startBean.resetJob}"
+						value="Nein" update="@form" />
+				</p:dialog>
+				<p:dialog header="Ungespeicherte Änderungen gefunden!"
+					widgetVar="reminder2" modal="true" minHeight="40">
+					<h:outputText value="Vorm verlassen speichern?" />
+					<p:commandButton value="Ja"
+						action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
+					<p:button value="Nein" update="@form"
+						outcome="jobticket_overview.xhtml" />
+				</p:dialog>
+			</p:panel>
 		</h:form>
 		<p:overlayPanel my="left top" widgetVar="angestellten_overlay"
 			showEffect="fade" hideEffect="drop"
