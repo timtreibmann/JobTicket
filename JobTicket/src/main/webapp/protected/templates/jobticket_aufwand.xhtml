@@ -124,10 +124,10 @@
 					action="#{jobBean.saveJobAndRedirect(null)}" update="@form" />
 
 				<p:commandButton value="Job-Tabelle" style="float:right"
-					action="#{startBean.redirectFromOverview('start.xhtml')}" />
+					action="#{startBean.checkUnsavedChanges('start.xhtml')}" />
 
 				<p:commandButton value="Zur Job Overview" style="float:right"
-					action="#{startBean.redirectFromOverview('jobticket_overview.xhtml')}" />
+					action="#{startBean.checkUnsavedChanges('jobticket_overview.xhtml')}" />
 
 				<p:dialog header="Ungespeicherte Änderungen gefunden!"
 					widgetVar="reminder1" modal="true" minHeight="40">
@@ -142,8 +142,8 @@
 					<h:outputText value="Vorm verlassen speichern?" />
 					<p:commandButton value="Ja"
 						action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
-					<p:button value="Nein" update="@form"
-						outcome="jobticket_overview.xhtml" />
+					<p:commandButton value="Nein" update="@form"
+						action="#{startBean.reloadJob()}" />
 				</p:dialog>
 			</p:panel>
 		</h:form>

@@ -78,7 +78,8 @@ public class StartBean implements Serializable {
 	private List<Job> jobs;
 
 	/**
-	 * Initialisierungsmethode der Bean wo die Eigenschaft jobs initialisiert wird.
+	 * Initialisierungsmethode der Bean wo die Eigenschaft jobs initialisiert
+	 * wird.
 	 */
 	@PostConstruct
 	private void init() {
@@ -123,7 +124,8 @@ public class StartBean implements Serializable {
 	}
 
 	/**
-	 * Query methode die die Eigenschaft jobs mit einer Liste von Jobs aus der Datenbank füllt.
+	 * Query methode die die Eigenschaft jobs mit einer Liste von Jobs aus der
+	 * Datenbank füllt.
 	 */
 	public void queryJobs() {
 		em = entityManagerFactory.createEntityManager();
@@ -153,7 +155,9 @@ public class StartBean implements Serializable {
 	}
 
 	/**
-	 * Sucht in der Datenbank nach allen Jobs an denen der ausgewählte Mitarbeiter arbeitet.
+	 * Sucht in der Datenbank nach allen Jobs an denen der ausgewählte
+	 * Mitarbeiter arbeitet.
+	 * 
 	 * @return Query für die gesuchten Jobs
 	 */
 	private Query findJobByAngestellten() {
@@ -165,6 +169,7 @@ public class StartBean implements Serializable {
 
 	/**
 	 * Sucht in der Datenbank nach allen nicht fertigen Jobs.
+	 * 
 	 * @return Query für die gesuchten Jobs
 	 */
 	private Query findUnfinishedJobsByAngestellten() {
@@ -176,7 +181,9 @@ public class StartBean implements Serializable {
 
 	/**
 	 * Sucht in der Datenbank nach einem Job über seine id.
-	 * @param id Id des zu findenden Jobs
+	 * 
+	 * @param id
+	 *            Id des zu findenden Jobs
 	 * @return Job dessen id übergeben wurde
 	 */
 	public Job findJobByID(int id) {
@@ -185,6 +192,7 @@ public class StartBean implements Serializable {
 
 	/**
 	 * Löscht einen Job aus der Datenbank.
+	 * 
 	 * @return null
 	 */
 	public String deleteJob() {
@@ -197,39 +205,48 @@ public class StartBean implements Serializable {
 		resetJob();
 		return null;
 	}
-	
+
 	/**
-	 * ButtonListener methode die einen Dialog öffnet sofern es ungespeicherte Änderungen gibt 
-	 * und ansonsten die Client redirected.
-	 * @param target Ziel-Datei die über den Button erreicht werden sollte als String
+	 * ButtonListener methode die einen Dialog öffnet sofern es ungespeicherte
+	 * Änderungen gibt und ansonsten die Client redirected.
+	 * 
+	 * @param target
+	 *            Ziel-Datei die über den Button erreicht werden sollte als
+	 *            String
 	 * @return Zielpfad, der vom Browser ausgewertet wird
 	 */
-	public String redirectFromOverview(String target){
-		if(aktuellerJobBean.isUnsavedChanges()){
+	public void checkUnsavedChanges(String target) {
+		if (aktuellerJobBean.isUnsavedChanges()) {
 			String dialog;
-			switch(target){
-				case "start.xhtml":
-					dialog = "reminder1";
-					break;
-				case "jobticket_overview.xhtml":
-					dialog = "reminder2";
-					break;
-				default:
-					dialog = "";
+			switch (target) {
+			case "start.xhtml":
+				dialog = "reminder1";
+				break;
+			case "jobticket_overview.xhtml":
+				dialog = "reminder2";
+				break;
+			default:
+				dialog = "";
 			}
-			if(!dialog.equals("")){
-				RequestContext.getCurrentInstance().execute("PF('" + dialog + "').show();");
+			if (!dialog.equals("")) {
+				RequestContext.getCurrentInstance().execute(
+						"PF('" + dialog + "').show();");
 			}
-			target = null;
+		} else {
+			if (target != null) {
+				if (target.equals("start.xhtml")) {
+					resetJob();
+				} else {
+					goToPage(target);
+				}
+			}
 		}
-		if(target != null && target.equals("start.xhtml")){
-			resetJob();
-		}
-		return target;
 	}
-	
+
 	/**
-	 * Setzt den aktuellen Job auf null und schickt den Cliet zurück auf die start.xhtml
+	 * Setzt den aktuellen Job auf null und schickt den Cliet zurück auf die
+	 * start.xhtml
+	 * 
 	 * @return null
 	 */
 	public String resetJob() {
@@ -240,7 +257,22 @@ public class StartBean implements Serializable {
 	}
 
 	/**
+	 * Holt die alte Version des aktuellen Jobs aus der Datenbank und
+	 * überschreibt die aktuelle und schickt den client dann auf die
+	 * Overviewpage.
+	 * 
+	 * @return
+	 */
+	public String reloadJob() {
+		aktuellerJobBean.setJob(findJobByID(aktuellerJobBean.getJob().getId()));
+		goToPage("jobticket_overview.xhtml?faces-redirect=true");
+		aktuellerJobBean.setUnsavedChanges(false);
+		return null;
+	}
+
+	/**
 	 * Stellt den Link zur Logout-Page bereit und invalidiert die Session.
+	 * 
 	 * @return "/logout.xhtml?faces-redirect=true"
 	 */
 	public String logout() {
@@ -251,8 +283,9 @@ public class StartBean implements Serializable {
 	}
 
 	/**
-	 * Event-Handler der bei der Selection einer Zeile in der Jobtabelle ausgeführt wird.
-	 * <schickt den client auf die Job-Overview des ausgewählten Jobs.
+	 * Event-Handler der bei der Selection einer Zeile in der Jobtabelle
+	 * ausgeführt wird. <schickt den client auf die Job-Overview des
+	 * ausgewählten Jobs.
 	 */
 	public void onRowSelect() {
 		aktuellerJobBean.setIstNeuesTicket(false);
@@ -261,7 +294,9 @@ public class StartBean implements Serializable {
 
 	/**
 	 * Wandelt ein Date-Objekt in einen kurzen String im Format 'dd.MM.yyyy' um.
-	 * @param date Umzuwandelndes Dateobjekt
+	 * 
+	 * @param date
+	 *            Umzuwandelndes Dateobjekt
 	 * @return Datum im Format dd.MM.yyyy
 	 */
 	public String customFormatDate(Date date) {
@@ -271,27 +306,31 @@ public class StartBean implements Serializable {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Schickt die Page dessen Name übergeben wurde an den Client.
-	 * @param Name der zu ladenden Datei in form von: "<Dateiname>.xhtml?faces-redirect=true".
+	 * 
+	 * @param Name
+	 *            der zu ladenden Datei in form von:
+	 *            "<Dateiname>.xhtml?faces-redirect=true".
 	 */
-	private void goToPage(String page){
+	private void goToPage(String page) {
 		ConfigurableNavigationHandler configurableNavigationHandler = (ConfigurableNavigationHandler) FacesContext
 				.getCurrentInstance().getApplication().getNavigationHandler();
 
-		configurableNavigationHandler
-				.performNavigation(page);
+		configurableNavigationHandler.performNavigation(page);
 	}
-	
+
 	/**
 	 * Filtermethode für die Kunden damit man auch nach dem Kürzel suchen kann.
-	 * @param k vom Datatable übergebener Kunde
+	 * 
+	 * @param k
+	 *            vom Datatable übergebener Kunde
 	 * @return String der vom Datatabe zum filtern benutzt wird
 	 */
-	public String customKundenFilter(Kunde k){
+	public String customKundenFilter(Kunde k) {
 		String filter = "";
-		if(k != null){
+		if (k != null) {
 			filter = k.getName() + k.getKundenkuerzel();
 		}
 		return filter;
