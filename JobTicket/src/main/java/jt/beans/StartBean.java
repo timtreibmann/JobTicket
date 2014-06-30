@@ -264,7 +264,9 @@ public class StartBean implements Serializable {
 	 * @return
 	 */
 	public String reloadJob() {
-		aktuellerJobBean.setJob(findJobByID(aktuellerJobBean.getJob().getId()));
+		if(!aktuellerJobBean.isIstNeuesTicket()){
+			aktuellerJobBean.setJob(findJobByID(aktuellerJobBean.getJob().getId()));
+		}
 		goToPage("jobticket_overview.xhtml?faces-redirect=true");
 		aktuellerJobBean.setUnsavedChanges(false);
 		return null;
