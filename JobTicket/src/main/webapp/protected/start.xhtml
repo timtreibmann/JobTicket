@@ -11,54 +11,46 @@
 	<h:form>
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel styleClass="panelLong">
-			<p>
-				<h:outputLabel value="Willkommen #{request.remoteUser}!" />
-			</p>
-			<p style="float:right">
 			<p:commandButton value="Logout" style="float:right"
 				action="#{startBean.logout}" ajax="false" />
-			<p:button style="float:right" value="Kundenliste" outcome="kunden_table.xhtml" />
-			<p:commandButton value="Optionen" id="erweitert" />
-			</p>
-			
+			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
 			<p>
-			<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
-				for="angestellteBearbeitenButton"
-				value="Mitarbeiter liste bearbeiten" widgetVar="tip1"
-				myPosition="left center" atPosition="right center" />
+				<p:commandLink action="#{chartBean.openActiveUserChart()}"><h:outputLabel
+						value="Willkommen #{request.remoteUser}!" /></p:commandLink>
+			</p>
+			<p>
+				<p:button style="float:right" value="Kundenliste"
+					outcome="kunden_table.xhtml" />
+				<p:button style="float:right" value="Angestelltenliste"
+						outcome="angestellte_table.xhtml" />
 
-			<p:panelGrid styleClass="grid" columns="5">
-				<p:selectBooleanCheckbox id="checkbox"
-					value="#{optionenBean.filtereNachMitarbeiter}">
-					<p:ajax update="@form" listener="#{startBean.queryJobs}"
-						oncomplete="PF('dataTableWidgetVar').filter();" />
-				</p:selectBooleanCheckbox>
+				<p:panelGrid styleClass="grid" columns="4">
+					<p:selectBooleanCheckbox id="checkbox"
+						value="#{optionenBean.filtereNachMitarbeiter}">
+						<p:ajax update="@form" listener="#{startBean.queryJobs}"
+							oncomplete="PF('dataTableWidgetVar').filter();" />
+					</p:selectBooleanCheckbox>
 
-				<p:outputLabel for="checkbox"
-					value="Tickets nach Mitarbeitern filtern "></p:outputLabel>
+					<p:outputLabel for="checkbox"
+						value="Tickets nach Mitarbeitern filtern " />
 
-				<p:selectOneMenu id="jobbearbeiter"
-					disabled="#{!optionenBean.filtereNachMitarbeiter}"
-					value="#{optionenBean.selectedAngestellterId}" effect="fold"
-					rendered="#{optionenBean.filtereNachMitarbeiter}" editable="false">
-					<f:selectItem itemLabel="Mitarbeiter wählen"></f:selectItem>
-					<f:selectItems value="#{angestellteBean.angestelltes}"
-						var="angestellte"
-						itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-						itemValue="#{angestellte.id}" />
-					<p:ajax event="change" process="@this" update="dataTable"
-						listener="#{startBean.queryJobs}"
-						oncomplete="PF('dataTableWidgetVar').filter();" />
-				</p:selectOneMenu>
+					<p:selectOneMenu id="jobbearbeiter"
+						disabled="#{!optionenBean.filtereNachMitarbeiter}"
+						value="#{optionenBean.selectedAngestellterId}" effect="fold"
+						rendered="#{optionenBean.filtereNachMitarbeiter}" editable="false">
+						<f:selectItem itemLabel="Mitarbeiter wählen"></f:selectItem>
+						<f:selectItems value="#{angestellteBean.angestelltes}"
+							var="angestellte"
+							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
+							itemValue="#{angestellte.id}" />
+						<p:ajax event="change" process="@this" update="dataTable"
+							listener="#{startBean.queryJobs}"
+							oncomplete="PF('dataTableWidgetVar').filter();" />
+					</p:selectOneMenu>
 
-				<p:button id="angestellteBearbeitenButton" icon="ui-icon-wrench"
-					disabled="#{!optionenBean.filtereNachMitarbeiter}"
-					rendered="#{optionenBean.filtereNachMitarbeiter}"
-					outcome="angestellte_table.xhtml" />
-
-				<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
-					action="#{startBean.createJobticket}" ajax="false" />
-			</p:panelGrid>
+					<p:commandButton style="width:200px" value="Neues Ticket erzeugen"
+						action="#{startBean.createJobticket}" ajax="false" />
+				</p:panelGrid>
 			</p>
 			<p:overlayPanel hideEffect="drop" widgetVar="optionpanel"
 				showEffect="drop" my="right bottom" for="erweitert">
@@ -112,20 +104,22 @@
 				widgetVar="dataTableWidgetVar"
 				filteredValue="#{startBean.filteredJobs}"
 				sortBy="#{job.erstellDatum}" sortOrder="descending"
-				selectionMode="single"
-             	selection="#{aktuellerJobBean.job}" rowKey="#{job.id}">
-             	<p:ajax event="rowSelect" listener="#{startBean.onRowSelect}"/>
+				selectionMode="single" selection="#{aktuellerJobBean.job}"
+				rowKey="#{job.id}">
+				<p:ajax event="rowSelect" listener="#{startBean.onRowSelect}" />
 				<f:facet name="header">
 					<h:outputText value="Ticket-Übersicht"></h:outputText>
 				</f:facet>
-				<p:column id="idColumn" sortBy="#{job.id}" filterBy="#{job.longId()}"
-					headerText="Jobnummer" filterMatchMode="contains">
+				<p:column id="idColumn" sortBy="#{job.id}"
+					filterBy="#{job.longId()}" headerText="Jobnummer"
+					filterMatchMode="contains">
 					<h:outputText value="#{job.longId()}" />
 				</p:column>
-				<p:column id="kundeColumn" filterBy="#{startBean.customKundenFilter(job.kunde)}"
+				<p:column id="kundeColumn"
+					filterBy="#{startBean.customKundenFilter(job.kunde)}"
 					sortBy="#{job.kunde.name}" headerText="Kunde"
 					filterMatchMode="contains">
-					<h:outputText value="#{job.kunde.kundenkuerzel}"/>
+					<h:outputText value="#{job.kunde.kundenkuerzel}" />
 				</p:column>
 				<p:column id="nameColumn" filterBy="#{job.name}"
 					sortBy="#{job.name}" headerText="Jobname"
@@ -148,8 +142,8 @@
 				</p:column>
 				<p:column style="width: 5%">
 					<p:commandButton disabled="true"
-							rendered="#{(job.budgetInEuro > 0) and (job.getGesamtKosten() > job.budgetInEuro)}"
-							style="background:orange" icon="ui-icon-alert" id="achtung" />
+						rendered="#{(job.budgetInEuro > 0) and (job.getGesamtKosten() > job.budgetInEuro)}"
+						style="background:orange" icon="ui-icon-alert" id="achtung" />
 				</p:column>
 			</p:dataTable>
 		</p:panel>

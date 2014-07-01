@@ -316,7 +316,7 @@ public class StartBean implements Serializable {
 	 *            der zu ladenden Datei in form von:
 	 *            "<Dateiname>.xhtml?faces-redirect=true".
 	 */
-	private void goToPage(String page) {
+	public void goToPage(String page) {
 		ConfigurableNavigationHandler configurableNavigationHandler = (ConfigurableNavigationHandler) FacesContext
 				.getCurrentInstance().getApplication().getNavigationHandler();
 

@@ -181,9 +181,9 @@ public class AufwandBean {
 	 *            the kosten
 	 * @return the string
 	 */
-	public String rechneUm(Kosten kosten) {
+	public void rechneUm(Kosten kosten) {
 		double erg;
-		if (!(kosten.getArbeitsaufwandIstInEuro() == 1)) {
+		if (kosten.getArbeitsaufwandIstInEuro() == 0) {
 			erg = berechneAufwandInEuro(kosten);
 			kosten.setArbeitsaufwandIstInEuro(1);
 		} else {
@@ -191,7 +191,6 @@ public class AufwandBean {
 			kosten.setArbeitsaufwandIstInEuro(0);
 		}
 		kosten.setArbeitsaufwand(erg);
-		return null;
 	}
 
 	/**

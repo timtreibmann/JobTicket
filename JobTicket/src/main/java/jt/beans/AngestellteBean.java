@@ -78,6 +78,9 @@ public class AngestellteBean {
 	 * @return Den Angestellten dessen id übergeben wurde.
 	 */
 	public Angestellte findAngestelltenByID(int id) {
+		if(em == null){
+			em = entityManagerFactory.createEntityManager();
+		}
 		return em.find(Angestellte.class, id);
 	}
 
@@ -89,7 +92,7 @@ public class AngestellteBean {
 	 *            Angestellter dessen Jobs gesucht werden sollen.
 	 * @return Liste an Jobs an denen Der übergebene Angestellte arbeitet.
 	 */
-	private List<Job> getJobsFromAngestellten(Angestellte angestellte) {
+	public List<Job> getJobsFromAngestellten(Angestellte angestellte) {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		final Query query = em

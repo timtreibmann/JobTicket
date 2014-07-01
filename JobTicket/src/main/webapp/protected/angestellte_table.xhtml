@@ -37,12 +37,12 @@
 				var="angestellter">
 
 
-				<p:column>
+				<p:column filterBy="#{angestellter.vorname}" filterMatchMode="contains">
 					<f:facet name="header">Vorname</f:facet>
 					<h:outputText value="#{angestellter.vorname}" />
 				</p:column>
 
-				<p:column>
+				<p:column filterBy="#{angestellter.nachname}" filterMatchMode="contains">
 					<f:facet name="header">Nachname</f:facet>
 					<h:outputText value="#{angestellter.nachname}" />
 				</p:column>
@@ -60,12 +60,15 @@
 
 				<p:column>
 					<p:columnGroup>
-						<p:commandButton icon="ui-icon-wrench"
+						<p:commandButton icon="ui-icon-pencil"
 							action="#{angestellteBean.editAngestellten(angestellter)}"
 							ajax="false" />
 						<p:commandButton icon="ui-icon-trash"
 							actionListener="#{angestellteBean.delete(angestellter)}"
 							update="@form" />
+						<p:commandButton icon="ui-icon-search"
+							action="#{chartBean.openUserChart(angestellter)}"
+							rendered="#{request.isUserInRole('JobTicket-Administratoren')}" />
 					</p:columnGroup>
 				</p:column>
 			</p:dataTable>
