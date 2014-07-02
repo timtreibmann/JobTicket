@@ -36,7 +36,6 @@
 			<p:dataTable value="#{angestellteBean.angestelltes}"
 				var="angestellter">
 
-
 				<p:column filterBy="#{angestellter.vorname}" filterMatchMode="contains">
 					<f:facet name="header">Vorname</f:facet>
 					<h:outputText value="#{angestellter.vorname}" />

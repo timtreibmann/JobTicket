@@ -151,7 +151,7 @@ public class AufwandBean {
 	 *            Übergebene Kosten die umgerechnet werden sollen.
 	 * @return Den Aufwand in Stunden
 	 */
-	private double berechneAufwandInStd(Kosten kosten) {
+	public double berechneAufwandInStd(Kosten kosten) {
 		double stundenlohn = kosten.getAngestellte().getStundenlohn();
 		if (stundenlohn != 0) {
 			return kosten.getArbeitsaufwand() / stundenlohn;

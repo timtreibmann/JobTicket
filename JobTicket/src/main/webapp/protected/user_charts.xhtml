@@ -9,15 +9,18 @@
 <h:head></h:head>
 <body>
 	<h:form>
-		<p:panel style="width:700px;">
-			<p:pieChart widgetVar="kundenAufwandChart"
-				value="#{chartBean.getPieChartModel()}" legendPosition="e"
-				title="Arbeitszeitaufwand - Kunden" style="width:600px;height:600px"
+		<p:panel >
+			<p:pieChart
+				value="#{chartBean.pieChartModel}" legendPosition="s"
+				title="Arbeitszeitaufwand - Kunden" style="width:600px;height:600px;margin:0 auto;"
 				showDataLabels="true" />
 		</p:panel>
-		<p:panel style="width:700px;">
+		<p:panel>
 			<p:button value="Job-Tabelle" outcome="start.xhtml" />
 			<p:button value="Angestelltenliste" outcome="angestellte_table.xhtml" />
+		</p:panel>
+		<p:panel>
+			<p:barChart value="#{chartBean.barChartModel}" title="Stundenaufwand aller Mitarbeiter" orientation="horizontal"/>
 		</p:panel>
 	</h:form>
 	

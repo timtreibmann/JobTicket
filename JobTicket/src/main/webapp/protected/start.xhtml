@@ -8,21 +8,23 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head></h:head>
 <h:body>
-	<h:form>
+	<h:form onkeydown="return event.keyCode != 13">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel styleClass="panelLong">
+			<p:commandButton rendered="false" />
 			<p:commandButton value="Logout" style="float:right"
 				action="#{startBean.logout}" ajax="false" />
 			<p:commandButton style="float:right" value="Optionen" id="erweitert" />
 			<p>
-				<p:commandLink action="#{chartBean.openActiveUserChart()}"><h:outputLabel
-						value="Willkommen #{request.remoteUser}!" /></p:commandLink>
+				<p:commandLink action="#{chartBean.openActiveUserChart()}">
+					<h:outputLabel value="Willkommen #{request.remoteUser}!" />
+				</p:commandLink>
 			</p>
 			<p>
 				<p:button style="float:right" value="Kundenliste"
 					outcome="kunden_table.xhtml" />
 				<p:button style="float:right" value="Angestelltenliste"
-						outcome="angestellte_table.xhtml" />
+					outcome="angestellte_table.xhtml" />
 
 				<p:panelGrid styleClass="grid" columns="4">
 					<p:selectBooleanCheckbox id="checkbox"

@@ -29,6 +29,7 @@ import org.eclipse.persistence.annotations.CascadeOnDelete;
  * 
  * @author Jan Müller
  * @author Tim Treibmann
+ * @author Marcus Wanka
  */
 @Entity
 @Table(schema = "JOBTICKET", name = "JOBS")
@@ -520,7 +521,11 @@ public class Job implements Serializable {
 	public String toString() {
 		return id + " ";
 	}
-
+	
+	/**
+	 * Berecnet die Gesamtkosten und gibt diese dann zurück.
+	 * @return Gesamtkosten in (€)Euro(double)
+	 */
 	public double getGesamtKosten() {
 		// Gesamtkosten berechnen
 		double gesamtKosten = 0;
@@ -540,6 +545,26 @@ public class Job implements Serializable {
 			gesamtKosten += betrag;
 		}
 		return gesamtKosten;
+	}
+	
+	/**
+	 * Berecnet die Gesammtzeit die für diesen Job gearbeitet wurde und gibt diese dann zurück.
+	 * @return Gesamtzeit in Stunden(double)
+	 */
+	public double getGesamtZeitaufwand() {
+		double gesamtZeit = 0;
+		double betrag = 0;
+		List<Kosten> kostenListe = kostens;
+		for (Kosten k : kostenListe) {
+			if (k.getArbeitsaufwandIstInEuro() == 1) {
+				AufwandBean aB = new AufwandBean();
+				betrag = aB.berechneAufwandInStd(k);
+			}else {
+				betrag = k.getArbeitsaufwand();
+			}
+		gesamtZeit += betrag;
+		}
+		return gesamtZeit;
 	}
 	
 	public String longId(){

@@ -153,6 +153,23 @@ public class StartBean implements Serializable {
 		}
 		jobs = jobListe;
 	}
+	
+	/**
+	 * Gibt alle Jobs aus der Datenbank aus.
+	 * @return Liste von allen Jobs
+	 */
+	public List<Job> getAllJobs(){
+		em = entityManagerFactory.createEntityManager();
+		em.getTransaction().begin();
+		Query query = em.createQuery("SELECT b FROM Job b");
+		@SuppressWarnings("unchecked")
+		List<Job> jobListe = query.getResultList();
+		em.getTransaction().commit();
+		if (jobListe == null) {
+			jobListe = new ArrayList<Job>();
+		}
+		return jobListe;
+	}
 
 	/**
 	 * Sucht in der Datenbank nach allen Jobs an denen der ausgewählte
