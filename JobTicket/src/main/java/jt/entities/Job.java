@@ -567,6 +567,16 @@ public class Job implements Serializable {
 		return gesamtZeit;
 	}
 	
+	public String getFortschrittsAnzeige(){
+		int fertigeJobs = 0;
+		for(Produkteigenschaften p: produkteigenschaftens){
+			if(p.getErledigt() == 1){
+				fertigeJobs++;
+			}
+		}
+		return  fertigeJobs + "/" + produkteigenschaftens.size() + " Produkte fertig";
+	}
+	
 	public String longId(){
 		String longId = "" + this.id;
 		if(id < 10){

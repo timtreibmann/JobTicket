@@ -19,9 +19,10 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 
 /**
- * Diese Bean ist für die Verbindung zum LDAP-Server zuständig,
- * auf welchem die Benutzer als ActiveDirectory angelegt sind.
- * Über die Bean kann außerdem nach Usern gesucht werden.
+ * Diese Bean ist für die Verbindung zum LDAP-Server zuständig, auf welchem die
+ * Benutzer als ActiveDirectory angelegt sind. Über die Bean kann außerdem nach
+ * Usern gesucht werden.
+ * 
  * @author marcus
  */
 
@@ -30,35 +31,33 @@ import javax.naming.directory.SearchResult;
 public class LDAPBean {
 
 	private DirContext ldapContex;
-	
+
 	/**
 	 * Verbindet sich mit dem Server.
+	 * @throws NamingException 
 	 */
-	public LDAPBean() {
+	public LDAPBean() throws NamingException {
 		ldapConnect();
-	}
-	
-	
-	/**
-	 * Erstellt eine Verbindung zum Server und initialisiert die Eigenschaft ldapContext(DirContext).
-	 */
-	private void ldapConnect() {
-		try {
-			Hashtable<String, String> env = new Hashtable<String, String>();
-			env.put(Context.INITIAL_CONTEXT_FACTORY,
-					"com.sun.jndi.ldap.LdapCtxFactory");
-			env.put(Context.PROVIDER_URL, "ldap://runzefilem.rc.intra:389");
-			env.put(Context.SECURITY_AUTHENTICATION, "simple");
-			env.put(Context.SECURITY_PRINCIPAL, "Administrator@rc.intra");
-			env.put(Context.SECURITY_CREDENTIALS, "28072Kinder");
-			ldapContex = new InitialDirContext(env);
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
-	 * Suchfunktion um Mitarbeiter in Form einer Liste von 'Attributes' aus dem
+	 * Erstellt eine Verbindung zum Server und initialisiert die Eigenschaft
+	 * ldapContext(DirContext).
+	 * @throws NamingException Fängt NamingExceptions ab.
+	 */
+	private void ldapConnect() throws NamingException {
+		Hashtable<String, String> env = new Hashtable<String, String>();
+		env.put(Context.INITIAL_CONTEXT_FACTORY,
+				"com.sun.jndi.ldap.LdapCtxFactory");
+		env.put(Context.PROVIDER_URL, "ldap://runzefilem.rc.intra:389");
+		env.put(Context.SECURITY_AUTHENTICATION, "simple");
+		env.put(Context.SECURITY_PRINCIPAL, "Administrator@rc.intra");
+		env.put(Context.SECURITY_CREDENTIALS, "28072Kinder");
+		ldapContex = new InitialDirContext(env);
+	}
+
+	/**
+	 * Suchfunktion um Mitarbeiter in Form einer Liste von Attributes aus dem
 	 * LDAP Server zu lesen. Wobei die Attribute 'givenName', 'sn' und
 	 * 'sAMAccountName' aus dem LDAP gespeichert werden.
 	 * 
@@ -69,37 +68,32 @@ public class LDAPBean {
 	 */
 	public List<Attributes> searchLDAP(String filter) throws NamingException {
 		List<Attributes> allAttrs = new ArrayList<Attributes>();
-		try {
-			SearchControls searchCtls = new SearchControls();
-			String returnedAtts[] = { "givenName", "sn", "sAMAccountName" };
-			searchCtls.setReturningAttributes(returnedAtts);
-			searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+		SearchControls searchCtls = new SearchControls();
+		String returnedAtts[] = { "givenName", "sn", "sAMAccountName" };
+		searchCtls.setReturningAttributes(returnedAtts);
+		searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-			String searchFilter = "(&(objectClass=user)(sn=*))";
-			String searchBase = "DC=rc,DC=intra";
-			if (filter != null && !filter.equals("")) {
-				searchFilter = "(&(objectClass=user)(" + filter + "))";
+		String searchFilter = "(&(objectClass=user)(sn=*))";
+		String searchBase = "DC=rc,DC=intra";
+		if (filter != null && !filter.equals("")) {
+			searchFilter = "(&(objectClass=user)(" + filter + "))";
+		}
+
+		NamingEnumeration<SearchResult> answer = ldapContex.search(searchBase,
+				searchFilter, searchCtls);
+		while (answer.hasMoreElements()) {
+			SearchResult sr = (SearchResult) answer.next();
+
+			Attributes attrs = sr.getAttributes();
+			if (attrs != null
+					&& (attrs.get("givenName") != null
+							&& attrs.get("sn") != null && attrs
+							.get("sAMAccountName") != null)) {
+				allAttrs.add(attrs);
 			}
-
-			NamingEnumeration<SearchResult> answer = ldapContex.search(
-					searchBase, searchFilter, searchCtls);
-			while (answer.hasMoreElements()) {
-				SearchResult sr = (SearchResult) answer.next();
-
-				Attributes attrs = sr.getAttributes();
-				if (attrs != null
-						&& (attrs.get("givenName") != null
-								&& attrs.get("sn") != null && attrs
-								.get("sAMAccountName") != null)) {
-					allAttrs.add(attrs);
-				}
-			}
-		} catch (NamingException e) {
-			e.printStackTrace();
 		}
 		return allAttrs;
 	}
-
 
 	/**
 	 * @return the ldapContex
@@ -108,9 +102,9 @@ public class LDAPBean {
 		return ldapContex;
 	}
 
-
 	/**
-	 * @param ldapContex the ldapContex to set
+	 * @param ldapContex
+	 *            the ldapContex to set
 	 */
 	public void setLdapContex(DirContext ldapContex) {
 		this.ldapContex = ldapContex;

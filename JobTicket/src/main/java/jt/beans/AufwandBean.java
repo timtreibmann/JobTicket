@@ -52,7 +52,7 @@ import jt.entities.Kosten;
 @Named
 @RequestScoped
 public class AufwandBean {
-	
+
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
@@ -67,7 +67,7 @@ public class AufwandBean {
 
 	@Inject
 	AngestellteBean angestellteBean;
-	
+
 	private int selectedAngestellteId;
 	private String selectedAngestellte;
 	private double gesamtKosten;
@@ -75,9 +75,9 @@ public class AufwandBean {
 	private boolean initDone;
 
 	/**
-	 * Initialisierungsmethode der Bean, 
-	 * die sofern der Aktuelle job ein neues Ticket ist den angemeldeten Mitarbeiter 
-	 * dem Job hinzufügt und dann die Gesamtkosten berechnet.
+	 * Initialisierungsmethode der Bean, die sofern der Aktuelle job ein neues
+	 * Ticket ist den angemeldeten Mitarbeiter dem Job hinzufügt und dann die
+	 * Gesamtkosten berechnet.
 	 */
 	@PostConstruct
 	private void init() {
@@ -88,56 +88,11 @@ public class AufwandBean {
 		berechneGesamtkosten();
 		initDone = true;
 	}
-	
-	/**
-	 * Listener der aktiv wird, wenn man einen Mitarbeiter zum Job hinzufügt 
-	 * und dann nachschaut ob der ausgewählte Mitarbeiter bereits einen JobTicket-Account hat
-	 * und jenachdem ob es diesen gibt oder nicht den User fragt ob er einen Erstellen möchte.
-	 * @return null
-	 */
-	public void addBySelection() {
-		if(angestellteBean == null){
-			angestellteBean = new AngestellteBean();
-		}
-		List<Angestellte> angestelltes = angestellteBean.getAngestelltes();
-		for(Angestellte a: angestelltes){
-			if(a.getLoginName().equals(selectedAngestellte)){
-				selectedAngestellteId = a.getId();
-				initRelations();
-				return;
-			}
-		}
-		List<Attributes> alleAngestellten = angestellteBean.getAlleAngestellten();
-		Angestellte newAngestellte = new Angestellte();
-		for (Attributes attr: alleAngestellten) {
-			try {
-				if((attr.get("sAMAccountName").get()).equals(selectedAngestellte)){
-					newAngestellte.setLoginName((String)attr.get("sAMAccountName").get());
-					newAngestellte.setVorname((String)attr.get("givenName").get());
-					newAngestellte.setNachname((String)attr.get("sn").get());
-					newAngestellte.setStundenlohn(80.0);
-				}
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
-		}
-		if(newAngestellte.getLoginName() != null && !newAngestellte.getLoginName().equals("")){
-			angestellteBean.setAngestellte(newAngestellte);
-			angestellteBean.saveAngestellte();
-			angestelltes = angestellteBean.getAngestelltes();
-		}
-		for(Angestellte a: angestelltes){
-			if(a.getLoginName().equals(selectedAngestellte)){
-				selectedAngestellteId = a.getId();
-				initRelations();
-			}
-		}
-	}
-
 
 	/**
-	 * Initialisiert die Relationen zu den Kosten und dem Jobbearbeiter.
-	 * Fügt dem Job einen Mitarbeiter hinzu.
+	 * Initialisiert die Relationen zu den Kosten und dem Jobbearbeiter. Fügt
+	 * dem Job einen Mitarbeiter hinzu.
+	 * 
 	 * @return null
 	 */
 	public String initRelations() {
@@ -145,7 +100,8 @@ public class AufwandBean {
 		em = entityManagerFactory.createEntityManager();
 		Angestellte angestellte = em.find(Angestellte.class,
 				selectedAngestellteId);
-		if (!istAngestellterVorhanden(angestellte) && selectedAngestellteId != 0) {
+		if (!istAngestellterVorhanden(angestellte)
+				&& selectedAngestellteId != 0) {
 			kosten.setAngestellte(angestellte);
 			Jobbearbeiter jobbearbeiter = new Jobbearbeiter();
 			jobbearbeiter.setAngestellte(angestellte);
@@ -160,6 +116,50 @@ public class AufwandBean {
 		}
 		selectedAngestellteId = 0;
 		return null;
+	}
+	
+	/**
+	 * Listener der aktiv wird, wenn man einen Mitarbeiter zum Job hinzufügt und
+	 * dann nachschaut ob der ausgewählte Mitarbeiter bereits einen
+	 * JobTicket-Account hat und jenachdem ob es diesen gibt oder nicht den User
+	 * fragt ob er einen Erstellen möchte.
+	 * 
+	 * @return null
+	 */
+	public void addBySelection() throws NamingException {
+		if (angestellteBean == null) {
+			angestellteBean = new AngestellteBean();
+		}
+		List<Angestellte> angestelltes = angestellteBean.getAngestelltes();
+		for (Angestellte a : angestelltes) {
+			if (a.getLoginName().equals(selectedAngestellte)) {
+				selectedAngestellteId = a.getId();
+				initRelations();
+				return;
+			}
+		}
+		List<Attributes> resultList = angestellteBean.getFilteredAD("sAMAccountName=" + selectedAngestellte);
+		Angestellte newAngestellte = new Angestellte();
+		if (resultList != null) {
+			Attributes attr = resultList.get(0);
+			newAngestellte.setLoginName((String) attr.get("sAMAccountName").get());
+			newAngestellte.setVorname((String) attr.get("givenName").get());
+			newAngestellte.setNachname((String) attr.get("sn").get());
+			newAngestellte.setStundenlohn(80.0);
+		}
+		
+		if (newAngestellte.getLoginName() != null
+				&& !newAngestellte.getLoginName().equals("")) {
+			angestellteBean.setAngestellte(newAngestellte);
+			angestellteBean.saveAngestellte();
+			angestelltes = angestellteBean.getAngestelltes();
+		}
+		for (Angestellte a : angestelltes) {
+			if (a.getLoginName().equals(selectedAngestellte)) {
+				selectedAngestellteId = a.getId();
+				initRelations();
+			}
+		}
 	}
 
 	/**
@@ -271,7 +271,9 @@ public class AufwandBean {
 
 	/**
 	 * Löscht Kosten vom Job.
-	 * @param kosten Zu löschende Kosten.
+	 * 
+	 * @param kosten
+	 *            Zu löschende Kosten.
 	 */
 	private void deleteKostenFromJob(Kosten kosten) {
 		job.removeKosten(kosten);
@@ -280,7 +282,9 @@ public class AufwandBean {
 
 	/**
 	 * Löscht Jobbearbeiter und Kosten vom Job.
-	 * @param kosten zu löschende Kosten
+	 * 
+	 * @param kosten
+	 *            zu löschende Kosten
 	 * @return null
 	 */
 	public String delete(Kosten kosten) {
@@ -313,8 +317,11 @@ public class AufwandBean {
 
 	/**
 	 * Schaut im Job nach ob der übergebene Angestellte bereits am Job arbeitet.
-	 * @param angestellte Zu überprüfender Angestellter
-	 * @return Ob der angestellte vorhanden bereits ist (true) oder nicht (false).
+	 * 
+	 * @param angestellte
+	 *            Zu überprüfender Angestellter
+	 * @return Ob der angestellte vorhanden bereits ist (true) oder nicht
+	 *         (false).
 	 */
 	private boolean istAngestellterVorhanden(Angestellte angestellte) {
 		List<Kosten> kostenListe = job.getKostens();
@@ -329,6 +336,7 @@ public class AufwandBean {
 
 	/**
 	 * Getter-methode für initDone Variable.
+	 * 
 	 * @return the initDone
 	 */
 	public boolean isInitDone() {
@@ -343,7 +351,8 @@ public class AufwandBean {
 	}
 
 	/**
-	 * @param selectedAngestellte the selectedAngestellte to set
+	 * @param selectedAngestellte
+	 *            the selectedAngestellte to set
 	 */
 	public void setSelectedAngestellte(String selectedAngestellte) {
 		this.selectedAngestellte = selectedAngestellte;

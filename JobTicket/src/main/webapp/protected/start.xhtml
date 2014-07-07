@@ -138,9 +138,7 @@
 				<p:column id="fortschrittColumn" filterMatchMode="contains"
 					sortBy="#{job.fortschritt}" filterBy="#{job.fortschritt}"
 					headerText="Fortschritt">
-
-					<p:progressBar value="#{job.fortschritt}" labelTemplate="{value}%"
-						displayOnly="true" />
+					<h:outputText value="#{job.fortschrittsAnzeige}"/>
 				</p:column>
 				<p:column style="width: 5%">
 					<p:commandButton disabled="true"

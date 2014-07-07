@@ -60,12 +60,8 @@ public class AngestellteBean {
 	/**
 	 * Initialisiert Eigenschaften.
 	 */
-	public AngestellteBean(){
-		try {
-			loadAllUsers();
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+	public AngestellteBean() throws NamingException{
+		loadAllUsers();
 	}
 
 	/**
@@ -212,7 +208,7 @@ public class AngestellteBean {
 		}
 		setAlleAngestellten(ldapBean.searchLDAP(null));	
 	}
-
+	
 	public Angestellte getAngestellte() {
 		return angestellte;
 	}
@@ -226,6 +222,10 @@ public class AngestellteBean {
 	 */
 	public List<Attributes> getAlleAngestellten() {
 		return alleAngestellten;
+	}
+	
+	public List<Attributes> getFilteredAD(String filter) throws NamingException{
+		return ldapBean.searchLDAP(filter);
 	}
 
 	/**
