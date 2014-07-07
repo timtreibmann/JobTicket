@@ -13,7 +13,7 @@
 
 <h:body>
 	<ui:composition>
-		<h:form id="aufwandform" rendered="#{aufwandBean.initDone}">
+		<h:form id="aufwandform" rendered="#{aufwandBean.initDone}" onkeydown="return event.keyCode != 13">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 			<p:panel styleClass="panel" id="panel">
@@ -68,15 +68,15 @@
 					<p:outputLabel for="kontakter" value="Zum Job hinzufügen"
 						style="width:150px" />
 					<p:selectOneMenu id="kontakter"
-						value="#{aufwandBean.selectedAngestellteId}" effect="fold"
+						value="#{aufwandBean.selectedAngestellte}" effect="fold"
 						editable="false" required="false">
 						<f:selectItem itemLabel="Angestellten auswählen" />
-						<f:selectItems value="#{angestellteBean.angestelltes}"
+						<f:selectItems value="#{angestellteBean.alleAngestellten}"
 							var="angestellte"
-							itemLabel="#{angestellte.vorname} #{angestellte.nachname}"
-							itemValue="#{angestellte.id}" />
+							itemLabel="#{angestellte.get('givenName').get()} #{angestellte.get('sn').get()}"
+							itemValue="#{angestellte.get('sAMAccountName').get()}" />
 						<p:ajax event="change" process="@this" update="@form"
-							listener="#{aufwandBean.initRelations}" />
+							listener="#{aufwandBean.addBySelection()}" />
 					</p:selectOneMenu>
 					<p:outputLabel style="width:50%" value="Neuen Mitarbeiter anlegen:" />
 					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"

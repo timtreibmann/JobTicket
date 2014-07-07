@@ -13,6 +13,7 @@
 
 <h:body>
 	<p:commandButton id="neuerKundeButton" value="Neuen Kunden anlegen" />
+	<p:button value="Zurück" outcome="start.xhtml"></p:button>
 	<h:form>
 		<p:growl id="growl"></p:growl>
 		<h:outputStylesheet library="css" name="style.css" />
@@ -27,12 +28,12 @@
 			</p:breadCrumb>
 			<p:dataTable id="table" value="#{kundenBean.kunden}" var="kunde">
 
-				<p:column>
+				<p:column filterBy="#{kunde.name}" filterMatchMode="contains">
 					<f:facet name="header">Name</f:facet>
 					<h:outputText value="#{kunde.name}" />
 				</p:column>
 
-				<p:column>
+				<p:column filterBy="#{kunde.kundenkuezrel}" filterMatchMode="contains">
 					<f:facet name="header">Kürzel</f:facet>
 					<h:outputText value="#{kunde.kundenkuerzel}" />
 				</p:column>
@@ -57,7 +58,6 @@
 				</p:column>
 			</p:dataTable>
 		</p:panel>
-		<p:button value="Zurück" outcome="start.xhtml"></p:button>
 	</h:form>
 	<p:overlayPanel my="right top" widgetVar="kunden_overlay"
 		showEffect="fade" hideEffect="drop" for=":neuerKundeButton">

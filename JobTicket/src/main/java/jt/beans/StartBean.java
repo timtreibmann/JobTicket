@@ -153,12 +153,13 @@ public class StartBean implements Serializable {
 		}
 		jobs = jobListe;
 	}
-	
+
 	/**
 	 * Gibt alle Jobs aus der Datenbank aus.
+	 * 
 	 * @return Liste von allen Jobs
 	 */
-	public List<Job> getAllJobs(){
+	public List<Job> getAllJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
 		Query query = em.createQuery("SELECT b FROM Job b");
@@ -281,8 +282,9 @@ public class StartBean implements Serializable {
 	 * @return
 	 */
 	public String reloadJob() {
-		if(!aktuellerJobBean.isIstNeuesTicket()){
-			aktuellerJobBean.setJob(findJobByID(aktuellerJobBean.getJob().getId()));
+		if (!aktuellerJobBean.isIstNeuesTicket()) {
+			aktuellerJobBean.setJob(findJobByID(aktuellerJobBean.getJob()
+					.getId()));
 		}
 		goToPage("jobticket_overview.xhtml?faces-redirect=true");
 		aktuellerJobBean.setUnsavedChanges(false);
@@ -354,4 +356,5 @@ public class StartBean implements Serializable {
 		}
 		return filter;
 	}
+
 }

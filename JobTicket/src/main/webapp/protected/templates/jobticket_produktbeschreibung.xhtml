@@ -12,7 +12,7 @@
 <h:head></h:head>
 
 <ui:composition>
-	<h:form id="produktform">
+	<h:form id="produktform" onkeydown="return event.keyCode != 13">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel styleClass="panel">
 			<p:breadCrumb>

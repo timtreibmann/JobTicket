@@ -25,6 +25,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -51,6 +53,20 @@ public class AngestellteBean {
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
+	
+	private LDAPBean ldapBean;
+	private List<Attributes> alleAngestellten;
+	
+	/**
+	 * Initialisiert Eigenschaften.
+	 */
+	public AngestellteBean(){
+		try {
+			loadAllUsers();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Holt die Angestellten aus der Datenbank und gibt sie dann zurück.
@@ -145,7 +161,6 @@ public class AngestellteBean {
 		context.addMessage(null, new FacesMessage(
 				"Daten erfolgreich gespeichert!", ""));
 		return "angestellte_add.xhtml";
-
 	}
 
 	/**
@@ -186,6 +201,17 @@ public class AngestellteBean {
 		fc.addMessage(null, new FacesMessage("Daten erfolgreich gespeichert"));
 		return null;
 	}
+	
+	/**
+	 * Läd alle User aus der Active Directory und speichert diese Liste in der Eigenschaft alleAngestellten ab.
+	 * @throws NamingException
+	 */
+	private void loadAllUsers() throws NamingException{
+		if(ldapBean == null){
+			ldapBean = new LDAPBean();
+		}
+		setAlleAngestellten(ldapBean.searchLDAP(null));	
+	}
 
 	public Angestellte getAngestellte() {
 		return angestellte;
@@ -193,6 +219,20 @@ public class AngestellteBean {
 
 	public void setAngestellte(Angestellte angestellte) {
 		this.angestellte = angestellte;
+	}
+
+	/**
+	 * @return the alleAngestellten
+	 */
+	public List<Attributes> getAlleAngestellten() {
+		return alleAngestellten;
+	}
+
+	/**
+	 * @param alleAngestellten the alleAngestellten to set
+	 */
+	public void setAlleAngestellten(List<Attributes> alleAngestellten) {
+		this.alleAngestellten = alleAngestellten;
 	}
 
 }

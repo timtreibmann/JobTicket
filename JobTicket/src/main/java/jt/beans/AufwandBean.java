@@ -26,6 +26,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -50,6 +52,7 @@ import jt.entities.Kosten;
 @Named
 @RequestScoped
 public class AufwandBean {
+	
 	@Inject
 	private EntityManagerFactory entityManagerFactory;
 	private EntityManager em;
@@ -62,7 +65,11 @@ public class AufwandBean {
 	@Inject
 	private AktuellerJobBean aktuellerJobBean;
 
+	@Inject
+	AngestellteBean angestellteBean;
+	
 	private int selectedAngestellteId;
+	private String selectedAngestellte;
 	private double gesamtKosten;
 	private boolean istAufwandInEuro;
 	private boolean initDone;
@@ -81,6 +88,52 @@ public class AufwandBean {
 		berechneGesamtkosten();
 		initDone = true;
 	}
+	
+	/**
+	 * Listener der aktiv wird, wenn man einen Mitarbeiter zum Job hinzufügt 
+	 * und dann nachschaut ob der ausgewählte Mitarbeiter bereits einen JobTicket-Account hat
+	 * und jenachdem ob es diesen gibt oder nicht den User fragt ob er einen Erstellen möchte.
+	 * @return null
+	 */
+	public void addBySelection() {
+		if(angestellteBean == null){
+			angestellteBean = new AngestellteBean();
+		}
+		List<Angestellte> angestelltes = angestellteBean.getAngestelltes();
+		for(Angestellte a: angestelltes){
+			if(a.getLoginName().equals(selectedAngestellte)){
+				selectedAngestellteId = a.getId();
+				initRelations();
+				return;
+			}
+		}
+		List<Attributes> alleAngestellten = angestellteBean.getAlleAngestellten();
+		Angestellte newAngestellte = new Angestellte();
+		for (Attributes attr: alleAngestellten) {
+			try {
+				if((attr.get("sAMAccountName").get()).equals(selectedAngestellte)){
+					newAngestellte.setLoginName((String)attr.get("sAMAccountName").get());
+					newAngestellte.setVorname((String)attr.get("givenName").get());
+					newAngestellte.setNachname((String)attr.get("sn").get());
+					newAngestellte.setStundenlohn(80.0);
+				}
+			} catch (NamingException e) {
+				e.printStackTrace();
+			}
+		}
+		if(newAngestellte.getLoginName() != null && !newAngestellte.getLoginName().equals("")){
+			angestellteBean.setAngestellte(newAngestellte);
+			angestellteBean.saveAngestellte();
+			angestelltes = angestellteBean.getAngestelltes();
+		}
+		for(Angestellte a: angestelltes){
+			if(a.getLoginName().equals(selectedAngestellte)){
+				selectedAngestellteId = a.getId();
+				initRelations();
+			}
+		}
+	}
+
 
 	/**
 	 * Initialisiert die Relationen zu den Kosten und dem Jobbearbeiter.
@@ -280,5 +333,19 @@ public class AufwandBean {
 	 */
 	public boolean isInitDone() {
 		return initDone;
+	}
+
+	/**
+	 * @return the selectedAngestellte
+	 */
+	public String getSelectedAngestellte() {
+		return selectedAngestellte;
+	}
+
+	/**
+	 * @param selectedAngestellte the selectedAngestellte to set
+	 */
+	public void setSelectedAngestellte(String selectedAngestellte) {
+		this.selectedAngestellte = selectedAngestellte;
 	}
 }

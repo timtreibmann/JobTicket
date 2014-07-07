@@ -11,7 +11,7 @@
 
 <h:body>
 	<ui:composition>
-		<h:form id="mainform">
+		<h:form id="mainform" onkeydown="return event.keyCode != 13">
 			<h:outputStylesheet library="css" name="style.css" />
 
 			<p:growl id="growl"></p:growl>
