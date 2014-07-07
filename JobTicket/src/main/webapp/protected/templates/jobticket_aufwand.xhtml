@@ -69,7 +69,8 @@
 						style="width:150px" />
 					<p:selectOneMenu id="kontakter"
 						value="#{aufwandBean.selectedAngestellte}" effect="fold"
-						editable="false" required="false">
+						editable="false" required="false"
+						filter="true" filterMatchMode="contains">
 						<f:selectItem itemLabel="Angestellten auswählen" />
 						<f:selectItems value="#{angestellteBean.alleAngestellten}"
 							var="angestellte"
