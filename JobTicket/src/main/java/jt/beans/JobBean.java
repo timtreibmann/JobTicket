@@ -113,16 +113,17 @@ public class JobBean {
 	/**
 	 * Sucht den Kunden in der Datenbank und speichert das Ergebnis im Job
 	 */
-	public void findeKunde() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
+	public void findeKunde() {	
 		if (selectedKundeId != 0) {
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
 			Kunde k = em.find(Kunde.class, selectedKundeId);
 			job.setKunde(k);
 			kuerzel = k.getKundenkuerzel();
+			em.getTransaction().commit();
 		}
 		aktuellerJobBean.setUnsavedChanges(true);
-		em.getTransaction().commit();
+		
 	}
 
 	/**
@@ -130,17 +131,22 @@ public class JobBean {
 	 * den Namen im Job.
 	 */
 	public void findeKundeUeberKuerzel() {
-		em = entityManagerFactory.createEntityManager();
-		em.getTransaction().begin();
-		final Query query = em
-				.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
-		query.setParameter("kuerzel", kuerzel);
-
-		List<Kunde> kundenListe = query.getResultList();
-		em.getTransaction().commit();
-		if (kundenListe.size() > 0) {
-			setSelectedKundeId(kundenListe.get(0).getId());
+		if(kuerzel == ""){
+			setSelectedKundeId(0);
 			findeKunde();
+		}else{
+			em = entityManagerFactory.createEntityManager();
+			em.getTransaction().begin();
+			final Query query = em
+					.createQuery("SELECT b FROM Kunde b WHERE b.kundenkuerzel LIKE :kuerzel");
+			query.setParameter("kuerzel", kuerzel);
+	
+			List<Kunde> kundenListe = query.getResultList();
+			em.getTransaction().commit();
+			if (kundenListe.size() > 0) {
+				setSelectedKundeId(kundenListe.get(0).getId());
+				findeKunde();
+			}	
 		}
 	}
 
