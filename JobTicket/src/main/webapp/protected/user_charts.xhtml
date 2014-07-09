@@ -9,21 +9,22 @@
 <h:head></h:head>
 <body>
 	<h:form>
-		<p:panel >
-			<p:pieChart
-				value="#{chartBean.pieChartModel}" legendPosition="s"
-				title="Arbeitszeitaufwand - Kunden" style="width:600px;height:600px;margin:0 auto;"
-				showDataLabels="true" />
-		</p:panel>
-		<p:panel>
+		<p:tabView style="width:1000px;">
+			<p:tab title="User">
+				<p:pieChart value="#{chartBean.pieChartModel}" legendPosition="s"
+					title="Arbeitszeitaufwand - #{request.remoteUser}"
+					style="width:600px;margin:auto;" showDataLabels="true" />
+			</p:tab>
+			<p:tab title="Firma">
+				<p:barChart style="width:90%;" value="#{chartBean.barChartModel}"
+					title="Stundenaufwand aller Mitarbeiter" orientation="horizontal" />
+			</p:tab>
+		</p:tabView>
+
+		<p:panel style="width:1000px">
 			<p:button value="Job-Tabelle" outcome="start.xhtml" />
 			<p:button value="Angestelltenliste" outcome="angestellte_table.xhtml" />
 		</p:panel>
-		<p:panel>
-			<p:barChart style="width:90%" value="#{chartBean.barChartModel}" title="Stundenaufwand aller Mitarbeiter" orientation="horizontal"/>
-		</p:panel>
 	</h:form>
-	
-	
 </body>
 </html>
