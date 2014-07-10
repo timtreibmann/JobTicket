@@ -16,7 +16,7 @@
 				<p:button outcome="jt_aufwand.xhtml" value="Weiter" />
 
 				<p:commandButton value="Speichern"
-					action="#{jobBean.saveJobAndRedirect(null)}" />
+					action="#{jobBean.saveJobAndRedirect('jt_produkte.xhtml')}" />
 
 				<p:commandButton value="Job-Tabelle" style="float:right"
 					action="#{startBean.checkUnsavedChanges('start.xhtml')}" />
@@ -37,8 +37,7 @@
 					<h:outputText value="Vorm verlassen speichern?" />
 					<p:commandButton value="Ja"
 						action="#{jobBean.saveJobAndRedirect('jobticket_overview.xhtml')}" />
-					<p:commandButton value="Nein" update="@form"
-						action="#{startBean.reloadJob()}" />
+					<p:commandButton value="Nein" action="#{startBean.reloadJob()}" />
 				</p:dialog>
 			</p:panel>
 		</ui:define>

@@ -29,16 +29,9 @@
 					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 						value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				</p:breadCrumb>
-
-				
-
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
-
-
-				
-
 				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet"
 					id="repeat" var="kosten" value="#{aktuellerJobBean.job.kostens}">
 					<f:facet name="header">
@@ -48,7 +41,6 @@
 						<h:outputLabel
 							value=" #{kosten.angestellte.vorname} #{kosten.angestellte.nachname}"></h:outputLabel>
 					</p:column>
-
 					<p:column style="width:50%" headerText="Aufwand">
 						<p:inputText id="aufwand" value="#{kosten.arbeitsaufwand}">
 							<p:ajax event="change" process="@this" update="@form"
@@ -83,9 +75,7 @@
 					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"
 						style="float:right" />
 				</p:panelGrid>
-				
 
-				
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>
@@ -122,7 +112,7 @@
 					outcome="jt_produkte.xhtml" />
 
 				<p:commandButton value="Speichern"
-					action="#{jobBean.saveJobAndRedirect(null)}" update="@form" />
+					action="#{jobBean.saveJobAndRedirect(optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml')}" update="@form" />
 
 				<p:commandButton value="Job-Tabelle" style="float:right"
 					action="#{startBean.checkUnsavedChanges('start.xhtml')}" />

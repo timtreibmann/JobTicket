@@ -16,15 +16,6 @@
 
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
-					value="Jobticket" url="ticketanzeige.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Produktbeschreibung" url="jt_produkte.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Aufwand festlegen" url="jt_aufwand.xhtml" />
-				<p:menuitem value="Übersicht" url="jobticket_overview.xhtml" />
 			</p:breadCrumb>
 			<p:dataTable var="job" value="#{aktuellerJobBean.job}">
 				<f:facet name="header">Jobticket</f:facet>
