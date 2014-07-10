@@ -18,10 +18,6 @@
 		<p:panel styleClass="panel">
 			<p:breadCrumb>
 				<p:menuitem value="Übersicht" url="start.xhtml" />
-				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
-					value="Jobticket" url="ticketanzeige.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Jobticket" url="jt_main.xhtml" />
 				<p:menuitem value="Kunden Tabelle" url="kunden_table.xhtml" />
 				<p:menuitem value="Kunden editieren" url="kunden_edit.xhtml" />
 			</p:breadCrumb>
@@ -46,12 +42,12 @@
 			</h:panelGrid>
 
 		</p:panel>
-		<p></p>
 
-
-		<p:commandButton value="Übernehmen" ajax="false" 
-			action="#{kundenBean.updateKunde}"></p:commandButton>
-		<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
+		<p:panel styleClass="panel">
+			<p:commandButton value="Übernehmen" ajax="false"
+				action="#{kundenBean.updateKunde}"></p:commandButton>
+			<p:button value="Zurück" outcome="kunden_table.xhtml"></p:button>
+		</p:panel>
 	</h:form>
 </h:body>
 

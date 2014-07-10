@@ -14,8 +14,8 @@
 <ui:composition>
 	<h:form id="produktform" onkeydown="return event.keyCode != 13">
 		<h:outputStylesheet library="css" name="style.css" />
-		<p:panel styleClass="panel">
-			<p:breadCrumb>
+		<p:panel styleClass="panel" style="margin-bottom:20px">
+			<p:breadCrumb style="margin-bottom:15px">
 				<p:menuitem value="Übersicht" />
 				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
 					disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
@@ -26,16 +26,16 @@
 				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					value="Produktbeschreibung" url="jt_produkte.xhtml" />
 			</p:breadCrumb>
-			<p></p>
+			
 			<p:tooltip hideEffect="fade" for="create"
 				value="neues Produkt anlegen" autoShow="true" widgetVar="tip1"
 				myPosition="left center" atPosition="right center" />
-			<p:commandButton id="create"
+			<p:commandButton id="create" style="margin-bottom:15px"
 				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
 				update="acc #{optionenBean.zeigeAllesAufEinerSeite ? ':aufwandform' : ''}"
 				value="Neues Produkt anlegen">
 			</p:commandButton>
-			<p></p>
+			
 
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc"
@@ -183,7 +183,7 @@
 				</p:tab>
 			</p:accordionPanel>
 		</p:panel>
-		<p></p>
+		
 	</h:form>
 </ui:composition>
 </html>

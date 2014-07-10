@@ -17,7 +17,7 @@
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 			<p:panel styleClass="panel" id="panel">
-				<p:breadCrumb>
+				<p:breadCrumb style="margin-bottom:20px">
 					<p:menuitem value="Übersicht" />
 					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
 						disabled="#{optionenBean.zeigeAllesAufEinerSeite}" value="Aufwand"
@@ -30,14 +30,14 @@
 						value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				</p:breadCrumb>
 
-				<p></p>
+				
 
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
 
 
-				<p></p>
+				
 
 				<p:dataTable emptyMessage="Noch keine Mitarbeiter zugeordnet"
 					id="repeat" var="kosten" value="#{aktuellerJobBean.job.kostens}">
@@ -83,9 +83,9 @@
 					<p:commandButton id="neuerAngestellterButton" icon="ui-icon-plus"
 						style="float:right" />
 				</p:panelGrid>
-				<p></p>
+				
 
-				<p></p>
+				
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>

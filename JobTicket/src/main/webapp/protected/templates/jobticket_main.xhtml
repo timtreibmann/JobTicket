@@ -16,9 +16,9 @@
 
 			<p:growl id="growl"></p:growl>
 
-			<p:panel styleClass="panel">
+			<p:panel styleClass="panel" style="margin-bottom:20px">
 
-				<p:breadCrumb styleClass="breadCrumbpanel">
+				<p:breadCrumb styleClass="breadCrumbpanel" style="margin-bottom:20px">
 					<p:menuitem value="Übersicht" />
 					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
 						disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
@@ -27,7 +27,7 @@
 						value="Jobticket" url="jt_main.xhtml" />
 				</p:breadCrumb>
 
-				<p></p>
+				
 				<p:panelGrid styleClass="grid">
 					<p:row>
 						<p:column>
@@ -166,11 +166,11 @@
 						actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
 						update=":mainform:growl :mainform:kundenselect grid"
 						value="Kunden hinzufügen"/>
-					<p></p>
+					
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>
-		<p></p>
+		
 	</ui:composition>
 
 </h:body>

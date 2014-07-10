@@ -26,7 +26,6 @@
 					value="Aufwand festlegen" url="jt_aufwand.xhtml" />
 				<p:menuitem value="Übersicht" url="jobticket_overview.xhtml" />
 			</p:breadCrumb>
-			<p></p>
 			<p:dataTable var="job" value="#{aktuellerJobBean.job}">
 				<f:facet name="header">Jobticket</f:facet>
 				<p:column headerText="Jobnummer">
@@ -38,7 +37,6 @@
 				<p:column headerText="Name">
 					<p:outputLabel value="#{job.name}"></p:outputLabel>
 				</p:column>
-
 			</p:dataTable>
 
 			<p:dataTable var="job" value="#{aktuellerJobBean.job}">
@@ -49,7 +47,6 @@
 					<p:outputLabel value="#{job.budgetInEuro}"></p:outputLabel>
 				</p:column>
 			</p:dataTable>
-			<p></p>
 
 			<p:dataTable var="produkt"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}">
@@ -71,8 +68,6 @@
 				</p:column>
 			</p:dataTable>
 
-			<p></p>
-
 			<p:dataTable var="kosten" value="#{aktuellerJobBean.job.kostens}">
 				<f:facet name="header">Kosten</f:facet>
 				<p:column headerText="Angestellter">
@@ -89,7 +84,6 @@
 						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}" />
 				</p:column>
 			</p:dataTable>
-			<p></p>
 			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €" />
 		</p:panel>
 		<p:commandButton actionListener="#{startBean.resetJob}" value="Job-Tabelle" />
@@ -99,7 +93,6 @@
 
 		<p:overlayPanel id="p" for="delete" hideEffect="fade">
 			<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
-			<p></p>
 			<p:commandButton value="Ja" actionListener="#{startBean.deleteJob}"/>
 			<p:commandButton value="Nein" update="@form" />
 		</p:overlayPanel>
