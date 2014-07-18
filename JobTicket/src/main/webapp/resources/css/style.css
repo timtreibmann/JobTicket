@@ -45,3 +45,11 @@
 .ui-selectonemenu-filter-container {
     width: 98% !important;
 }
+
+h3.ui-accordion-header.ui-helper-reset.ui-state-default.ui-state-active.ui-corner-top {
+	width: 781px;
+}
+
+h3.ui-accordion-header.ui-helper-reset.ui-state-default.ui-corner-all {
+	width: 781px;
+}

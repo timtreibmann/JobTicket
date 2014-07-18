@@ -13,10 +13,6 @@
 		<h:outputStylesheet library="css" name="style.css" />
 
 		<p:panel styleClass="panel" style="margin-bottom:10px">
-
-			<p:breadCrumb style="margin-bottom:15px">
-				<p:menuitem value="Übersicht" url="start.xhtml" />
-			</p:breadCrumb>
 			<p:dataTable var="job" value="#{aktuellerJobBean.job}">
 				<f:facet name="header">Jobticket</f:facet>
 				<p:column headerText="Jobnummer">
@@ -30,7 +26,8 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:dataTable var="job" value="#{aktuellerJobBean.job}" style="margin-bottom:15px">
+			<p:dataTable var="job" value="#{aktuellerJobBean.job}"
+				style="margin-bottom:15px">
 				<p:column headerText="Kunde">
 					<p:outputLabel value="#{job.kunde.name}"></p:outputLabel>
 				</p:column>
@@ -59,7 +56,8 @@
 				</p:column>
 			</p:dataTable>
 
-			<p:dataTable var="kosten" value="#{aktuellerJobBean.job.kostens}" style="margin-bottom:10px">
+			<p:dataTable var="kosten" value="#{aktuellerJobBean.job.kostens}"
+				style="margin-bottom:10px">
 				<f:facet name="header">Kosten</f:facet>
 				<p:column headerText="Angestellter">
 
@@ -82,9 +80,10 @@
 				value="Job-Tabelle" />
 			<p:button value="Bearbeiten"
 				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_main.xhtml'}" />
-			<p:commandButton id="delete" value="Job löschen" icon="ui-icon-trash"
+			<p:commandButton id="delete" value="Job löschen"
 				rendered="#{(!aktuellerJobBean.istNeuesTicket) and (request.isUserInRole('JobTicket-Administratoren') or aktuellerJobBean.jobMadeByRemoteUser())}" />
 
+			<p:button id="printView" value="Druckansicht" style="float:right" outcome="print.xhtml"/>
 			<p:overlayPanel id="p" for="delete" hideEffect="fade">
 				<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
 				<p:commandButton value="Ja" actionListener="#{startBean.deleteJob}" />

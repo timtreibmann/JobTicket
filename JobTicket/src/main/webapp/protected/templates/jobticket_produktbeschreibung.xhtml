@@ -15,43 +15,26 @@
 	<h:form id="produktform" onkeydown="return event.keyCode != 13">
 		<h:outputStylesheet library="css" name="style.css" />
 		<p:panel styleClass="panel" style="margin-bottom:20px">
-			<p:breadCrumb style="margin-bottom:15px">
-				<p:menuitem value="Übersicht" />
-				<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
-					disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
-					value="Produktbeschreibung" url="" />
-
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Jobticket" url="jt_main.xhtml" />
-				<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-					value="Produktbeschreibung" url="jt_produkte.xhtml" />
-			</p:breadCrumb>
-			
-			<p:tooltip hideEffect="fade" for="create"
-				value="neues Produkt anlegen" autoShow="true" widgetVar="tip1"
-				myPosition="left center" atPosition="right center" />
-			<p:commandButton id="create" style="margin-bottom:15px"
-				actionListener="#{produkteigenschaftenBean.createProdukteigenschaft}"
-				update="acc #{optionenBean.zeigeAllesAufEinerSeite ? ':aufwandform' : ''}"
-				value="Neues Produkt anlegen">
-			</p:commandButton>
-			
+			<p:menubar style="margin-bottom:15px;">
+				<p:menuitem disabled="true" value="Produkte" />
+				<f:facet name="options">
+            		<p:commandButton icon="ui-icon-plus" style="float:right; margin-right:10px"
+            		actionListener="#{produkteigenschaftenBean.createProdukteigenschaft()}" 
+            		update="acc #{optionenBean.zeigeAllesAufEinerSeite ? ':aufwandform' : ''}" />
+       			</f:facet>
+			</p:menubar>			
 
 			<p:accordionPanel var="produkteigenschaften" dynamic="true"
 				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc"
 				activeIndex="#{produkteigenschaftenBean.accordionIndex}">
 				<p:ajax event="tabChange"
 					listener="#{produkteigenschaftenBean.onTabChange}" />
-				<p:tab
+				<p:tab 	id="tab"
 					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"
-					id="tab"
 					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
 					<p:growl id="growl" showDetail="true" sticky="false" />
-
 					<p:panelGrid styleClass="grid">
-
 						<p:row>
-
 							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
 							<p:column>
 								<p:outputLabel value="Erledigt"></p:outputLabel>
@@ -60,14 +43,10 @@
 								<p:commandButton update="@this growl acc"
 									icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"
 									actionListener="#{produkteigenschaftenBean.toggleErledigt(produkteigenschaften)}"></p:commandButton>
-							</p:column>
-
-							<p:column>
-								<p:commandButton icon="ui-icon-trash"
+								<p:commandButton icon="ui-icon-minus" style="float:right; margin-right:2px;"
 									actionListener="#{produkteigenschaftenBean.delete(produkteigenschaften)}"
 									update="acc" />
 							</p:column>
-
 						</p:row>
 						<p:row>
 							<p:column>
@@ -112,7 +91,7 @@
 							<p:column>
 								<p:inputTextarea
 									value="#{produkteigenschaften.produktbeschreibung}"
-									id="beschreibung" maxlength="199" cols="90">
+									id="beschreibung" maxlength="199" cols="109">
 									<p:ajax event="change" process="@this" update="@this growl"
 										listener="#{produkteigenschaftenBean.updateProdukteigenschaften(produkteigenschaften)}"></p:ajax>
 								</p:inputTextarea>
@@ -122,7 +101,7 @@
 					<p:accordionPanel
 						activeIndex="#{produkteigenschaftenBean.accordionIndex1}">
 						<p:tab title="Details">
-							<p:panelGrid styleClass="grid" columns="4">
+							<p:panelGrid styleClass="grid" columns="4" style="width:100%">
 								<p:outputLabel for="format" value="Format(B x H)" />
 								<p:inputText value="#{produkteigenschaften.fomat}" id="format">
 									<p:ajax event="change" process="@this" update="growl"

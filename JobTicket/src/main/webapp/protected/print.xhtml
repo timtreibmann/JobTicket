@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui">
+<h:head></h:head>
+<h:body>
+	<h:form>
+
+		<h:outputStylesheet library="css" name="style.css" />
+		<p:panel styleClass="panel" style="margin-bottom:10px">
+			<p:dataTable var="job" value="#{aktuellerJobBean.job}">
+				<f:facet name="header">Jobticket</f:facet>
+				<p:column headerText="Jobnummer">
+					<p:outputLabel value="#{job.id}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Alte Jobnummer">
+					<p:outputLabel value="#{job.alteJobnummer}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Name">
+					<p:outputLabel value="#{job.name}"></p:outputLabel>
+				</p:column>
+			</p:dataTable>
+
+			<p:dataTable var="job" value="#{aktuellerJobBean.job}" style="margin-bottom:15px">
+				<p:column headerText="Kunde" style="width:50%">
+					<p:outputLabel value="#{job.kunde.name}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Kuerzel">
+					<p:outputLabel value="#{job.kunde.kundenkuerzel}"></p:outputLabel>
+				</p:column>
+				<p:column headerText="Budget in Euro">
+					<p:outputLabel value="#{job.budgetInEuro}"></p:outputLabel>
+				</p:column>
+			</p:dataTable>
+			
+			<p:menubar style="margin-bottom:10px;">
+				<p:menuitem disabled="true" value="Produkte" />
+			</p:menubar>			
+			<p:accordionPanel var="produkteigenschaften" dynamic="true"
+				value="#{aktuellerJobBean.job.produkteigenschaftens}" id="acc" multiple="true">
+				<p:tab 	id="tab"
+					titleStyle="#{produkteigenschaften.erledigt ==1 ? 'background: #66FF99' : ''}"
+					title="#{fn:substring(produkteigenschaften.produktbeschreibung,0,60)}">
+					<p:growl id="growl" showDetail="true" sticky="false" />
+					<p:panelGrid styleClass="grid">
+						<p:row>
+							<h:inputHidden value="#{produkteigenschaften.id}"></h:inputHidden>
+							<p:column>
+								<p:outputLabel value="Erledigt"></p:outputLabel>
+							</p:column>
+							<p:column>
+								<p:commandButton disabled="true"
+									icon=" #{produkteigenschaften.erledigt ==1 ? 'ui-icon-check':'ui-icon-close' }"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel for="eingangsdatum" value="Eingangsdatum" />
+							</p:column>
+							<p:column>
+								<p:calendar disabled="true" value="#{produkteigenschaften.eingangsdatum}"
+									id="eingangsdatum">
+								</p:calendar>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel for="ausgangsdatum" value="Ausgangsdatum" />
+							</p:column>
+							<p:column>
+								<p:calendar disabled="true" value="#{produkteigenschaften.ausgangsdatum}"
+									id="ausgangsdatum"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel for="fertigstellung" value="Vorlagedatum" />
+							</p:column>
+							<p:column>
+								<p:calendar value="#{produkteigenschaften.vorlagedatum}"
+									id="fertigstellung" disabled="true"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel for="beschreibung" value="Beschreibung" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea
+									value="#{produkteigenschaften.produktbeschreibung}"
+									id="beschreibung" maxlength="199" cols="109" disabled="true"/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:accordionPanel
+						activeIndex="#{produkteigenschaftenBean.accordionIndex1}">
+						<p:tab title="Details">
+							<p:panelGrid styleClass="grid" columns="4" style="width:100%">
+								<p:outputLabel for="format" value="Format(B x H)" />
+								<p:inputText disabled="true" value="#{produkteigenschaften.fomat}" id="format"/>
+								<p:outputLabel for="beschnitt" value="Beschnitt" />
+								<p:inputText value="#{produkteigenschaften.beschnitt}"
+									id="beschnitt" disabled="true"/>
+								<p:outputLabel for="farbe" value="Farbe" />
+								<p:inputText value="#{produkteigenschaften.farbe4c}" id="farbe" disabled="true"/>
+								<p:outputLabel for="sonderfarbe" value="Sonderfarbe" />
+								<p:inputText value="#{produkteigenschaften.sonderfarbe}"
+									id="sonderfarbe" disabled="true"/>
+								<p:outputLabel for="seitenzahl" value="Seitenzahl" />
+								<p:inputText value="#{produkteigenschaften.seitenzahl}"
+									id="seitenzahl" disabled="true"/>
+								<p:outputLabel for="falzung" value="Falzung" />
+								<p:inputText value="#{produkteigenschaften.falzung}"
+									id="falzung" disabled="true"/>
+								<p:outputLabel for="bindung" value="Bindung" />
+								<p:inputText value="#{produkteigenschaften.bindung}"
+									id="bindung" disabled="true"/>
+								<p:outputLabel for="proof" value="Proof" />
+								<p:inputText value="#{produkteigenschaften.proof}" id="proof" disabled="true"/>
+								<p:outputLabel for="dummy" value="Dummy" />
+								<p:inputText value="#{produkteigenschaften.dummy}" id="dummy" disabled="true"/>
+							</p:panelGrid>
+							<p:growl id="growl"></p:growl>
+						</p:tab>
+					</p:accordionPanel>
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:dataTable var="kosten" value="#{aktuellerJobBean.job.kostens}" style="margin:10px 0">
+				<f:facet name="header">Kosten</f:facet>
+				<p:column headerText="Angestellter">
+
+					<p:outputLabel
+						value="#{kosten.angestellte.vorname} #{kosten.angestellte.nachname} " />
+				</p:column>
+
+				<p:column headerText="Aufwand">
+					<p:outputLabel value="#{kosten.arbeitsaufwand}" />
+				</p:column>
+				<p:column headerText="Aufwandsart">
+					<p:outputLabel
+						value="#{kosten.arbeitsaufwandIstInEuro==1 ? '€' : 'Stunden'}" />
+				</p:column>
+			</p:dataTable>
+			<p:outputLabel value="Gesamtkosten: #{aufwandBean.gesamtKosten} €" />
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

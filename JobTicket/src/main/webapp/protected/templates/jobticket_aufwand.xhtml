@@ -13,22 +13,15 @@
 
 <h:body>
 	<ui:composition>
-		<h:form id="aufwandform" rendered="#{aufwandBean.initDone}" onkeydown="return event.keyCode != 13">
+		<h:form id="aufwandform" rendered="#{aufwandBean.initDone}"
+			onkeydown="return event.keyCode != 13">
 			<h:outputStylesheet library="css" name="style.css" />
 			<p:growl id="growl"></p:growl>
 			<p:panel styleClass="panel" id="panel">
-				<p:breadCrumb style="margin-bottom:20px">
-					<p:menuitem value="Übersicht" />
-					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
-						disabled="#{optionenBean.zeigeAllesAufEinerSeite}" value="Aufwand"
-						url="" />
-					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-						value="Jobticket" url="jt_main.xhtml" />
-					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-						value="Produktbeschreibung" url="jt_produkte.xhtml" />
-					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-						value="Aufwand festlegen" url="jt_aufwand.xhtml" />
-				</p:breadCrumb>
+				<p:menubar style="margin-bottom:15px;">
+					<p:menuitem disabled="true" value="Aufwand" />
+				</p:menubar>
+
 				<p:tooltip id="tooltip" showEffect="fade" hideEffect="fade"
 					for="neuerAngestellterButton" value="neuen Mitarbeiter anlegen"
 					widgetVar="tip1" myPosition="left center" atPosition="right center" />
@@ -52,7 +45,7 @@
 							actionListener="#{aufwandBean.rechneUm(kosten)}" />
 
 						<p:commandButton update="@form" id="deletebutton"
-							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-trash"
+							action="#{aufwandBean.delete(kosten)}" icon="ui-icon-minus"
 							style="float:right" />
 					</p:column>
 				</p:dataTable>
@@ -61,8 +54,8 @@
 						style="width:150px" />
 					<p:selectOneMenu id="kontakter"
 						value="#{aufwandBean.selectedAngestellte}" effect="fold"
-						editable="false" required="false"
-						filter="true" filterMatchMode="contains">
+						editable="false" required="false" filter="true"
+						filterMatchMode="contains">
 						<f:selectItem itemLabel="Angestellten auswählen" />
 						<f:selectItems value="#{angestellteBean.alleAngestellten}"
 							var="angestellte"
@@ -107,17 +100,17 @@
 
 			</p:panel>
 			<p:panel style="width:850px">
+				<p:commandButton value="Speichern" style="float:right"
+					action="#{jobBean.saveJobAndRedirect(optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml')}"
+					update="@form" />
 				<p:button value="Zurück" styleClass="buttonZurueck"
+					style="float:right"
 					rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
 					outcome="jt_produkte.xhtml" />
-
-				<p:commandButton value="Speichern"
-					action="#{jobBean.saveJobAndRedirect(optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_aufwand.xhtml')}" update="@form" />
-
-				<p:commandButton value="Job-Tabelle" style="float:right"
+				<p:commandButton value="Job-Tabelle"
 					action="#{startBean.checkUnsavedChanges('start.xhtml')}" />
 
-				<p:commandButton value="Zur Job Overview" style="float:right"
+				<p:commandButton value="Zur Job Overview"
 					action="#{startBean.checkUnsavedChanges('jobticket_overview.xhtml')}" />
 
 				<p:dialog header="Ungespeicherte Änderungen gefunden!"

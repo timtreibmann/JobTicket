@@ -18,17 +18,12 @@
 
 			<p:panel styleClass="panel" style="margin-bottom:20px">
 
-				<p:breadCrumb styleClass="breadCrumbpanel" style="margin-bottom:20px">
-					<p:menuitem value="Übersicht" />
-					<p:menuitem rendered="#{optionenBean.zeigeAllesAufEinerSeite}"
-						disabled="#{optionenBean.zeigeAllesAufEinerSeite}"
-						value="Jobticket" url="" />
-					<p:menuitem rendered="#{!optionenBean.zeigeAllesAufEinerSeite}"
-						value="Jobticket" url="jt_main.xhtml" />
-				</p:breadCrumb>
+				<p:menubar style="margin-bottom:15px;">
+					<p:menuitem disabled="true" value="Jobticket" />
+				</p:menubar>
 
-				
-				<p:panelGrid styleClass="grid">
+
+				<p:panelGrid styleClass="grid" style="width:100%">
 					<p:row>
 						<p:column>
 							<p:outputLabel for="jobnummer" value="Jobnummer" />
@@ -38,14 +33,15 @@
 								value="#{aktuellerJobBean.job.id==0 ? 'wird generiert' : aktuellerJobBean.job.id}"
 								id="jobnummer" />
 						</p:column>
+						<p:column />
 						<p:column>
 							<p:outputLabel for="alt" value="Alte Jobnummer" />
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%"
+							<p:inputText style="width:95%"
 								value="#{aktuellerJobBean.job.alteJobnummer}" id="alt">
 								<p:ajax event="change" process="@this" update="@form"
-								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
+									listener="#{aktuellerJobBean.setUnsavedChanges(true)}" />
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -56,33 +52,31 @@
 						<p:column>
 							<p:selectOneMenu style="width:104%" id="kundenselect"
 								value="#{jobBean.selectedKundeId}" editable="false"
-								effect="fold" filter="true"
-								filterMatchMode="contains">
+								effect="fold" filter="true" filterMatchMode="contains">
 								<f:selectItem itemLabel="Kunden auswählen" itemValue="0" />
 								<f:selectItems value="#{kundenBean.kunden}" var="kunde"
 									itemLabel="#{kunde.name}" itemValue="#{kunde.id}" />
 								<p:ajax event="change" process="@this"
 									update="@this growl kundenkurz"
-									listener="#{jobBean.findeKunde}"/>
+									listener="#{jobBean.findeKunde}" />
 							</p:selectOneMenu>
 						</p:column>
+						<p:column />
 						<p:column>
 							<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%" value="#{jobBean.kuerzel}"
+							<p:inputText style="width:80%" value="#{jobBean.kuerzel}"
 								id="kundenkurz">
-								<p:ajax
-									listener="#{jobBean.findeKundeUeberKuerzel}"
+								<p:ajax listener="#{jobBean.findeKundeUeberKuerzel}"
 									event="change" process="@this" update="kundenselect"></p:ajax>
 							</p:inputText>
-						</p:column>
-						<p:column>
+							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus"
+								style="margin-left:2px" />
 							<p:tooltip showEffect="fade" hideEffect="fade"
 								for="neuerKundeButton" value="neuen Kunden anlegen"
 								widgetVar="tip1" myPosition="left center"
 								atPosition="right center" />
-							<p:commandButton id="neuerKundeButton" icon="ui-icon-plus"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -94,19 +88,19 @@
 							<p:inputText style="width:100%" maxlength="30" id="job"
 								value="#{aktuellerJobBean.job.name}">
 								<p:ajax event="change" process="@this" update="@form"
-								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
+									listener="#{aktuellerJobBean.setUnsavedChanges(true)}" />
 							</p:inputText>
 						</p:column>
-
+						<p:column />
 
 						<p:column>
 							<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
 						</p:column>
 						<p:column>
-							<p:inputText style="width:100%"
+							<p:inputText style="width:95%"
 								value="#{aktuellerJobBean.job.budgetInEuro}" id="budget_in_eur">
 								<p:ajax event="change" process="@this" update="@form"
-								listener="#{aktuellerJobBean.setUnsavedChanges(true)}"/>
+									listener="#{aktuellerJobBean.setUnsavedChanges(true)}" />
 							</p:inputText>
 						</p:column>
 					</p:row>
@@ -120,18 +114,13 @@
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
-
+						<p:column />
 						<p:column>
 							<p:outputLabel for="ersteller" value="Ersteller" />
 						</p:column>
 						<p:column>
 							<p:outputLabel id="ersteller"
 								value="#{aktuellerJobBean.job.ersteller==null  ? request.remoteUser : aktuellerJobBean.job.ersteller}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="7">
-
 						</p:column>
 					</p:row>
 
@@ -165,12 +154,12 @@
 					<p:commandButton
 						actionListener="#{kundenBean.saveKunde(kundenBean.kunde)}"
 						update=":mainform:growl :mainform:kundenselect grid"
-						value="Kunden hinzufügen"/>
-					
+						value="Kunden hinzufügen" />
+
 				</h:panelGrid>
 			</h:form>
 		</p:overlayPanel>
-		
+
 	</ui:composition>
 
 </h:body>
