@@ -33,7 +33,6 @@
 								value="#{aktuellerJobBean.job.id==0 ? 'wird generiert' : aktuellerJobBean.job.id}"
 								id="jobnummer" />
 						</p:column>
-						<p:column />
 						<p:column>
 							<p:outputLabel for="alt" value="Alte Jobnummer" />
 						</p:column>
@@ -61,7 +60,6 @@
 									listener="#{jobBean.findeKunde}" />
 							</p:selectOneMenu>
 						</p:column>
-						<p:column />
 						<p:column>
 							<p:outputLabel for="kundenkurz" value="Kundenkürzel" />
 						</p:column>
@@ -91,8 +89,6 @@
 									listener="#{aktuellerJobBean.setUnsavedChanges(true)}" />
 							</p:inputText>
 						</p:column>
-						<p:column />
-
 						<p:column>
 							<p:outputLabel for="budget_in_eur" value="Budget in Euro" />
 						</p:column>
@@ -114,7 +110,6 @@
 								<f:convertDateTime type="date" pattern="dd.MM.yyyy"></f:convertDateTime>
 							</h:outputText>
 						</p:column>
-						<p:column />
 						<p:column>
 							<p:outputLabel for="ersteller" value="Ersteller" />
 						</p:column>
