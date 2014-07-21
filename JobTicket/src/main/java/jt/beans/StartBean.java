@@ -130,19 +130,25 @@ public class StartBean implements Serializable {
 	public void queryJobs() {
 		em = entityManagerFactory.createEntityManager();
 		em.getTransaction().begin();
-
-		Query query = em.createQuery("SELECT b FROM Job b");
+		jobs = new ArrayList<Job>();
+		Query query = em.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
 		if (optionen.isFiltereNachMitarbeiter()) {
-			if (optionen.isVersteckeFertigeJobs()) {
+			if (optionen.isVersteckeFertigeJobs() || optionen.getSelectedAngestellterId() != optionen.getAngemeldeterMitarbeiterId()) {
 				query = findUnfinishedJobsByAngestellten();
-
-			} else {
+			}else {
 				query = findJobByAngestellten();
 			}
 		} else {
 			if (optionen.isVersteckeFertigeJobs()) {
 				query = em
 						.createQuery("SELECT b FROM Job b WHERE b.fortschritt < 100");
+			}else{
+				@SuppressWarnings("unchecked")
+				List<Job> jobListe = query.getResultList();
+				if (jobListe != null) {
+					jobs = jobListe;
+				}
+				query = findRestJobs();
 			}
 		}
 		@SuppressWarnings("unchecked")
@@ -151,7 +157,7 @@ public class StartBean implements Serializable {
 		if (jobListe == null) {
 			jobListe = new ArrayList<Job>();
 		}
-		jobs = jobListe;
+		jobs.addAll(jobListe);
 	}
 
 	/**
@@ -170,6 +176,17 @@ public class StartBean implements Serializable {
 			jobListe = new ArrayList<Job>();
 		}
 		return jobListe;
+	}
+	
+	/**
+	 * Gibt Query für fertige Jobs des angemeldeten Mitarbeiters zurück.
+	 * @return Liste von allen Jobs
+	 */
+	public Query findRestJobs() {
+		Query query = em
+				.createQuery("SELECT j.job FROM Jobbearbeiter j WHERE j.angestellte.id = :id AND j.job.fortschritt = 100");
+		query.setParameter("id", optionen.getAngemeldeterMitarbeiterId());
+		return query;
 	}
 
 	/**
