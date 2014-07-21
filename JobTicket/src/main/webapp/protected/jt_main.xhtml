@@ -13,14 +13,14 @@
 		<ui:define name="main">
 			<ui:include src="templates/jobticket_main.xhtml" />
 			<p:panel style="width:850px">
-				<p:commandButton value="Speichern" style="float:right"
+				<p:commandButton value="Speichern" style="float:right;width:130px"
 					action="#{jobBean.saveJobAndRedirect('jt_main.xhtml')}" />
 				<p:button outcome="jt_produkte.xhtml" value="Weiter"
-					style="float:right" />
-				<p:commandButton value="Job-Tabelle"
+					style="float:right;width:130px" />
+				<p:commandButton value="Job-Tabelle" style="width:130px"
 					action="#{startBean.checkUnsavedChanges('start.xhtml')}" />
 
-				<p:commandButton value="Zur Job Overview"
+				<p:commandButton value="Job Overview" style="width:130px"
 					action="#{startBean.checkUnsavedChanges('jobticket_overview.xhtml')}" />
 
 				<p:dialog header="Ungespeicherte Änderungen gefunden!"

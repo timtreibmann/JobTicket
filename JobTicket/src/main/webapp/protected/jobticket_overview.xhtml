@@ -77,13 +77,13 @@
 		</p:panel>
 		<p:panel styleClass="panel">
 			<p:commandButton actionListener="#{startBean.resetJob}"
-				value="Job-Tabelle" />
-			<p:button value="Bearbeiten"
+				value="Job-Tabelle" style="width:130px"/>
+			<p:button value="Bearbeiten" style="width:130px"
 				outcome="#{optionenBean.zeigeAllesAufEinerSeite ? 'ticketanzeige.xhtml' : 'jt_main.xhtml'}" />
-			<p:commandButton id="delete" value="Job löschen"
+			<p:commandButton id="delete" value="Job löschen" style="width:130px"
 				rendered="#{(!aktuellerJobBean.istNeuesTicket) and (request.isUserInRole('JobTicket-Administratoren') or aktuellerJobBean.jobMadeByRemoteUser())}" />
 
-			<p:button id="printView" value="Druckansicht" style="float:right" outcome="print.xhtml"/>
+			<p:button id="printView" value="Druckansicht" style="float:right;width:130px" outcome="print.xhtml"/>
 			<p:overlayPanel id="p" for="delete" hideEffect="fade">
 				<p:outputLabel value="Ticket wirklich löschen?"></p:outputLabel>
 				<p:commandButton value="Ja" actionListener="#{startBean.deleteJob}" />
